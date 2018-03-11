@@ -1,20 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="HowMuch" parent="Theme.AppCompat.Light.NoActionBar">
+
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowSharedElementsUseOverlay">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
+    <style name="HowMuch.Translucent">
+
+        <item name="android:windowBackground">@color/scrim</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+
+    <style name="HowMuch.Home">
+
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <style name="HowMuch.Translucent.ExpenseDay">
+
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/grey2</item>
+    </style>
+
+    <style name="HowMuch.Translucent.Intro">
+
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <style name="HowMuch.AddTransaction" parent="@style/Theme.AppCompat.Light.Dialog">
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <!-- text appearance-->
+    <style
+        name="TextAppearance.Display4"
+        parent="@android:style/TextAppearance.Material.Display4">
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    </style>
 
+    <style
+        name="TextAppearance.Display3"
+        parent="@android:style/TextAppearance.Material.Display3">
+
+    </style>
+
+    <style
+        name="TextAppearance.Display2"
+        parent="@android:style/TextAppearance.Material.Display2">
+
+    </style>
+
+    <style
+        name="TextAppearance.Display1"
+        parent="@android:style/TextAppearance.Material.Display1">
+
+    </style>
+
+    <style
+        name="TextAppearance.Headline"
+        parent="@android:style/TextAppearance.Material.Headline">
+
+    </style>
+
+    <style
+        name="TextAppearance.Title"
+        parent="@android:style/TextAppearance.Material.Title">
+
+    </style>
+
+    <style
+        name="TextAppearance.Subhead"
+        parent="@android:style/TextAppearance.Material.Subhead">
+
+    </style>
+
+    <style
+        name="TextAppearance.Body1"
+        parent="@android:style/TextAppearance.Material.Body1">
+
+    </style>
+
+    <style
+        name="TextAppearance.Body2"
+        parent="@android:style/TextAppearance.Material.Body2">
+
+    </style>
+
+    <style
+        name="TextAppearance.Caption"
+        parent="@android:style/TextAppearance.Material.Caption">
+
+    </style>
+
+    <style
+        name="TextAppearance.ExpenseHeading"
+        parent="@style/TextAppearance.Title">
+
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/secondaryText</item>
+        <item name="android:fontFeatureSettings">smcp</item>
+    </style>
+
+    <style
+        name="TextAppearance.ExpenseAmountBig"
+        parent="@style/TextAppearance.Display4">
+
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style
+        name="TextAppearance.CurrencySymbolBig"
+        parent="@style/TextAppearance.Display4">
+
+        <item name="android:fontFamily">sans-serif-condensed-light</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/secondaryText</item>
+    </style>
+
+    <style
+        name="TextAppearance.Currency"
+        parent="@style/TextAppearance.Title">
+
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/primaryTextLight</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style
+        name="TextAppearance.ListHeading"
+        parent="@style/TextAppearance.Title">
+
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/secondaryText</item>
+        <item name="android:fontFeatureSettings">smcp</item>
+    </style>
+
+    <style
+        name="TextAppearance.Btn"
+        parent="@style/TextAppearance.Body2">
+
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/secondaryText</item>
+    </style>
+
+    <style
+        name="TextAppearance.ExpenseDate"
+        parent="@style/TextAppearance.Subhead">
+
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style
+        name="TextAppearance.TransactionNum"
+        parent="@style/TextAppearance.Subhead">
+
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/secondaryText</item>
+    </style>
+
+    <style
+        name="TextAppearance.ExpenseAmountSmall"
+        parent="@style/TextAppearance.Title">
+
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style
+        name="TextAppearance.ExpenseTextSmall"
+        parent="@style/TextAppearance.Subhead">
+
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
+    <style
+        name="TextAppearance.ExpenseTime"
+        parent="@style/TextAppearance.Subhead">
+
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style
+        name="TextAppearance.ExpenseDayHeading"
+        parent="@style/TextAppearance.Title">
+
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/secondaryText</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style
+        name="TextAppearance.ExpenseAmount"
+        parent="@style/TextAppearance.Display1">
+
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style
+        name="TextAppearance.ExpenseText"
+        parent="@style/TextAppearance.Subhead">
+
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
+    <style
+        name="TextAppearance.DialogHeading"
+        parent="@style/TextAppearance.Title">
+
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style
+        name="TextAppearance.IntroLine"
+        parent="@style/TextAppearance.Headline">
+
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textColor">@color/secondaryText</item>
+    </style>
+
+    <style
+        name="TextAppearance.AppNameBig"
+        parent="@style/TextAppearance.Display2">
+
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style
+        name="TextAppearance.IntroQuestion"
+        parent="@style/TextAppearance.Title">
+
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
 </resources>

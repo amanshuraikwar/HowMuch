@@ -8,19 +8,28 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/HowMuch"
         android:name=".MyApp">
+
         <activity
             android:name=".ui.home.HomeActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:theme="@style/HowMuch.Home">
 
+            <intent-filter>
+
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.base.BaseActivity" />
+
+        <activity
+            android:name=".ui.intro.IntroActivity"
+            android:theme="@style/HowMuch.Translucent.Intro"/>
+
+        <activity
+            android:name=".ui.addtransaction.AddTransactionActivity"
+            android:theme="@style/HowMuch.AddTransaction"/>
     </application>
 
 </manifest>

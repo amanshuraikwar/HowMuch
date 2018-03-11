@@ -1,5 +1,6 @@
 package io.github.amanshuraikwar.howmuch.ui.home
 
+import io.github.amanshuraikwar.howmuch.data.model.DayExpense
 import io.github.amanshuraikwar.howmuch.ui.base.BasePresenter
 import io.github.amanshuraikwar.howmuch.ui.base.BaseView
 
@@ -8,7 +9,20 @@ import io.github.amanshuraikwar.howmuch.ui.base.BaseView
  */
 interface HomeContract {
 
-    interface View : BaseView
+    interface View : BaseView {
+        fun startIntroActivity()
+        fun startExpenseDayActivity(dayExpense: DayExpense)
+        fun startStatsActivity()
+        fun showAddTransactionDialog()
+        fun startSettingsActivity()
+        fun displayTodaysExpense(amount: String)
+        fun displayDayExpenses(dayExpenses: List<DayExpense>, dailyLimit: Int)
+    }
 
-    interface Presenter : BasePresenter<View>
+    interface Presenter : BasePresenter<View> {
+        fun onMoreStatsBtnClick()
+        fun onExpenseDayClick(dayExpense: DayExpense)
+        fun onAddBtnClick()
+        fun onSettingBtnClick()
+    }
 }

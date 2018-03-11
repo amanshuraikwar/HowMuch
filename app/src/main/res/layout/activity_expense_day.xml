@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.github.amanshuraikwar.howmuch.ui.widget.SwipeBackCoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey2">
+
+    <io.github.amanshuraikwar.howmuch.ui.widget.NestedScrollAppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grey1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            app:layout_scrollFlags="scroll">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginNormal"
+                android:layout_marginEnd="@dimen/marginNormal"
+                app:cardBackgroundColor="@color/grey3"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="@dimen/cardCornerRadiusNormal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/marginSmall"
+                    android:paddingEnd="@dimen/marginSmall"
+                    android:paddingTop="@dimen/marginSmall"
+                    android:paddingBottom="@dimen/marginSmall"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    tools:ignore="UseCompoundDrawables">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_today_black_24dp"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/expenseHeading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:textAppearance="@style/TextAppearance.ExpenseDayHeading"
+                        tools:text="today"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/expenseBarHeight"
+                android:layout_marginStart="@dimen/marginNormal"
+                android:layout_marginEnd="@dimen/marginNormal"
+                android:layout_marginTop="@dimen/marginLarge"
+                app:rcProgress="40"
+                app:rcSecondaryProgress="60"
+                app:rcMax="100"
+                app:rcRadius="@dimen/expenseBarRadius"
+                app:rcBackgroundPadding="0dp"
+                app:rcProgressColor="@color/lightBlue"
+                app:rcSecondaryProgressColor="@color/lightGreen" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/marginLarge"
+                android:layout_marginBottom="@dimen/marginNormal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:layout_marginStart="@dimen/marginSmall"
+                    android:layout_marginEnd="@dimen/marginSmall">
+
+                    <TextView
+                        android:id="@+id/spentAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.ExpenseAmount"
+                        android:textColor="@color/lightBlue"
+                        tools:text="₹256"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.ExpenseText"
+                        android:textColor="@color/lightBlue"
+                        android:text="@string/spent_today"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:layout_marginStart="@dimen/marginSmall"
+                    android:layout_marginEnd="@dimen/marginSmall">
+
+                    <TextView
+                        android:id="@+id/leftAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.ExpenseAmount"
+                        android:textColor="@color/lightGreen"
+                        tools:text="₹144"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.ExpenseText"
+                        android:textColor="@color/lightGreen"
+                        android:text="@string/left"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:layout_marginStart="@dimen/marginSmall"
+                    android:layout_marginEnd="@dimen/marginSmall">
+
+                    <TextView
+                        android:id="@+id/aboveLimitAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.ExpenseAmount"
+                        android:textColor="@color/red"
+                        tools:text="₹0"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.ExpenseText"
+                        android:textColor="@color/red"
+                        android:text="@string/above_limit"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grey3">
+
+            <TextView
+                android:id="@+id/transactionNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/marginNormal"
+                android:text="@string/transactions"
+                android:textAppearance="@style/TextAppearance.ListHeading"/>
+        </FrameLayout>
+    </io.github.amanshuraikwar.howmuch.ui.widget.NestedScrollAppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/transactionsRv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:listitem="@layout/item_transaction"/>
+</io.github.amanshuraikwar.howmuch.ui.widget.SwipeBackCoordinatorLayout>

@@ -3,6 +3,7 @@ package io.github.amanshuraikwar.howmuch.ui.home
 import android.support.v7.app.AppCompatActivity
 import dagger.Binds
 import dagger.Module
+import io.github.amanshuraikwar.howmuch.di.ActivityContext
 import io.github.amanshuraikwar.howmuch.di.ActivityScope
 
 /**
@@ -14,6 +15,6 @@ import io.github.amanshuraikwar.howmuch.di.ActivityScope
     @ActivityScope @Binds
     abstract fun homePrsntr (presenter: HomePresenter): HomeContract.Presenter
 
-    @ActivityScope @Binds
+    @ActivityScope @Binds @ActivityContext
     abstract fun activity (activity: AppCompatActivity): AppCompatActivity
 }

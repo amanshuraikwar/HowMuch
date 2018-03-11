@@ -6,7 +6,7 @@ package io.github.amanshuraikwar.howmuch.util;
 
 public class LogUtil {
 
-    public static final String getLogTag(Object object) {
+    public static String getLogTag(Object object) {
         return object.getClass().getSimpleName();
     }
 }

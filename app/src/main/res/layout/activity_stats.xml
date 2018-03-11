@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.github.amanshuraikwar.howmuch.ui.widget.SwipeBackCoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/downy">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginNormal"
+                android:text="@string/spent_today"
+                android:textAppearance="@style/TextAppearance.ExpenseHeading"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginNormal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/todayCurrencySymbol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.CurrencySymbolBig"
+                    tools:text="₹" />
+
+                <TextView
+                    android:id="@+id/todayExpenseAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textAppearance="@style/TextAppearance.ExpenseAmountBig"
+                    tools:text="256" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dividerHeight"
+                android:layout_marginTop="@dimen/marginNormal"
+                android:background="@color/divider" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginNormal"
+                android:text="@string/spent_this_week"
+                android:textAppearance="@style/TextAppearance.ExpenseHeading"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginNormal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/thisWeekCurrencySymbol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.CurrencySymbolBig"
+                    tools:text="₹" />
+
+                <TextView
+                    android:id="@+id/thisWeekExpenseAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textAppearance="@style/TextAppearance.ExpenseAmountBig"
+                    tools:text="300" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dividerHeight"
+                android:layout_marginTop="@dimen/marginNormal"
+                android:background="@color/divider" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginNormal"
+                android:text="@string/spent_this_month"
+                android:textAppearance="@style/TextAppearance.ExpenseHeading"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginNormal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/thisMonthCurrencySymbol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.CurrencySymbolBig"
+                    tools:text="₹" />
+
+                <TextView
+                    android:id="@+id/thisMonthExpenseAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textAppearance="@style/TextAppearance.ExpenseAmountBig"
+                    tools:text="700" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</io.github.amanshuraikwar.howmuch.ui.widget.SwipeBackCoordinatorLayout>

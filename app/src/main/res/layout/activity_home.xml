@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="io.github.amanshuraikwar.howmuch.ui.home.HomeActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:contentScrim="?attr/colorPrimary">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/marginNormal"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                app:layout_collapseMode="parallax">
+
+                <TextView
+                    android:id="@+id/expenseHeading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/marginNormal"
+                    android:text="@string/spent_today"
+                    android:textAppearance="@style/TextAppearance.ExpenseHeading"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/marginNormal"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/currencySymbol"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.CurrencySymbolBig"
+                        tools:text="₹" />
+
+                    <TextView
+                        android:id="@+id/todaysExpenseAmountTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:textAppearance="@style/TextAppearance.ExpenseAmountBig"
+                        tools:text="256" />
+                </LinearLayout>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/marginNormal"
+                    app:cardBackgroundColor="@color/disableHintText"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="@dimen/cardCornerRadiusNormal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/more"
+                        android:padding="@dimen/marginSmall"
+                        android:textAppearance="@style/TextAppearance.Btn"
+                        android:textColor="@color/primaryTextLight"/>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grey3">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/marginNormal"
+                android:text="@string/expense_history"
+                android:textAppearance="@style/TextAppearance.ListHeading"/>
+        </FrameLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/expenseHistoryRv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/fab_padding_bottom"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:listitem="@layout/item_transaction_day" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_add_black_24dp" />
+
+</android.support.design.widget.CoordinatorLayout>

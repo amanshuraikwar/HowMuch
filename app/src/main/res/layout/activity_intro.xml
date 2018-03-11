@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parentCl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/downy">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginLarge"
+                android:layout_marginStart="@dimen/marginLarge"
+                android:layout_marginEnd="@dimen/marginLarge"
+                android:textAppearance="@style/TextAppearance.IntroLine"
+                android:text="@string/intro_line_1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginNormal"
+                android:layout_gravity="center_horizontal"
+                android:textAppearance="@style/TextAppearance.AppNameBig"
+                android:text="@string/app_name_q" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginNormal"
+                android:layout_marginStart="@dimen/marginLarge"
+                android:layout_marginEnd="@dimen/marginLarge"
+                android:layout_gravity="end"
+                android:textAppearance="@style/TextAppearance.IntroLine"
+                android:text="@string/intro_line_2" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dividerHeight"
+                android:layout_marginTop="@dimen/marginLarge"
+                android:layout_marginStart="@dimen/marginLarge"
+                android:layout_marginEnd="@dimen/marginLarge"
+                android:background="@color/divider" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginLarge"
+                android:layout_marginStart="@dimen/marginLarge"
+                android:layout_marginEnd="@dimen/marginLarge"
+                android:textAppearance="@style/TextAppearance.IntroLine"
+                android:text="@string/intro_line_3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginLarge"
+                android:layout_marginStart="@dimen/marginLarge"
+                android:layout_marginEnd="@dimen/marginLarge"
+                android:textAppearance="@style/TextAppearance.IntroQuestion"
+                android:text="@string/intro_question_1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/marginNormal"
+                android:layout_marginStart="@dimen/marginLarge"
+                android:layout_marginEnd="@dimen/marginLarge">
+
+                <TextView
+                    android:id="@+id/currencySymbolDaily"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingTop="@dimen/marginSmall"
+                    android:paddingBottom="@dimen/marginSmall"
+                    android:paddingStart="@dimen/marginNormal"
+                    android:paddingEnd="@dimen/marginNormal"
+                    android:gravity="center"
+                    android:textAppearance="@style/TextAppearance.Currency"
+                    android:textColor="@color/secondaryText"
+                    android:text="@string/rupee"/>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/disableHintText" >
+
+                    <EditText
+                        android:id="@+id/dailyAmountTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:ellipsize="end"
+                        android:hint="@string/amount"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:paddingBottom="12dp"
+                        android:paddingEnd="@dimen/marginNormal"
+                        android:paddingStart="@dimen/marginNormal"
+                        android:paddingTop="12dp"
+                        android:scrollHorizontally="true"
+                        android:textAppearance="@style/TextAppearance.ExpenseAmountSmall"
+                        android:textColor="@color/primaryTextLight"
+                        android:textColorHint="@color/secondaryTextLight" />
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dividerHeight"
+                android:layout_marginTop="@dimen/marginLarge"
+                android:layout_marginStart="@dimen/marginLarge"
+                android:layout_marginEnd="@dimen/marginLarge"
+                android:background="@color/divider" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/doneBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginLarge"
+                android:layout_marginBottom="@dimen/marginLarge"
+                android:layout_marginStart="@dimen/marginLarge"
+                android:layout_marginEnd="@dimen/marginLarge"
+                android:layout_gravity="center_horizontal"
+                app:cardBackgroundColor="@color/grey2"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="@dimen/cardCornerRadiusNormal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:padding="@dimen/marginNormal"
+                    android:textAppearance="@style/TextAppearance.Btn"
+                    android:textColor="@color/primaryText"
+                    android:text="@string/done" />
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+</android.support.design.widget.CoordinatorLayout>

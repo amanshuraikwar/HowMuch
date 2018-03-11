@@ -10,7 +10,7 @@ interface BasePresenter<View: BaseView> {
      * Presenter should perform initializations here
      * @param view view associated with this presenter
      */
-    fun attachView(view: View, wasRecreated: Boolean)
+    fun attachView(view: View, wasViewRecreated: Boolean)
 
     /**
      * Drops the view when presenter is destroyed
@@ -20,11 +20,13 @@ interface BasePresenter<View: BaseView> {
 
     /**
      * to get view instance
+     * @return view instance
      */
     fun getView(): View?
 
     /**
      * to check if the view is attached
+     * @return boolean
      */
     fun isViewAttached(): Boolean
 }
