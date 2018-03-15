@@ -1,6 +1,7 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="cardCornerRadiusNormal">4dp</dimen>
+    <dimen name="marginVeryLarge">40dp</dimen>
     <dimen name="marginLarge">32dp</dimen>
     <dimen name="marginNormal">16dp</dimen>
     <dimen name="marginSmall">8dp</dimen>

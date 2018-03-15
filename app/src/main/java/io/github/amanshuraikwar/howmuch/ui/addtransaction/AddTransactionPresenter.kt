@@ -5,7 +5,7 @@ import io.github.amanshuraikwar.howmuch.data.DataManager
 import io.github.amanshuraikwar.howmuch.data.local.room.transaction.Transaction
 import io.github.amanshuraikwar.howmuch.ui.base.BasePresenterImpl
 import io.github.amanshuraikwar.howmuch.util.LogUtil
-import io.github.amanshuraikwar.howmuch.util.NumberUtil
+import io.github.amanshuraikwar.howmuch.util.Util
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -49,7 +49,7 @@ class AddTransactionPresenter @Inject constructor(appBus: AppBus, dataManager: D
                 getDataManager()
                         .addTransaction(
                                 Transaction(
-                                        NumberUtil.getCurDateTime(),
+                                        Util.getCurDateTime(),
                                         amount,
                                         ""))
                         .subscribeOn(Schedulers.io())

@@ -11,7 +11,6 @@
     <string name="transactions">transactions</string>
     <string name="spent_this_week">spent this week</string>
     <string name="spent_this_month">spent this month</string>
-    <string name="add_transaction">Add Transaction</string>
     <string name="amount">amount</string>
     <string name="rupee">₹</string>
     <string name="add">add</string>
@@ -22,4 +21,9 @@
     <string name="done">done</string>
 
     <string name="preference_file_key">io.github.amanshuraikwar.howmuch.preference_file_key</string>
+    <string name="developer_name">Amanshu Raikwar</string>
+    <string name="ar_email">amanshuraikwar.in@gmail.com</string>
+    <string name="third_party_libraries_title">third party libraries</string>
+    <string name="today">Today</string>
+    <string name="add_transaction">Add Transaction</string>
 </resources>

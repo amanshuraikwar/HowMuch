@@ -29,7 +29,11 @@
 
         <activity
             android:name=".ui.addtransaction.AddTransactionActivity"
-            android:theme="@style/HowMuch.AddTransaction"/>
+            android:theme="@style/HowMuch.Translucent.AddTransaction"/>
+
+        <activity
+            android:name=".ui.expenseday.ExpenseDayActivity"
+            android:theme="@style/HowMuch.Translucent.ExpenseDay"/>
     </application>
 
 </manifest>

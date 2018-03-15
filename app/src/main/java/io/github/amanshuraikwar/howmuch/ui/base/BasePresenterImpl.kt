@@ -2,6 +2,7 @@ package io.github.amanshuraikwar.howmuch.ui.base
 
 import io.github.amanshuraikwar.howmuch.bus.AppBus
 import io.github.amanshuraikwar.howmuch.data.DataManager
+import io.reactivex.disposables.Disposable
 
 /**
  * Created by amanshuraikwar on 06/03/18.
@@ -12,6 +13,16 @@ constructor(private val appBus: AppBus,
     : BasePresenter<View> {
 
     private var view: View? = null
+
+    private var disposables: Set<Disposable> = mutableSetOf()
+
+    protected fun Disposable.addToCleanup() {
+        disposables.plusElement(this)
+    }
+
+    protected fun Disposable.removeFromCleanup() {
+        disposables.plusElement(this)
+    }
 
     override fun attachView(view: View, wasViewRecreated: Boolean) {
         this.view = view
@@ -36,6 +47,13 @@ constructor(private val appBus: AppBus,
     }
 
     protected open fun onDetach() {
-        // do nothing
+
+        // disposing all disposables
+        for (disposable in disposables) {
+            if (! disposable.isDisposed) {
+                disposable.dispose()
+                disposable.removeFromCleanup()
+            }
+        }
     }
 }

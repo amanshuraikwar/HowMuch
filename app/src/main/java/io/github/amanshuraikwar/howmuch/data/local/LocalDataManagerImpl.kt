@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import io.github.amanshuraikwar.howmuch.data.local.room.AppDatabase
 import io.github.amanshuraikwar.howmuch.data.local.room.transaction.Transaction
 import io.github.amanshuraikwar.howmuch.data.local.sharedprefs.SharedPrefsKeys
-import io.github.amanshuraikwar.howmuch.data.model.DayExpense
+import io.github.amanshuraikwar.howmuch.model.DayExpense
 import io.github.amanshuraikwar.howmuch.util.LogUtil
 import io.reactivex.Observable
 import org.threeten.bp.LocalDate
@@ -23,91 +23,72 @@ class LocalDataManagerImpl @Inject constructor() : LocalDataManager {
 
     @Inject lateinit var sharedPrefs: SharedPreferences
 
-    override fun getAllTransactions(): Observable<List<Transaction>> {
+    override fun getAllTransactions()
+            : Observable<List<Transaction>>
+            = Observable.fromCallable({ appDatabase.transactionDao().getAll() })
 
-        return Observable.create {
-            try {
-                it.onNext(appDatabase.transactionDao().getAll())
-                it.onComplete()
-            } catch (e: Exception) {
-                e.printStackTrace()
-                it.tryOnError(e)
-            }
+
+    override fun getAllTransactionsForDate(date: OffsetDateTime)
+            : Observable<List<Transaction>>
+            = Observable.fromCallable({ appDatabase.transactionDao().getAllForDate(date) })
+
+    override fun getDayExpenseByDate(date: OffsetDateTime)
+            : Observable<DayExpense>
+            = Observable
+            .fromCallable({ appDatabase.transactionDao().getAllForDate(date) })
+            .map { transactions -> convertToDayExpense(transactions, date) }
+
+    private fun convertToDayExpense(transactions: List<Transaction>, date: OffsetDateTime)
+            : DayExpense {
+
+        var transactionNum = 0
+        var amount = 0
+
+        for (transaction in transactions) {
+            transactionNum += 1
+            amount += transaction.getAmount()
         }
-    }
 
-    override fun getAllTransactionsForDate(date: OffsetDateTime): Observable<List<Transaction>> {
-
-        return Observable.create {
-            try {
-                it.onNext(appDatabase.transactionDao().getAllForDate(date))
-                it.onComplete()
-            } catch (e: Exception) {
-                e.printStackTrace()
-                it.tryOnError(e)
-            }
-        }
-    }
-
-    override fun getDayExpenseByDate(date: OffsetDateTime): Observable<DayExpense> {
-
-        return Observable.create {
-
-            try {
-                val transactions = appDatabase.transactionDao().getAllForDate(date)
-                var transactionNum = 0
-                var amount = 0
-
-                for (transaction in transactions) {
-                    transactionNum += 1
-                    amount += transaction.getAmount()
-                }
-
-                it.onNext(DayExpense(date.toLocalDate(), amount, transactionNum))
-                it.onComplete()
-            } catch (e: Exception) {
-                e.printStackTrace()
-                it.tryOnError(e)
-            }
-        }
+        return DayExpense(date, amount, transactionNum)
     }
 
     override fun getExpenseGroupedByDate(): Observable<List<DayExpense>> {
 
-        return Observable.create {
-
-            try {
-                it.onNext(groupTransactions(appDatabase.transactionDao().getAll()))
-            } catch (e: Exception) {
-                e.printStackTrace()
-                it.tryOnError(e)
-            }
-        }
+        return Observable
+                .fromCallable({ appDatabase.transactionDao().getAll() })
+                .map { transactions -> groupTransactions(transactions) }
     }
 
     private fun groupTransactions(transactions: List<Transaction>): List<DayExpense> {
 
         val dayExpenses = mutableListOf<DayExpense>()
-        var lastDate: LocalDate? = null
+        var lastDate: OffsetDateTime? = null
         var transactionNum = 0
         var amount = 0
 
         for (transaction in transactions) {
 
-            if (lastDate != transaction.getDateAdded().toLocalDate()) {
+            when {
+                lastDate == null -> {
 
-                if (transactionNum != 0) {
-                    if (lastDate != null) {
+                    lastDate = transaction.getDateAdded()
+                    transactionNum = 1
+                    amount = transaction.getAmount()
+                }
+                lastDate.toLocalDate() != transaction.getDateAdded().toLocalDate() -> {
+
+                    if (transactionNum != 0) {
                         dayExpenses.add(DayExpense(lastDate, amount, transactionNum))
                     }
-                }
 
-                lastDate = transaction.getDateAdded().toLocalDate()
-                transactionNum = 1
-                amount = transaction.getAmount()
-            } else {
-                amount += transaction.getAmount()
-                transactionNum += 1
+                    lastDate = transaction.getDateAdded()
+                    transactionNum = 1
+                    amount = transaction.getAmount()
+                }
+                else -> {
+                    amount += transaction.getAmount()
+                    transactionNum += 1
+                }
             }
         }
 
@@ -118,76 +99,43 @@ class LocalDataManagerImpl @Inject constructor() : LocalDataManager {
         return dayExpenses
     }
 
-    override fun addTransaction(transaction: Transaction): Observable<Boolean> {
+    override fun addTransaction(transaction: Transaction)
+            : Observable<Boolean>
+            = Observable.fromCallable(
+                {
+                    appDatabase.transactionDao().insert(transaction)
+                    return@fromCallable true
+                })
 
-        return Observable.create {
-
-            try {
-                appDatabase.transactionDao().insert(transaction)
-                it.onNext(true)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                it.tryOnError(e)
-            }
-        }
-    }
-
-    override fun deleteTransaction(transaction: Transaction): Observable<Boolean> {
-
-        return Observable.create {
-
-            try {
+    override fun deleteTransaction(transaction: Transaction)
+            : Observable<Boolean>
+            = Observable.fromCallable(
+            {
                 appDatabase.transactionDao().delete(transaction)
-                it.onNext(true)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                it.tryOnError(e)
-            }
-        }
-    }
+                return@fromCallable true
+            })
 
-    override fun updateTransaction(transaction: Transaction): Observable<Boolean> {
-
-        return Observable.create {
-
-            try {
+    override fun updateTransaction(transaction: Transaction)
+            : Observable<Boolean>
+            = Observable.fromCallable(
+            {
                 appDatabase.transactionDao().update(transaction)
-                it.onNext(true)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                it.tryOnError(e)
-            }
-        }
-    }
+                return@fromCallable true
+            })
 
     @SuppressLint("CommitPrefEdits")
-    override fun setDailyLimitAmount(amount: Int): Observable<Boolean> {
-
-        return Observable.create {
-
-            try {
+    override fun setDailyLimitAmount(amount: Int)
+            : Observable<Boolean>
+            = Observable.fromCallable(
+            {
                 with (sharedPrefs.edit()) {
                     putInt(SharedPrefsKeys.KEY_DAILY_LIMIT_AMOUNT, amount)
                     commit()
                 }
-                it.onNext(true)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                it.tryOnError(e)
-            }
-        }
-    }
+                return@fromCallable true
+            })
 
-    override fun getDailyLimitAmount(): Observable<Int> {
-
-        return Observable.create {
-
-            try {
-                it.onNext(sharedPrefs.getInt(SharedPrefsKeys.KEY_DAILY_LIMIT_AMOUNT, 0))
-            } catch (e: Exception) {
-                e.printStackTrace()
-                it.tryOnError(e)
-            }
-        }
-    }
+    override fun getDailyLimitAmount()
+            : Observable<Int>
+            = Observable.fromCallable({ sharedPrefs.getInt(SharedPrefsKeys.KEY_DAILY_LIMIT_AMOUNT, 0) })
 }

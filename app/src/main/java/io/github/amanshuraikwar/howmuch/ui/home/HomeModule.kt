@@ -13,8 +13,8 @@ import io.github.amanshuraikwar.howmuch.di.ActivityScope
 @Module abstract class HomeModule {
 
     @ActivityScope @Binds
-    abstract fun homePrsntr (presenter: HomePresenter): HomeContract.Presenter
+    abstract fun homePrsntr(presenter: HomePresenter): HomeContract.Presenter
 
     @ActivityScope @Binds @ActivityContext
-    abstract fun activity (activity: AppCompatActivity): AppCompatActivity
+    abstract fun activity(activity: AppCompatActivity): AppCompatActivity
 }

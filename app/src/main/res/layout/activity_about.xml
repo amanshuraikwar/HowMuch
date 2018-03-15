@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:clipToPadding="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grey3">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/marginNormal"
+                android:layout_gravity="center_horizontal"
+                android:text="settings"
+                android:textAppearance="@style/TextAppearance.ListHeading"/>
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="developed by"
+            android:textAppearance="@style/TextAppearance.AppInfoHeading"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/myImageCv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="1dp">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/me"
+                    tools:ignore="ContentDescription" />
+            </android.support.v7.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_toEndOf="@+id/myImageCv"
+                android:layout_marginStart="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/developer_name"
+                    android:textAppearance="@style/TextAppearance.AppInfoElementTitle"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppInfoElementSubtitle"
+                    android:text="@string/ar_email"/>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/arLinkedinIv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:padding="4dp"
+                android:layout_toStartOf="@+id/arGithubIv"
+                android:layout_below="@+id/myImageCv"
+                android:src="@drawable/ic_linkedin_grey_24dp"
+                style="@style/Widget.HowMuch.BorderlessImageButton"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/arGithubIv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:padding="4dp"
+                android:layout_toStartOf="@+id/arInstagramIv"
+                android:layout_below="@+id/myImageCv"
+                android:src="@drawable/ic_github_grey_24dp"
+                style="@style/Widget.HowMuch.BorderlessImageButton"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/arInstagramIv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="4dp"
+                android:layout_below="@+id/myImageCv"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_instagram_grey_24dp"
+                style="@style/Widget.HowMuch.BorderlessImageButton"
+                tools:ignore="ContentDescription" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"
+            android:layout_marginTop="16dp"/>
+    </LinearLayout>
+</ScrollView>

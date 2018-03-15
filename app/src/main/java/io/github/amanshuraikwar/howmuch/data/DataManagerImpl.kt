@@ -3,7 +3,6 @@ package io.github.amanshuraikwar.howmuch.data
 import android.content.Context
 import io.github.amanshuraikwar.howmuch.data.local.LocalDataManager
 import io.github.amanshuraikwar.howmuch.data.local.room.transaction.Transaction
-import io.github.amanshuraikwar.howmuch.data.model.DayExpense
 import io.github.amanshuraikwar.howmuch.di.ApplicationContext
 import org.threeten.bp.OffsetDateTime
 import javax.inject.Inject

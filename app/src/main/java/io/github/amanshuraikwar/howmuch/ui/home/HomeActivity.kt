@@ -2,19 +2,20 @@ package io.github.amanshuraikwar.howmuch.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import io.github.amanshuraikwar.howmuch.R
-import io.github.amanshuraikwar.howmuch.data.model.DayExpense
+import io.github.amanshuraikwar.howmuch.model.DayExpense
 import io.github.amanshuraikwar.howmuch.ui.addtransaction.AddTransactionActivity
 import io.github.amanshuraikwar.howmuch.ui.base.BaseActivity
-import io.github.amanshuraikwar.howmuch.ui.expenseday.ExpenseDayListItem
+import io.github.amanshuraikwar.howmuch.ui.expenseday.ExpenseDayActivity
+import io.github.amanshuraikwar.howmuch.ui.list.expenseday.ExpenseDayListItem
 import io.github.amanshuraikwar.howmuch.ui.intro.IntroActivity
 import io.github.amanshuraikwar.howmuch.ui.list.ListItem
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.howmuch.ui.list.RecyclerViewAdapter
+import io.github.amanshuraikwar.howmuch.ui.list.expenseday.ExpenseDayListItemOnClickListener
+import io.github.amanshuraikwar.howmuch.ui.list.header.HeaderListItem
 import io.github.amanshuraikwar.howmuch.util.LogUtil
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -25,6 +26,13 @@ class HomeActivity
     : BaseActivity<HomeContract.View, HomeContract.Presenter>(), HomeContract.View {
 
     private val TAG = LogUtil.getLogTag(this)
+
+    private val expenseDayOnClickListener: ExpenseDayListItemOnClickListener =
+            object : ExpenseDayListItemOnClickListener{
+                override fun onClick(dayExpense: DayExpense) {
+                    presenter.onExpenseDayClick(dayExpense)
+                }
+            }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +47,7 @@ class HomeActivity
             presenter.onAddBtnClick()
         }
 
-        currencySymbol.text = "₹"
+        currencySymbolTv.text = "₹"
 
         expenseHistoryRv.layoutManager = LinearLayoutManager(this)
     }
@@ -56,7 +64,10 @@ class HomeActivity
     }
 
     override fun startExpenseDayActivity(dayExpense: DayExpense) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        with(Intent(this, ExpenseDayActivity::class.java)){
+            this.putExtra(ExpenseDayActivity.KEY_DAY_EXPENSE, dayExpense)
+            startActivity(this)
+        }
     }
 
     override fun startStatsActivity() {
@@ -75,19 +86,28 @@ class HomeActivity
         todaysExpenseAmountTv.text = amount
     }
 
-    override fun displayDayExpenses(dayExpenses: List<DayExpense>, dailyLimit: Int) {
+    override fun displayDayExpenses(listItems: List<ListItem<*>>) {
         Log.d(TAG, "displayDayExpenses:called")
+
         expenseHistoryRv.adapter =
                 RecyclerViewAdapter(
                         this,
                         ListItemTypeFactory(),
-                        createListItems(dayExpenses, dailyLimit))
+                        listItems)
     }
 
-    private fun createListItems(daysExpenses: List<DayExpense>, dailyLimit: Int): List<ListItem<*>> {
+    override fun getExpenseDayListItems(dayExpenses: List<DayExpense>, dailyLimit: Int)
+            : List<ListItem<*>> {
+
         val list = mutableListOf<ListItem<*>>()
-        for (dayExpense in daysExpenses) {
-            list.add(ExpenseDayListItem(dayExpense, dailyLimit) as ListItem<*>)
+        list.add(HeaderListItem(getString(R.string.expense_history)))
+
+        for (dayExpense in dayExpenses) {
+
+            with(ExpenseDayListItem(dayExpense, dailyLimit)) {
+                this.onClickListener = expenseDayOnClickListener
+                list.add(this)
+            }
         }
         return list
     }

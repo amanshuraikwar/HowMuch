@@ -87,7 +87,7 @@
                     android:paddingStart="@dimen/marginNormal"
                     android:paddingEnd="@dimen/marginNormal"
                     android:gravity="center"
-                    android:textAppearance="@style/TextAppearance.Currency"
+                    android:textAppearance="@style/TextAppearance.CurrencySymbol"
                     android:textColor="@color/secondaryText"
                     android:text="@string/rupee"/>
 

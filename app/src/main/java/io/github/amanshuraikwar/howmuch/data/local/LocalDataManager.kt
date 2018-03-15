@@ -1,7 +1,7 @@
 package io.github.amanshuraikwar.howmuch.data.local
 
 import io.github.amanshuraikwar.howmuch.data.local.room.transaction.Transaction
-import io.github.amanshuraikwar.howmuch.data.model.DayExpense
+import io.github.amanshuraikwar.howmuch.model.DayExpense
 import io.reactivex.Observable
 import org.threeten.bp.OffsetDateTime
 
