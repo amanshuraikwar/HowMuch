@@ -37,7 +37,7 @@ class TransactionViewHolder(itemView: View) : ViewHolder<TransactionListItem>(it
 
         progressBar.max = listItem.getMaxTransactionAmount().toFloat()
         progressBar.progress = listItem.getTransaction().getAmount().toFloat()
-        spentAmountTv.text = "${listItem.getTransaction().getAmount()}"
+        spentAmountTv.text = Util.formatAmount(listItem.getTransaction().getAmount())
 
         spentCurrencyTvv.text = "₹"
 

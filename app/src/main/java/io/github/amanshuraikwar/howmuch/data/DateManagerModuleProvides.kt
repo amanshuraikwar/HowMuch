@@ -3,6 +3,7 @@ package io.github.amanshuraikwar.howmuch.data
 import android.arch.persistence.room.Room
 import android.content.Context
 import android.content.SharedPreferences
+import android.preference.PreferenceManager
 import dagger.Module
 import dagger.Provides
 import io.github.amanshuraikwar.howmuch.R
@@ -29,9 +30,6 @@ import javax.inject.Singleton
     @Singleton
     @Provides
     fun sharedPrefs(@ApplicationContext context: Context): SharedPreferences {
-        return context
-                .getSharedPreferences(
-                        context.getString(R.string.preference_file_key),
-                        Context.MODE_PRIVATE)
+        return PreferenceManager.getDefaultSharedPreferences(context)
     }
 }

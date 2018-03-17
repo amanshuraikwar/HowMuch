@@ -9,4 +9,5 @@ import javax.inject.Inject
 class AppBus {
 
     var onTransactionAdded: PublishSubject<Boolean> = PublishSubject.create()
+    var onSharedPrefsChanged: PublishSubject<String> = PublishSubject.create()
 }

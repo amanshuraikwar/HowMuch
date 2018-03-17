@@ -2,6 +2,7 @@ package io.github.amanshuraikwar.howmuch.data.local
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
+import io.github.amanshuraikwar.howmuch.bus.AppBus
 import io.github.amanshuraikwar.howmuch.data.local.room.AppDatabase
 import io.github.amanshuraikwar.howmuch.data.local.room.transaction.Transaction
 import io.github.amanshuraikwar.howmuch.data.local.sharedprefs.SharedPrefsKeys
@@ -22,6 +23,8 @@ class LocalDataManagerImpl @Inject constructor() : LocalDataManager {
     @Inject lateinit var appDatabase: AppDatabase
 
     @Inject lateinit var sharedPrefs: SharedPreferences
+
+    @Inject lateinit var appBus: AppBus
 
     override fun getAllTransactions()
             : Observable<List<Transaction>>
@@ -129,7 +132,7 @@ class LocalDataManagerImpl @Inject constructor() : LocalDataManager {
             = Observable.fromCallable(
             {
                 with (sharedPrefs.edit()) {
-                    putInt(SharedPrefsKeys.KEY_DAILY_LIMIT_AMOUNT, amount)
+                    putString(SharedPrefsKeys.KEY_DAILY_LIMIT_AMOUNT, amount.toString())
                     commit()
                 }
                 return@fromCallable true
@@ -137,5 +140,5 @@ class LocalDataManagerImpl @Inject constructor() : LocalDataManager {
 
     override fun getDailyLimitAmount()
             : Observable<Int>
-            = Observable.fromCallable({ sharedPrefs.getInt(SharedPrefsKeys.KEY_DAILY_LIMIT_AMOUNT, 0) })
+            = Observable.fromCallable({ sharedPrefs.getString(SharedPrefsKeys.KEY_DAILY_LIMIT_AMOUNT, "100").toInt() })
 }

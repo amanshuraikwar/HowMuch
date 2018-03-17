@@ -11,7 +11,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/grey2">
+        android:background="@color/grey2"
+        android:elevation="@dimen/elevation_action_bar">
 
         <ImageButton
             android:id="@+id/backIb"

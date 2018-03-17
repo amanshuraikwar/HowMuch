@@ -10,6 +10,8 @@ import io.github.amanshuraikwar.howmuch.ui.list.header.HeaderListItem;
 import io.github.amanshuraikwar.howmuch.ui.list.header.HeaderViewHolder;
 import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionListItem;
 import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionViewHolder;
+import io.github.amanshuraikwar.howmuch.ui.list.verybigexpense.VeryBigExpenseListItem;
+import io.github.amanshuraikwar.howmuch.ui.list.verybigexpense.VeryBigExpenseViewHolder;
 
 /**
  * Created by amanshuraikwar on 20/12/17.
@@ -33,6 +35,10 @@ public class ListItemTypeFactory {
         return 3;
     }
 
+    public int type(VeryBigExpenseListItem item) {
+        return 4;
+    }
+
     public int getLayout(int viewType) {
         switch (viewType) {
             case 0:
@@ -43,6 +49,8 @@ public class ListItemTypeFactory {
                 return HeaderViewHolder.Companion.getLAYOUT();
             case 3:
                 return BigExpenseViewHolder.Companion.getLAYOUT();
+            case 4:
+                return VeryBigExpenseViewHolder.Companion.getLAYOUT();
             default:
                 return 0;
         }
@@ -64,6 +72,9 @@ public class ListItemTypeFactory {
                 break;
             case 3:
                 viewHolder = new BigExpenseViewHolder(parent);
+                break;
+            case 4:
+                viewHolder = new VeryBigExpenseViewHolder(parent);
                 break;
         }
 

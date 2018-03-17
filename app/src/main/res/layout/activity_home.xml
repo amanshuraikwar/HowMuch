@@ -8,98 +8,46 @@
     android:background="@color/grey1"
     tools:context="io.github.amanshuraikwar.howmuch.ui.home.HomeActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:contentScrim="@color/veryLightPink">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="?attr/actionBarSize"
-                android:paddingBottom="@dimen/marginNormal"
-                android:orientation="vertical"
-                android:background="@color/veryLightPink"
-                app:layout_collapseMode="parallax">
-
-                <TextView
-                    android:id="@+id/expenseHeadingTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/marginVeryLarge"
-                    android:layout_marginStart="@dimen/marginVeryLarge"
-                    android:textColor="@color/pink"
-                    android:textAppearance="@style/TextAppearance.ExpenseHeading"
-                    android:text="@string/spent_today" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="@dimen/marginVeryLarge">
-
-                    <TextView
-                        android:id="@+id/currencySymbolTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/lightPink"
-                        android:textAppearance="@style/TextAppearance.CurrencySymbolBig"
-                        tools:text="₹" />
-
-                    <TextView
-                        android:id="@+id/todaysExpenseAmountTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:textColor="@color/pink"
-                        android:textAppearance="@style/TextAppearance.ExpenseAmountBig"
-                        tools:text="256" />
-                </LinearLayout>
-            </LinearLayout>
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/pink"
-        android:elevation="2dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/marginNormal"
-            android:layout_gravity="center_vertical"
-            android:textAppearance="@style/TextAppearance.ToolbarTitle.Light"
-            android:text="@string/app_name" />
-
-        <ImageButton
-            android:id="@+id/settingsIb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/marginSmall"
-            android:padding="@dimen/marginSmall"
-            android:layout_gravity="end"
-            android:src="@drawable/ic_settings_black_24dp"
-            android:tint="@color/white"
-            android:background="?android:selectableItemBackgroundBorderless"
-            tools:ignore="ContentDescription" />
-    </FrameLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/expenseHistoryRv"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="@dimen/fab_padding_bottom"
-        android:clipToPadding="false"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/item_transaction_day" />
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/pink"
+            android:elevation="@dimen/elevation_action_bar">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/marginNormal"
+                android:layout_gravity="center_vertical"
+                android:textAppearance="@style/TextAppearance.ToolbarTitle.Light.SmallCaps"
+                android:text="@string/app_name" />
+
+            <ImageButton
+                android:id="@+id/settingsIb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/marginSmall"
+                android:padding="@dimen/marginSmall"
+                android:layout_gravity="end"
+                android:src="@drawable/ic_settings_black_24dp"
+                android:tint="@color/white"
+                android:background="?android:selectableItemBackgroundBorderless"
+                tools:ignore="ContentDescription" />
+        </FrameLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/expenseHistoryRv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/fab_padding_bottom"
+            android:clipToPadding="false"
+            tools:listitem="@layout/item_transaction_day" />
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

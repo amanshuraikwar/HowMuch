@@ -5,11 +5,11 @@
     android:id="@+id/parentLll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/marginNormal"
-    android:layout_marginEnd="@dimen/marginNormal"
+    android:layout_marginStart="0dp"
+    android:layout_marginEnd="0dp"
     android:orientation="vertical"
     android:background="@color/veryLightBlue"
-    android:elevation="1dp">
+    android:elevation="0dp">
 
     <TextView
         android:id="@+id/expenseHeadingTvv"

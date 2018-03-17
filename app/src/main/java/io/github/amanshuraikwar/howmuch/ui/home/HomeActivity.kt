@@ -2,6 +2,7 @@ package io.github.amanshuraikwar.howmuch.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import io.github.amanshuraikwar.howmuch.R
@@ -16,8 +17,14 @@ import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.howmuch.ui.list.RecyclerViewAdapter
 import io.github.amanshuraikwar.howmuch.ui.list.expenseday.ExpenseDayListItemOnClickListener
 import io.github.amanshuraikwar.howmuch.ui.list.header.HeaderListItem
+import io.github.amanshuraikwar.howmuch.ui.list.verybigexpense.VeryBigExpenseListItem
+import io.github.amanshuraikwar.howmuch.ui.settings.SettingsActivity
 import io.github.amanshuraikwar.howmuch.util.LogUtil
 import kotlinx.android.synthetic.main.activity_home.*
+import android.content.SharedPreferences
+import android.preference.PreferenceManager
+import io.github.amanshuraikwar.howmuch.data.local.sharedprefs.SharedPrefsKeys
+
 
 /**
  * Created by amanshuraikwar on 07/03/18.
@@ -47,9 +54,9 @@ class HomeActivity
             presenter.onAddBtnClick()
         }
 
-        currencySymbolTv.text = "₹"
-
         expenseHistoryRv.layoutManager = LinearLayoutManager(this)
+
+        settingsIb.setOnClickListener({ presenter.onSettingBtnClick() })
     }
 
     override fun onResume() {
@@ -79,11 +86,7 @@ class HomeActivity
     }
 
     override fun startSettingsActivity() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun displayTodaysExpense(amount: String) {
-        todaysExpenseAmountTv.text = amount
+        startActivity(Intent(this, SettingsActivity::class.java))
     }
 
     override fun displayDayExpenses(listItems: List<ListItem<*>>) {
@@ -96,10 +99,21 @@ class HomeActivity
                         listItems)
     }
 
-    override fun getExpenseDayListItems(dayExpenses: List<DayExpense>, dailyLimit: Int)
+    override fun getExpenseDayListItems(dayExpenses: List<DayExpense>,
+                                        dailyLimit: Int,
+                                        todaysExpense: DayExpense)
             : List<ListItem<*>> {
 
         val list = mutableListOf<ListItem<*>>()
+
+        list.add(
+                VeryBigExpenseListItem(
+                        getString(R.string.spent_today),
+                        todaysExpense.amount,
+                        ContextCompat.getColor(this, R.color.pink),
+                        ContextCompat.getColor(this, R.color.lightPink),
+                        ContextCompat.getColor(this, R.color.veryLightPink)))
+
         list.add(HeaderListItem(getString(R.string.expense_history)))
 
         for (dayExpense in dayExpenses) {

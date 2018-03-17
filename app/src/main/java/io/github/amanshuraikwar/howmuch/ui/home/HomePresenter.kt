@@ -26,7 +26,6 @@ class HomePresenter @Inject constructor(appBus: AppBus, dataManager: DataManager
 
         if (wasViewRecreated) {
 
-            getTodaysExpense()
             getDayExpenses()
 
             getAppBus()
@@ -35,8 +34,20 @@ class HomePresenter @Inject constructor(appBus: AppBus, dataManager: DataManager
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             {
-                                getTodaysExpense()
                                 getDayExpenses()
+                            },
+                            {
+                                // todo something on error
+                            }
+                    ).addToCleanup()
+
+            getAppBus()
+                    .onSharedPrefsChanged
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            {
+                                onSharedPrefsChanged()
                             },
                             {
                                 // todo something on error
@@ -62,32 +73,35 @@ class HomePresenter @Inject constructor(appBus: AppBus, dataManager: DataManager
 
     }
 
-    private fun getTodaysExpense() {
-
-        getDataManager()
-                .getDayExpenseByDate(Util.getCurDateTime())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        {
-                            getView()
-                                    ?.displayTodaysExpense(
-                                            Util.formatAmount(it.amount))
-                        },
-                        {
-                            // todo something on error
-                        }
-                ).addToCleanup()
-    }
-
     private fun getDayExpenses() {
 
         getDataManager()
                 .getDailyLimitAmount()
                 .zipWith(
-                        getDataManager().getExpenseGroupedByDate().map { items -> items.reversed() },
-                        BiFunction { t1: Int, t2: List<DayExpense> ->  Pair(t1, t2)})
-                .map { pair -> getView()?.getExpenseDayListItems(pair.second, pair.first) }
+                        getDataManager()
+                                .getExpenseGroupedByDate()
+                                .map {
+                                    items -> items.reversed()
+                                },
+                        BiFunction {
+                            dailyLimitAmount: Int, dayExpenses: List<DayExpense> ->
+                            Pair(dailyLimitAmount, dayExpenses)
+                        })
+                .zipWith(
+                        getDataManager()
+                                .getDayExpenseByDate(Util.getCurDateTime()),
+                        BiFunction {
+                            pair: Pair<Int, List<DayExpense>>, todaysExpense: DayExpense ->
+                            Pair(pair, todaysExpense)
+                        })
+                .map {
+                    pair ->
+                    getView()
+                            ?.getExpenseDayListItems(
+                                    pair.first.second,
+                                    pair.first.first,
+                                    pair.second)
+                }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -115,5 +129,9 @@ class HomePresenter @Inject constructor(appBus: AppBus, dataManager: DataManager
 
     override fun onSettingBtnClick() {
         getView()?.startSettingsActivity()
+    }
+
+    override fun onSharedPrefsChanged() {
+        getDayExpenses()
     }
 }

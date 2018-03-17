@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/grey2"
-        android:elevation="2dp">
+        android:elevation="@dimen/elevation_action_bar">
 
         <ImageButton
             android:id="@+id/backIb"
@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="56dp"
-        android:paddingTop="@dimen/marginNormal"
+        android:paddingTop="0dp"
         android:paddingBottom="@dimen/fab_padding_bottom"
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

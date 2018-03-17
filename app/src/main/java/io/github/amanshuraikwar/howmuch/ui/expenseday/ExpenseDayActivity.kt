@@ -15,6 +15,7 @@ import io.github.amanshuraikwar.howmuch.ui.list.header.HeaderListItem
 import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionListItem
 import io.github.amanshuraikwar.howmuch.util.LogUtil
 import kotlinx.android.synthetic.main.activity_expense_day.*
+import kotlinx.android.synthetic.main.activity_home.*
 
 /**
  * Created by amanshuraikwar on 12/03/18.
@@ -36,7 +37,10 @@ class ExpenseDayActivity
     }
 
     private fun initUi() {
+
         transactionsRv.layoutManager = LinearLayoutManager(this)
+
+        backIb.setOnClickListener({ finishAfterTransition() })
     }
 
     override fun displayDate(date: String) {

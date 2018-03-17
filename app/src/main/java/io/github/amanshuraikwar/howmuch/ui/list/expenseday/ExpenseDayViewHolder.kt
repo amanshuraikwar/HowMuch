@@ -68,7 +68,7 @@ class ExpenseDayViewHolder(itemView: View) : ViewHolder<ExpenseDayListItem>(item
             otherAmountCurrencyTv.setTextColor(lightRedColor)
             otherAmountTv.setTextColor(redColor)
             otherTextTv.setTextColor(redColor)
-            otherAmountTv.text = "${(-diff)}"
+            otherAmountTv.text = Util.formatAmount(-diff)
             otherTextTv.text = parentActivity.getString(R.string.above_limit)
         } else {
             progressBar.isReverse = false
@@ -78,10 +78,10 @@ class ExpenseDayViewHolder(itemView: View) : ViewHolder<ExpenseDayListItem>(item
             otherAmountCurrencyTv.setTextColor(lightGreenColor)
             otherAmountTv.setTextColor(greenColor)
             otherTextTv.setTextColor(greenColor)
-            otherAmountTv.text = "${(diff)}"
+            otherAmountTv.text = Util.formatAmount(diff)
             otherTextTv.text = parentActivity.getString(R.string.left)
         }
-        spentAmountTv.text = "$spent"
+        spentAmountTv.text = Util.formatAmount(spent)
 
         parentLl.setOnClickListener { listItem.onClickListener.onClick(listItem.getDayExpense()) }
     }

@@ -16,9 +16,10 @@ interface HomeContract {
         fun startStatsActivity()
         fun showAddTransactionDialog()
         fun startSettingsActivity()
-        fun displayTodaysExpense(amount: String)
         fun displayDayExpenses(listItems: List<ListItem<*>>)
-        fun getExpenseDayListItems(dayExpenses: List<DayExpense>, dailyLimit: Int): List<ListItem<*>>
+        fun getExpenseDayListItems(dayExpenses: List<DayExpense>,
+                                   dailyLimit: Int,
+                                   todaysExpense: DayExpense): List<ListItem<*>>
     }
 
     interface Presenter : BasePresenter<View> {
@@ -26,5 +27,6 @@ interface HomeContract {
         fun onExpenseDayClick(dayExpense: DayExpense)
         fun onAddBtnClick()
         fun onSettingBtnClick()
+        fun onSharedPrefsChanged()
     }
 }

@@ -35,9 +35,14 @@
         <item name="android:statusBarColor">@color/grey3</item>
     </style>
 
-    <style name="HowMuch.Translucent.Intro">
+    <style name="HowMuch.Translucent.Settings">
 
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/grey3</item>
+    </style>
+
+    <style name="HowMuch.Translucent.Intro">
+
     </style>
 
     <style name="HowMuch.Translucent.AddTransaction">
@@ -220,8 +225,13 @@
 
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textColor">@color/primaryText</item>
-        <item name="android:fontFeatureSettings">smcp, onum</item>
-        <item name="android:letterSpacing">0.1</item>
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+
+    <style
+        name="TextAppearance.ToolbarTitle.SmallCaps">
+
+        <item name="android:fontFeatureSettings">smcp</item>
     </style>
 
     <style
@@ -230,12 +240,17 @@
         <item name="android:textColor">@color/primaryTextLight</item>
     </style>
 
+    <style
+        name="TextAppearance.ToolbarTitle.Light.SmallCaps">
+
+        <item name="android:fontFeatureSettings">smcp</item>
+    </style>
+
     <!-- to be deprecated-->
     <style
         name="TextAppearance.IntroLine"
         parent="@style/TextAppearance.Headline">
 
-        <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:textColor">@color/secondaryText</item>
     </style>
 
@@ -251,8 +266,7 @@
     <style
         name="TextAppearance.IntroQuestion"
         parent="@style/TextAppearance.Title">
-
-        <item name="android:fontFamily">sans-serif-condensed</item>
+        
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/primaryText</item>
     </style>

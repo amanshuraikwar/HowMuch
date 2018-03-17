@@ -26,4 +26,9 @@
     <string name="third_party_libraries_title">third party libraries</string>
     <string name="today">Today</string>
     <string name="add_transaction">Add Transaction</string>
+
+    <string name="preference_key_daily_limit">daily_limit_amount</string>
+    <string name="settings">Settings</string>
+    <string name="general">general</string>
+    <string name="about">About</string>
 </resources>
