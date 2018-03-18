@@ -11,7 +11,7 @@ import io.github.amanshuraikwar.howmuch.ui.list.SimpleListItemOnClickListener
 class TransactionListItem(
         private val transaction: Transaction,
         private val maxTransactionAmount: Int)
-    : ListItem<SimpleListItemOnClickListener>() {
+    : ListItem<TransactionListItemOnClickListener>() {
 
     override fun type(typeFactory: ListItemTypeFactory): Int {
         return typeFactory.type(this)

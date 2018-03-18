@@ -11,6 +11,14 @@ import org.threeten.bp.format.DateTimeFormatter;
 
 public class Util {
 
+    public static boolean areSameDate(OffsetDateTime dateTime1, OffsetDateTime dateTime2) {
+        return formatDate(dateTime1).equals(formatDate(dateTime2));
+    }
+
+    public static boolean isAmountValid(String amount) {
+        return ! ( amount.equals("") || amount.equals("0") );
+    }
+
     public static OffsetDateTime getCurDateTime() {
         return OffsetDateTime.now();
     }

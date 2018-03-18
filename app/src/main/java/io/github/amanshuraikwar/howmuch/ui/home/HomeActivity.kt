@@ -81,7 +81,7 @@ class HomeActivity
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun showAddTransactionDialog() {
+    override fun startAddTransactionActivity() {
         startActivity(Intent(this, AddTransactionActivity::class.java))
     }
 
@@ -124,5 +124,10 @@ class HomeActivity
             }
         }
         return list
+    }
+
+    override fun getIntentAction(): String {
+        Log.i(TAG, "onCreate: action = ${intent.action}")
+        return intent.action
     }
 }

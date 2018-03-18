@@ -4,6 +4,8 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import io.github.amanshuraikwar.howmuch.ui.addtransaction.AddTransactionActivity
 import io.github.amanshuraikwar.howmuch.ui.addtransaction.AddTransactionModule
+import io.github.amanshuraikwar.howmuch.ui.edittransaction.EditTransactionActivity
+import io.github.amanshuraikwar.howmuch.ui.edittransaction.EditTransactionModule
 import io.github.amanshuraikwar.howmuch.ui.expenseday.ExpenseDayActivity
 import io.github.amanshuraikwar.howmuch.ui.expenseday.ExpenseDayModule
 import io.github.amanshuraikwar.howmuch.ui.home.HomeActivity
@@ -32,4 +34,8 @@ import io.github.amanshuraikwar.howmuch.ui.intro.IntroModule
     @ActivityScope
     @ContributesAndroidInjector(modules = arrayOf(ExpenseDayModule::class))
     abstract fun expenseDayActivity(): ExpenseDayActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = arrayOf(EditTransactionModule::class))
+    abstract fun editTransactionActivity(): EditTransactionActivity
 }

@@ -9,7 +9,7 @@
     android:background="@color/white"
     android:layout_marginStart="@dimen/marginNormal"
     android:layout_marginEnd="@dimen/marginNormal"
-    android:layout_marginBottom="1dp"
+    android:layout_marginBottom="@dimen/marginVerySmall"
     android:elevation="1dp">
 
     <TextView
@@ -42,7 +42,6 @@
         android:layout_marginStart="@dimen/marginNormal"
         android:layout_marginEnd="@dimen/marginNormal"
         android:layout_marginTop="@dimen/marginNormal"
-        android:layout_marginBottom="@dimen/marginNormal"
         android:layout_gravity="end"
         android:gravity="bottom">
 
@@ -71,5 +70,37 @@
             android:textAppearance="@style/TextAppearance.ExpenseTextSmall"
             android:textColor="@color/blue"
             android:text="@string/spent"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider"
+        android:layout_marginTop="@dimen/marginNormal"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginVerySmall"
+        android:layout_marginBottom="@dimen/marginVerySmall"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/transactionItemEditBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTint="@color/amber"
+            android:text="@string/edit"
+            style="@style/Widget.HowMuch.BorderlessButton"/>
+
+        <Button
+            android:id="@+id/transactionItemDeleteBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/marginSmall"
+            android:drawableTint="@color/amber"
+            android:text="@string/delete"
+            style="@style/Widget.HowMuch.BorderlessButton" />
     </LinearLayout>
 </LinearLayout>

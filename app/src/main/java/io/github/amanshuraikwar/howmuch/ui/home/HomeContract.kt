@@ -14,12 +14,13 @@ interface HomeContract {
         fun startIntroActivity()
         fun startExpenseDayActivity(dayExpense: DayExpense)
         fun startStatsActivity()
-        fun showAddTransactionDialog()
+        fun startAddTransactionActivity()
         fun startSettingsActivity()
         fun displayDayExpenses(listItems: List<ListItem<*>>)
         fun getExpenseDayListItems(dayExpenses: List<DayExpense>,
                                    dailyLimit: Int,
                                    todaysExpense: DayExpense): List<ListItem<*>>
+        fun getIntentAction(): String
     }
 
     interface Presenter : BasePresenter<View> {

@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">How Much</string>
+    <string name="app_name">@string/app_name_release</string>
+    <string name="app_name_debug">How Much-DEBUG</string>
+    <string name="app_name_release">How Much</string>
+
     <string name="app_name_q">How Much?</string>
     <string name="action_settings">Settings</string>
     <string name="spent_today">spent today</string>
@@ -31,4 +34,12 @@
     <string name="settings">Settings</string>
     <string name="general">general</string>
     <string name="about">About</string>
+    <string name="edit">edit</string>
+    <string name="delete">delete</string>
+    <string name="minus">-</string>
+    <string name="edit_transaction">Edit Transaction</string>
+
+    <string name="add_expense_shortcut_short_label">Add Expense</string>
+    <string name="add_expense_shortcut_long_label">Add a new expense</string>
+    <string name="add_expense_disabled_message">Cannot add expense</string>
 </resources>

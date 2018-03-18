@@ -50,12 +50,23 @@
         <item name="android:statusBarColor">@color/grey3</item>
     </style>
 
+    <style name="HowMuch.Translucent.EditTransaction">
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/grey3</item>
+    </style>
+
     <style
         name="Widget.HowMuch.BorderlessImageButton"
         parent="@android:style/Widget.Material.ImageButton">
 
         <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
         <item name="android:tint">@color/activeIcon</item>
+    </style>
+
+    <style
+        name="Widget.HowMuch.BorderlessButton"
+        parent="@android:style/Widget.Material.Button.Borderless">
+
     </style>
 
     <!-- text appearance-->

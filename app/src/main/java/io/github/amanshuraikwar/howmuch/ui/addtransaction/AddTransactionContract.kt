@@ -14,6 +14,6 @@ interface AddTransactionContract {
     }
 
     interface Presenter : BasePresenter<View> {
-        fun onAddBtnClick(amount: String)
+        fun onAddBtnClick(amount: String, transactionType: String)
     }
 }

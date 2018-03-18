@@ -5,6 +5,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 apply plugin: 'kotlin-android-extensions'
+def gitTag = 'git describe --tags'.execute([], project.rootDir).text.trim()
+def gitCommitCount = 6
 
 android {
     compileSdkVersion 26
@@ -12,14 +14,34 @@ android {
         applicationId "io.github.amanshuraikwar.howmuch"
         minSdkVersion 23
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode gitCommitCount
+        versionName gitTag
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    ext{
+        APP_NAME_DEBUG = "@string/app_name_debug"
+        APP_NAME_RELEASE = "@string/app_name_release"
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+
+            // replace applicationLabel in manifest with appropriate app_name
+            manifestPlaceholders = [ applicationLabel_1 : APP_NAME_RELEASE]
+        }
+
+        debug {
+            // for giving a different application id to debug apk
+            // to keep debug and release apk at the same time in test device
+            applicationIdSuffix ".debug"
+            versionNameSuffix '-DEBUG'
+
+            // replace applicationLabel in manifest with appropriate app_name
+            manifestPlaceholders = [ applicationLabel_1: APP_NAME_DEBUG]
         }
     }
 }

@@ -3,6 +3,7 @@ package io.github.amanshuraikwar.howmuch.ui.list.transaction
 import android.support.annotation.LayoutRes
 import android.support.v4.app.FragmentActivity
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import butterknife.BindView
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
@@ -32,6 +33,12 @@ class TransactionViewHolder(itemView: View) : ViewHolder<TransactionListItem>(it
     @BindView(R.id.progressBar)
     lateinit var progressBar: RoundCornerProgressBar
 
+    @BindView(R.id.transactionItemEditBtn)
+    lateinit var editBtn: Button
+
+    @BindView(R.id.transactionItemDeleteBtn)
+    lateinit var deleteBtn: Button
+
     override fun bind(listItem: TransactionListItem,
                       parentActivity: FragmentActivity) {
 
@@ -42,5 +49,8 @@ class TransactionViewHolder(itemView: View) : ViewHolder<TransactionListItem>(it
         spentCurrencyTvv.text = "₹"
 
         timeTv.text = Util.formatTime(listItem.getTransaction().getDateAdded())
+
+        editBtn.setOnClickListener { listItem.onClickListener.onEditClick(listItem.getTransaction()) }
+        deleteBtn.setOnClickListener { listItem.onClickListener.onDeleteClick(listItem.getTransaction()) }
     }
 }

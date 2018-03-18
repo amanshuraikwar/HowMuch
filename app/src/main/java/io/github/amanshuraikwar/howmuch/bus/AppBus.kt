@@ -1,5 +1,6 @@
 package io.github.amanshuraikwar.howmuch.bus
 
+import io.github.amanshuraikwar.howmuch.data.local.room.transaction.Transaction
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
@@ -8,6 +9,9 @@ import javax.inject.Inject
  */
 class AppBus {
 
-    var onTransactionAdded: PublishSubject<Boolean> = PublishSubject.create()
+    var onTransactionUpdated: PublishSubject<Transaction> = PublishSubject.create()
+    var onTransactionDeleted: PublishSubject<Transaction> = PublishSubject.create()
+    var onTransactionAdded: PublishSubject<Transaction> = PublishSubject.create()
+    var onTransactionsChanged: PublishSubject<Transaction> = PublishSubject.create()
     var onSharedPrefsChanged: PublishSubject<String> = PublishSubject.create()
 }

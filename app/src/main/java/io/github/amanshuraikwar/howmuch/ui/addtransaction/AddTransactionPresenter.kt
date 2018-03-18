@@ -32,32 +32,33 @@ class AddTransactionPresenter @Inject constructor(appBus: AppBus, dataManager: D
         }
     }
 
-    override fun onAddBtnClick(amount: String) {
+    override fun onAddBtnClick(amount: String, transactionType: String) {
 
         with(amount.trim()) {
-            if (this == "" || this == "0") {
-                getView()?.showError("Please enter a valid amount!")
-            } else {
-                addTransaction(this.toInt())
+            when {
+                !Util.isAmountValid(amount) -> getView()?.showError("Please enter a valid amount!")
+                transactionType == "-" -> addTransaction(this.toInt())
+                else -> addTransaction(this.toInt())
             }
         }
     }
 
     private fun addTransaction(amount: Int) {
 
+        val transaction = Transaction(
+                Util.getCurDateTime(),
+                amount,
+                "")
+
         disposables.plusElement(
                 getDataManager()
-                        .addTransaction(
-                                Transaction(
-                                        Util.getCurDateTime(),
-                                        amount,
-                                        ""))
+                        .addTransaction(transaction)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 {
                                     if (it) {
-                                        getAppBus().onTransactionAdded.onNext(it)
+                                        getAppBus().onTransactionsChanged.onNext(transaction)
                                         getView()?.closeActivity()
                                     }
                                 },

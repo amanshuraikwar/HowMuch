@@ -19,6 +19,12 @@ class HomePresenter @Inject constructor(appBus: AppBus, dataManager: DataManager
 
     private val TAG = LogUtil.getLogTag(this)
 
+    companion object {
+        val ACTION_ADD_EXPENSE = "io.github.amanshuraikwar.howmuch.ui.home.addexpense"
+    }
+
+    private var actionServed = false
+
     override fun onAttach(wasViewRecreated: Boolean) {
         super.onAttach(wasViewRecreated)
 
@@ -26,10 +32,15 @@ class HomePresenter @Inject constructor(appBus: AppBus, dataManager: DataManager
 
         if (wasViewRecreated) {
 
+            if (!actionServed) {
+                serveAction(getView()!!.getIntentAction())
+                actionServed = true
+            }
+
             getDayExpenses()
 
             getAppBus()
-                    .onTransactionAdded
+                    .onTransactionsChanged
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
@@ -53,6 +64,13 @@ class HomePresenter @Inject constructor(appBus: AppBus, dataManager: DataManager
                                 // todo something on error
                             }
                     ).addToCleanup()
+        }
+    }
+
+    private fun serveAction(action: String) {
+
+        if (action == ACTION_ADD_EXPENSE) {
+            getView()?.startAddTransactionActivity()
         }
     }
 
@@ -124,7 +142,7 @@ class HomePresenter @Inject constructor(appBus: AppBus, dataManager: DataManager
     }
 
     override fun onAddBtnClick() {
-        getView()?.showAddTransactionDialog()
+        getView()?.startAddTransactionActivity()
     }
 
     override fun onSettingBtnClick() {

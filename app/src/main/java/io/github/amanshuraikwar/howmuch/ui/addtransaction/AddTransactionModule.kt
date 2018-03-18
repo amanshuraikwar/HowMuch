@@ -13,7 +13,7 @@ import io.github.amanshuraikwar.howmuch.di.ActivityScope
 @Module abstract class AddTransactionModule {
 
     @ActivityScope @Binds
-    abstract fun introPrsntr (presenter: AddTransactionPresenter): AddTransactionContract.Presenter
+    abstract fun prsntr (presenter: AddTransactionPresenter): AddTransactionContract.Presenter
 
     @ActivityScope @Binds @ActivityContext
     abstract fun activity (activity: AppCompatActivity): AppCompatActivity

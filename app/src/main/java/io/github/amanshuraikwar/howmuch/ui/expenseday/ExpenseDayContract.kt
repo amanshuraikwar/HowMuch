@@ -19,7 +19,11 @@ interface ExpenseDayContract {
                                     spentTodayAmount: Int,
                                     leftAmount: Int,
                                     aboveLimitAmount: Int): List<ListItem<*>>
+        fun startEditTransactionActivity(transaction: Transaction)
     }
 
-    interface Presenter : BasePresenter<View>
+    interface Presenter : BasePresenter<View> {
+        fun onEditTransactionClick(transaction: Transaction)
+        fun onDeleteTransactionClick(transaction: Transaction)
+    }
 }

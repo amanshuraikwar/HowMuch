@@ -15,7 +15,7 @@
         android:elevation="@dimen/elevation_action_bar">
 
         <ImageButton
-            android:id="@+id/backIb"
+            android:id="@+id/addTransactionBackIb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/marginSmall"
@@ -49,20 +49,41 @@
             android:textAppearance="@style/TextAppearance.ExpenseHeading"
             android:text="@string/amount" />
 
-        <EditText
-            android:id="@+id/amountTv"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/marginVeryLarge"
-            android:layout_marginEnd="@dimen/marginVeryLarge"
-            android:layout_marginBottom="@dimen/marginNormal"
-            android:ellipsize="end"
-            android:hint="@string/amount"
-            android:imeOptions="actionNext"
-            android:inputType="number"
-            android:maxLines="1"
-            android:scrollHorizontally="true"
-            android:textAppearance="@style/TextAppearance.ExpenseAmount" />
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/marginNormal">
+
+            <TextView
+                android:id="@+id/transactionTypeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/marginNormal"
+                android:paddingEnd="@dimen/marginNormal"
+                android:layout_marginStart="@dimen/marginNormal"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:background="@color/lightRed"
+                android:clickable="true"
+                android:focusable="true"
+                android:textAppearance="@style/TextAppearance.CurrencySymbol"
+                android:text="@string/minus" />
+
+            <EditText
+                android:id="@+id/amountTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/marginNormal"
+                android:layout_marginEnd="@dimen/marginVeryLarge"
+                android:ellipsize="end"
+                android:hint="@string/amount"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:textAppearance="@style/TextAppearance.ExpenseAmount" />
+        </LinearLayout>
     </LinearLayout>
 
     <android.support.v7.widget.CardView

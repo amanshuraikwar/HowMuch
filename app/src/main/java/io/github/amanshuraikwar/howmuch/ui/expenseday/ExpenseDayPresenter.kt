@@ -9,6 +9,7 @@ import io.github.amanshuraikwar.howmuch.ui.base.BasePresenterImpl
 import io.github.amanshuraikwar.howmuch.ui.home.HomeContract
 import io.github.amanshuraikwar.howmuch.ui.list.ListItem
 import io.github.amanshuraikwar.howmuch.util.Util
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
@@ -26,9 +27,52 @@ class ExpenseDayPresenter @Inject constructor(appBus: AppBus, dataManager: DataM
         super.onAttach(wasViewRecreated)
 
         if (wasViewRecreated) {
+
             displayDate()
             getTransactions()
+
+            getAppBus()
+                    .onTransactionsChanged
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            {
+                                transaction ->
+                                getView()?.let {
+                                    if (Util.areSameDate(
+                                                    transaction.getDateAdded(),
+                                                    it.getCurDayExpense().date)) {
+                                        updateEverything()
+                                    }
+                                }
+                            },
+                            {
+                                // todo something on error
+                            }
+                    ).addToCleanup()
         }
+    }
+
+    override fun onEditTransactionClick(transaction: Transaction) {
+        getView()?.startEditTransactionActivity(transaction)
+    }
+
+    override fun onDeleteTransactionClick(transaction: Transaction) {
+
+        getDataManager()
+                .deleteTransaction(transaction)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        {
+                            if (it) {
+                                getAppBus().onTransactionsChanged.onNext(transaction)
+                            }
+                        },
+                        {
+                            // todo something on error
+                        }
+                ).addToCleanup()
     }
 
     private fun displayDate() {
@@ -37,18 +81,33 @@ class ExpenseDayPresenter @Inject constructor(appBus: AppBus, dataManager: DataM
         }
     }
 
+    private fun updateEverything() {
+
+        getView()?.getCurDayExpense()?.let {
+            dayExpense ->
+            getDataManager()
+                    .getDayExpenseByDate(dayExpense.date)
+                    .flatMap(this::getTransactionObs)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            {
+                                listItems ->
+                                when {
+                                    listItems != null -> getView()?.displayDayTransactions(listItems)
+                                }
+                            },
+                            {
+
+                            }
+                    ).addToCleanup()
+        }
+    }
+
     private fun getTransactions() {
 
         getView()?.getCurDayExpense()?.let {
-            getDataManager()
-                .getAllTransactionsForDate(it.date)
-                .map { transactions -> transactions.reversed() }
-                .zipWith(
-                        getDataManager().getDailyLimitAmount(),
-                        BiFunction {
-                            t1: List<Transaction>, t2: Int ->
-                            getTransactionListItems(t1, t2, it)
-                        })
+            getTransactionObs(it)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -64,6 +123,17 @@ class ExpenseDayPresenter @Inject constructor(appBus: AppBus, dataManager: DataM
                 ).addToCleanup()
         }
     }
+
+    private fun getTransactionObs(dayExpense: DayExpense)
+            = getDataManager()
+                    .getAllTransactionsForDate(dayExpense.date)
+                    .map { transactions -> transactions.reversed() }
+                    .zipWith(
+                            getDataManager().getDailyLimitAmount(),
+                            BiFunction {
+                                t1: List<Transaction>, t2: Int ->
+                                getTransactionListItems(t1, t2, dayExpense)
+                            })
 
     private fun getTransactionListItems(transactions: List<Transaction>,
                                         dailyLimitAmount: Int,
