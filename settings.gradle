@@ -1,0 +1,4 @@
+include ':app'
+
+include ':module-multi-item-list-adapter'
+project(':module-multi-item-list-adapter').projectDir = new File(settingsDir, '../multi-item-list-adapter/multiitemlistadapter')

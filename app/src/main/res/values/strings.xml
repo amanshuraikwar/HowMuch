@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">HowMuch</string>
+    <string name="title_home">Home</string>
+    <string name="title_add_expense">Add Expense</string>
+    <string name="title_history">History</string>
+    <string name="title_stats">Stats</string>
+</resources>
