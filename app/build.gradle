@@ -68,4 +68,14 @@ dependencies {
     implementation "com.google.code.gson:gson:$gsonVersion"
 
     implementation project(':module-multi-item-list-adapter')
+
+    implementation 'com.google.android.gms:play-services-auth:16.0.0'
+//    implementation 'pub.devrel:easypermissions:0.3.0'
+//    implementation 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
+    implementation('com.google.api-client:google-api-client-android:1.23.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+    implementation('com.google.apis:google-api-services-sheets:v4-rev516-1.23.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
 }

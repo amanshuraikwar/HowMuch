@@ -1,5 +1,6 @@
 package io.github.amanshuraikwar.howmuch.ui.home
 
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.View
@@ -19,7 +20,11 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        (findViewById<View>(android.R.id.content)).systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            (findViewById<View>(android.R.id.content)).systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+        }
+
         init()
     }
 
