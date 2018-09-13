@@ -66,6 +66,7 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 break;
             case 1:
                 viewHolder = new ExpenseViewHolder(parent);
+                break;
             default:
                 viewHolder = super.createViewHolder(parent, type);
         }

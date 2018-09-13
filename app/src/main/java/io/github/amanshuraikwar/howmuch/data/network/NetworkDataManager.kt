@@ -1,6 +1,9 @@
 package io.github.amanshuraikwar.howmuch.data.network
 
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
+import io.github.amanshuraikwar.howmuch.data.network.sheets.AuthenticationManager
 import io.github.amanshuraikwar.howmuch.model.Photo
+import io.reactivex.Observable
 
 /**
  * Data Manager for the content fetched from the network.
@@ -12,4 +15,13 @@ import io.github.amanshuraikwar.howmuch.model.Photo
 interface NetworkDataManager {
 
     fun getAllPhotos(page: Int, orderBy: String, perPage: Int): List<Photo>?
+
+    fun getAuthenticationManager(): AuthenticationManager
+
+    fun readSpreadSheet(spreadsheetId: String,
+                        spreadsheetRange: String): Observable<MutableList<MutableList<Any>>>
+
+    fun readSpreadSheet(spreadsheetId: String,
+                        spreadsheetRange: String,
+                        googleAccountCredential: GoogleAccountCredential): Observable<MutableList<MutableList<Any>>>
 }

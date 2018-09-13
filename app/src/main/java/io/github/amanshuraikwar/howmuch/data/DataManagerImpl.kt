@@ -1,8 +1,11 @@
 package io.github.amanshuraikwar.howmuch.data
 
 import android.content.Context
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import io.github.amanshuraikwar.howmuch.data.network.NetworkDataManager
+import io.github.amanshuraikwar.howmuch.data.network.sheets.AuthenticationManager
 import io.github.amanshuraikwar.howmuch.di.ApplicationContext
+import io.reactivex.Observable
 import javax.inject.Inject
 
 /**
@@ -12,9 +15,23 @@ import javax.inject.Inject
  * Created by Amanshu Raikwar on 07/03/18.
  */
 class DataManagerImpl @Inject constructor(
-        @ApplicationContext val context: Context,
+        @ApplicationContext private val context: Context,
         private val networkDataManager: NetworkDataManager) : DataManager {
 
     override fun getAllPhotos(page: Int, orderBy: String, perPage: Int)
             = networkDataManager.getAllPhotos(page, orderBy, perPage)
+
+    override fun getAuthenticationManager()
+            = networkDataManager.getAuthenticationManager()
+
+    override fun readSpreadSheet(spreadsheetId: String,
+                                 spreadsheetRange: String)
+            : Observable<MutableList<MutableList<Any>>>
+            = networkDataManager.readSpreadSheet(spreadsheetId, spreadsheetRange)
+
+    override fun readSpreadSheet(spreadsheetId: String,
+                                 spreadsheetRange: String,
+                                 googleAccountCredential: GoogleAccountCredential)
+            : Observable<MutableList<MutableList<Any>>>
+            = networkDataManager.readSpreadSheet(spreadsheetId, spreadsheetRange, googleAccountCredential)
 }

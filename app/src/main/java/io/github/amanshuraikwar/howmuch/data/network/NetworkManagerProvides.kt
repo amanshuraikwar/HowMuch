@@ -1,5 +1,7 @@
 package io.github.amanshuraikwar.howmuch.data.network
 
+import com.google.api.client.extensions.android.http.AndroidHttp
+import com.google.api.client.json.jackson2.JacksonFactory
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -28,4 +30,12 @@ class NetworkManagerProvides {
     @Provides
     fun getApiInterface(retrofit: Retrofit)
             = retrofit.create(ApiInterface::class.java)!!
+
+    @Singleton
+    @Provides
+    fun getHttpTransport() = AndroidHttp.newCompatibleTransport()
+
+    @Singleton
+    @Provides
+    fun getJsonFactory() = JacksonFactory.getDefaultInstance()
 }

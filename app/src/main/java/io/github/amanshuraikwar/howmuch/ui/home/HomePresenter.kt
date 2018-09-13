@@ -24,7 +24,14 @@ class HomePresenter @Inject constructor(appBus: AppBus, dataManager: DataManager
     override fun onAttach(wasViewRecreated: Boolean) {
         super.onAttach(wasViewRecreated)
 
-        getView()?.loadPage(NavigationPage.ADD_EXPENSE)
+        if (getDataManager().getAuthenticationManager().hasPermissions()) {
+            getView()?.loadPage(NavigationPage.ADD_EXPENSE)
+        } else {
+            getView()?.hideBnv()
+            getView()?.hideMainFragmentContainer()
+            getView()?.showSignInScreen()
+        }
+
     }
     //endregion
 
@@ -35,6 +42,23 @@ class HomePresenter @Inject constructor(appBus: AppBus, dataManager: DataManager
             R.id.navigation_home -> getView()?.loadPage(NavigationPage.ADD_EXPENSE)
             R.id.navigation_history -> getView()?.loadPage(NavigationPage.HISTORY)
             R.id.navigation_stats -> getView()?.loadPage(NavigationPage.STATS)
+        }
+    }
+
+    override fun onSignInBtnClicked() {
+        getView()?.initiateSignIn()
+    }
+
+    override fun onSignInResult(isSuccessful: Boolean) {
+        if (isSuccessful){
+            if (getDataManager().getAuthenticationManager().hasPermissions()) {
+                getView()?.showToast("Sign in successful!")
+                getView()?.hideSignInScreen()
+                getView()?.showBnv()
+                getView()?.loadPage(NavigationPage.ADD_EXPENSE)
+            }
+        } else {
+
         }
     }
 }

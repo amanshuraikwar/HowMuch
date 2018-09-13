@@ -39,19 +39,19 @@ constructor(private val appBus: AppBus,
     //endregion
 
     //region BasePresenter implemented methods
-    override fun attachView(view: View, wasViewRecreated: Boolean) {
+    final override fun attachView(view: View, wasViewRecreated: Boolean) {
         this.view = view
         onAttach(wasViewRecreated)
     }
 
-    override fun detachView() {
+    final override fun detachView() {
         view = null
         onDetach()
     }
 
-    override fun getView(): View? = view
+    final override fun getView(): View? = view
 
-    override fun isViewAttached(): Boolean = view != null
+    final override fun isViewAttached(): Boolean = view != null
     //endregion
 
     /**
