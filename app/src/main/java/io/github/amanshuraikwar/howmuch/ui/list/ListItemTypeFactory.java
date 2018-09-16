@@ -3,6 +3,8 @@ package io.github.amanshuraikwar.howmuch.ui.list;
 import android.support.annotation.NonNull;
 import android.view.View;
 
+import io.github.amanshuraikwar.howmuch.ui.list.date.DateListItem;
+import io.github.amanshuraikwar.howmuch.ui.list.date.DateViewHolder;
 import io.github.amanshuraikwar.howmuch.ui.list.expense.ExpenseListItem;
 import io.github.amanshuraikwar.howmuch.ui.list.expense.ExpenseViewHolder;
 import io.github.amanshuraikwar.howmuch.ui.list.expensecategorysummary.ExpenseCategorySummaryListItem;
@@ -38,6 +40,10 @@ public class ListItemTypeFactory extends BaseTypeFactory {
         return 2;
     }
 
+    public int type(DateListItem item) {
+        return 3;
+    }
+
     /**
      * To get layout file id (R.layout.*) for a corresponding list item/view type.
      *
@@ -52,6 +58,8 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 return ExpenseViewHolder.Companion.getLAYOUT();
             case 2:
                 return ExpenseCategorySummaryViewHolder.Companion.getLAYOUT();
+            case 3:
+                return DateViewHolder.Companion.getLAYOUT();
             default:
                 return super.getLayout(viewType);
         }
@@ -77,6 +85,9 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 break;
             case 2:
                 viewHolder = new ExpenseCategorySummaryViewHolder(parent);
+                break;
+            case 3:
+                viewHolder = new DateViewHolder(parent);
                 break;
             default:
                 viewHolder = super.createViewHolder(parent, type);

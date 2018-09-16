@@ -5,6 +5,7 @@ import io.github.amanshuraikwar.howmuch.bus.AppBus
 import io.github.amanshuraikwar.howmuch.data.DataManager
 import io.github.amanshuraikwar.howmuch.model.Expense
 import io.github.amanshuraikwar.howmuch.ui.base.BasePresenterImpl
+import io.github.amanshuraikwar.howmuch.ui.list.date.DateListItem
 import io.github.amanshuraikwar.howmuch.ui.list.expense.ExpenseListItem
 import io.github.amanshuraikwar.howmuch.util.Util
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
@@ -51,8 +52,8 @@ class HistoryPresenter @Inject constructor(appBus: AppBus, dataManager: DataMana
                     Log.d(TAG, "onAttach: $observable")
 
                     disposables.add(observable
-                            .map { getExpenseList(it) }
-                            .map { getListItems(it).reversed() }
+                            .map { list -> getExpenseList(list) }
+                            .map { processData(it) }
                             .subscribeOn(Schedulers.newThread())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
@@ -91,6 +92,22 @@ class HistoryPresenter @Inject constructor(appBus: AppBus, dataManager: DataMana
         val list = mutableListOf<ListItem<*, *>>()
         input.forEach{
             list.add(ExpenseListItem(it))
+        }
+        return list
+    }
+
+    private fun processData(input: List<Expense>): List<ListItem<*, *>> {
+        val inputSorted = input.sortedBy { it.date }.reversed()
+        val list = mutableListOf<ListItem<*, *>>()
+        var date = ""
+        var i = 0
+        while (i < inputSorted.size) {
+            if (date != inputSorted[i].date) {
+                date = inputSorted[i].date
+                list.add(DateListItem(date))
+            }
+            list.add(ExpenseListItem(inputSorted[i]))
+            i += 1
         }
         return list
     }

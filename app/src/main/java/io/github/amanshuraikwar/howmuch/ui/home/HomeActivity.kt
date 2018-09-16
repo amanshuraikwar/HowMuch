@@ -107,6 +107,8 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
 
     private fun updateTabSelection(currentTab: Int) {
 
+        toolbarTitleTv.text = tabs[currentTab]
+
         for (i in tabs.indices) {
             val selectedTab = bottomTl.getTabAt(i)
             selectedTab!!.customView!!.isSelected = currentTab == i

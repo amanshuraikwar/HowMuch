@@ -15,7 +15,7 @@
     <string name="submit">submit</string>
     <string name="person">Person</string>
     <string name="date">date</string>
-    <string name="loading_text">hang on!</string>
+    <string name="loading_text">hang on…</string>
     <string name="retry">retry</string>
     <string name="amount">AMOUNT</string>
     <string name="description">Description</string>
@@ -23,7 +23,7 @@
     <string name="save">save</string>
 
     <array name="tab_names">
-        <item>home</item>
+        <item>@string/app_name</item>
         <item>history</item>
         <item>stats</item>
     </array>

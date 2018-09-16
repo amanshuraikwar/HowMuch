@@ -167,10 +167,26 @@
     </style>
 
     <style
+        name="TextAppearance.DateSmall"
+        parent="@style/TextAppearance.Subhead">
+
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style
         name="TextAppearance.Amount"
         parent="@style/TextAppearance.Display2">
 
         <item name="android:fontFamily">@font/roboto_mono_light</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style
+        name="TextAppearance.AmountSmall"
+        parent="@style/TextAppearance.Headline">
+
+        <item name="android:fontFamily">@font/roboto_mono</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
@@ -182,8 +198,23 @@
     </style>
 
     <style
+        name="TextAppearance.DescriptionSmall"
+        parent="@style/TextAppearance.Caption">
+
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+    </style>
+
+    <style
         name="TextAppearance.Category"
         parent="@style/TextAppearance.Subhead">
+
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style
+        name="TextAppearance.CategorySmall"
+        parent="@style/TextAppearance.Caption">
 
         <item name="android:fontFamily">@font/roboto_mono_medium</item>
         <item name="android:textAllCaps">true</item>

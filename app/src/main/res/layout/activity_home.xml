@@ -15,8 +15,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="HowMuch"
-        style="@style/Widget.HowMuch.Toolbar.SmallCapsTitle" />
+        app:title=""
+        style="@style/Widget.HowMuch.Toolbar.SmallCapsTitle" >
+
+        <TextView
+            android:id="@+id/toolbarTitleTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:gravity="center_horizontal"
+            android:textAppearance="@style/TextAppearance.ToolbarTitle.SmallCaps"
+            android:text="@string/app_name"/>
+    </android.support.v7.widget.Toolbar>
 
     <FrameLayout
         android:id="@+id/fragmentContainerFl"
