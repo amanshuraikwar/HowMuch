@@ -13,19 +13,14 @@ interface HomeContract {
 
     interface View : BaseView {
         fun loadPage(navigationPage: NavigationPage)
-        fun hideBnv()
-        fun showBnv()
-        fun showSignInScreen()
-        fun hideSignInScreen()
+        fun hideBottomNav()
+        fun showBottomNav()
         fun hideMainFragmentContainer()
         fun showMainFragmentContainer()
-        fun initiateSignIn()
         fun showToast(message: String)
     }
 
     interface Presenter : BasePresenter<View> {
-        fun onNavigationItemSelected(itemId: Int)
-        fun onSignInBtnClicked()
-        fun onSignInResult(isSuccessful: Boolean)
+        fun onNavigationItemSelected(position: Int)
     }
 }

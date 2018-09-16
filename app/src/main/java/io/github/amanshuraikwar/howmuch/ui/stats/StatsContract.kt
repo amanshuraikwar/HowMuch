@@ -1,0 +1,23 @@
+package io.github.amanshuraikwar.howmuch.ui.stats
+
+import android.accounts.Account
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
+import io.github.amanshuraikwar.howmuch.ui.base.BasePresenter
+import io.github.amanshuraikwar.howmuch.ui.base.BaseView
+import io.github.amanshuraikwar.multiitemlistadapter.ListItem
+
+interface StatsContract {
+
+    interface View : BaseView {
+        fun getGoogleAccountCredential(account: Account): GoogleAccountCredential
+        fun submitList(list: List<ListItem<*, *>>)
+        fun showLoadingOverlay()
+        fun hideLoadingOverlay()
+        fun showErrorOverlay()
+        fun showSnackBar(message: String)
+    }
+
+    interface Presenter : BasePresenter<View> {
+        fun onLoadingRetryClicked()
+    }
+}

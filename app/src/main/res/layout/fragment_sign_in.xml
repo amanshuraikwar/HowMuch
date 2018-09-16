@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parentLl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/green"
+    android:gravity="center"
+    android:animateLayoutChanges="true">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:tint="@color/gray1"
+        android:src="@drawable/twotone_person_24"
+        android:contentDescription="@string/person"/>
+
+    <Button
+        android:id="@+id/signInBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:text="@string/sign_in"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/signOutBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:text="@string/sign_out"
+        android:visibility="gone"/>
+</LinearLayout>

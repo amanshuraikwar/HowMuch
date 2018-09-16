@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:animateLayoutChanges="true">
+
+    <ImageView
+        android:id="@+id/tabIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="ContentDescription" />
+
+    <View
+        android:id="@+id/bottomDotView"
+        android:layout_width="4dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:visibility="gone" />
+</LinearLayout>

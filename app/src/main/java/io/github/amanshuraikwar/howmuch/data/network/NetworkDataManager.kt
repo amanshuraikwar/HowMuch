@@ -24,4 +24,15 @@ interface NetworkDataManager {
     fun readSpreadSheet(spreadsheetId: String,
                         spreadsheetRange: String,
                         googleAccountCredential: GoogleAccountCredential): Observable<MutableList<MutableList<Any>>>
+
+    fun appendToSpreadSheet(spreadsheetId : String,
+                            spreadsheetRange : String,
+                            valueInputOption: String,
+                            values: List<List<Any>>): Observable<Boolean>
+
+    fun appendToSpreadSheet(spreadsheetId : String,
+                            spreadsheetRange : String,
+                            valueInputOption: String,
+                            values: List<List<Any>>,
+                            googleAccountCredential: GoogleAccountCredential): Observable<Boolean>
 }

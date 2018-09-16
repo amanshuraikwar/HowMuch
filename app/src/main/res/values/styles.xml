@@ -1,13 +1,198 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- activities and app -->
+    <style name="HowMuch" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="android:navigationBarColor">#fafafa</item>
+        <item name="android:statusBarColor">@color/gray2</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowSharedElementsUseOverlay">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
     </style>
 
+    <!-- widget -->
+    <style
+        name="Widget.HowMuch.Toolbar"
+        parent="@android:style/Widget.Material.Toolbar">
+
+        <item name="android:titleTextAppearance">
+            @android:style/TextAppearance.Material.Widget.ActionBar.Title</item>
+        <item name="titleTextAppearance">
+            @android:style/TextAppearance.Material.Widget.ActionBar.Title</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:elevation">@dimen/elevation_normal</item>
+        <item name="elevation">@dimen/elevation_normal</item>
+    </style>
+
+    <style name="Widget.HowMuch.Toolbar.SmallCapsTitle">
+
+        <item name="android:titleTextAppearance">@style/TextAppearance.ToolbarTitle.SmallCaps</item>
+        <item name="titleTextAppearance">@style/TextAppearance.ToolbarTitle.SmallCaps</item>
+    </style>
+
+    <style name="Widget.HowMuch.Toolbar.BoldTitle">
+
+        <item name="android:titleTextAppearance">@style/TextAppearance.ToolbarTitle.Bold</item>
+        <item name="titleTextAppearance">@style/TextAppearance.ToolbarTitle.Bold</item>
+    </style>
+
+    <style name="BottomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorHeight">0dp</item>
+        <item name="tabPaddingStart">0dp</item>
+        <item name="tabPaddingEnd">0dp</item>
+        <item name="tabGravity">fill</item>
+        <item name="tabMode">fixed</item>
+    </style>
+
+    <style
+        name="Widget.HowMuch.Button"
+        parent="@android:style/Widget.Material.Button">
+        <item name="android:textAppearance">@style/TextAppearance.Button</item>
+    </style>
+
+    <style
+        name="Widget.HowMuch.Button.Small"
+        parent="@android:style/Widget.Material.Button">
+
+        <item name="android:textAppearance">@style/TextAppearance.Button.Small</item>
+    </style>
+
+    <!-- text appearance -->
+    <style
+        name="TextAppearance.Display4"
+        parent="@android:style/TextAppearance.Material.Display4">
+
+    </style>
+
+    <style
+        name="TextAppearance.Display3"
+        parent="@android:style/TextAppearance.Material.Display3">
+
+    </style>
+
+    <style
+        name="TextAppearance.Display2"
+        parent="@android:style/TextAppearance.Material.Display2">
+
+    </style>
+
+    <style
+        name="TextAppearance.Display1"
+        parent="@android:style/TextAppearance.Material.Display1">
+
+    </style>
+
+    <style
+        name="TextAppearance.Headline"
+        parent="@android:style/TextAppearance.Material.Headline">
+
+    </style>
+
+    <style
+        name="TextAppearance.Title"
+        parent="@android:style/TextAppearance.Material.Title">
+
+    </style>
+
+    <style
+        name="TextAppearance.Subhead"
+        parent="@android:style/TextAppearance.Material.Subhead">
+
+    </style>
+
+    <style
+        name="TextAppearance.Body1"
+        parent="@android:style/TextAppearance.Material.Body1">
+
+    </style>
+
+    <style
+        name="TextAppearance.Body2"
+        parent="@android:style/TextAppearance.Material.Body2">
+
+    </style>
+
+    <style
+        name="TextAppearance.Caption"
+        parent="@android:style/TextAppearance.Material.Caption">
+
+    </style>
+
+    <style name="TextAppearance.ToolbarTitle"
+        parent="@android:style/TextAppearance.Material.Widget.ActionBar.Title">
+
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+    </style>
+
+    <style name="TextAppearance.ToolbarTitle.SmallCaps">
+
+        <item name="android:fontFeatureSettings">smcp</item>
+        <item name="android:letterSpacing">0.1</item>
+    </style>
+
+    <style name="TextAppearance.ToolbarTitle.Bold">
+
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style
+        name="TextAppearance.Button"
+        parent="@android:style/TextAppearance.Material.Widget.Button">
+
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:letterSpacing">0.1</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style
+        name="TextAppearance.Button.Small">
+
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style
+        name="TextAppearance.Date"
+        parent="@style/TextAppearance.Subhead">
+
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style
+        name="TextAppearance.Amount"
+        parent="@style/TextAppearance.Display2">
+
+        <item name="android:fontFamily">@font/roboto_mono_light</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style
+        name="TextAppearance.Description"
+        parent="@style/TextAppearance.Subhead">
+
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+    </style>
+
+    <style
+        name="TextAppearance.Category"
+        parent="@style/TextAppearance.Subhead">
+
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style
+        name="TextAppearance.Loading"
+        parent="@style/TextAppearance.Caption">
+
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+    </style>
 </resources>

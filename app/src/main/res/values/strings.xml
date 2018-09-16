@@ -10,5 +10,21 @@
     <string name="signing_in">Signing in…</string>
     <string name="signed_out">Signed out</string>
     <string name="sign_in">sign in</string>
+    <string name="sign_out">sign out</string>
     <string name="done">done</string>
+    <string name="submit">submit</string>
+    <string name="person">Person</string>
+    <string name="date">date</string>
+    <string name="loading_text">hang on!</string>
+    <string name="retry">retry</string>
+    <string name="amount">AMOUNT</string>
+    <string name="description">Description</string>
+    <string name="category">category</string>
+    <string name="save">save</string>
+
+    <array name="tab_names">
+        <item>home</item>
+        <item>history</item>
+        <item>stats</item>
+    </array>
 </resources>

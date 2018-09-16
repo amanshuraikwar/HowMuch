@@ -2,6 +2,8 @@ package io.github.amanshuraikwar.howmuch.ui.history
 
 import android.accounts.Account
 import android.os.Bundle
+import android.support.design.widget.Snackbar
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +15,9 @@ import io.github.amanshuraikwar.howmuch.ui.base.BaseFragment
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
+import kotlinx.android.synthetic.main.fragment_add_expense.*
 import kotlinx.android.synthetic.main.fragment_history.*
+import kotlinx.android.synthetic.main.layout_loading_overlay.*
 import java.util.*
 import javax.inject.Inject
 
@@ -32,9 +36,14 @@ class HistoryFragment
     }
 
     private fun init() {
+        itemsRv.layoutManager = LinearLayoutManager(activity)
         if (adapter == null) {
             adapter = MultiItemListAdapter(activity!!, ListItemTypeFactory())
-            itemsRv.adapter = adapter
+        }
+        itemsRv.adapter = adapter
+
+        loadingRetryBtn.setOnClickListener {
+            presenter.onLoadingRetryClicked()
         }
     }
 
@@ -46,5 +55,27 @@ class HistoryFragment
 
     override fun submitList(list: List<ListItem<*, *>>) {
         adapter?.submitList(list)
+    }
+
+    override fun showLoadingOverlay() {
+        loadingParentLl.visibility = View.VISIBLE
+        loadingPb.visibility = View.VISIBLE
+        loadingTv.visibility = View.VISIBLE
+        loadingRetryBtn.visibility = View.GONE
+    }
+
+    override fun hideLoadingOverlay() {
+        loadingParentLl.visibility = View.GONE
+    }
+
+    override fun showErrorOverlay() {
+        loadingParentLl.visibility = View.VISIBLE
+        loadingPb.visibility = View.GONE
+        loadingTv.visibility = View.GONE
+        loadingRetryBtn.visibility = View.VISIBLE
+    }
+
+    override fun showSnackBar(message: String) {
+        Snackbar.make(parentFl, message, Snackbar.LENGTH_SHORT).show()
     }
 }

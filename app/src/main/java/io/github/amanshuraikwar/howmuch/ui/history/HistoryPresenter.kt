@@ -9,6 +9,8 @@ import io.github.amanshuraikwar.howmuch.ui.list.expense.ExpenseListItem
 import io.github.amanshuraikwar.howmuch.util.Util
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposables
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -17,8 +19,17 @@ class HistoryPresenter @Inject constructor(appBus: AppBus, dataManager: DataMana
 
     private val TAG = Util.getTag(this)
 
+    private val disposables: CompositeDisposable = CompositeDisposable()
+
     override fun onAttach(wasViewRecreated: Boolean) {
         super.onAttach(wasViewRecreated)
+
+        if (wasViewRecreated) {
+            getHistory()
+        }
+    }
+
+    private fun getHistory() {
 
         getDataManager().getAuthenticationManager().let {
             authMan ->
@@ -29,20 +40,38 @@ class HistoryPresenter @Inject constructor(appBus: AppBus, dataManager: DataMana
 
                     Log.d(TAG, "onAttach:account is not null")
 
-                    getDataManager()
+                    val observable = getDataManager()
                             .readSpreadSheet(
                                     "1HzV18zWmo_-LwuHT_WtXHvR18f7GwQj2EKNKq47iOIM"
                                     ,"Transactions!B5:E",
                                     getView()!!
                                             .getGoogleAccountCredential(
                                                     authMan.getLastSignedAccount()!!.account!!))
+
+                    Log.d(TAG, "onAttach: $observable")
+
+                    disposables.add(observable
                             .map { getExpenseList(it) }
-                            .map { getListItems(it) }
+                            .map { getListItems(it).reversed() }
                             .subscribeOn(Schedulers.newThread())
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe {
-                                getView()?.submitList(it)
-                            }
+                            .subscribe(
+                                    {
+                                        Log.d(TAG, "reading spread sheets: onNext")
+                                        getView()?.submitList(it)
+                                        getView()?.hideLoadingOverlay()
+                                    },
+                                    {
+                                        Log.d(TAG, "reading spread sheets: error thrown")
+                                        getView()?.showErrorOverlay()
+                                    },
+                                    {
+                                        Log.d(TAG, "reading spread sheets: completed")
+                                    },
+                                    {
+                                        getView()?.showLoadingOverlay()
+                                        Log.d(TAG, "reading spread sheets: subscribed")
+                                    }))
                 }
             }
         }
@@ -66,4 +95,12 @@ class HistoryPresenter @Inject constructor(appBus: AppBus, dataManager: DataMana
         return list
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        Log.d(TAG, "onDetach: called")
+    }
+
+    override fun onLoadingRetryClicked() {
+        getHistory()
+    }
 }

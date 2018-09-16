@@ -15,15 +15,12 @@ import javax.inject.Inject
  */
 
 class AuthenticationManager
-@Inject constructor(@ApplicationContext private val context: Context
-//                    val googleSignInClient : GoogleSignInClient,
-//                    val googleAccountCredential : GoogleAccountCredential?
- ) {
+@Inject constructor(@ApplicationContext private val context: Context) {
 
     fun hasPermissions(): Boolean {
 
         if (getLastSignedAccount() != null) {
-            return GoogleSignIn.hasPermissions(getLastSignedAccount(), Scope(SheetsScopes.SPREADSHEETS_READONLY))
+            return GoogleSignIn.hasPermissions(getLastSignedAccount(), Scope(SheetsScopes.SPREADSHEETS))
         }
 
         return false
@@ -33,13 +30,8 @@ class AuthenticationManager
         return GoogleSignIn.getLastSignedInAccount(context)
     }
 
-//    fun setUpGoogleAccountCredential() {
-//        googleAccountCredential?.selectedAccount = getLastSignedAccount()?.account
-//    }
-//
     companion object {
-        val SCOPES = arrayOf(SheetsScopes.SPREADSHEETS_READONLY)
-        val CODE_SIGN_IN = 9001
+        const val CODE_SIGN_IN = 9001
     }
 
 }

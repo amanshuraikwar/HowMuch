@@ -28,20 +28,4 @@ class HomeDi {
         @ActivityScope @Binds @ActivityContext
         abstract fun activity(activity: HomeActivity): AppCompatActivity
     }
-
-    @Module class HomeProvides {
-
-        @Provides
-        fun googleSignInClient(@ActivityContext activity: AppCompatActivity,
-                               googleSignInOptions: GoogleSignInOptions)
-                = GoogleSignIn.getClient(activity, googleSignInOptions)!!
-
-        @Provides
-        fun googleSignInOptions()
-                = GoogleSignInOptions
-                        .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestScopes(Scope(SheetsScopes.SPREADSHEETS_READONLY))
-                        .requestEmail()
-                        .build()!!
-    }
 }

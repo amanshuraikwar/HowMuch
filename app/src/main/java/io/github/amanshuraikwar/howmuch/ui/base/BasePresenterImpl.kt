@@ -1,5 +1,6 @@
 package io.github.amanshuraikwar.howmuch.ui.base
 
+import android.util.Log
 import io.github.amanshuraikwar.howmuch.bus.AppBus
 import io.github.amanshuraikwar.howmuch.data.DataManager
 import io.reactivex.disposables.CompositeDisposable

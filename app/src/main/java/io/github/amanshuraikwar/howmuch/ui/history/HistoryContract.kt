@@ -11,7 +11,13 @@ interface HistoryContract {
     interface View : BaseView {
         fun getGoogleAccountCredential(account: Account): GoogleAccountCredential
         fun submitList(list: List<ListItem<*, *>>)
+        fun showLoadingOverlay()
+        fun hideLoadingOverlay()
+        fun showErrorOverlay()
+        fun showSnackBar(message: String)
     }
 
-    interface Presenter : BasePresenter<View>
+    interface Presenter : BasePresenter<View> {
+        fun onLoadingRetryClicked()
+    }
 }

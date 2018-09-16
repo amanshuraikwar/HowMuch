@@ -5,6 +5,8 @@ import android.view.View;
 
 import io.github.amanshuraikwar.howmuch.ui.list.expense.ExpenseListItem;
 import io.github.amanshuraikwar.howmuch.ui.list.expense.ExpenseViewHolder;
+import io.github.amanshuraikwar.howmuch.ui.list.expensecategorysummary.ExpenseCategorySummaryListItem;
+import io.github.amanshuraikwar.howmuch.ui.list.expensecategorysummary.ExpenseCategorySummaryViewHolder;
 import io.github.amanshuraikwar.multiitemlistadapter.BaseTypeFactory;
 import io.github.amanshuraikwar.multiitemlistadapter.ViewHolder;
 import io.github.amanshuraikwar.howmuch.ui.list.photo.PhotoListItem;
@@ -32,6 +34,10 @@ public class ListItemTypeFactory extends BaseTypeFactory {
         return 1;
     }
 
+    public int type(ExpenseCategorySummaryListItem item) {
+        return 2;
+    }
+
     /**
      * To get layout file id (R.layout.*) for a corresponding list item/view type.
      *
@@ -44,6 +50,8 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 return PhotoViewHolder.Companion.getLAYOUT();
             case 1:
                 return ExpenseViewHolder.Companion.getLAYOUT();
+            case 2:
+                return ExpenseCategorySummaryViewHolder.Companion.getLAYOUT();
             default:
                 return super.getLayout(viewType);
         }
@@ -66,6 +74,9 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 break;
             case 1:
                 viewHolder = new ExpenseViewHolder(parent);
+                break;
+            case 2:
+                viewHolder = new ExpenseCategorySummaryViewHolder(parent);
                 break;
             default:
                 viewHolder = super.createViewHolder(parent, type);

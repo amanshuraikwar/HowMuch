@@ -9,4 +9,9 @@ interface SheetsDataSource {
 
     fun readSpreadSheet(spreadsheetId : String,
                         spreadsheetRange : String): Observable<MutableList<MutableList<Any>>>
+
+    fun appendToSpreadSheet(spreadsheetId : String,
+                            spreadsheetRange : String,
+                            valueInputOption: String,
+                            values: List<List<Any>>): Observable<Boolean>
 }

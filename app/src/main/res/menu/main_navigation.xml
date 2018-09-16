@@ -3,16 +3,16 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/twotone_home_24"
         android:title="@string/title_home" />
 
     <item
         android:id="@+id/navigation_history"
-        android:icon="@drawable/ic_history_black_24dp"
+        android:icon="@drawable/twotone_list_alt_24"
         android:title="@string/title_history" />
 
     <item
         android:id="@+id/navigation_stats"
-        android:icon="@drawable/ic_show_chart_black_24dp"
+        android:icon="@drawable/twotone_pie_chart_24"
         android:title="@string/title_stats" />
 </menu>

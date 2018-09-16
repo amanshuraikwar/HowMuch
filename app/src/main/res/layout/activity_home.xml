@@ -1,42 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/containerCl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/green"
     tools:context=".ui.home.HomeActivity">
 
-    <FrameLayout
-        android:id="@+id/signInFl"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/green"
-        android:visibility="gone">
-
-        <Button
-            android:id="@+id/signInBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/sign_in" />
-    </FrameLayout>
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="HowMuch"
+        style="@style/Widget.HowMuch.Toolbar.SmallCapsTitle" />
 
     <FrameLayout
         android:id="@+id/fragmentContainerFl"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="56dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toTopOf="@id/bottomTl">
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/mainBnv"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/app_name" />
+    </FrameLayout>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/bottomTl"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/main_navigation"/>
+        android:elevation="@dimen/elevation_normal"
+        style="@style/BottomTabLayout"
+        android:fitsSystemWindows="false"
+        android:background="@android:color/white" />
 </android.support.constraint.ConstraintLayout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/nameTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="food"/>
+
+    <TextView
+        android:id="@+id/plannedTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="544.50"/>
+
+    <TextView
+        android:id="@+id/actualTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="123.45"/>
+</LinearLayout>

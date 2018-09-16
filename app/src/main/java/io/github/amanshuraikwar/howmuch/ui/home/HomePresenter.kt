@@ -7,7 +7,6 @@ import io.github.amanshuraikwar.howmuch.data.DataManager
 import io.github.amanshuraikwar.howmuch.ui.base.BasePresenterImpl
 import io.github.amanshuraikwar.howmuch.util.Util
 import javax.inject.Inject
-import kotlin.math.log
 
 /**
  * Implementation of presenter of HomeActivity.
@@ -25,40 +24,32 @@ class HomePresenter @Inject constructor(appBus: AppBus, dataManager: DataManager
         super.onAttach(wasViewRecreated)
 
         if (getDataManager().getAuthenticationManager().hasPermissions()) {
-            getView()?.loadPage(NavigationPage.ADD_EXPENSE)
+            if (wasViewRecreated) {
+                getView()?.run {
+                    loadPage(NavigationPage.ADD_EXPENSE)
+                    showBottomNav()
+                }
+            }
         } else {
-            getView()?.hideBnv()
-            getView()?.hideMainFragmentContainer()
-            getView()?.showSignInScreen()
+            getView()?.loadPage(NavigationPage.SIGN_IN)
         }
 
+        getAppBus().signInSuccessful.subscribe{
+            getView()?.run {
+                loadPage(NavigationPage.ADD_EXPENSE)
+                showBottomNav()
+            }
+        }
     }
     //endregion
 
-    override fun onNavigationItemSelected(itemId: Int) {
+    override fun onNavigationItemSelected(position: Int) {
         Log.d(TAG, "onNavigationItemSelected:called")
-        Log.i(TAG, "onNavigationItemSelected: itemId = $itemId")
-        when(itemId) {
-            R.id.navigation_home -> getView()?.loadPage(NavigationPage.ADD_EXPENSE)
-            R.id.navigation_history -> getView()?.loadPage(NavigationPage.HISTORY)
-            R.id.navigation_stats -> getView()?.loadPage(NavigationPage.STATS)
-        }
-    }
-
-    override fun onSignInBtnClicked() {
-        getView()?.initiateSignIn()
-    }
-
-    override fun onSignInResult(isSuccessful: Boolean) {
-        if (isSuccessful){
-            if (getDataManager().getAuthenticationManager().hasPermissions()) {
-                getView()?.showToast("Sign in successful!")
-                getView()?.hideSignInScreen()
-                getView()?.showBnv()
-                getView()?.loadPage(NavigationPage.ADD_EXPENSE)
-            }
-        } else {
-
+        Log.i(TAG, "onNavigationItemSelected: position = $position")
+        when(position) {
+            0 -> getView()?.loadPage(NavigationPage.ADD_EXPENSE)
+            1 -> getView()?.loadPage(NavigationPage.HISTORY)
+            2 -> getView()?.loadPage(NavigationPage.STATS)
         }
     }
 }

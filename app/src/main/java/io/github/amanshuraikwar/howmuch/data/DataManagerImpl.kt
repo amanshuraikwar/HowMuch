@@ -34,4 +34,20 @@ class DataManagerImpl @Inject constructor(
                                  googleAccountCredential: GoogleAccountCredential)
             : Observable<MutableList<MutableList<Any>>>
             = networkDataManager.readSpreadSheet(spreadsheetId, spreadsheetRange, googleAccountCredential)
+
+    override fun appendToSpreadSheet(spreadsheetId: String,
+                                     spreadsheetRange: String,
+                                     valueInputOption: String,
+                                     values: List<List<Any>>)
+            : Observable<Boolean>
+            = networkDataManager.appendToSpreadSheet(spreadsheetId, spreadsheetRange, valueInputOption, values)
+
+
+    override fun appendToSpreadSheet(spreadsheetId: String,
+                                     spreadsheetRange: String,
+                                     valueInputOption: String,
+                                     values: List<List<Any>>,
+                                     googleAccountCredential: GoogleAccountCredential)
+            : Observable<Boolean>
+            = networkDataManager.appendToSpreadSheet(spreadsheetId, spreadsheetRange, valueInputOption, values, googleAccountCredential)
 }

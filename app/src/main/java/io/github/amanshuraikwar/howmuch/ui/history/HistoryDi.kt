@@ -17,6 +17,6 @@ class HistoryDi {
 
         @FragmentScope
         @ContributesAndroidInjector
-        internal abstract fun HistoryFragment(): HistoryFragment
+        internal abstract fun frgmnt(): HistoryFragment
     }
 }
