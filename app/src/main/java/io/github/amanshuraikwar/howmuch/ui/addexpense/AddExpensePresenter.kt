@@ -19,7 +19,9 @@ class AddExpensePresenter
     override fun onAttach(wasViewRecreated: Boolean) {
         super.onAttach(wasViewRecreated)
 
-        getCategories()
+        if (wasViewRecreated) {
+            getCategories()
+        }
     }
 
     private fun getCategories() {
@@ -71,6 +73,16 @@ class AddExpensePresenter
 
     override fun onSubmitClicked(expense: Expense) {
 
+        if (expense.amount == "") {
+            getView()?.showAmountError("Can't be empty!")
+            return
+        }
+
+        if (expense.description == "") {
+            getView()?.showDescriptionError("Can't be empty!")
+            return
+        }
+
         getDataManager().getAuthenticationManager().let {
             authMan ->
             Log.d(TAG, "onAttach:checking permissions")
@@ -95,6 +107,7 @@ class AddExpensePresenter
                                     {
                                         if (it) {
                                             getView()?.showSnackBar("Added successfully!")
+                                            getView()?.resetInputFields()
                                         } else {
                                             getView()?.showSnackBar("Could not add expense!")
                                         }
@@ -103,19 +116,19 @@ class AddExpensePresenter
                                         getView()?.run {
                                             showSnackBar("Could not add expense!")
                                             enableSubmitBtn()
-                                            setSubmitBtnText("submit")
+                                            setSubmitBtnText("save")
                                         }
                                     },
                                     {
                                         getView()?.run {
                                             enableSubmitBtn()
-                                            setSubmitBtnText("submit")
+                                            setSubmitBtnText("save")
                                         }
                                     },
                                     {
                                         getView()?.run {
                                             disableSubmitBtn()
-                                            setSubmitBtnText("adding...")
+                                            setSubmitBtnText("saving...")
                                         }
                                     })
                 }

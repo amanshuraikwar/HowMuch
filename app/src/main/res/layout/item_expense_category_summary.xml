@@ -1,25 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:elevation="1dp">
 
-    <TextView
-        android:id="@+id/nameTv"
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="food"/>
+        android:layout_marginTop="16dp">
 
-    <TextView
-        android:id="@+id/plannedTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="544.50"/>
+        <TextView
+            android:id="@+id/nameTv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingStart="72dp"
+            android:paddingEnd="4dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/secondaryText"
+            android:textAppearance="@style/TextAppearance.Category"
+            android:background="@color/gray2"
+            tools:text="food" />
+
+        <TextView
+            android:id="@+id/plannedTv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingEnd="16dp"
+            android:paddingStart="4dp"
+            android:layout_gravity="end"
+            android:gravity="center_vertical"
+            android:textAppearance="@style/TextAppearance.AmountVerySmall"
+            android:textColor="@color/disableHintText"
+            tools:text="544.50"/>
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:padding="4dp"
+            android:layout_marginStart="24dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/twotone_category_24"
+            android:contentDescription="@string/category"/>
+    </FrameLayout>
 
     <TextView
         android:id="@+id/actualTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="@dimen/margin_small"
+        android:textAppearance="@style/TextAppearance.AmountSmall"
         tools:text="123.45"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="@dimen/margin_small">
+
+        <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+            android:id="@+id/pb"
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            app:rcProgress="40"
+            app:rcMax="100"
+            app:rcRadius="0dp"
+            app:rcBackgroundPadding="0dp"
+            app:rcProgressColor="@color/colorPrimary"
+            app:rcSecondaryProgressColor="#B71C1C"
+            app:rcBackgroundColor="@color/gray2" />
+
+
+        <ImageView
+            android:id="@+id/pbIconIv"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="center_vertical|end"
+            android:src="@drawable/twotone_priority_high_24"
+            android:tint="@color/white"
+            android:contentDescription="@string/category"
+            android:visibility="invisible"/>
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:background="@color/divider" />
 </LinearLayout>

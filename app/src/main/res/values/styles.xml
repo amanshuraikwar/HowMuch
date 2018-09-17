@@ -191,6 +191,14 @@
     </style>
 
     <style
+        name="TextAppearance.AmountVerySmall"
+        parent="@style/TextAppearance.Caption">
+
+        <item name="android:fontFamily">@font/roboto_mono</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style
         name="TextAppearance.Description"
         parent="@style/TextAppearance.Subhead">
 

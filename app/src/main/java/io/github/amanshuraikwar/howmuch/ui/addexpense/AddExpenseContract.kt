@@ -19,6 +19,9 @@ interface AddExpenseContract {
         fun enableSubmitBtn()
         fun disableSubmitBtn()
         fun showSnackBar(message: String)
+        fun showAmountError(message: String)
+        fun showDescriptionError(message: String)
+        fun resetInputFields()
     }
 
     interface Presenter : BasePresenter<View> {

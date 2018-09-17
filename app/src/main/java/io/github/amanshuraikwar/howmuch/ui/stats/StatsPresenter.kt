@@ -6,6 +6,7 @@ import io.github.amanshuraikwar.howmuch.data.DataManager
 import io.github.amanshuraikwar.howmuch.model.Expense
 import io.github.amanshuraikwar.howmuch.model.ExpenseCategorySummary
 import io.github.amanshuraikwar.howmuch.ui.base.BasePresenterImpl
+import io.github.amanshuraikwar.howmuch.ui.list.date.DateListItem
 import io.github.amanshuraikwar.howmuch.ui.list.expense.ExpenseListItem
 import io.github.amanshuraikwar.howmuch.ui.list.expensecategorysummary.ExpenseCategorySummaryListItem
 import io.github.amanshuraikwar.howmuch.util.Util
@@ -94,9 +95,11 @@ class StatsPresenter @Inject constructor(appBus: AppBus, dataManager: DataManage
 
     private fun getListItems(input: List<ExpenseCategorySummary>): List<ListItem<*, *>> {
         val list = mutableListOf<ListItem<*, *>>()
+        list.add(DateListItem("Expense Categories"))
         input.forEach{
             list.add(ExpenseCategorySummaryListItem(it))
         }
+        list.add(DateListItem("All Done!"))
         return list
     }
 

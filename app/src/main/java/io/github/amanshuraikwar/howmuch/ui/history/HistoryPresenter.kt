@@ -109,6 +109,7 @@ class HistoryPresenter @Inject constructor(appBus: AppBus, dataManager: DataMana
             list.add(ExpenseListItem(inputSorted[i]))
             i += 1
         }
+        list.add(DateListItem("All Done!"))
         return list
     }
 

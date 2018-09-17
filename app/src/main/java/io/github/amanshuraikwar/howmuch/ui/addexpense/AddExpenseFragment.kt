@@ -103,4 +103,17 @@ class AddExpenseFragment @Inject constructor()
     override fun showSnackBar(message: String) {
         Snackbar.make(parentFl, message, Snackbar.LENGTH_SHORT).show()
     }
+
+    override fun showAmountError(message: String) {
+        amountEt.error = message
+    }
+
+    override fun showDescriptionError(message: String) {
+        descriptionEt.error = message
+    }
+
+    override fun resetInputFields() {
+        amountEt.setText("")
+        descriptionEt.setText("")
+    }
 }
