@@ -9,7 +9,6 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.ListAdapter
 import android.widget.Toast
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.google.api.client.util.ExponentialBackOff
@@ -101,7 +100,7 @@ class AddExpenseFragment @Inject constructor()
     }
 
     override fun showSnackBar(message: String) {
-        Snackbar.make(parentFl, message, Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(contentFl, message, Snackbar.LENGTH_SHORT).show()
     }
 
     override fun showAmountError(message: String) {

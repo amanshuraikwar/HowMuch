@@ -1,6 +1,7 @@
 package io.github.amanshuraikwar.howmuch.ui.history
 
 import android.accounts.Account
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
@@ -15,7 +16,6 @@ import io.github.amanshuraikwar.howmuch.ui.base.BaseFragment
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
-import kotlinx.android.synthetic.main.fragment_add_expense.*
 import kotlinx.android.synthetic.main.fragment_history.*
 import kotlinx.android.synthetic.main.layout_loading_overlay.*
 import java.util.*
@@ -44,6 +44,13 @@ class HistoryFragment
 
         loadingRetryBtn.setOnClickListener {
             presenter.onLoadingRetryClicked()
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            itemsRv.setOnScrollChangeListener {
+                _, _, _, _, _ ->
+                toolbar.isSelected = itemsRv.canScrollVertically(-1)
+            }
         }
     }
 
@@ -76,6 +83,6 @@ class HistoryFragment
     }
 
     override fun showSnackBar(message: String) {
-        Snackbar.make(parentFl, message, Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(containerRl, message, Snackbar.LENGTH_SHORT).show()
     }
 }

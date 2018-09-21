@@ -1,9 +1,11 @@
 package io.github.amanshuraikwar.howmuch.ui.home
 
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.AppCompatImageView
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -52,12 +54,10 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
         setContentView(R.layout.activity_home)
         ButterKnife.bind(this)
 
-        // todo ponder on this while final designing
-        /*
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             (findViewById<View>(android.R.id.content)).systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+            window.navigationBarColor = getColor(R.color.gray1)
         }
-        */
 
         init()
         initTabs()
@@ -100,7 +100,7 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
     private fun getTabView(position: Int): View {
 
         val view = LayoutInflater.from(this).inflate(R.layout.item_bottom_tab, null)
-        val icon = view.findViewById<ImageView>(R.id.tabIcon)
+        val icon = view.findViewById<AppCompatImageView>(R.id.tabIcon)
         icon.setImageDrawable(ContextCompat.getDrawable(this, tabIconsDrawable[position]))
         return view
     }

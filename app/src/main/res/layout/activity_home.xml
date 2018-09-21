@@ -16,7 +16,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:title=""
-        style="@style/Widget.HowMuch.Toolbar.SmallCapsTitle" >
+        style="@style/Widget.HowMuch.Toolbar.SmallCapsTitle"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/toolbarTitleTv"

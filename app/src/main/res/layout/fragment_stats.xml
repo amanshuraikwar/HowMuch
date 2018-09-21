@@ -1,13 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/containerRl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray1">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/itemsRv"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        app:title=""
+        style="@style/Widget.HowMuch.Toolbar.SmallCapsTitle"
+        android:stateListAnimator="@animator/toolbar_elevation">
 
-    <include layout="@layout/layout_loading_overlay" />
-</FrameLayout>
+        <TextView
+            android:id="@+id/toolbarTitleTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:gravity="center_horizontal"
+            android:textAppearance="@style/TextAppearance.ToolbarTitle.SmallCaps"
+            android:text="@string/title_stats"/>
+    </android.support.v7.widget.Toolbar>
+
+    <FrameLayout
+        android:id="@+id/fragmentContainerFl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/itemsRv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <include layout="@layout/layout_loading_overlay" />
+    </FrameLayout>
+</RelativeLayout>
