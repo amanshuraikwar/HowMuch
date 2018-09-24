@@ -18,14 +18,19 @@ class SignInPresenter
 
         // toggling sign in and sign out btns
         if (getDataManager().getAuthenticationManager().hasPermissions()) {
+            val authMan = getDataManager().getAuthenticationManager()
             getView()?.run {
                 hideSignInBtn()
-                showSignOutBtn()
+                showNegBtn()
+                showGoogleUserInfo(
+                        email = authMan.getLastSignedAccount()?.email ?: "",
+                        photoUrl = authMan.getLastSignedAccount()?.photoUrl?.toString() ?: "")
             }
         } else {
             getView()?.run {
-                hideSignOutBtn()
+                hideNegBtn()
                 showSignInBtn()
+                hideGoogleUserInfo()
             }
         }
     }
@@ -34,27 +39,36 @@ class SignInPresenter
         getView()?.initiateSignIn()
     }
 
-    override fun onSignOutBtnClicked() {
-        getView()?.run {
-            initiateSignOut()
-            hideSignOutBtn()
-            showSignInBtn()
-        }
-
+    override fun onNegBtnClicked() {
+        getAppBus().onBoardingScreenProceed.onNext(true)
     }
 
     override fun onSignInResult(isSuccessful: Boolean) {
         if (isSuccessful) {
             getAppBus().signInSuccessful.onNext(Any())
+            val authMan = getDataManager().getAuthenticationManager()
             getView()?.run {
                 showToast("Signed in successfully!")
                 hideSignInBtn()
-                showSignOutBtn()
+                showNegBtn()
+                showGoogleUserInfo(
+                        email = authMan.getLastSignedAccount()?.email ?: "",
+                        photoUrl = authMan.getLastSignedAccount()?.photoUrl?.encodedPath ?: "")
             }
         } else {
             getView()?.run {
                 showSnackbar("Signed in failed! Click on sign in button to try again.")
             }
+        }
+    }
+
+    override fun onEmailBtnClicked() {
+        getView()?.run {
+            initiateSignOut()
+            hideNegBtn()
+            showSignInBtn()
+            hideGoogleUserInfo()
+            getView()?.initiateSignIn()
         }
     }
 }

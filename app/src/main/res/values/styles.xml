@@ -234,4 +234,50 @@
 
         <item name="android:fontFamily">@font/roboto_mono_medium</item>
     </style>
+
+    <style
+        name="TextAppearance.AppName.Large"
+        parent="@style/TextAppearance.Display1">
+
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+    </style>
+
+    <style name="TextAppearance.AppName.Large.SmallCaps">
+
+        <item name="android:fontFeatureSettings">smcp</item>
+        <item name="android:letterSpacing">0.1</item>
+    </style>
+
+    <style
+        name="TextAppearance.AppTagLine"
+        parent="@style/TextAppearance.Headline">
+
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:fontFamily">@font/roboto_mono</item>
+    </style>
+
+    <style
+        name="TextAppearance.OnBoardingPageTitle"
+        parent="@style/TextAppearance.Headline">
+
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:fontFamily">@font/roboto_mono</item>
+    </style>
+
+    <style
+        name="TextAppearance.OnBoardingPageDescription"
+        parent="@style/TextAppearance.Body1">
+
+        <item name="android:textColor">@color/secondaryText</item>
+        <item name="android:fontFamily">@font/roboto_mono</item>
+    </style>
+
+    <style
+        name="TextAppearance.EmailSmall"
+        parent="@style/TextAppearance.Body1">
+
+        <item name="android:textColor">@color/green</item>
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+    </style>
 </resources>

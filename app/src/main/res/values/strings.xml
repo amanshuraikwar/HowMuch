@@ -21,6 +21,17 @@
     <string name="description">Description</string>
     <string name="category">category</string>
     <string name="save">save</string>
+    <string name="proceed">proceed</string>
+    <string name="sign_in_description">HowMuch uses Google Sheets to keep your data.
+        \n\nSign In to allow HowMuch to read and write a google sheet.</string>
+    <string name="sheet">sheet</string>
+    <string name="create_sheet_description">Create a new Google Sheet. This will serve as a database for your expenses.
+        \n\nOnly you have the permission to read and write you data.</string>
+    <string name="create_a_new_sheet">create a new sheet</string>
+    <string name="all_done_description">Locked and Loaded. You are ready to manage you expenses.</string>
+    <string name="manage_expenses">start managing expenses</string>
+    <string name="sign_in_cc">Sign In</string>
+    <string name="profile_pic">profile pic</string>
 
     <array name="tab_names">
         <item>@string/app_name</item>

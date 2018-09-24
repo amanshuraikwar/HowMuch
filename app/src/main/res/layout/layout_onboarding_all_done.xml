@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_very_large"
+        android:src="@drawable/baseline_done_24"
+        android:contentDescription="@string/sheet" />
+
+    <TextView
+        android:id="@+id/titleTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_very_very_large"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginEnd="@dimen/margin_large"
+        android:gravity="center_horizontal"
+        android:textAppearance="@style/TextAppearance.OnBoardingPageTitle"
+        android:text="All Done" />
+
+    <TextView
+        android:id="@+id/descriptionTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleTv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginEnd="@dimen/margin_large"
+        android:gravity="center_horizontal"
+        android:textAppearance="@style/TextAppearance.OnBoardingPageDescription"
+        android:text="@string/all_done_description"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/descriptionTv"
+        android:layout_above="@id/actionBtn">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/google"
+            android:tint="@color/transparentGreen"
+            android:contentDescription="@string/person"
+            android:visibility="gone"/>
+    </FrameLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/actionBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:paddingStart="48dp"
+        android:paddingEnd="48dp"
+        android:layout_marginBottom="@dimen/margin_very_large"
+        app:backgroundTint="@color/colorPrimary"
+        android:stateListAnimator="@animator/button_elevation"
+        android:textColor="@color/white"
+        android:text="@string/manage_expenses"
+        style="@style/Widget.HowMuch.Button"/>
+</RelativeLayout>

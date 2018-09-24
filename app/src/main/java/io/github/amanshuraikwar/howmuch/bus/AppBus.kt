@@ -11,5 +11,5 @@ import io.reactivex.subjects.PublishSubject
 class AppBus {
 
     val signInSuccessful: PublishSubject<Any> = PublishSubject.create<Any>()
-
+    val onBoardingScreenProceed: PublishSubject<Any> = PublishSubject.create<Any>()
 }

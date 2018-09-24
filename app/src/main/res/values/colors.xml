@@ -8,6 +8,8 @@
     <color name="darkGreen">#045d56</color>
     <color name="yellow">#FFEB3B</color>
 
+    <color name="transparentGreen">#221eb980</color>
+
     <color name="teal">#A7FFEB</color>
 
     <color name="white">@android:color/white</color>

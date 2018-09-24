@@ -10,15 +10,18 @@ interface SignInContract {
         fun initiateSignOut()
         fun hideSignInBtn()
         fun showSignInBtn()
-        fun hideSignOutBtn()
-        fun showSignOutBtn()
+        fun hideNegBtn()
+        fun showNegBtn()
         fun showToast(message: String)
         fun showSnackbar(message: String)
+        fun showGoogleUserInfo(photoUrl: String, email: String)
+        fun hideGoogleUserInfo()
     }
 
     interface Presenter : BasePresenter<View> {
         fun onSignInBtnClicked()
-        fun onSignOutBtnClicked()
+        fun onNegBtnClicked()
         fun onSignInResult(isSuccessful: Boolean)
+        fun onEmailBtnClicked()
     }
 }
