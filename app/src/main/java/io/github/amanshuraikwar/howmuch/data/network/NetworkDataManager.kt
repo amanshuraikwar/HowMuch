@@ -35,4 +35,8 @@ interface NetworkDataManager {
                             valueInputOption: String,
                             values: List<List<Any>>,
                             googleAccountCredential: GoogleAccountCredential): Observable<Boolean>
+
+    fun createSpeadSheet(): Observable<String>
+
+    fun createSpeadSheet(googleAccountCredential: GoogleAccountCredential): Observable<String>
 }

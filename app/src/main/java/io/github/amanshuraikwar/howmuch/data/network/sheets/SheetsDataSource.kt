@@ -14,4 +14,6 @@ interface SheetsDataSource {
                             spreadsheetRange : String,
                             valueInputOption: String,
                             values: List<List<Any>>): Observable<Boolean>
+
+    fun createSpreadSheet(title: String): Observable<String>
 }

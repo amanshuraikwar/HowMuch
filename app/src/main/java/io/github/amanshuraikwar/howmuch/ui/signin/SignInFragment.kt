@@ -14,8 +14,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.data.network.sheets.AuthenticationManager
 import io.github.amanshuraikwar.howmuch.ui.base.BaseFragment
-import kotlinx.android.synthetic.main.layout_onboarding_signin.*
+import kotlinx.android.synthetic.main.fragment_sign_in.*
 import javax.inject.Inject
+
 
 class SignInFragment @Inject constructor()
     : BaseFragment<SignInContract.View, SignInContract.Presenter>(), SignInContract.View {
@@ -24,7 +25,7 @@ class SignInFragment @Inject constructor()
     lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.layout_onboarding_signin, null)
+        return inflater.inflate(R.layout.fragment_sign_in, null)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -11,17 +11,15 @@
   <component name="ChangeListManager">
     <list default="true" id="96c0e269-1a05-4615-b9e9-4c6944585214" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/bus/AppBus.kt" afterPath="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/bus/AppBus.kt" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/di/ActivityBindingModule.kt" afterPath="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/di/ActivityBindingModule.kt" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/signin/SignInContract.kt" afterPath="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/signin/SignInContract.kt" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/DataManagerImpl.kt" afterPath="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/DataManagerImpl.kt" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/network/NetworkDataManager.kt" afterPath="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/network/NetworkDataManager.kt" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/network/NetworkDataManagerImpl.kt" afterPath="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/network/NetworkDataManagerImpl.kt" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/network/sheets/SheetsAPIDataSource.kt" afterPath="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/network/sheets/SheetsAPIDataSource.kt" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/network/sheets/SheetsDataSource.kt" afterPath="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/network/sheets/SheetsDataSource.kt" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/signin/SignInFragment.kt" afterPath="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/signin/SignInFragment.kt" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/signin/SignInPresenter.kt" afterPath="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/signin/SignInPresenter.kt" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_sign_in.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/layout_onboarding_signin.xml" afterPath="" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -44,43 +42,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="layout_onboarding_signin.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_onboarding_signin.xml">
+      <file leaf-file-name="fragment_sign_in.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_sign_in.xml">
           <provider editor-type-id="android-designer2">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-566">
-              <caret line="64" column="40" lean-forward="false" selection-start-line="64" selection-start-column="36" selection-end-line="64" selection-end-column="40" />
-              <folding>
-                <element signature="e#539#565#0" expanded="true" />
-                <element signature="e#654#670#0" expanded="true" />
-                <element signature="e#892#923#0" expanded="true" />
-                <element signature="e#959#980#0" expanded="true" />
-                <element signature="e#1014#1035#0" expanded="true" />
-                <element signature="e#1176#1196#0" expanded="true" />
-                <element signature="e#1467#1488#0" expanded="true" />
-                <element signature="e#1524#1545#0" expanded="true" />
-                <element signature="e#1579#1600#0" expanded="true" />
-                <element signature="e#1747#1776#0" expanded="true" />
-                <element signature="e#2619#2635#0" expanded="true" />
-                <element signature="e#3325#3346#0" expanded="true" />
-                <element signature="e#3829#3851#0" expanded="true" />
-                <element signature="e#3885#3907#0" expanded="true" />
-                <element signature="e#3944#3965#0" expanded="true" />
-                <element signature="e#4594#4620#0" expanded="true" />
-                <element signature="e#5134#5151#0" expanded="true" />
-                <element signature="e#5718#5735#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ic_cancel_black_24dp.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_cancel_black_24dp.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="6" column="39" lean-forward="false" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
+            <state relative-caret-position="242">
+              <caret line="11" column="34" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -89,85 +58,97 @@
       <file leaf-file-name="SignInFragment.kt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/signin/SignInFragment.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="213">
-              <caret line="91" column="33" lean-forward="false" selection-start-line="91" selection-start-column="33" selection-end-line="91" selection-end-column="33" />
+            <state relative-caret-position="286">
+              <caret line="28" column="5" lean-forward="false" selection-start-line="26" selection-start-column="4" selection-end-line="28" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SignInPresenter.kt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/signin/SignInPresenter.kt">
+      <file leaf-file-name="SheetsAPIDataSource.kt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/network/sheets/SheetsAPIDataSource.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-161">
-              <caret line="42" column="56" lean-forward="false" selection-start-line="42" selection-start-column="56" selection-end-line="42" selection-end-column="56" />
+            <state relative-caret-position="365">
+              <caret line="60" column="12" lean-forward="false" selection-start-line="60" selection-start-column="12" selection-end-line="60" selection-end-column="12" />
               <folding>
-                <element signature="e#52#302#0" expanded="true" />
+                <element signature="e#62#449#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="button_elevation.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/animator/button_elevation.xml">
+      <file leaf-file-name="SheetsDataSource.kt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/network/sheets/SheetsDataSource.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="11" column="10" lean-forward="false" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
-              <folding>
-                <element signature="e#538#562#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="email_button_elevation.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/animator/email_button_elevation.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="569">
-              <caret line="30" column="48" lean-forward="false" selection-start-line="30" selection-start-column="48" selection-end-line="30" selection-end-column="48" />
-              <folding>
-                <element signature="e#283#307#0" expanded="true" />
-                <element signature="e#538#562#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="avatar_anim.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/animator/avatar_anim.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="48" column="35" lean-forward="false" selection-start-line="48" selection-start-column="35" selection-end-line="48" selection-end-column="35" />
+            <state relative-caret-position="374">
+              <caret line="17" column="39" lean-forward="false" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fade_anim.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/animator/fade_anim.xml">
+      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="479">
-              <caret line="30" column="14" lean-forward="false" selection-start-line="24" selection-start-column="8" selection-end-line="30" selection-end-column="14" />
+            <state relative-caret-position="217">
+              <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AppBus.kt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/bus/AppBus.kt">
+      <file leaf-file-name="layout_onboarding_create_sheet.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_onboarding_create_sheet.xml">
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="553">
+              <caret line="67" column="43" lean-forward="false" selection-start-line="67" selection-start-column="43" selection-end-line="67" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CreateSheetContract.kt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/createsheet/CreateSheetContract.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="198">
+              <caret line="9" column="44" lean-forward="false" selection-start-line="9" selection-start-column="44" selection-end-line="9" selection-end-column="44" />
+              <folding>
+                <element signature="e#57#175#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CreateSheetFragment.kt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/createsheet/CreateSheetFragment.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="15" column="5" lean-forward="false" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+              <folding>
+                <element signature="e#57#301#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CreateSheetDi.kt" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/createsheet/CreateSheetDi.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="308">
+              <caret line="18" column="59" lean-forward="false" selection-start-line="18" selection-start-column="59" selection-end-line="18" selection-end-column="59" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CreateSheetPresenter.kt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/createsheet/CreateSheetPresenter.kt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="286">
-              <caret line="13" column="83" lean-forward="false" selection-start-line="13" selection-start-column="83" selection-end-line="13" selection-end-column="83" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SignInContract.kt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/signin/SignInContract.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="22" column="17" lean-forward="false" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
+              <caret line="19" column="5" lean-forward="false" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -183,9 +164,9 @@
         <option value="Class" />
         <option value="layoutResourceFile" />
         <option value="resourceFile" />
-        <option value="Kotlin Class" />
         <option value="Interface" />
         <option value="Kotlin Interface" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -3443,15 +3424,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/animator/toolbar_elevation.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_history.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_stats.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/history/HistoryFragment.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/stats/StatsFragment.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_add_expense.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/addexpense/AddExpenseFragment.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/baseline_list_24.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/baseline_view_list_24.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/item_bottom_tab.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/home/HomeActivity.kt" />
@@ -3471,7 +3443,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/layout_onboarding_all_done.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/baseline_done_24.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/baseline_description_24.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/demo/DemoContract.kt" />
         <option value="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/demo/DemoPresenter.kt" />
         <option value="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/demo/DemoDi.kt" />
@@ -3484,20 +3455,30 @@
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/ripple_light_green.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_arrow_drop_down_black_24dp.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_cancel_black_24dp.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/signin/SignInContract.kt" />
         <option value="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/bus/AppBus.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/signin/SignInPresenter.kt" />
         <option value="$PROJECT_DIR$/app/src/main/res/animator/button_elevation.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/animator/avatar_size.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/animator/avatar_anim.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/animator/fade_anim.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/layout_onboarding_signin.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/signin/SignInFragment.kt" />
         <option value="$PROJECT_DIR$/app/src/main/res/animator/email_button_elevation.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/network/NetworkDataManager.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/network/NetworkDataManagerImpl.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/DataManagerImpl.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/signin/SignInContract.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/signin/SignInFragment.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/signin/SignInPresenter.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/network/sheets/SheetsDataSource.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/network/sheets/SheetsAPIDataSource.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/createsheet/CreateSheetContract.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/createsheet/CreateSheetFragment.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/createsheet/CreateSheetPresenter.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/createsheet/CreateSheetDi.kt" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
     <option name="width" value="1440" />
     <option name="height" value="900" />
   </component>
@@ -3535,9 +3516,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="ProjectPane" />
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -3553,19 +3532,81 @@
             <path>
               <item name="howmuch" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="io" type="cbb59c9e:AndroidPsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="howmuch" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="io" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="github" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="howmuch" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="io" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="github" type="462c0819:PsiDirectoryNode" />
+              <item name="amanshuraikwar" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="howmuch" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="io" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="github" type="462c0819:PsiDirectoryNode" />
+              <item name="amanshuraikwar" type="462c0819:PsiDirectoryNode" />
+              <item name="howmuch" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="howmuch" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="io" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="github" type="462c0819:PsiDirectoryNode" />
+              <item name="amanshuraikwar" type="462c0819:PsiDirectoryNode" />
+              <item name="howmuch" type="462c0819:PsiDirectoryNode" />
+              <item name="ui" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="howmuch" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="io" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="github" type="462c0819:PsiDirectoryNode" />
+              <item name="amanshuraikwar" type="462c0819:PsiDirectoryNode" />
+              <item name="howmuch" type="462c0819:PsiDirectoryNode" />
+              <item name="ui" type="462c0819:PsiDirectoryNode" />
+              <item name="createsheet" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="howmuch" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="io" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="github" type="462c0819:PsiDirectoryNode" />
+              <item name="amanshuraikwar" type="462c0819:PsiDirectoryNode" />
+              <item name="howmuch" type="462c0819:PsiDirectoryNode" />
+              <item name="ui" type="462c0819:PsiDirectoryNode" />
+              <item name="signin" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="howmuch" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="res" type="d4f16f75:AndroidResFolderNode" />
             </path>
             <path>
               <item name="howmuch" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="animator" type="ddeffd01:AndroidResFolderTypeNode" />
+              <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
             </path>
             <path>
               <item name="howmuch" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="drawable" type="ddeffd01:AndroidResFolderTypeNode" />
+              <item name="values" type="ddeffd01:AndroidResFolderTypeNode" />
             </path>
             <path>
               <item name="howmuch" type="1abcf292:AndroidViewProjectNode" />
@@ -3575,7 +3616,9 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -3587,11 +3630,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="io.github.amanshuraikwar.howmuch.ui.createsheet" />
       <recent name="io.github.amanshuraikwar.howmuch.ui.demo" />
       <recent name="io.github.amanshuraikwar.howmuch.ui.list.date" />
       <recent name="io.github.amanshuraikwar.howmuch.ui.stats" />
       <recent name="io.github.amanshuraikwar.howmuch.ui.list.expensecategorysummary" />
-      <recent name="io.github.amanshuraikwar.howmuch.model" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="io.github.amanshuraikwar.howmuch.ui.base" />
@@ -3793,7 +3836,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -3807,12 +3850,13 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23748212" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23676682" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -3826,7 +3870,6 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="100" y="99" width="1240" height="700" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -3837,123 +3880,10 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/baseline_donut_small_24.xml" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/baseline_donut_large_24.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" column="46" lean-forward="false" selection-start-line="6" selection-start-column="46" selection-end-line="6" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/baseline_pie_chart_24.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" column="39" lean-forward="false" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/stats_drawable_selector.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="27" column="49" lean-forward="false" selection-start-line="27" selection-start-column="49" selection-end-line="27" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/avd_list.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="461">
-          <caret line="21" column="41" lean-forward="false" selection-start-line="21" selection-start-column="41" selection-end-line="21" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/backup_descriptor.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider editor-type-id="android-manifest">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="20" column="27" lean-forward="false" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_loading_overlay.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="575">
-          <caret line="35" column="46" lean-forward="false" selection-start-line="26" selection-start-column="4" selection-end-line="35" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/animator/toolbar_elevation.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="5" column="31" lean-forward="false" selection-start-line="5" selection-start-column="31" selection-end-line="5" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/history_drawable_selector.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" column="43" lean-forward="false" selection-start-line="6" selection-start-column="43" selection-end-line="6" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/dimens.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="2" column="33" lean-forward="false" selection-start-line="2" selection-start-column="33" selection-end-line="2" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/google.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" column="36" lean-forward="false" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="10" column="44" lean-forward="false" selection-start-line="10" selection-start-column="38" selection-end-line="10" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_onboarding_create_sheet.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1474">
-          <caret line="67" column="43" lean-forward="false" selection-start-line="67" selection-start-column="43" selection-end-line="67" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3961,7 +3891,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
           <caret line="6" column="36" lean-forward="false" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3969,7 +3898,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
           <caret line="4" column="37" lean-forward="false" selection-start-line="4" selection-start-column="37" selection-end-line="4" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3977,7 +3905,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
           <caret line="4" column="37" lean-forward="false" selection-start-line="4" selection-start-column="37" selection-end-line="4" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3985,7 +3912,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
           <caret line="7" column="8" lean-forward="false" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="48" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3996,25 +3922,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="27" column="52" lean-forward="false" selection-start-line="27" selection-start-column="52" selection-end-line="27" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="25" column="37" lean-forward="false" selection-start-line="25" selection-start-column="37" selection-end-line="25" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_sign_in.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="11" column="34" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -4087,17 +3994,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_onboarding_all_done.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="729">
-          <caret line="68" column="31" lean-forward="false" selection-start-line="68" selection-start-column="31" selection-end-line="68" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/demo/DemoActivity.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="463">
@@ -4105,19 +4001,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/network/NetworkDataManager.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="18" column="45" lean-forward="false" selection-start-line="18" selection-start-column="45" selection-end-line="18" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/network/sheets/AuthenticationManager.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="226">
           <caret line="28" column="43" lean-forward="false" selection-start-line="28" selection-start-column="43" selection-end-line="28" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4141,7 +4028,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6138">
           <caret line="279" column="51" lean-forward="false" selection-start-line="279" selection-start-column="51" selection-end-line="279" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4149,7 +4035,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
           <caret line="19" column="31" lean-forward="false" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4157,65 +4042,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="41" column="13" lean-forward="false" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
-          <folding>
-            <marker date="1536673204500" expanded="false" signature="0:104" ph="/.../" />
-            <marker date="1536673204500" expanded="false" signature="162:1568" ph="..." />
-            <marker date="1536673204500" expanded="true" signature="1570:1622" ph="@{...}" />
-            <marker date="1536673204500" expanded="true" signature="1905:1940" ph="@{...}" />
-            <marker date="1536673204500" expanded="true" signature="1980:2034" ph="@{...}" />
-            <marker date="1536673204500" expanded="true" signature="2063:2122" ph="@{...}" />
-            <marker date="1536673204500" expanded="true" signature="2151:2208" ph="@{...}" />
-            <marker date="1536673204500" expanded="true" signature="2237:2300" ph="@{...}" />
-            <marker date="1536673204500" expanded="true" signature="2329:2389" ph="@{...}" />
-            <marker date="1536673204500" expanded="true" signature="2415:2481" ph="@{...}" />
-            <marker date="1536673204500" expanded="true" signature="2510:2580" ph="@{...}" />
-            <marker date="1536673204500" expanded="true" signature="2607:2679" ph="@{...}" />
-            <marker date="1536673204500" expanded="true" signature="2708:2737" ph="@{...}" />
-            <marker date="1536673204500" expanded="true" signature="2771:2833" ph="@{...}" />
-            <marker date="1536673204500" expanded="true" signature="2862:2925" ph="@{...}" />
-            <marker date="1536673204500" expanded="true" signature="3106:4186" ph="{...}" />
-            <marker date="1536673204500" expanded="true" signature="4460:4762" ph="{...}" />
-            <marker date="1536673204500" expanded="true" signature="4990:5096" ph="{...}" />
-            <marker date="1536673204500" expanded="true" signature="5216:5459" ph="{...}" />
-            <marker date="1536673204500" expanded="true" signature="5515:5625" ph="{...}" />
-            <marker date="1536673204500" expanded="true" signature="5701:5844" ph="{...}" />
-            <marker date="1536673204500" expanded="true" signature="6227:6546" ph="{...}" />
-            <marker date="1536673204500" expanded="false" signature="6587:6598" ph=" { " />
-            <marker date="1536673204500" expanded="false" signature="6614:6620" ph=" }" />
-            <marker date="1536673204500" expanded="false" signature="6666:6677" ph=" { " />
-            <marker date="1536673204500" expanded="false" signature="6693:6699" ph=" }" />
-            <marker date="1536673204500" expanded="false" signature="6743:6754" ph=" { " />
-            <marker date="1536673204500" expanded="false" signature="6770:6776" ph=" }" />
-            <marker date="1536673204500" expanded="true" signature="6824:6909" ph="{...}" />
-            <marker date="1536673204500" expanded="false" signature="6959:6970" ph=" { " />
-            <marker date="1536673204500" expanded="false" signature="6986:6992" ph=" }" />
-            <marker date="1536673204500" expanded="false" signature="7040:7051" ph=" { " />
-            <marker date="1536673204500" expanded="false" signature="7067:7073" ph=" }" />
-            <marker date="1536673204500" expanded="false" signature="7122:7133" ph=" { " />
-            <marker date="1536673204500" expanded="false" signature="7149:7155" ph=" }" />
-            <marker date="1536673204500" expanded="false" signature="7199:7210" ph=" { " />
-            <marker date="1536673204500" expanded="false" signature="7226:7232" ph=" }" />
-            <marker date="1536673204500" expanded="true" signature="7296:7349" ph="{...}" />
-            <marker date="1536673204500" expanded="true" signature="7416:7531" ph="{...}" />
-            <marker date="1536673204500" expanded="false" signature="7584:7595" ph=" { " />
-            <marker date="1536673204500" expanded="false" signature="7611:7617" ph=" }" />
-            <marker date="1536673204500" expanded="false" signature="7658:7669" ph=" { " />
-            <marker date="1536673204500" expanded="false" signature="7685:7691" ph=" }" />
-            <marker date="1536673204500" expanded="false" signature="7723:7734" ph=" { " />
-            <marker date="1536673204500" expanded="false" signature="7795:7801" ph=" }" />
-            <marker date="1536673204500" expanded="false" signature="7859:7870" ph=" { " />
-            <marker date="1536673204500" expanded="false" signature="7886:7892" ph=" }" />
-            <marker date="1536673204500" expanded="false" signature="7947:7958" ph=" { " />
-            <marker date="1536673204500" expanded="false" signature="7987:7993" ph=" }" />
-            <marker date="1536673204500" expanded="true" signature="8051:8158" ph="{...}" />
-            <marker date="1536673204500" expanded="true" signature="8213:9235" ph="{...}" />
-            <marker date="1536673204500" expanded="true" signature="9263:9380" ph="{...}" />
-            <marker date="1536673204500" expanded="true" signature="9421:9816" ph="{...}" />
-            <marker date="1536673204500" expanded="false" signature="9844:9855" ph=" { " />
-            <marker date="1536673204500" expanded="false" signature="9884:9890" ph=" }" />
-            <marker date="1536673204500" expanded="true" signature="9929:10047" ph="{...}" />
-            <marker date="1536673204500" expanded="true" signature="10084:11805" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -4223,6 +4049,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
           <caret line="6" column="44" lean-forward="false" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_sign_in.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1408">
+          <caret line="64" column="40" lean-forward="false" selection-start-line="64" selection-start-column="36" selection-end-line="64" selection-end-column="40" />
           <folding />
         </state>
       </provider>
@@ -4235,10 +4071,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/signin/SignInContract.kt">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/animator/button_elevation.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="22" column="17" lean-forward="false" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
+        <state relative-caret-position="242">
+          <caret line="11" column="10" lean-forward="false" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/animator/avatar_anim.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1056">
+          <caret line="48" column="35" lean-forward="false" selection-start-line="48" selection-start-column="35" selection-end-line="48" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/animator/fade_anim.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="30" column="14" lean-forward="false" selection-start-line="24" selection-start-column="8" selection-end-line="30" selection-end-column="14" />
           <folding />
         </state>
       </provider>
@@ -4251,88 +4103,190 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/animator/email_button_elevation.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="434">
+          <caret line="30" column="48" lean-forward="false" selection-start-line="30" selection-start-column="48" selection-end-line="30" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.apis/google-api-services-sheets/v4-rev516-1.23.0/5e8ee179e121436782d2bd016448615bf8762420/google-api-services-sheets-v4-rev516-1.23.0-sources.jar!/com/google/api/services/sheets/v4/model/Spreadsheet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1956">
+          <caret line="33" column="19" lean-forward="false" selection-start-line="33" selection-start-column="19" selection-end-line="33" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/DataManagerImpl.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="53" column="59" lean-forward="false" selection-start-line="53" selection-start-column="59" selection-end-line="53" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/network/NetworkDataManager.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="38" column="8" lean-forward="false" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/network/NetworkDataManagerImpl.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="222">
+          <caret line="60" column="0" lean-forward="false" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+          <folding>
+            <element signature="e#55#678#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/history/HistoryContract.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="11" column="81" lean-forward="false" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="81" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/history/HistoryFragment.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="59" column="44" lean-forward="false" selection-start-line="57" selection-start-column="8" selection-end-line="59" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/history/HistoryPresenter.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="708">
+          <caret line="55" column="36" lean-forward="false" selection-start-line="55" selection-start-column="36" selection-end-line="55" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/signin/SignInContract.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="17" column="32" lean-forward="true" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/signin/SignInPresenter.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-161">
-          <caret line="42" column="56" lean-forward="false" selection-start-line="42" selection-start-column="56" selection-end-line="42" selection-end-column="56" />
+        <state relative-caret-position="447">
+          <caret line="58" column="13" lean-forward="false" selection-start-line="58" selection-start-column="13" selection-end-line="58" selection-end-column="13" />
           <folding>
-            <element signature="e#52#302#0" expanded="true" />
+            <element signature="e#52#401#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/animator/avatar_anim.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_onboarding_all_done.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="48" column="35" lean-forward="false" selection-start-line="48" selection-start-column="35" selection-end-line="48" selection-end-column="35" />
+        <state relative-caret-position="457">
+          <caret line="68" column="31" lean-forward="false" selection-start-line="68" selection-start-column="31" selection-end-line="68" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/animator/button_elevation.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="11" column="10" lean-forward="false" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
+        <state relative-caret-position="217">
+          <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/network/sheets/SheetsDataSource.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="17" column="39" lean-forward="false" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/data/network/sheets/SheetsAPIDataSource.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="60" column="12" lean-forward="false" selection-start-line="60" selection-start-column="12" selection-end-line="60" selection-end-column="12" />
           <folding>
-            <element signature="e#538#562#0" expanded="true" />
+            <element signature="e#62#449#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/animator/fade_anim.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_sign_in.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="479">
-          <caret line="30" column="14" lean-forward="false" selection-start-line="24" selection-start-column="8" selection-end-line="30" selection-end-column="14" />
+        <state relative-caret-position="242">
+          <caret line="11" column="34" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_onboarding_create_sheet.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="553">
+          <caret line="67" column="43" lean-forward="false" selection-start-line="67" selection-start-column="43" selection-end-line="67" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/createsheet/CreateSheetContract.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="9" column="44" lean-forward="false" selection-start-line="9" selection-start-column="44" selection-end-line="9" selection-end-column="44" />
+          <folding>
+            <element signature="e#57#175#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/signin/SignInFragment.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="91" column="33" lean-forward="false" selection-start-line="91" selection-start-column="33" selection-end-line="91" selection-end-column="33" />
+        <state relative-caret-position="286">
+          <caret line="28" column="5" lean-forward="false" selection-start-line="26" selection-start-column="4" selection-end-line="28" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_onboarding_signin.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/createsheet/CreateSheetFragment.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-566">
-          <caret line="64" column="40" lean-forward="false" selection-start-line="64" selection-start-column="36" selection-end-line="64" selection-end-column="40" />
+        <state relative-caret-position="330">
+          <caret line="15" column="5" lean-forward="false" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
           <folding>
-            <element signature="e#539#565#0" expanded="true" />
-            <element signature="e#654#670#0" expanded="true" />
-            <element signature="e#892#923#0" expanded="true" />
-            <element signature="e#959#980#0" expanded="true" />
-            <element signature="e#1014#1035#0" expanded="true" />
-            <element signature="e#1176#1196#0" expanded="true" />
-            <element signature="e#1467#1488#0" expanded="true" />
-            <element signature="e#1524#1545#0" expanded="true" />
-            <element signature="e#1579#1600#0" expanded="true" />
-            <element signature="e#1747#1776#0" expanded="true" />
-            <element signature="e#2619#2635#0" expanded="true" />
-            <element signature="e#3325#3346#0" expanded="true" />
-            <element signature="e#3829#3851#0" expanded="true" />
-            <element signature="e#3885#3907#0" expanded="true" />
-            <element signature="e#3944#3965#0" expanded="true" />
-            <element signature="e#4594#4620#0" expanded="true" />
-            <element signature="e#5134#5151#0" expanded="true" />
-            <element signature="e#5718#5735#0" expanded="true" />
+            <element signature="e#57#301#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/animator/email_button_elevation.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/createsheet/CreateSheetPresenter.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="569">
-          <caret line="30" column="48" lean-forward="false" selection-start-line="30" selection-start-column="48" selection-end-line="30" selection-end-column="48" />
-          <folding>
-            <element signature="e#283#307#0" expanded="true" />
-            <element signature="e#538#562#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="286">
+          <caret line="19" column="5" lean-forward="false" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/github/amanshuraikwar/howmuch/ui/createsheet/CreateSheetDi.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="18" column="59" lean-forward="false" selection-start-line="18" selection-start-column="59" selection-end-line="18" selection-end-column="59" />
+          <folding />
         </state>
       </provider>
     </entry>

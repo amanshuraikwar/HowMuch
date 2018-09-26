@@ -56,4 +56,13 @@ class NetworkDataManagerImpl @Inject constructor(
         sheetsDataSource = SheetsAPIDataSource(googleAccountCredential, httpTransport, jsonFactory)
         return sheetsDataSource!!.appendToSpreadSheet(spreadsheetId, spreadsheetRange, valueInputOption, values)
     }
+
+    override fun createSpeadSheet(): Observable<String> {
+        return sheetsDataSource!!.createSpeadSheet()
+    }
+
+    override fun createSpeadSheet(googleAccountCredential: GoogleAccountCredential): Observable<String> {
+        sheetsDataSource = SheetsAPIDataSource(googleAccountCredential, httpTransport, jsonFactory)
+        return sheetsDataSource!!.createSpeadSheet()
+    }
 }

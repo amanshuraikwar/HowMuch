@@ -5,18 +5,20 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccoun
 import com.google.api.client.http.HttpTransport
 import com.google.api.client.json.JsonFactory
 import com.google.api.services.sheets.v4.Sheets
-import com.google.api.services.sheets.v4.model.ValueRange
+import com.google.api.services.sheets.v4.model.*
 import io.github.amanshuraikwar.howmuch.util.Util
 import io.reactivex.Observable
 
+
 /**
-* @author Pedro Carrillo.
+ * @author Pedro Carrillo.
  * @author Amanshu Raikwar.
-*/
+ */
 class SheetsAPIDataSource(private val googleAccountCredential: GoogleAccountCredential,
                           private val transport : HttpTransport,
                           private val jsonFactory: JsonFactory) : SheetsDataSource {
 
+    @Suppress("PrivatePropertyName")
     private val TAG = Util.getTag(this)
 
     private val sheetsAPI : Sheets
@@ -30,15 +32,18 @@ class SheetsAPIDataSource(private val googleAccountCredential: GoogleAccountCred
 
     override fun readSpreadSheet(spreadsheetId: String,
                                  spreadsheetRange: String): Observable<MutableList<MutableList<Any>>> {
+
         Log.d(TAG, "readSpreadSheet: called")
-        return Observable
-                .create{
+
+        return Observable.fromCallable {
+
                     Log.d(TAG, "readSpreadSheet: executing")
+
                     val response = sheetsAPI.spreadsheets().values()
                             .get(spreadsheetId, spreadsheetRange)
                             .execute()
                     response.getValues()
-                    it.onNext(response.getValues())}
+                }
     }
 
     override fun appendToSpreadSheet(spreadsheetId: String,
@@ -46,9 +51,13 @@ class SheetsAPIDataSource(private val googleAccountCredential: GoogleAccountCred
                                      valueInputOption: String,
                                      values: List<List<Any>>)
             : Observable<Boolean> {
+
         Log.d(TAG, "appendToSpreadSheet:called")
+
         return Observable.fromCallable {
+
             Log.d(TAG, "appendToSpreadSheet: executing")
+
             val body = ValueRange().setValues(values)
             val response = sheetsAPI.spreadsheets().values()
                     .append(spreadsheetId, spreadsheetRange, body)
@@ -56,5 +65,28 @@ class SheetsAPIDataSource(private val googleAccountCredential: GoogleAccountCred
                     .execute()
             true
         }
+    }
+
+    override fun createSpreadSheet(title: String): Observable<String> {
+
+        Log.d(TAG, "createSpreadSheet: called")
+
+        return Observable.fromCallable {
+
+                    Log.d(TAG, "createSpreadSheet: executing")
+
+                    val newSpreadSheet = Spreadsheet()
+                    newSpreadSheet.properties = SpreadsheetProperties().setTitle(title)
+
+                    val response =
+                            sheetsAPI
+                                    .spreadsheets()
+                                    .create(newSpreadSheet)
+                                    .execute()
+
+                    Log.d(TAG, "createSpreadSheet: Spread sheet id created = " + response.spreadsheetId)
+
+                    response.spreadsheetId
+                }
     }
 }

@@ -50,4 +50,9 @@ class DataManagerImpl @Inject constructor(
                                      googleAccountCredential: GoogleAccountCredential)
             : Observable<Boolean>
             = networkDataManager.appendToSpreadSheet(spreadsheetId, spreadsheetRange, valueInputOption, values, googleAccountCredential)
+
+    override fun createSpeadSheet() = networkDataManager.createSpeadSheet()
+
+    override fun createSpeadSheet(googleAccountCredential: GoogleAccountCredential)
+            = networkDataManager.createSpeadSheet(googleAccountCredential)
 }
