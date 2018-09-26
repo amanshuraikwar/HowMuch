@@ -280,4 +280,20 @@
         <item name="android:textColor">@color/green</item>
         <item name="android:fontFamily">@font/roboto_mono_medium</item>
     </style>
+
+    <style
+        name="TextAppearance.SpreadSheetId"
+        parent="@style/TextAppearance.Caption">
+
+        <item name="android:textColor">@color/green</item>
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+    </style>
+
+    <style
+        name="TextAppearance.SpreadSheetName"
+        parent="@style/TextAppearance.Caption">
+
+        <item name="android:textColor">@color/green</item>
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+    </style>
 </resources>

@@ -50,7 +50,7 @@ class SheetsAPIDataSource(private val googleAccountCredential: GoogleAccountCred
                                      spreadsheetRange: String,
                                      valueInputOption: String,
                                      values: List<List<Any>>)
-            : Observable<Boolean> {
+            : Observable<String> {
 
         Log.d(TAG, "appendToSpreadSheet:called")
 
@@ -63,20 +63,35 @@ class SheetsAPIDataSource(private val googleAccountCredential: GoogleAccountCred
                     .append(spreadsheetId, spreadsheetRange, body)
                     .setValueInputOption(valueInputOption)
                     .execute()
-            true
+            spreadsheetId
         }
     }
 
-    override fun createSpreadSheet(title: String): Observable<String> {
+    override fun createSpreadSheet(spreadSheetTitle: String, sheetTitles: List<String>): Observable<String> {
 
         Log.d(TAG, "createSpreadSheet: called")
 
-        return Observable.fromCallable {
+        return Observable
+                .fromCallable {
 
                     Log.d(TAG, "createSpreadSheet: executing")
 
                     val newSpreadSheet = Spreadsheet()
-                    newSpreadSheet.properties = SpreadsheetProperties().setTitle(title)
+                    newSpreadSheet.properties = SpreadsheetProperties().setTitle(spreadSheetTitle)
+
+                    val sheetProperties = SheetProperties()
+                    sheetProperties.title = "hello hello"
+
+                    val sheets = mutableListOf<Sheet>()
+
+                    sheetTitles.forEach {
+                        sheetTitle ->
+                        val sheet = Sheet()
+                        sheet.properties = SheetProperties().setTitle(sheetTitle)
+                        sheets.add(sheet)
+                    }
+
+                    newSpreadSheet.sheets = sheets
 
                     val response =
                             sheetsAPI

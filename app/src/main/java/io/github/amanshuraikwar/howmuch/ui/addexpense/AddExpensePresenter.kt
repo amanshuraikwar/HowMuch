@@ -105,7 +105,7 @@ class AddExpensePresenter
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
                                     {
-                                        if (it) {
+                                        if (it != null) {
                                             getView()?.showSnackBar("Added successfully!")
                                             getView()?.resetInputFields()
                                         } else {

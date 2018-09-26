@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import io.github.amanshuraikwar.howmuch.di.modules.GoogleSignInProvides
 import io.github.amanshuraikwar.howmuch.ui.addexpense.AddExpenseDi
+import io.github.amanshuraikwar.howmuch.ui.createsheet.CreateSheetDi
 import io.github.amanshuraikwar.howmuch.ui.demo.DemoActivity
 import io.github.amanshuraikwar.howmuch.ui.demo.DemoDi
 import io.github.amanshuraikwar.howmuch.ui.history.HistoryDi
@@ -34,6 +35,7 @@ import io.github.amanshuraikwar.howmuch.ui.stats.StatsDi
             modules = [
                 (DemoDi.DemoModule::class),
                 (GoogleSignInProvides::class),
-                (SignInDi.SignInModule::class)])
+                (SignInDi.SignInModule::class),
+                (CreateSheetDi.SignInModule::class)])
     abstract fun demo(): DemoActivity
 }

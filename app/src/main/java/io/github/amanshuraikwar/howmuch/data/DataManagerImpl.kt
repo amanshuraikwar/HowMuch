@@ -39,7 +39,7 @@ class DataManagerImpl @Inject constructor(
                                      spreadsheetRange: String,
                                      valueInputOption: String,
                                      values: List<List<Any>>)
-            : Observable<Boolean>
+            : Observable<String>
             = networkDataManager.appendToSpreadSheet(spreadsheetId, spreadsheetRange, valueInputOption, values)
 
 
@@ -48,11 +48,14 @@ class DataManagerImpl @Inject constructor(
                                      valueInputOption: String,
                                      values: List<List<Any>>,
                                      googleAccountCredential: GoogleAccountCredential)
-            : Observable<Boolean>
+            : Observable<String>
             = networkDataManager.appendToSpreadSheet(spreadsheetId, spreadsheetRange, valueInputOption, values, googleAccountCredential)
 
-    override fun createSpeadSheet() = networkDataManager.createSpeadSheet()
+    override fun createSpreadSheet(spreadSheetTitle: String, sheetTitles: List<String>)
+            = networkDataManager.createSpreadSheet(spreadSheetTitle, sheetTitles)
 
-    override fun createSpeadSheet(googleAccountCredential: GoogleAccountCredential)
-            = networkDataManager.createSpeadSheet(googleAccountCredential)
+    override fun createSpreadSheet(spreadSheetTitle: String,
+                                   sheetTitles: List<String>,
+                                   googleAccountCredential: GoogleAccountCredential)
+            = networkDataManager.createSpreadSheet(spreadSheetTitle, sheetTitles, googleAccountCredential)
 }

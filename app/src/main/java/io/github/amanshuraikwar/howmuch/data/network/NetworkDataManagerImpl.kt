@@ -48,21 +48,21 @@ class NetworkDataManagerImpl @Inject constructor(
         return sheetsDataSource!!.readSpreadSheet(spreadsheetId, spreadsheetRange)
     }
 
-    override fun appendToSpreadSheet(spreadsheetId: String, spreadsheetRange: String, valueInputOption: String, values: List<List<Any>>): Observable<Boolean> {
+    override fun appendToSpreadSheet(spreadsheetId: String, spreadsheetRange: String, valueInputOption: String, values: List<List<Any>>): Observable<String> {
         return sheetsDataSource!!.appendToSpreadSheet(spreadsheetId, spreadsheetRange, valueInputOption, values)
     }
 
-    override fun appendToSpreadSheet(spreadsheetId: String, spreadsheetRange: String, valueInputOption: String, values: List<List<Any>>, googleAccountCredential: GoogleAccountCredential): Observable<Boolean> {
+    override fun appendToSpreadSheet(spreadsheetId: String, spreadsheetRange: String, valueInputOption: String, values: List<List<Any>>, googleAccountCredential: GoogleAccountCredential): Observable<String> {
         sheetsDataSource = SheetsAPIDataSource(googleAccountCredential, httpTransport, jsonFactory)
         return sheetsDataSource!!.appendToSpreadSheet(spreadsheetId, spreadsheetRange, valueInputOption, values)
     }
 
-    override fun createSpeadSheet(): Observable<String> {
-        return sheetsDataSource!!.createSpeadSheet()
+    override fun createSpreadSheet(spreadSheetTitle: String, sheetTitles: List<String>): Observable<String> {
+        return sheetsDataSource!!.createSpreadSheet(spreadSheetTitle, sheetTitles)
     }
 
-    override fun createSpeadSheet(googleAccountCredential: GoogleAccountCredential): Observable<String> {
+    override fun createSpreadSheet(spreadSheetTitle: String, sheetTitles: List<String>, googleAccountCredential: GoogleAccountCredential): Observable<String> {
         sheetsDataSource = SheetsAPIDataSource(googleAccountCredential, httpTransport, jsonFactory)
-        return sheetsDataSource!!.createSpeadSheet()
+        return sheetsDataSource!!.createSpreadSheet(spreadSheetTitle, sheetTitles)
     }
 }

@@ -6,13 +6,14 @@ import android.support.v4.app.Fragment
 import android.view.View
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.ui.base.BaseActivity
+import io.github.amanshuraikwar.howmuch.ui.createsheet.CreateSheetFragment
 import io.github.amanshuraikwar.howmuch.ui.signin.SignInFragment
 import javax.inject.Inject
 
 class DemoActivity : BaseActivity<DemoContract.View, DemoContract.Presenter>(), DemoContract.View {
 
     @Inject
-    lateinit var fragment: SignInFragment
+    lateinit var fragment: CreateSheetFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

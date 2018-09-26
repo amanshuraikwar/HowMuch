@@ -56,7 +56,7 @@ class AddExpenseFragment @Inject constructor()
     }
 
     override fun getGoogleAccountCredential(account: Account): GoogleAccountCredential {
-        return GoogleAccountCredential.usingOAuth2(activity, Arrays.asList(SheetsScopes.SPREADSHEETS_READONLY))
+        return GoogleAccountCredential.usingOAuth2(activity, Arrays.asList(SheetsScopes.SPREADSHEETS))
                 .setBackOff(ExponentialBackOff())
                 .setSelectedAccount(account)
     }

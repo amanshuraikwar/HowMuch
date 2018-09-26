@@ -28,15 +28,15 @@ interface NetworkDataManager {
     fun appendToSpreadSheet(spreadsheetId : String,
                             spreadsheetRange : String,
                             valueInputOption: String,
-                            values: List<List<Any>>): Observable<Boolean>
+                            values: List<List<Any>>): Observable<String>
 
     fun appendToSpreadSheet(spreadsheetId : String,
                             spreadsheetRange : String,
                             valueInputOption: String,
                             values: List<List<Any>>,
-                            googleAccountCredential: GoogleAccountCredential): Observable<Boolean>
+                            googleAccountCredential: GoogleAccountCredential): Observable<String>
 
-    fun createSpeadSheet(): Observable<String>
+    fun createSpreadSheet(spreadSheetTitle: String, sheetTitles: List<String>): Observable<String>
 
-    fun createSpeadSheet(googleAccountCredential: GoogleAccountCredential): Observable<String>
+    fun createSpreadSheet(spreadSheetTitle: String, sheetTitles: List<String>, googleAccountCredential: GoogleAccountCredential): Observable<String>
 }

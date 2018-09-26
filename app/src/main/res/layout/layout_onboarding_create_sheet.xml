@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parentRl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -42,7 +43,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/descriptionTv"
-        android:layout_above="@id/actionBtn">
+        android:layout_above="@id/bottomFl"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -53,18 +55,98 @@
             android:contentDescription="@string/person" />
     </FrameLayout>
 
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/actionBtn"
+    <TextView
+        android:id="@+id/spreadSheetNameTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_above="@+id/spreadSheetIdTv"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:layout_marginStart="@dimen/margin_normal"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:background="@color/gray1"
+        android:textAppearance="@style/TextAppearance.SpreadSheetName"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/spreadSheetIdTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/bottomFl"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:layout_marginStart="@dimen/margin_normal"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:layout_marginBottom="@dimen/margin_large"
+        android:background="@color/gray1"
+        android:textAppearance="@style/TextAppearance.SpreadSheetId"
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:id="@+id/loadingLl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:layout_alignParentBottom="true"
-        android:paddingStart="48dp"
-        android:paddingEnd="48dp"
         android:layout_marginBottom="@dimen/margin_very_large"
-        app:backgroundTint="@color/colorPrimary"
-        android:stateListAnimator="@animator/button_elevation"
-        android:textColor="@color/white"
-        android:text="@string/create_a_new_sheet"
-        style="@style/Widget.HowMuch.Button"/>
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/loadingPb"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:indeterminateTint="@color/green"/>
+
+        <TextView
+            android:id="@+id/loadingTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:text="@string/loading_text"
+            android:textAppearance="@style/TextAppearance.Loading"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/bottomFl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/margin_very_large">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/actionBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingStart="48dp"
+            android:paddingEnd="48dp"
+            app:backgroundTint="@color/colorPrimary"
+            android:stateListAnimator="@animator/button_elevation"
+            android:textColor="@color/white"
+            android:text="@string/create_a_new_sheet"
+            style="@style/Widget.HowMuch.Button"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/negActionBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingStart="48dp"
+            android:paddingEnd="48dp"
+            app:backgroundTint="@color/colorPrimary"
+            android:stateListAnimator="@animator/button_elevation"
+            android:textColor="@color/white"
+            android:text="@string/proceed"
+            style="@style/Widget.HowMuch.Button"
+            android:visibility="gone"/>
+    </FrameLayout>
 </RelativeLayout>
