@@ -8,4 +8,5 @@
     <dimen name="elevation_small">2dp</dimen>
     <dimen name="text_size_small">12sp</dimen>
     <dimen name="margin_small">8dp</dimen>
+    <dimen name="padding_very_large">48dp</dimen>
 </resources>

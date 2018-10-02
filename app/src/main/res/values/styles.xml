@@ -57,6 +57,16 @@
     </style>
 
     <style
+        name="Widget.HowMuch.Button.Onboarding"
+        parent="@android:style/Widget.Material.Button">
+        <item name="android:paddingStart">@dimen/padding_very_large</item>
+        <item name="android:paddingEnd">@dimen/padding_very_large</item>
+        <item name="backgroundTint">@color/green</item>
+        <item name="android:stateListAnimator">@animator/button_elevation</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style
         name="Widget.HowMuch.Button.Small"
         parent="@android:style/Widget.Material.Button">
 
@@ -172,6 +182,13 @@
 
         <item name="android:fontFamily">@font/roboto_mono_medium</item>
         <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style
+        name="TextAppearance.Empty"
+        parent="@style/TextAppearance.Title">
+
+        <item name="android:fontFamily">@font/roboto_mono</item>
     </style>
 
     <style

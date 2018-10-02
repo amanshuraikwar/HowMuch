@@ -3,6 +3,7 @@ package io.github.amanshuraikwar.howmuch.ui.signin
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
@@ -14,12 +15,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.data.network.sheets.AuthenticationManager
 import io.github.amanshuraikwar.howmuch.ui.base.BaseFragment
+import io.github.amanshuraikwar.howmuch.ui.onboarding.OnboardingScreen
+import io.github.amanshuraikwar.howmuch.util.Util
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import javax.inject.Inject
 
 
 class SignInFragment @Inject constructor()
-    : BaseFragment<SignInContract.View, SignInContract.Presenter>(), SignInContract.View {
+    : BaseFragment<SignInContract.View, SignInContract.Presenter>(), SignInContract.View, OnboardingScreen {
+
+    private val TAG = Util.getTag(this)
 
     @Inject
     lateinit var googleSignInClient: GoogleSignInClient
@@ -34,11 +39,11 @@ class SignInFragment @Inject constructor()
     }
 
     private fun init() {
-        actionBtn.setOnClickListener {
+        createSheetBtn.setOnClickListener {
             presenter.onSignInBtnClicked()
         }
 
-        negActionBtn.setOnClickListener {
+        proceedBtn.setOnClickListener {
             presenter.onNegBtnClicked()
         }
 
@@ -49,8 +54,9 @@ class SignInFragment @Inject constructor()
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        Log.d(TAG, "onActivityResult: called")
 
-        if (resultCode == AuthenticationManager.CODE_SIGN_IN) {
+        if (requestCode == AuthenticationManager.CODE_SIGN_IN) {
             presenter.onSignInResult(GoogleSignIn.getSignedInAccountFromIntent(data).isSuccessful)
         }
     }
@@ -64,19 +70,19 @@ class SignInFragment @Inject constructor()
     }
 
     override fun hideSignInBtn() {
-        actionBtn.visibility = GONE
+        createSheetBtn.visibility = GONE
     }
 
     override fun showSignInBtn() {
-        actionBtn.visibility = VISIBLE
+        createSheetBtn.visibility = VISIBLE
     }
 
     override fun hideNegBtn() {
-        negActionBtn.visibility = GONE
+        proceedBtn.visibility = GONE
     }
 
     override fun showNegBtn() {
-        negActionBtn.visibility = VISIBLE
+        proceedBtn.visibility = VISIBLE
     }
 
     override fun showToast(message: String) {
@@ -88,8 +94,8 @@ class SignInFragment @Inject constructor()
     }
 
     override fun showGoogleUserInfo(photoUrl: String, email: String) {
-//        profileCv.visibility = VISIBLE
-//        emailBtn.visibility = VISIBLE
+        profileCv.visibility = VISIBLE
+        emailBtn.visibility = VISIBLE
         emailBtn.isEnabled = true
         profileCv.isEnabled = true
         Glide.with(activity!!).load(photoUrl).into(profileIv)
@@ -97,9 +103,13 @@ class SignInFragment @Inject constructor()
     }
 
     override fun hideGoogleUserInfo() {
-//        profileCv.visibility = GONE
-//        emailBtn.visibility = INVISIBLE
+        profileCv.visibility = INVISIBLE
+        emailBtn.visibility = INVISIBLE
         emailBtn.isEnabled = false
         profileCv.isEnabled = false
+    }
+
+    override fun selected() {
+        presenter.onScreenSelected()
     }
 }

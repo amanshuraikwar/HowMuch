@@ -2,6 +2,7 @@ package io.github.amanshuraikwar.howmuch.data
 
 import android.content.Context
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
+import io.github.amanshuraikwar.howmuch.data.local.LocalDataManager
 import io.github.amanshuraikwar.howmuch.data.network.NetworkDataManager
 import io.github.amanshuraikwar.howmuch.data.network.sheets.AuthenticationManager
 import io.github.amanshuraikwar.howmuch.di.ApplicationContext
@@ -16,7 +17,8 @@ import javax.inject.Inject
  */
 class DataManagerImpl @Inject constructor(
         @ApplicationContext private val context: Context,
-        private val networkDataManager: NetworkDataManager) : DataManager {
+        private val networkDataManager: NetworkDataManager,
+        private val localDataManager: LocalDataManager) : DataManager {
 
     override fun getAllPhotos(page: Int, orderBy: String, perPage: Int)
             = networkDataManager.getAllPhotos(page, orderBy, perPage)
@@ -51,6 +53,19 @@ class DataManagerImpl @Inject constructor(
             : Observable<String>
             = networkDataManager.appendToSpreadSheet(spreadsheetId, spreadsheetRange, valueInputOption, values, googleAccountCredential)
 
+    override fun updateSpreadSheet(spreadsheetId: String,
+                                   spreadsheetRange: String,
+                                   valueInputOption: String,
+                                   values: List<List<Any>>): Observable<String>
+            = networkDataManager.updateSpreadSheet(spreadsheetId, spreadsheetRange, valueInputOption, values)
+
+    override fun updateSpreadSheet(spreadsheetId: String,
+                                   spreadsheetRange: String,
+                                   valueInputOption: String,
+                                   values: List<List<Any>>,
+                                   googleAccountCredential: GoogleAccountCredential): Observable<String>
+            = networkDataManager.updateSpreadSheet(spreadsheetId, spreadsheetRange, valueInputOption, values, googleAccountCredential)
+
     override fun createSpreadSheet(spreadSheetTitle: String, sheetTitles: List<String>)
             = networkDataManager.createSpreadSheet(spreadSheetTitle, sheetTitles)
 
@@ -58,4 +73,29 @@ class DataManagerImpl @Inject constructor(
                                    sheetTitles: List<String>,
                                    googleAccountCredential: GoogleAccountCredential)
             = networkDataManager.createSpreadSheet(spreadSheetTitle, sheetTitles, googleAccountCredential)
+
+    override fun isInitialOnboardingDone() =
+            localDataManager.isInitialOnboardingDone()
+
+    override fun isSignedIn() =
+            localDataManager.isSignedIn()
+
+    override fun isSpreadsheetReady() =
+            localDataManager.isSpreadsheetReady()
+
+    override fun setInitialOnboardingDone(value: Boolean) =
+            localDataManager.setInitialOnboardingDone(value)
+
+    override fun setSignedIn(value: Boolean) =
+            localDataManager.setSignedIn(value)
+
+    override fun setSpreadsheetReady(value: Boolean) =
+            localDataManager.setSpreadsheetReady(value)
+
+    override fun getSpreadsheetIdForYearAndMonth(year: Int, month: Int) =
+            localDataManager.getSpreadsheetIdForYearAndMonth(year, month)
+
+
+    override fun addSpreadsheetIdForYearAndMonth(spreadsheetId: String, year: Int, month: Int) =
+            localDataManager.addSpreadsheetIdForYearAndMonth(spreadsheetId, year, month)
 }

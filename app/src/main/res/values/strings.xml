@@ -1,5 +1,9 @@
 <resources>
-    <string name="app_name">HowMuch</string>
+
+    <string name="app_name_release">HowMuch</string>
+    <string name="app_name_debug">HowMuch-DEBUG</string>
+    <string name="app_name_usable">HowMuch-USABLE</string>
+
     <string name="title_home">Home</string>
     <string name="title_add_expense">Add Expense</string>
     <string name="title_history">History</string>
@@ -32,10 +36,10 @@
     <string name="manage_expenses">start managing expenses</string>
     <string name="sign_in_cc">Sign In</string>
     <string name="profile_pic">profile pic</string>
+    <string name="complete_setup">complete setup</string>
 
     <array name="tab_names">
         <item>@string/app_name</item>
         <item>history</item>
-        <item>stats</item>
     </array>
 </resources>

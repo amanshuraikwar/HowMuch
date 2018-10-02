@@ -7,7 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 def versionMajor = 0
-def versionMinor = 2
+def versionMinor = 3
 def versionPatch = 0
 def versionBuild = 0 // bump for dogfood builds, public betas, etc.
 
@@ -22,10 +22,19 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
+
+    ext{
+        APP_NAME_DEBUG = "@string/app_name_debug"
+        APP_NAME_RELEASE = "@string/app_name_release"
+        APP_NAME_USABLE = "@string/app_name_usable"
+    }
+
     buildTypes {
+
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
         }
     }
 }
@@ -86,4 +95,7 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$glideVersion"
     implementation "com.github.bumptech.glide:okhttp3-integration:$glideVersion"
     implementation "com.github.bumptech.glide:recyclerview-integration:$glideVersion"
+
+    implementation "android.arch.persistence.room:runtime:1.1.1"
+    kapt "android.arch.persistence.room:compiler:1.1.1"
 }

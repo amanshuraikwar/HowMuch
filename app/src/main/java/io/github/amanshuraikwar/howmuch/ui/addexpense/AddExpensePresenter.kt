@@ -1,8 +1,12 @@
 package io.github.amanshuraikwar.howmuch.ui.addexpense
 
+import android.accounts.Account
 import android.util.Log
 import io.github.amanshuraikwar.howmuch.bus.AppBus
 import io.github.amanshuraikwar.howmuch.data.DataManager
+import io.github.amanshuraikwar.howmuch.data.network.sheets.AuthenticationManager
+import io.github.amanshuraikwar.howmuch.data.network.sheets.SheetsAPIDataSource
+import io.github.amanshuraikwar.howmuch.data.network.sheets.SheetsDataSource
 import io.github.amanshuraikwar.howmuch.model.Expense
 import io.github.amanshuraikwar.howmuch.ui.base.BasePresenterImpl
 import io.github.amanshuraikwar.howmuch.util.Util
@@ -11,7 +15,9 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class AddExpensePresenter
-    @Inject constructor(appBus: AppBus, dataManager: DataManager)
+    @Inject constructor(appBus: AppBus,
+                        dataManager: DataManager,
+                        private val authMan: AuthenticationManager = dataManager.getAuthenticationManager())
     : BasePresenterImpl<AddExpenseContract.View>(appBus, dataManager), AddExpenseContract.Presenter {
 
     private val TAG = Util.getTag(this)
@@ -20,46 +26,64 @@ class AddExpensePresenter
         super.onAttach(wasViewRecreated)
 
         if (wasViewRecreated) {
-            getCategories()
+            getCategories(getAccount()!!)
         }
     }
 
-    private fun getCategories() {
-        getDataManager().getAuthenticationManager().let {
-            authMan ->
-            Log.d(TAG, "onAttach:checking permissions")
-            if (authMan.hasPermissions()) {
-                Log.d(TAG, "onAttach:has permissions")
-                if (authMan.getLastSignedAccount()?.account != null) {
+    @Suppress("LiftReturnOrAssignment")
+    private fun getAccount(): Account? {
 
-                    Log.d(TAG, "onAttach:account is not null")
+        if (authMan.hasPermissions()) {
 
-                    getDataManager()
-                            .readSpreadSheet(
-                                    "1HzV18zWmo_-LwuHT_WtXHvR18f7GwQj2EKNKq47iOIM"
-                                    ,"Summary!B22:C",
-                                    getView()!!
-                                            .getGoogleAccountCredential(
-                                                    authMan.getLastSignedAccount()!!.account!!))
-                            .map { convertToCategoriesArray(it) }
-                            .subscribeOn(Schedulers.newThread())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    {
-                                        getView()?.populateCategories(it)
-                                        getView()?.hideLoadingOverlay()
-                                    },
-                                    {
-                                        getView()?.showErrorOverlay()
-                                    },
-                                    {
+            val account = authMan.getLastSignedAccount()?.account
 
-                                    },
-                                    {
-                                        getView()?.showLoadingOverlay()
-                                    })
-                }
+            if (account == null) {
+                // todo invalid state
+                return null
+            } else {
+                return account
             }
+        } else {
+            // todo invalid state
+            return null
+        }
+    }
+
+    private fun getCategories(account: Account) {
+
+        getDataManager().let {
+            dm ->
+            dm
+                    .getSpreadsheetIdForYearAndMonth(
+                            Util.getCurYearNumber(),
+                            Util.getCurMonthNumber()
+                    )
+                    .flatMap {
+                        id ->
+                        dm
+                                .readSpreadSheet(
+                                        id,
+                                        Util.getDefaultCategoriesSpreadSheetRange(),
+                                        getView()!!.getGoogleAccountCredential(account)
+                                )
+                    }
+                    .map { convertToCategoriesArray(it) }
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            {
+                                getView()?.populateCategories(it)
+                                getView()?.hideLoadingOverlay()
+                            },
+                            {
+                                getView()?.showErrorOverlay()
+                            },
+                            {
+
+                            },
+                            {
+                                getView()?.showLoadingOverlay()
+                            })
         }
     }
 
@@ -83,60 +107,71 @@ class AddExpensePresenter
             return
         }
 
-        getDataManager().getAuthenticationManager().let {
-            authMan ->
-            Log.d(TAG, "onAttach:checking permissions")
-            if (authMan.hasPermissions()) {
-                Log.d(TAG, "onAttach:has permissions")
-                if (authMan.getLastSignedAccount()?.account != null) {
+        addExpense(expense, getAccount()!!)
+    }
 
-                    Log.d(TAG, "onAttach:account is not null")
+    private fun addExpense(expense: Expense, account: Account) {
 
-                    getDataManager()
-                            .appendToSpreadSheet(
-                                    "1HzV18zWmo_-LwuHT_WtXHvR18f7GwQj2EKNKq47iOIM",
-                                    "Transactions!B5:E",
-                                    "RAW",
-                                    listOf(listOf(expense.date, expense.amount, expense.description, expense.category)),
-                                    getView()!!
-                                            .getGoogleAccountCredential(
-                                                    authMan.getLastSignedAccount()!!.account!!))
-                            .subscribeOn(Schedulers.newThread())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    {
-                                        if (it != null) {
-                                            getView()?.showSnackBar("Added successfully!")
-                                            getView()?.resetInputFields()
-                                        } else {
-                                            getView()?.showSnackBar("Could not add expense!")
-                                        }
-                                    },
-                                    {
-                                        getView()?.run {
-                                            showSnackBar("Could not add expense!")
-                                            enableSubmitBtn()
-                                            setSubmitBtnText("save")
-                                        }
-                                    },
-                                    {
-                                        getView()?.run {
-                                            enableSubmitBtn()
-                                            setSubmitBtnText("save")
-                                        }
-                                    },
-                                    {
-                                        getView()?.run {
-                                            disableSubmitBtn()
-                                            setSubmitBtnText("saving...")
-                                        }
-                                    })
-                }
-            }
+        getDataManager().let {
+            dm ->
+            dm
+                    .getSpreadsheetIdForYearAndMonth(
+                            Util.getCurYearNumber(),
+                            Util.getCurMonthNumber()
+                    )
+                    .flatMap {
+                        id ->
+                        dm
+                                .appendToSpreadSheet(
+                                        id,
+                                        Util.getDefaultTransactionsSpreadSheetRange(),
+                                        SheetsDataSource.VALUE_INPUT_OPTION,
+                                        listOf(
+                                                listOf(
+                                                        expense.date,
+                                                        expense.time,
+                                                        expense.amount,
+                                                        expense.description,
+                                                        expense.category
+                                                )
+                                        ),
+                                        getView()!!.getGoogleAccountCredential(account)
+                                )
+                    }
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            {
+                                if (it != null) {
+                                    getView()?.showSnackBar("Added successfully!")
+                                    getView()?.resetInputFields()
+                                } else {
+                                    getView()?.showSnackBar("Could not add expense!")
+                                }
+                            },
+                            {
+                                getView()?.run {
+                                    showSnackBar("Could not add expense!")
+                                    enableSubmitBtn()
+                                    setSubmitBtnText("save")
+                                }
+                            },
+                            {
+                                getView()?.run {
+                                    enableSubmitBtn()
+                                    setSubmitBtnText("save")
+                                }
+                            },
+                            {
+                                getView()?.run {
+                                    disableSubmitBtn()
+                                    setSubmitBtnText("saving...")
+                                }
+                            })
         }
     }
 
     override fun onLoadingRetryClicked() {
-        getCategories()
+        getCategories(getAccount()!!)
     }
 }

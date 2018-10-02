@@ -1,5 +1,6 @@
 package io.github.amanshuraikwar.howmuch.data
 
+import io.github.amanshuraikwar.howmuch.data.local.LocalDataManager
 import io.github.amanshuraikwar.howmuch.data.network.NetworkDataManager
 
 /**
@@ -9,4 +10,4 @@ import io.github.amanshuraikwar.howmuch.data.network.NetworkDataManager
  * @author Amanshu Raikwar
  * Created by Amanshu Raikwar on 06/03/18.
  */
-interface DataManager : NetworkDataManager
+interface DataManager : NetworkDataManager, LocalDataManager

@@ -48,13 +48,28 @@ class NetworkDataManagerImpl @Inject constructor(
         return sheetsDataSource!!.readSpreadSheet(spreadsheetId, spreadsheetRange)
     }
 
-    override fun appendToSpreadSheet(spreadsheetId: String, spreadsheetRange: String, valueInputOption: String, values: List<List<Any>>): Observable<String> {
-        return sheetsDataSource!!.appendToSpreadSheet(spreadsheetId, spreadsheetRange, valueInputOption, values)
+    override fun appendToSpreadSheet(spreadsheetId: String,
+                                     spreadsheetRange: String,
+                                     valueInputOption: String,
+                                     values: List<List<Any>>): Observable<String> {
+        return sheetsDataSource!!.appendToSpreadSheet(spreadsheetId,
+                spreadsheetRange, valueInputOption, values)
     }
 
     override fun appendToSpreadSheet(spreadsheetId: String, spreadsheetRange: String, valueInputOption: String, values: List<List<Any>>, googleAccountCredential: GoogleAccountCredential): Observable<String> {
         sheetsDataSource = SheetsAPIDataSource(googleAccountCredential, httpTransport, jsonFactory)
         return sheetsDataSource!!.appendToSpreadSheet(spreadsheetId, spreadsheetRange, valueInputOption, values)
+    }
+
+    override fun updateSpreadSheet(spreadsheetId: String, spreadsheetRange: String, valueInputOption: String, values: List<List<Any>>): Observable<String> {
+        return sheetsDataSource!!.updateSpreadSheet(spreadsheetId,
+                spreadsheetRange, valueInputOption, values)
+    }
+
+    override fun updateSpreadSheet(spreadsheetId: String, spreadsheetRange: String, valueInputOption: String, values: List<List<Any>>, googleAccountCredential: GoogleAccountCredential): Observable<String> {
+        sheetsDataSource = SheetsAPIDataSource(googleAccountCredential, httpTransport, jsonFactory)
+        return sheetsDataSource!!.updateSpreadSheet(spreadsheetId,
+                spreadsheetRange, valueInputOption, values)
     }
 
     override fun createSpreadSheet(spreadSheetTitle: String, sheetTitles: List<String>): Observable<String> {

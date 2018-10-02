@@ -16,6 +16,7 @@ import com.google.api.services.sheets.v4.SheetsScopes
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.model.Expense
 import io.github.amanshuraikwar.howmuch.ui.base.BaseFragment
+import io.github.amanshuraikwar.howmuch.util.Util
 import kotlinx.android.synthetic.main.fragment_add_expense.*
 import kotlinx.android.synthetic.main.layout_loading_overlay.*
 import java.text.SimpleDateFormat
@@ -40,6 +41,7 @@ class AddExpenseFragment @Inject constructor()
             presenter.onSubmitClicked(
                     Expense("",
                             dateEt.text.toString(),
+                            Util.getCurTime(),
                             amountEt.text.toString(),
                             descriptionEt.text.toString(),
                             categorySp.selectedItem.toString()))

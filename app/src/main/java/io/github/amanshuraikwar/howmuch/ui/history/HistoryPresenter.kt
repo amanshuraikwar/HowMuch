@@ -1,11 +1,14 @@
 package io.github.amanshuraikwar.howmuch.ui.history
 
+import android.accounts.Account
 import android.util.Log
 import io.github.amanshuraikwar.howmuch.bus.AppBus
 import io.github.amanshuraikwar.howmuch.data.DataManager
+import io.github.amanshuraikwar.howmuch.data.network.sheets.AuthenticationManager
 import io.github.amanshuraikwar.howmuch.model.Expense
 import io.github.amanshuraikwar.howmuch.ui.base.BasePresenterImpl
 import io.github.amanshuraikwar.howmuch.ui.list.date.DateListItem
+import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyListItem
 import io.github.amanshuraikwar.howmuch.ui.list.expense.ExpenseListItem
 import io.github.amanshuraikwar.howmuch.util.Util
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
@@ -15,7 +18,9 @@ import io.reactivex.disposables.Disposables
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class HistoryPresenter @Inject constructor(appBus: AppBus, dataManager: DataManager)
+class HistoryPresenter @Inject constructor(appBus: AppBus,
+                                           dataManager: DataManager,
+                                           private val authMan: AuthenticationManager = dataManager.getAuthenticationManager())
     : BasePresenterImpl<HistoryContract.View>(appBus, dataManager), HistoryContract.Presenter {
 
     private val TAG = Util.getTag(this)
@@ -26,72 +31,84 @@ class HistoryPresenter @Inject constructor(appBus: AppBus, dataManager: DataMana
         super.onAttach(wasViewRecreated)
 
         if (wasViewRecreated) {
-            getHistory()
+            getHistory(getAccount()!!)
         }
     }
 
-    private fun getHistory() {
+    @Suppress("LiftReturnOrAssignment")
+    private fun getAccount(): Account? {
 
-        getDataManager().getAuthenticationManager().let {
-            authMan ->
-            Log.d(TAG, "onAttach:checking permissions")
-            if (authMan.hasPermissions()) {
-                Log.d(TAG, "onAttach:has permissions")
-                if (authMan.getLastSignedAccount()?.account != null) {
+        if (authMan.hasPermissions()) {
 
-                    Log.d(TAG, "onAttach:account is not null")
+            val account = authMan.getLastSignedAccount()?.account
 
-                    val observable = getDataManager()
-                            .readSpreadSheet(
-                                    "1HzV18zWmo_-LwuHT_WtXHvR18f7GwQj2EKNKq47iOIM"
-                                    ,"Transactions!B5:E",
-                                    getView()!!
-                                            .getGoogleAccountCredential(
-                                                    authMan.getLastSignedAccount()!!.account!!))
-
-                    Log.d(TAG, "onAttach: $observable")
-
-                    disposables.add(observable
-                            .map { list -> getExpenseList(list) }
-                            .map { processData(it) }
-                            .subscribeOn(Schedulers.newThread())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    {
-                                        Log.d(TAG, "reading spread sheets: onNext")
-                                        getView()?.submitList(it)
-                                        getView()?.hideLoadingOverlay()
-                                    },
-                                    {
-                                        Log.d(TAG, "reading spread sheets: error thrown")
-                                        getView()?.showErrorOverlay()
-                                    },
-                                    {
-                                        Log.d(TAG, "reading spread sheets: completed")
-                                    },
-                                    {
-                                        getView()?.showLoadingOverlay()
-                                        Log.d(TAG, "reading spread sheets: subscribed")
-                                    }))
-                }
+            if (account == null) {
+                // todo invalid state
+                return null
+            } else {
+                return account
             }
+        } else {
+            // todo invalid state
+            return null
+        }
+    }
+
+    private fun getHistory(account: Account) {
+
+        getDataManager().let {
+            dm ->
+            dm
+                    .getSpreadsheetIdForYearAndMonth(
+                            Util.getCurYearNumber(),
+                            Util.getCurMonthNumber()
+                    )
+                    .flatMap {
+                        id ->
+                        dm
+                                .readSpreadSheet(
+                                        id,
+                                        Util.getDefaultTransactionsSpreadSheetRange(),
+                                        getView()!!.getGoogleAccountCredential(account)
+                                )
+                    }
+                    .map { list -> getExpenseList(list) }
+                    .map { processData(it) }
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            {
+                                Log.d(TAG, "reading spread sheets: onNext")
+                                getView()?.submitList(it)
+                                getView()?.hideLoadingOverlay()
+                            },
+                            {
+                                Log.d(TAG, "reading spread sheets: error thrown")
+                                it.printStackTrace()
+                                Log.e(TAG, it.message)
+                                Log.e(TAG, it.toString())
+                                getView()?.showErrorOverlay()
+                            },
+                            {
+                                Log.d(TAG, "reading spread sheets: completed")
+                            },
+                            {
+                                getView()?.showLoadingOverlay()
+                                Log.d(TAG, "reading spread sheets: subscribed")
+                            }
+                    )
+
         }
     }
 
     private fun getExpenseList(input: MutableList<MutableList<Any>>): List<Expense> {
         val list = mutableListOf<Expense>()
         var count = 0
-        input.forEach {
-            list.add(Expense(count.toString(), it[0].toString(), it[1].toString(), it[2].toString(), it[3].toString()))
-            count++
-        }
-        return list
-    }
-
-    private fun getListItems(input: List<Expense>): List<ListItem<*, *>> {
-        val list = mutableListOf<ListItem<*, *>>()
-        input.forEach{
-            list.add(ExpenseListItem(it))
+        if (input.size > 1) {
+            input.subList(1, input.size - 1).forEach {
+                list.add(Expense(count.toString(), it[0].toString(), it[1].toString(), it[2].toString(), it[3].toString(), it[4].toString()))
+                count++
+            }
         }
         return list
     }
@@ -109,7 +126,12 @@ class HistoryPresenter @Inject constructor(appBus: AppBus, dataManager: DataMana
             list.add(ExpenseListItem(inputSorted[i]))
             i += 1
         }
-        list.add(DateListItem("All Done!"))
+        if(list.size == 0) {
+            list.add(EmptyListItem("No transactions!!\no_o"))
+        } else {
+            list.add(DateListItem("All Done!"))
+        }
+
         return list
     }
 
@@ -119,6 +141,6 @@ class HistoryPresenter @Inject constructor(appBus: AppBus, dataManager: DataMana
     }
 
     override fun onLoadingRetryClicked() {
-        getHistory()
+        getHistory(getAccount()!!)
     }
 }

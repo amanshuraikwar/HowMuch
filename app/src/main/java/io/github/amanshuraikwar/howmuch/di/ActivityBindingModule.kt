@@ -10,6 +10,7 @@ import io.github.amanshuraikwar.howmuch.ui.demo.DemoDi
 import io.github.amanshuraikwar.howmuch.ui.history.HistoryDi
 import io.github.amanshuraikwar.howmuch.ui.home.HomeActivity
 import io.github.amanshuraikwar.howmuch.ui.home.HomeDi
+import io.github.amanshuraikwar.howmuch.ui.onboarding.OnboardingDi
 import io.github.amanshuraikwar.howmuch.ui.signin.SignInDi
 import io.github.amanshuraikwar.howmuch.ui.stats.StatsDi
 
@@ -27,7 +28,9 @@ import io.github.amanshuraikwar.howmuch.ui.stats.StatsDi
                 (HistoryDi.HistoryModule::class),
                 (AddExpenseDi.AddExpenseModule::class),
                 (StatsDi.StatsModule::class),
-                (SignInDi.SignInModule::class)])
+                (SignInDi.SignInModule::class),
+                (OnboardingDi.ModuleAct::class),
+                (CreateSheetDi.ModuleAct::class)])
     abstract fun home(): HomeActivity
 
     @ActivityScope
@@ -36,6 +39,6 @@ import io.github.amanshuraikwar.howmuch.ui.stats.StatsDi
                 (DemoDi.DemoModule::class),
                 (GoogleSignInProvides::class),
                 (SignInDi.SignInModule::class),
-                (CreateSheetDi.SignInModule::class)])
+                (CreateSheetDi.ModuleAct::class)])
     abstract fun demo(): DemoActivity
 }

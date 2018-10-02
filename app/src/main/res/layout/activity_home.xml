@@ -55,5 +55,6 @@
         android:elevation="@dimen/elevation_normal"
         style="@style/BottomTabLayout"
         android:fitsSystemWindows="false"
-        android:background="@android:color/white" />
+        android:background="@android:color/white"
+        android:visibility="gone" />
 </android.support.constraint.ConstraintLayout>

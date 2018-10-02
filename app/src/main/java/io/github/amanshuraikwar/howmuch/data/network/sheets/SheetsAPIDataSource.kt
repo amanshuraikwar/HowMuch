@@ -46,6 +46,7 @@ class SheetsAPIDataSource(private val googleAccountCredential: GoogleAccountCred
                 }
     }
 
+    @Suppress("UNUSED_VARIABLE")
     override fun appendToSpreadSheet(spreadsheetId: String,
                                      spreadsheetRange: String,
                                      valueInputOption: String,
@@ -61,6 +62,28 @@ class SheetsAPIDataSource(private val googleAccountCredential: GoogleAccountCred
             val body = ValueRange().setValues(values)
             val response = sheetsAPI.spreadsheets().values()
                     .append(spreadsheetId, spreadsheetRange, body)
+                    .setValueInputOption(valueInputOption)
+                    .execute()
+            spreadsheetId
+        }
+    }
+
+    @Suppress("UNUSED_VARIABLE")
+    override fun updateSpreadSheet(spreadsheetId: String,
+                                   spreadsheetRange: String,
+                                   valueInputOption: String,
+                                   values: List<List<Any>>)
+            : Observable<String> {
+
+        Log.d(TAG, "updateSpreadSheet:called")
+
+        return Observable.fromCallable {
+
+            Log.d(TAG, "updateSpreadSheet: executing")
+
+            val body = ValueRange().setValues(values)
+            val response = sheetsAPI.spreadsheets().values()
+                    .update(spreadsheetId, spreadsheetRange, body)
                     .setValueInputOption(valueInputOption)
                     .execute()
             spreadsheetId

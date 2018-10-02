@@ -23,7 +23,7 @@
             android:layout_marginEnd="@dimen/margin_normal"
             android:gravity="center_horizontal"
             android:textAppearance="@style/TextAppearance.ToolbarTitle.SmallCaps"
-            android:text="@string/app_name"/>
+            android:text="@string/app_name_release"/>
     </android.support.v7.widget.Toolbar>
 
     <FrameLayout

@@ -1,5 +1,6 @@
 package io.github.amanshuraikwar.howmuch.bus
 
+import io.github.amanshuraikwar.howmuch.ui.onboarding.OnboardingScreen
 import io.reactivex.subjects.PublishSubject
 
 /**
@@ -11,5 +12,5 @@ import io.reactivex.subjects.PublishSubject
 class AppBus {
 
     val signInSuccessful: PublishSubject<Any> = PublishSubject.create<Any>()
-    val onBoardingScreenProceed: PublishSubject<Any> = PublishSubject.create<Any>()
+    val onBoardingScreenState: PublishSubject<OnboardingScreen.State> = PublishSubject.create<OnboardingScreen.State>()
 }

@@ -11,6 +11,7 @@ import io.github.amanshuraikwar.howmuch.bus.AppBusModule
 import io.github.amanshuraikwar.howmuch.data.DataManager
 import io.github.amanshuraikwar.howmuch.data.DataManagerModule
 import io.github.amanshuraikwar.howmuch.data.DataManagerModuleProvides
+import io.github.amanshuraikwar.howmuch.data.local.LocaDataManagerDi
 import io.github.amanshuraikwar.howmuch.data.network.NetworkDataManagerModule
 import io.github.amanshuraikwar.howmuch.data.network.NetworkManagerProvides
 import javax.inject.Singleton
@@ -24,6 +25,8 @@ import javax.inject.Singleton
             (AppModule::class),
             (NetworkDataManagerModule::class),
             (NetworkManagerProvides::class),
+            (LocaDataManagerDi.LocalDataManagerModule::class),
+            (LocaDataManagerDi.LocalDataManagerProvides::class),
             (DataManagerModule::class),
             (DataManagerModuleProvides::class),
             (AppBusModule::class),

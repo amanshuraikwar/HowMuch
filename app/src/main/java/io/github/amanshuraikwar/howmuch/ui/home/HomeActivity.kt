@@ -1,11 +1,13 @@
 package io.github.amanshuraikwar.howmuch.ui.home
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.AppCompatImageView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -16,6 +18,7 @@ import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.ui.addexpense.AddExpenseFragment
 import io.github.amanshuraikwar.howmuch.ui.base.BaseActivity
 import io.github.amanshuraikwar.howmuch.ui.history.HistoryFragment
+import io.github.amanshuraikwar.howmuch.ui.onboarding.OnboardingFragment
 import io.github.amanshuraikwar.howmuch.ui.signin.SignInFragment
 import io.github.amanshuraikwar.howmuch.ui.stats.StatsFragment
 import io.github.amanshuraikwar.howmuch.util.Util
@@ -39,6 +42,9 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
     @Inject
     lateinit var statsFragment: StatsFragment
 
+    @Inject
+    lateinit var onboardingFragment: OnboardingFragment
+
     @BindArray(R.array.tab_names)
     lateinit var tabs: Array<String>
 
@@ -61,6 +67,12 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
 
         init()
         initTabs()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.d(TAG, "onActivityResult: called")
+        onboardingFragment.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun init() {
@@ -123,6 +135,7 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
             NavigationPage.HISTORY -> loadFragment(historyFragment)
             NavigationPage.STATS -> loadFragment(statsFragment)
             NavigationPage.SIGN_IN -> loadFragment(signInFragment)
+            NavigationPage.ONBOARDING-> loadFragment(onboardingFragment)
         }
     }
 
@@ -153,6 +166,5 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
     override fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
-
     //endregion
 }

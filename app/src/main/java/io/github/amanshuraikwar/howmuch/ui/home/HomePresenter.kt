@@ -5,7 +5,10 @@ import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.bus.AppBus
 import io.github.amanshuraikwar.howmuch.data.DataManager
 import io.github.amanshuraikwar.howmuch.ui.base.BasePresenterImpl
+import io.github.amanshuraikwar.howmuch.ui.onboarding.OnboardingScreen
 import io.github.amanshuraikwar.howmuch.util.Util
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 /**
@@ -23,25 +26,42 @@ class HomePresenter @Inject constructor(appBus: AppBus, dataManager: DataManager
     override fun onAttach(wasViewRecreated: Boolean) {
         super.onAttach(wasViewRecreated)
 
-        if (getDataManager().getAuthenticationManager().hasPermissions()) {
-            if (wasViewRecreated) {
-                getView()?.run {
-                    loadPage(NavigationPage.ADD_EXPENSE)
-                    showBottomNav()
-                }
-            }
-        } else {
-            getView()?.loadPage(NavigationPage.SIGN_IN)
-        }
-
-        getAppBus().signInSuccessful.subscribe{
-            getView()?.run {
-                loadPage(NavigationPage.ADD_EXPENSE)
-                showBottomNav()
-            }
+        if (wasViewRecreated) {
+            init()
         }
     }
     //endregion
+
+    private fun init() {
+
+        getDataManager()
+                .isInitialOnboardingDone()
+                .doOnNext {
+                    done ->
+                    if (!done) {
+                        getView()?.loadPage(NavigationPage.ONBOARDING)
+                    }
+                }
+                .filter { done -> done }
+                .subscribe {
+                    getView()?.loadPage(NavigationPage.ADD_EXPENSE)
+                    getView()?.showBottomNav()
+                }
+
+        getAppBus()
+                .onBoardingScreenState
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    @Suppress("NON_EXHAUSTIVE_WHEN")
+                    when(it) {
+                        OnboardingScreen.State.ONBOARDING_COMPLETE -> {
+                            getView()?.loadPage(NavigationPage.ADD_EXPENSE)
+                            getView()?.showBottomNav()
+                        }
+                    }
+                }
+    }
 
     override fun onNavigationItemSelected(position: Int) {
         Log.d(TAG, "onNavigationItemSelected:called")

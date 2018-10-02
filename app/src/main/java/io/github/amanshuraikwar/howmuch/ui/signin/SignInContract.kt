@@ -23,5 +23,6 @@ interface SignInContract {
         fun onNegBtnClicked()
         fun onSignInResult(isSuccessful: Boolean)
         fun onEmailBtnClicked()
+        fun onScreenSelected()
     }
 }

@@ -21,9 +21,16 @@ interface CreateSheetContract {
         fun hideId()
         fun showName(name: String)
         fun hideName()
+        fun showCompleteSetupButton()
+        fun hideCompleteSetupButton()
+        fun showIndefiniteErrorSnackbar(message: String)
     }
 
     interface Presenter : BasePresenter<View> {
         fun onCreateSheetClicked()
+        fun onCompleteSetupClicked()
+        fun onProceedClicked()
+        fun onIndefiniteRetryClicked()
+        fun onScreenSelected()
     }
 }

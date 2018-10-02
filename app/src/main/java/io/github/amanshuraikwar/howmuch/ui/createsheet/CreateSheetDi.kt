@@ -8,7 +8,7 @@ import io.github.amanshuraikwar.howmuch.di.FragmentScope
 
 class CreateSheetDi {
 
-    @Module abstract class SignInModule {
+    @Module abstract class ModuleAct {
 
         @ActivityScope
         @Binds

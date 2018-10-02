@@ -3,6 +3,7 @@ package io.github.amanshuraikwar.howmuch.ui.createsheet
 import android.accounts.Account
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
@@ -12,17 +13,20 @@ import com.google.api.client.util.ExponentialBackOff
 import com.google.api.services.sheets.v4.SheetsScopes
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.ui.base.BaseFragment
-import kotlinx.android.synthetic.main.layout_onboarding_create_sheet.*
+import io.github.amanshuraikwar.howmuch.ui.onboarding.OnboardingScreen
+import io.github.amanshuraikwar.howmuch.util.Util
+import kotlinx.android.synthetic.main.fragment_create_sheet.*
 import java.util.*
 import javax.inject.Inject
 
 class CreateSheetFragment @Inject constructor()
-    : BaseFragment<CreateSheetContract.View, CreateSheetContract.Presenter>(), CreateSheetContract.View {
+    : BaseFragment<CreateSheetContract.View, CreateSheetContract.Presenter>(), CreateSheetContract.View, OnboardingScreen {
+
+    private val TAG = Util.getTag(this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.layout_onboarding_create_sheet, null)
+        return inflater.inflate(R.layout.fragment_create_sheet, null)
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,8 +34,14 @@ class CreateSheetFragment @Inject constructor()
     }
 
     private fun init() {
-        actionBtn.setOnClickListener {
+        createSheetBtn.setOnClickListener {
             presenter.onCreateSheetClicked()
+        }
+        completeSetupBtn.setOnClickListener {
+            presenter.onCompleteSetupClicked()
+        }
+        proceedBtn.setOnClickListener {
+            presenter.onProceedClicked()
         }
     }
 
@@ -54,19 +64,19 @@ class CreateSheetFragment @Inject constructor()
     }
 
     override fun showProceedButton() {
-        negActionBtn.visibility = VISIBLE
+        proceedBtn.visibility = VISIBLE
     }
 
     override fun hideProceedButton() {
-        negActionBtn.visibility = GONE
+        proceedBtn.visibility = GONE
     }
 
     override fun showCreateSheetButton() {
-        actionBtn.visibility = VISIBLE
+        createSheetBtn.visibility = VISIBLE
     }
 
     override fun hideCreateSheetButton() {
-        actionBtn.visibility = GONE
+        createSheetBtn.visibility = GONE
     }
 
     override fun showSnackBar(message: String) {
@@ -89,5 +99,25 @@ class CreateSheetFragment @Inject constructor()
 
     override fun hideName() {
         spreadSheetNameTv.visibility = INVISIBLE
+    }
+
+    override fun showCompleteSetupButton() {
+        completeSetupBtn.visibility = VISIBLE
+    }
+
+    override fun hideCompleteSetupButton() {
+        completeSetupBtn.visibility = GONE
+    }
+
+    override fun showIndefiniteErrorSnackbar(message: String) {
+        Log.d(TAG, "showIndefiniteErrorSnackbar: called")
+        Snackbar
+                .make(parentRl, message, Snackbar.LENGTH_INDEFINITE)
+                .setAction("Retry") { presenter.onIndefiniteRetryClicked() }
+                .show()
+    }
+
+    override fun selected() {
+        presenter.onScreenSelected()
     }
 }
