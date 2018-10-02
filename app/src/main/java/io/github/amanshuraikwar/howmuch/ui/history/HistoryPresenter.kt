@@ -105,7 +105,7 @@ class HistoryPresenter @Inject constructor(appBus: AppBus,
         val list = mutableListOf<Expense>()
         var count = 0
         if (input.size > 1) {
-            input.subList(1, input.size - 1).forEach {
+            input.subList(1, input.size).forEach {
                 list.add(Expense(count.toString(), it[0].toString(), it[1].toString(), it[2].toString(), it[3].toString(), it[4].toString()))
                 count++
             }
