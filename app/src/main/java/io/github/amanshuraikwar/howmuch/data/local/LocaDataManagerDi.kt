@@ -10,7 +10,7 @@ import dagger.Provides
 import io.github.amanshuraikwar.howmuch.data.local.prefs.PrefsDataManager
 import io.github.amanshuraikwar.howmuch.data.local.prefs.PrefsDataManagerImpl
 import io.github.amanshuraikwar.howmuch.data.local.room.AppDatabase
-import io.github.amanshuraikwar.howmuch.data.local.room.RoomDataManager
+import io.github.amanshuraikwar.howmuch.data.local.room.SqliteDataManager
 import io.github.amanshuraikwar.howmuch.data.local.room.RoomDataManagerImpl
 import io.github.amanshuraikwar.howmuch.data.local.room.SpreadsheetDao
 import io.github.amanshuraikwar.howmuch.di.ApplicationContext
@@ -23,7 +23,7 @@ interface LocaDataManagerDi {
 
         @Singleton
         @Binds
-        abstract fun rdm(impl: RoomDataManagerImpl): RoomDataManager
+        abstract fun sdm(impl: RoomDataManagerImpl): SqliteDataManager
 
         @Singleton
         @Binds

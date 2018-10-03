@@ -29,7 +29,6 @@ class PrefsDataManagerImpl
         }
     }
 
-
     override fun isSpreadsheetReady(): Observable<Boolean> {
         return Observable.create {
             it.onNext(sharedPrefs.getBoolean(KEY_SPREADSHEET_READY, false))

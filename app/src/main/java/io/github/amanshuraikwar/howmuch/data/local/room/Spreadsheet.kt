@@ -6,4 +6,9 @@ import android.arch.persistence.room.PrimaryKey
 @Entity(primaryKeys = ["year","month"])
 data class Spreadsheet(var year: Int,
                        var month: Int,
-                       var spreadsheetId: String)
+                       var spreadsheetId: String,
+                       var state: SpreadsheetState)
+
+enum class SpreadsheetState {
+    CREATED, READY
+}
