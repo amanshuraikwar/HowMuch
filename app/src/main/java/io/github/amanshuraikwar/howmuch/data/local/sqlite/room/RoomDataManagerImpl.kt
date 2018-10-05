@@ -1,5 +1,8 @@
-package io.github.amanshuraikwar.howmuch.data.local.room
+package io.github.amanshuraikwar.howmuch.data.local.sqlite.room
 
+import io.github.amanshuraikwar.howmuch.data.local.sqlite.Spreadsheet
+import io.github.amanshuraikwar.howmuch.data.local.sqlite.SpreadsheetState
+import io.github.amanshuraikwar.howmuch.data.local.sqlite.SqliteDataManager
 import io.reactivex.Completable
 import io.reactivex.Observable
 import javax.inject.Inject
@@ -45,9 +48,8 @@ class RoomDataManagerImpl
             val spreadsheet: Spreadsheet? = spreadsheetDao.findByYearAndMonth(year, month)
 
             if (spreadsheet == null) {
-                throw SqliteDataManager
-                        .SpreadsheetDoesNotExistException(
-                                "Spreadsheet does not exists for year $year and month $month.")
+                throw SqliteDataManager.SpreadsheetDoesNotExistException(
+                        "Spreadsheet does not exists for year $year and month $month.")
             } else {
                 e.onNext(spreadsheet.state == SpreadsheetState.READY)
             }
@@ -64,9 +66,8 @@ class RoomDataManagerImpl
             val spreadsheet: Spreadsheet? = spreadsheetDao.findByYearAndMonth(year, month)
 
             if (spreadsheet == null) {
-                throw SqliteDataManager
-                        .SpreadsheetDoesNotExistException(
-                                "Spreadsheet does not exists for year $year and month $month.")
+                throw SqliteDataManager.SpreadsheetDoesNotExistException(
+                        "Spreadsheet does not exists for year $year and month $month.")
             } else {
                 spreadsheet.state = SpreadsheetState.READY
                 spreadsheetDao.updateAll(spreadsheet)

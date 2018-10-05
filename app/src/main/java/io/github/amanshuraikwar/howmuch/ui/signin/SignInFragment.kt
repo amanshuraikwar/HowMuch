@@ -44,12 +44,16 @@ class SignInFragment @Inject constructor()
         }
 
         proceedBtn.setOnClickListener {
-            presenter.onNegBtnClicked()
+            presenter.onProceedBtnClicked()
         }
 
         emailBtn.setOnClickListener {
             presenter.onEmailBtnClicked()
         }
+
+        profileCv.isEnabled = false
+        emailBtn.isEnabled = false
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -77,11 +81,11 @@ class SignInFragment @Inject constructor()
         createSheetBtn.visibility = VISIBLE
     }
 
-    override fun hideNegBtn() {
+    override fun hideProceedBtn() {
         proceedBtn.visibility = GONE
     }
 
-    override fun showNegBtn() {
+    override fun showProceedBtn() {
         proceedBtn.visibility = VISIBLE
     }
 

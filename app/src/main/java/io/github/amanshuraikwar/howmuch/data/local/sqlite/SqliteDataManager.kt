@@ -1,4 +1,4 @@
-package io.github.amanshuraikwar.howmuch.data.local.room
+package io.github.amanshuraikwar.howmuch.data.local.sqlite
 
 import io.reactivex.Completable
 import io.reactivex.Observable

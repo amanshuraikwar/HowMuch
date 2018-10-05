@@ -1,6 +1,7 @@
-package io.github.amanshuraikwar.howmuch.data.local.room
+package io.github.amanshuraikwar.howmuch.data.local.sqlite.room
 
 import android.arch.persistence.room.*
+import io.github.amanshuraikwar.howmuch.data.local.sqlite.Spreadsheet
 
 @Dao
 interface SpreadsheetDao {

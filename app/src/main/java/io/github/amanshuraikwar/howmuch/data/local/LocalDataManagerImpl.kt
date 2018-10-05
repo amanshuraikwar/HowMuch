@@ -1,9 +1,7 @@
 package io.github.amanshuraikwar.howmuch.data.local
 
 import io.github.amanshuraikwar.howmuch.data.local.prefs.PrefsDataManager
-import io.github.amanshuraikwar.howmuch.data.local.room.SqliteDataManager
-import io.reactivex.Completable
-import io.reactivex.Observable
+import io.github.amanshuraikwar.howmuch.data.local.sqlite.SqliteDataManager
 import javax.inject.Inject
 
 class LocalDataManagerImpl

@@ -6,6 +6,7 @@ import io.github.amanshuraikwar.howmuch.data.local.LocalDataManager
 import io.github.amanshuraikwar.howmuch.data.network.NetworkDataManager
 import io.github.amanshuraikwar.howmuch.data.network.sheets.AuthenticationManager
 import io.github.amanshuraikwar.howmuch.di.ApplicationContext
+import io.reactivex.Completable
 import io.reactivex.Observable
 import javax.inject.Inject
 
@@ -98,4 +99,12 @@ class DataManagerImpl @Inject constructor(
 
     override fun addSpreadsheetIdForYearAndMonth(spreadsheetId: String, year: Int, month: Int) =
             localDataManager.addSpreadsheetIdForYearAndMonth(spreadsheetId, year, month)
+
+    override fun isSpreadsheetReady(year: Int, month: Int): Observable<Boolean> {
+        return localDataManager.isSpreadsheetReady(year, month)
+    }
+
+    override fun setSpreadsheetReady(year: Int, month: Int): Completable {
+        return localDataManager.setSpreadsheetReady(year, month)
+    }
 }

@@ -1,5 +1,7 @@
 package io.github.amanshuraikwar.howmuch.ui.home
 
+import android.accounts.Account
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import io.github.amanshuraikwar.howmuch.ui.base.BasePresenter
 import io.github.amanshuraikwar.howmuch.ui.base.BaseView
 
@@ -18,6 +20,11 @@ interface HomeContract {
         fun hideMainFragmentContainer()
         fun showMainFragmentContainer()
         fun showToast(message: String)
+        fun showLoading()
+        fun hideLoading()
+        fun showError(message: String)
+        fun updateLoading(message: String)
+        fun getGoogleAccountCredential(googleAccount: Account): GoogleAccountCredential
     }
 
     interface Presenter : BasePresenter<View> {

@@ -1,17 +1,19 @@
 package io.github.amanshuraikwar.howmuch.ui.signin
 
 import android.util.Log
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import io.github.amanshuraikwar.howmuch.bus.AppBus
 import io.github.amanshuraikwar.howmuch.data.DataManager
+import io.github.amanshuraikwar.howmuch.data.network.sheets.AuthenticationManager
 import io.github.amanshuraikwar.howmuch.ui.base.BasePresenterImpl
 import io.github.amanshuraikwar.howmuch.ui.onboarding.OnboardingScreen
 import io.github.amanshuraikwar.howmuch.util.Util
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class SignInPresenter
-    @Inject constructor(appBus: AppBus, dataManager: DataManager)
+    @Inject constructor(appBus: AppBus,
+                        dataManager: DataManager,
+                        private val authMan: AuthenticationManager = dataManager.getAuthenticationManager())
     : BasePresenterImpl<SignInContract.View>(appBus, dataManager), SignInContract.Presenter {
 
     @Suppress("PrivatePropertyName")
@@ -22,6 +24,8 @@ class SignInPresenter
     override fun onAttach(wasViewRecreated: Boolean) {
         super.onAttach(wasViewRecreated)
 
+        // taking both in to consideration as this is the first screen
+        // in some cases page is selected before the presenter is attached
         if (selected && wasViewRecreated) {
             init()
         }
@@ -31,29 +35,42 @@ class SignInPresenter
 
         Log.d(TAG, "init: called")
 
+        val account = getAccount()
+
         // toggling sign in and sign out btns
-        if (getDataManager().getAuthenticationManager().hasPermissions()) {
-
-            Log.d(TAG, "init: has permissions")
-
-            val authMan = getDataManager().getAuthenticationManager()
+        if (account != null) {
 
             getView()?.run {
                 hideSignInBtn()
-                showNegBtn()
+                showProceedBtn()
                 showGoogleUserInfo(
-                        email = authMan.getLastSignedAccount()?.email ?: "",
-                        photoUrl = authMan.getLastSignedAccount()?.photoUrl?.toString() ?: "")
+                        email = account.email ?: "",
+                        photoUrl = account.photoUrl?.toString() ?: "")
             }
         } else {
 
-            Log.d(TAG, "init: does not have permissions")
-
             getView()?.run {
-                hideNegBtn()
+                hideProceedBtn()
                 showSignInBtn()
                 hideGoogleUserInfo()
             }
+        }
+    }
+
+    @Suppress("LiftReturnOrAssignment")
+    private fun getAccount(): GoogleSignInAccount? {
+
+        if (authMan.hasPermissions()) {
+
+            val account = authMan.getLastSignedAccount()
+
+            if (account == null) {
+                return null
+            } else {
+                return account
+            }
+        } else {
+            return null
         }
     }
 
@@ -61,25 +78,30 @@ class SignInPresenter
         getView()?.initiateSignIn()
     }
 
-    override fun onNegBtnClicked() {
+    override fun onProceedBtnClicked() {
         getAppBus().onBoardingScreenState.onNext(OnboardingScreen.State.SIGN_IN_COMPLETE)
     }
 
     override fun onSignInResult(isSuccessful: Boolean) {
+
         if (isSuccessful) {
+
             getAppBus().signInSuccessful.onNext(Any())
-            val authMan = getDataManager().getAuthenticationManager()
+
             getView()?.run {
-                showToast("Signed in successfully!")
+                showSnackbar("Signed in successfully!")
                 hideSignInBtn()
-                showNegBtn()
+                showProceedBtn()
                 showGoogleUserInfo(
-                        email = authMan.getLastSignedAccount()?.email ?: "",
-                        photoUrl = authMan.getLastSignedAccount()?.photoUrl?.toString() ?: "")
+                        email = getAccount()?.email ?: "",
+                        photoUrl = getAccount()?.photoUrl?.toString() ?: "")
             }
         } else {
             getView()?.run {
-                showSnackbar("Signed in failed! Click on sign in button to try again.")
+                showSnackbar("Signed in failed!")
+                showSignInBtn()
+                hideProceedBtn()
+                hideGoogleUserInfo()
             }
         }
     }
@@ -87,10 +109,10 @@ class SignInPresenter
     override fun onEmailBtnClicked() {
         getView()?.run {
             initiateSignOut()
-            hideNegBtn()
+            hideProceedBtn()
             showSignInBtn()
             hideGoogleUserInfo()
-            getView()?.initiateSignIn()
+            initiateSignIn()
         }
     }
 

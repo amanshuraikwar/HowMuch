@@ -52,7 +52,7 @@ class OnboardingFragment @Inject constructor()
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         Log.d(TAG, "onActivityResult: called")
-        signInFragment.onActivityResult(requestCode, resultCode, data)
+        adapter.getItem(viewPager.currentItem).onActivityResult(requestCode, resultCode, data)
     }
 
     private fun init() {

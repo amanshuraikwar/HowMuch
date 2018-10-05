@@ -22,14 +22,16 @@ class CreateSheetPresenter
     @Suppress("PrivatePropertyName")
     private val TAG = Util.getTag(this)
 
+    private val curYear = Util.getCurYearNumber()
+    private val curMonth = Util.getCurMonthNumber()
+    private val spreadsheetTitle = Util.createSpreadsheetTitle()
+
     private fun init() {
 
         getDataManager().let {
             dm ->
             dm
-                    .getSpreadsheetIdForYearAndMonth( // get id for cur year & month
-                            Util.getCurYearNumber(),
-                            Util.getCurMonthNumber())
+                    .getSpreadsheetIdForYearAndMonth(curYear, curMonth)
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnNext {
                         id ->
@@ -42,7 +44,7 @@ class CreateSheetPresenter
                     .filter { id -> id != "" } // if id exists
                     .flatMap {
                         dm
-                                .isSpreadsheetReady()
+                                .isSpreadsheetReady(curYear, curMonth)
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .doOnNext {
                                     ready ->
@@ -104,7 +106,6 @@ class CreateSheetPresenter
 
     private fun createNewSpreadsheet(account: Account) {
 
-        val spreadsheetTitle = Util.createSpreadsheetTitle()
         val sheetTitles = Util.getDefaultSheetTitles()
         val categories = Util.getDefaultCategoriesWithHeading()
 
@@ -129,8 +130,8 @@ class CreateSheetPresenter
                         dm
                                 .addSpreadsheetIdForYearAndMonth(
                                         id,
-                                        Util.getCurYearNumber(),
-                                        Util.getCurMonthNumber()
+                                        curYear,
+                                        curMonth
                                 )
                                 .doOnComplete {
                                     Log.d(TAG, "createNewSpreadsheet: addSpreadsheetIdForYearAndMonth: onComplete: called")
@@ -168,7 +169,7 @@ class CreateSheetPresenter
                     .flatMap {
                         id ->
                         dm
-                                .setSpreadsheetReady(true)
+                                .setSpreadsheetReady(curYear, curMonth)
                                 .toSingleDefault(id)
                                 .toObservable()
                     }
@@ -242,8 +243,8 @@ class CreateSheetPresenter
             dm ->
             dm
                     .getSpreadsheetIdForYearAndMonth(
-                            Util.getCurYearNumber(),
-                            Util.getCurMonthNumber()
+                            curYear,
+                            curMonth
                     )
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnNext {
@@ -283,7 +284,7 @@ class CreateSheetPresenter
                     .flatMap {
                         id ->
                         dm
-                                .setSpreadsheetReady(true)
+                                .setSpreadsheetReady(curYear, curMonth)
                                 .toSingleDefault(id)
                                 .toObservable()
                     }

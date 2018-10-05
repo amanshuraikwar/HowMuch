@@ -40,32 +40,6 @@
         android:textAppearance="@style/TextAppearance.OnBoardingPageDescription"
         android:text="@string/sign_in_description"/>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/descriptionTv"
-        android:layout_above="@id/bottomFl"
-        android:visibility="gone">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/illustrationIv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/google"
-                android:tint="@color/gray2"
-                android:contentDescription="@string/person"
-                android:visibility="gone"/>
-        </LinearLayout>
-    </FrameLayout>
-
     <android.support.v7.widget.CardView
         android:id="@+id/profileCv"
         android:layout_width="wrap_content"
@@ -74,8 +48,7 @@
         android:layout_above="@+id/emailBtn"
         app:cardElevation="0dp"
         app:cardCornerRadius="18dp"
-        android:stateListAnimator="@animator/avatar_anim"
-        android:visibility="invisible">
+        android:stateListAnimator="@animator/avatar_anim">
 
         <ImageView
             android:id="@+id/profileIv"
@@ -103,8 +76,7 @@
         android:textColor="@color/green"
         android:stateListAnimator="@animator/email_button_elevation"
         android:textAppearance="@style/TextAppearance.EmailSmall"
-        style="@style/Widget.HowMuch.Button"
-        android:visibility="invisible" />
+        style="@style/Widget.HowMuch.Button" />
 
     <FrameLayout
         android:id="@+id/bottomFl"
@@ -124,7 +96,8 @@
             android:stateListAnimator="@animator/button_elevation"
             android:textColor="@color/white"
             android:text="@string/sign_in"
-            style="@style/Widget.HowMuch.Button"/>
+            style="@style/Widget.HowMuch.Button"
+            android:visibility="gone" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/proceedBtn"

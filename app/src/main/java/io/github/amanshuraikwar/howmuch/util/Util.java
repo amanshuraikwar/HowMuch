@@ -33,7 +33,7 @@ public class Util {
 
     public static int getCurMonthNumber() {
         Calendar cal = Calendar.getInstance();
-        return Integer.parseInt(new SimpleDateFormat("MM", Locale.UK).format(cal.getTime()));
+        return Integer.parseInt(new SimpleDateFormat("MM", Locale.UK).format(cal.getTime())) + 2;
     }
 
     public static int getCurYearNumber() {

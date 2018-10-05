@@ -1,5 +1,6 @@
 package io.github.amanshuraikwar.howmuch.ui.home
 
+import android.accounts.Account
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -10,10 +11,15 @@ import android.support.v7.widget.AppCompatImageView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.Toast
 import butterknife.BindArray
 import butterknife.ButterKnife
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
+import com.google.api.client.util.ExponentialBackOff
+import com.google.api.services.sheets.v4.SheetsScopes
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.ui.addexpense.AddExpenseFragment
 import io.github.amanshuraikwar.howmuch.ui.base.BaseActivity
@@ -23,6 +29,8 @@ import io.github.amanshuraikwar.howmuch.ui.signin.SignInFragment
 import io.github.amanshuraikwar.howmuch.ui.stats.StatsFragment
 import io.github.amanshuraikwar.howmuch.util.Util
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.layout_loading_overlay.*
+import java.util.*
 import javax.inject.Inject
 
 class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), HomeContract.View {
@@ -165,6 +173,34 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
 
     override fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showLoading() {
+        loadingParentLl.visibility = VISIBLE
+        loadingPb.visibility = VISIBLE
+        loadingTv.visibility = VISIBLE
+        loadingRetryBtn.visibility = GONE
+    }
+
+    override fun hideLoading() {
+        loadingParentLl.visibility = GONE
+    }
+
+    override fun showError(message: String) {
+        loadingParentLl.visibility = VISIBLE
+        loadingPb.visibility = GONE
+        loadingTv.visibility = GONE
+        loadingRetryBtn.visibility = VISIBLE
+    }
+
+    override fun updateLoading(message: String) {
+        loadingTv.text = message
+    }
+
+    override fun getGoogleAccountCredential(googleAccount: Account): GoogleAccountCredential {
+        return GoogleAccountCredential.usingOAuth2(this, Arrays.asList(SheetsScopes.SPREADSHEETS))
+                .setBackOff(ExponentialBackOff())
+                .setSelectedAccount(googleAccount)
     }
     //endregion
 }
