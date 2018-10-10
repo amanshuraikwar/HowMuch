@@ -24,6 +24,13 @@ interface CreateSheetContract {
         fun showCompleteSetupButton()
         fun hideCompleteSetupButton()
         fun showIndefiniteErrorSnackbar(message: String)
+        fun hideCreateSheetInsteadButton()
+        fun hideSaveIdButton()
+        fun showHaveSpreadsheetButton()
+        fun hideHaveSpreadsheetButton()
+        fun showCreateSheetInsteadButton()
+        fun showSaveIdButton()
+        fun showSpreadsheetIdError(message: String)
     }
 
     interface Presenter : BasePresenter<View> {
@@ -32,5 +39,8 @@ interface CreateSheetContract {
         fun onProceedClicked()
         fun onIndefiniteRetryClicked()
         fun onScreenSelected()
+        fun haveSpreadsheetClicked()
+        fun createSheetInsteadClicked()
+        fun saveIdClicked(spreadsheetId: String)
     }
 }

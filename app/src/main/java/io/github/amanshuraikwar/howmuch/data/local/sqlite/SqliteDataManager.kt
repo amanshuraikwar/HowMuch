@@ -12,41 +12,45 @@ import java.lang.Exception
 interface SqliteDataManager {
 
     /**
-     * Gets spreadsheet id for given year and month.
+     * Gets spreadsheet id for given year, month and email.
      * @param year Year number.
      * @param month Month number.
+     * @param email Email.
      * @return A rx observable of spreadsheet id. If not exists returns empty string.
      */
-    fun getSpreadsheetIdForYearAndMonth(year: Int, month: Int): Observable<String>
+    fun getSpreadsheetIdForYearAndMonthAndEmail(year: Int, month: Int, email: String): Observable<String>
 
     /**
      * Adds a new entry if not exists, if exists updates.
      * @param spreadsheetId Spreadsheet id to be stored.
      * @param year Year number for which the spreadsheet id is.
      * @param month Month number for which the spreadsheet id is.
+     * @param email Email for which the spreadsheet id is.
      * @return A rx completable.
      */
-    fun addSpreadsheetIdForYearAndMonth(spreadsheetId: String, year: Int, month: Int): Completable
+    fun addSpreadsheetIdForYearAndMonthAndEmail(spreadsheetId: String, year: Int, month: Int, email: String): Completable
 
     /**
-     * Checks if spreadsheet for a given year and month is ready or not.
+     * Checks if spreadsheet for a given year, month and email is ready or not.
      * @param year Year number.
      * @param month Month number.
+     * @param email Email.
      * @return A rx observable of boolean. Returns false if entry does not exists.
      * @throws SpreadsheetDoesNotExistException when spreadsheet does not exist.
      */
     @Throws(SpreadsheetDoesNotExistException::class)
-    fun isSpreadsheetReady(year: Int, month: Int): Observable<Boolean>
+    fun isSpreadsheetReady(year: Int, month: Int, email: String): Observable<Boolean>
 
     /**
-     * Sets spreadsheet's state for a given year and month to ready.
+     * Sets spreadsheet's state for a given year. month and email to ready.
      * @param year Year number.
      * @param month Month number.
+     * @param email Email.
      * @return A rx completable.
      * @throws SpreadsheetDoesNotExistException when spreadsheet does not exist.
      */
     @Throws(SpreadsheetDoesNotExistException::class)
-    fun setSpreadsheetReady(year: Int, month: Int): Completable
+    fun setSpreadsheetReady(year: Int, month: Int, email: String): Completable
 
     /**
      * Exception to be thrown when an action is performed assuming spreadsheet will exist in DB

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parentRl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,7 +24,7 @@
         android:layout_marginEnd="@dimen/margin_large"
         android:gravity="center_horizontal"
         android:textAppearance="@style/TextAppearance.OnBoardingPageTitle"
-        android:text="Create Sheet" />
+        android:text="@string/create_sheet" />
 
     <TextView
         android:id="@+id/descriptionTv"
@@ -38,39 +39,39 @@
         android:textAppearance="@style/TextAppearance.OnBoardingPageDescription"
         android:text="@string/create_sheet_description"/>
 
-    <TextView
-        android:id="@+id/spreadSheetNameTv"
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:id="@+id/spreadsheetIdFl"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/spreadSheetIdTv"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:layout_marginStart="@dimen/margin_normal"
-        android:layout_marginEnd="@dimen/margin_normal"
-        android:layout_marginBottom="@dimen/margin_small"
-        android:background="@color/gray1"
-        android:textAppearance="@style/TextAppearance.SpreadSheetName"
-        android:visibility="invisible" />
-
-    <TextView
-        android:id="@+id/spreadSheetIdTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/bottomFl"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:layout_marginStart="@dimen/margin_normal"
-        android:layout_marginEnd="@dimen/margin_normal"
         android:layout_marginBottom="@dimen/margin_large"
-        android:background="@color/gray1"
-        android:textAppearance="@style/TextAppearance.SpreadSheetId"
-        android:visibility="invisible" />
+        android:layout_above="@+id/loadingLl"
+        android:visibility="invisible">
+
+        <EditText
+            android:id="@+id/spreadsheetIdEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/avatar_size_padding"
+            android:paddingEnd="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:hint="@string/spreadsheet_id"
+            android:inputType="text"
+            android:lines="1"
+            android:background="@color/gray1"
+            android:textAppearance="@style/TextAppearance.SpreadSheetId"
+            tools:text=""/>
+
+        <ImageView
+            android:id="@+id/spreadsheetIdTv"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_gravity="center_vertical"
+            android:tint="@color/inactiveIcon"
+            android:src="@drawable/ic_details_white_24dp"
+            android:contentDescription="@string/spreadsheet_id" />
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/loadingLl"
@@ -78,6 +79,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:layout_alignParentBottom="true"
+        android:layout_above="@+id/bottomLl"
         android:layout_marginBottom="@dimen/margin_very_large"
         android:orientation="vertical"
         android:visibility="gone">
@@ -98,38 +100,76 @@
             android:textAppearance="@style/TextAppearance.Loading"/>
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/bottomFl"
+    <LinearLayout
+        android:id="@+id/bottomLl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/margin_very_large">
+        android:layout_marginBottom="@dimen/margin_very_large"
+        android:orientation="vertical">
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/createSheetBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/create_a_new_sheet"
-            style="@style/Widget.HowMuch.Button.Onboarding"
-            android:visibility="gone"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/completeSetupBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/complete_setup"
-            style="@style/Widget.HowMuch.Button.Onboarding"
-            android:visibility="gone"/>
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/createSheetBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/create_a_new_sheet"
+                style="@style/Widget.HowMuch.Button.Onboarding"
+                android:visibility="gone"/>
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/proceedBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/proceed"
-            style="@style/Widget.HowMuch.Button.Onboarding"
-            android:visibility="gone"/>
-    </FrameLayout>
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/completeSetupBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/complete_setup"
+                style="@style/Widget.HowMuch.Button.Onboarding"
+                android:visibility="gone"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/proceedBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/proceed"
+                style="@style/Widget.HowMuch.Button.Onboarding"
+                android:visibility="gone"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/saveIdBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/proceed"
+                style="@style/Widget.HowMuch.Button.Onboarding"
+                android:visibility="gone"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/haveSpreadsheetBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/have_a_spreadsheet"
+                style="@style/Widget.HowMuch.Button.Onboarding.Alternate"
+                android:visibility="gone"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/createSheetInsteadBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/create_a_spreadsheet_instead"
+                style="@style/Widget.HowMuch.Button.Onboarding.Alternate"
+                android:visibility="gone"/>
+        </FrameLayout>
+    </LinearLayout>
 </RelativeLayout>

@@ -9,8 +9,10 @@ import io.github.amanshuraikwar.howmuch.data.network.sheets.SheetsDataSource
 import io.github.amanshuraikwar.howmuch.ui.base.BasePresenterImpl
 import io.github.amanshuraikwar.howmuch.ui.onboarding.OnboardingScreen
 import io.github.amanshuraikwar.howmuch.util.Util
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.lang.Exception
 import javax.inject.Inject
 
 class CreateSheetPresenter
@@ -22,6 +24,7 @@ class CreateSheetPresenter
     @Suppress("PrivatePropertyName")
     private val TAG = Util.getTag(this)
 
+    // cashing values to avoid month-end edge cases
     private val curYear = Util.getCurYearNumber()
     private val curMonth = Util.getCurMonthNumber()
     private val spreadsheetTitle = Util.createSpreadsheetTitle()
@@ -31,20 +34,21 @@ class CreateSheetPresenter
         getDataManager().let {
             dm ->
             dm
-                    .getSpreadsheetIdForYearAndMonth(curYear, curMonth)
+                    .getSpreadsheetIdForYearAndMonthAndEmail(curYear, curMonth, getEmail())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnNext {
                         id ->
-                        Log.i(TAG, "init: getSpreadsheetIdForYearAndMonth: onNext: id = $id")
+                        Log.i(TAG, "init: getSpreadsheetIdForYearAndMonthAndEmail: onNext: id = $id")
                         if (id == "") { // if id does not exists
                             getView()?.showCreateSheetButton()
+                            getView()?.showHaveSpreadsheetButton()
                         }
                     }
                     .observeOn(Schedulers.newThread())
                     .filter { id -> id != "" } // if id exists
                     .flatMap {
                         dm
-                                .isSpreadsheetReady(curYear, curMonth)
+                                .isSpreadsheetReady(curYear, curMonth, getEmail())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .doOnNext {
                                     ready ->
@@ -56,6 +60,13 @@ class CreateSheetPresenter
                                 .observeOn(Schedulers.newThread())
                     }
                     .filter { ready -> ready } // if sheet is ready
+                    .flatMap {
+                        ready ->
+                        getDataManager()
+                                .setInitialOnboardingDone(true)
+                                .toSingleDefault(ready)
+                                .toObservable()
+                    }
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe {
@@ -63,6 +74,8 @@ class CreateSheetPresenter
                             hideCreateSheetButton()
                             hideCompleteSetupButton()
                             hideProceedButton()
+                            hideHaveSpreadsheetButton()
+                            hideCreateSheetInsteadButton()
                         }
                     }
                     .subscribe(
@@ -83,25 +96,6 @@ class CreateSheetPresenter
 
     override fun onCreateSheetClicked() {
         createNewSpreadsheet(getAccount()!!)
-    }
-
-    @Suppress("LiftReturnOrAssignment")
-    private fun getAccount(): Account? {
-
-        if (authMan.hasPermissions()) {
-
-            val account = authMan.getLastSignedAccount()?.account
-
-            if (account == null) {
-                // todo invalid state
-                return null
-            } else {
-                return account
-            }
-        } else {
-            // todo invalid state
-            return null
-        }
     }
 
     private fun createNewSpreadsheet(account: Account) {
@@ -128,18 +122,19 @@ class CreateSheetPresenter
                     .flatMap {
                         id ->
                         dm
-                                .addSpreadsheetIdForYearAndMonth(
+                                .addSpreadsheetIdForYearAndMonthAndEmail(
                                         id,
                                         curYear,
-                                        curMonth
+                                        curMonth,
+                                        getEmail()
                                 )
                                 .doOnComplete {
-                                    Log.d(TAG, "createNewSpreadsheet: addSpreadsheetIdForYearAndMonth: onComplete: called")
+                                    Log.d(TAG, "createNewSpreadsheet: addSpreadsheetIdForYearAndMonthAndEmail: onComplete: called")
                                 }
                                 .toSingleDefault(id)
                                 .toObservable()
                                 .doOnNext {
-                                    Log.d(TAG, "createNewSpreadsheet: addSpreadsheetIdForYearAndMonth: toSingleDefault: doOnNext: called")
+                                    Log.d(TAG, "createNewSpreadsheet: addSpreadsheetIdForYearAndMonthAndEmail: toSingleDefault: doOnNext: called")
                                 }
                     }
                     .flatMap {
@@ -169,7 +164,7 @@ class CreateSheetPresenter
                     .flatMap {
                         id ->
                         dm
-                                .setSpreadsheetReady(curYear, curMonth)
+                                .setSpreadsheetReady(curYear, curMonth, getEmail())
                                 .toSingleDefault(id)
                                 .toObservable()
                     }
@@ -205,6 +200,7 @@ class CreateSheetPresenter
                             {
                                 getView()?.run {
                                     hideCreateSheetButton()
+                                    hideHaveSpreadsheetButton()
                                     showLoading()
                                 }
                             }
@@ -242,9 +238,10 @@ class CreateSheetPresenter
         getDataManager().let {
             dm ->
             dm
-                    .getSpreadsheetIdForYearAndMonth(
+                    .getSpreadsheetIdForYearAndMonthAndEmail(
                             curYear,
-                            curMonth
+                            curMonth,
+                            getEmail()
                     )
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnNext {
@@ -284,7 +281,7 @@ class CreateSheetPresenter
                     .flatMap {
                         id ->
                         dm
-                                .setSpreadsheetReady(curYear, curMonth)
+                                .setSpreadsheetReady(curYear, curMonth, getEmail())
                                 .toSingleDefault(id)
                                 .toObservable()
                     }
@@ -342,4 +339,208 @@ class CreateSheetPresenter
         Log.d(TAG, "onScreenSelected: called")
         init()
     }
+
+    @Suppress("LiftReturnOrAssignment")
+    private fun getAccount(): Account? {
+
+        if (authMan.hasPermissions()) {
+
+            val account = authMan.getLastSignedAccount()?.account
+
+            if (account == null) {
+                return null
+            } else {
+                return account
+            }
+        } else {
+            return null
+        }
+    }
+
+    @Suppress("LiftReturnOrAssignment")
+    private fun getEmail(): String {
+
+        if (authMan.hasPermissions()) {
+
+            val email = authMan.getLastSignedAccount()?.email
+
+            if (email == null) {
+                return ""
+            } else {
+                return email
+            }
+        } else {
+            return ""
+        }
+    }
+
+    override fun createSheetInsteadClicked() {
+        getView()?.run {
+            hideCreateSheetInsteadButton()
+            hideSaveIdButton()
+            showHaveSpreadsheetButton()
+            showCreateSheetButton()
+            hideId()
+        }
+    }
+
+    override fun haveSpreadsheetClicked() {
+        getView()?.run {
+            hideHaveSpreadsheetButton()
+            hideCreateSheetButton()
+            showCreateSheetInsteadButton()
+            showSaveIdButton()
+            showId("")
+        }
+    }
+
+    override fun saveIdClicked(spreadsheetId: String) {
+        if (spreadsheetId == "") {
+            getView()?.showSpreadsheetIdError("Spreadsheet id cannot be empty!")
+        } else {
+            validateSpreadsheet(spreadsheetId, getAccount()!!)
+                    .flatMap {
+                        getDataManager()
+                                .addSpreadsheetIdForYearAndMonthAndEmail(
+                                        spreadsheetId, curYear, curMonth, getEmail()
+                                )
+                                .toSingleDefault(spreadsheetId)
+                                .toObservable()
+                    }
+                    .flatMap {
+                        getDataManager()
+                                .setSpreadsheetReady(
+                                        curYear, curMonth, getEmail()
+                                )
+                                .toSingleDefault(spreadsheetId)
+                                .toObservable()
+                    }
+                    .flatMap {
+                        getDataManager()
+                                .setInitialOnboardingDone(true)
+                                .toSingleDefault(spreadsheetId)
+                                .toObservable()
+                    }
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            {
+                                getView()?.hideLoading()
+                                onProceedClicked()
+                            },
+                            {
+                                it.printStackTrace()
+                                Log.e(TAG, it.toString())
+                                if (it is InvalidSpreadsheetException) {
+                                    getView()?.run {
+                                        showSnackBar("Invalid spreadsheet!")
+                                        hideLoading()
+                                        showSaveIdButton()
+                                        showCreateSheetInsteadButton()
+                                    }
+                                } else {
+                                    getView()?.run {
+                                        showSnackBar("Something went wrong!")
+                                        hideLoading()
+                                        showSaveIdButton()
+                                        showCreateSheetInsteadButton()
+                                    }
+                                }
+                            },
+                            {
+
+                            },
+                            {
+                                getView()?.run {
+                                    hideSaveIdButton()
+                                    hideCreateSheetInsteadButton()
+                                    showLoading()
+                                    updateLoading("Checking spreadsheet...")
+                                }
+                            }
+                    )
+        }
+    }
+
+    private fun validateSpreadsheet(id: String, googleAccount: Account): Observable<String> {
+        return getDataManager()
+                .readSpreadSheet(
+                        id,
+                        Util.getDefaultCategoriesSpreadSheetRangeWithHeading(),
+                        getView()!!.getGoogleAccountCredential(googleAccount)
+                )
+                .flatMap {
+                    data ->
+                    Observable.fromCallable {
+
+                        if (data.size == 0) {
+                            throw InvalidSpreadsheetException("Metadata sheet is empty.")
+                        }
+
+                        if (data[0].size == 0) {
+                            throw InvalidSpreadsheetException("Categories heading is empty.")
+                        }
+
+                        if (data[0][0] != "Categories") {
+                            throw InvalidSpreadsheetException("Categories heading '${data[0][0]}' is invalid.")
+                        }
+
+                        if (data.size < 2) {
+                            throw InvalidSpreadsheetException("Metadata sheet has no categories.")
+                        }
+
+                        if (data[1].size == 0) {
+                            throw InvalidSpreadsheetException("Metadata sheet has no categories.")
+                        }
+
+                        id
+                    }
+                }
+                .flatMap {
+                    getDataManager()
+                            .readSpreadSheet(
+                                    id,
+                                    Util.getDefaultTransactionsSpreadSheetRangeWithHeading(),
+                                    getView()!!.getGoogleAccountCredential(googleAccount)
+                            )
+                }
+                .flatMap {
+                    data ->
+                    Observable.fromCallable {
+
+                        if (data.size == 0) {
+                            throw InvalidSpreadsheetException("Transactions sheet is empty.")
+                        }
+
+                        if (data[0].size == 0) {
+                            throw InvalidSpreadsheetException("Transactions heading is empty.")
+                        }
+
+                        if (data[0][0] != "Transactions") {
+                            throw InvalidSpreadsheetException("Transactions heading is invalid.")
+                        }
+
+                        if (data.size < 2) {
+                            throw InvalidSpreadsheetException("Transactions sheet does not have content headings.")
+                        }
+
+                        if (data[1].size == 0) {
+                            throw InvalidSpreadsheetException("Transactions sheet content headings are empty.")
+                        }
+
+                        if (!(data[1][0] == "Date"
+                                        && data[1][1] == "Time"
+                                        && data[1][2] == "Amount"
+                                        && data[1][3] == "Description"
+                                        && data[1][4] == "Category")
+                        ) {
+                            throw InvalidSpreadsheetException("Invalid transaction content headings.")
+                        }
+
+                        id
+                    }
+                }
+    }
+
+    class InvalidSpreadsheetException(message: String): Exception(message)
 }

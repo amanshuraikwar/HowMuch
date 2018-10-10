@@ -14,6 +14,7 @@ import io.github.amanshuraikwar.howmuch.ui.base.BaseView
 interface HomeContract {
 
     interface View : BaseView {
+        fun setCurPage(index: Int)
         fun loadPage(navigationPage: NavigationPage)
         fun hideBottomNav()
         fun showBottomNav()
@@ -29,5 +30,6 @@ interface HomeContract {
 
     interface Presenter : BasePresenter<View> {
         fun onNavigationItemSelected(position: Int)
+        fun onRetryClicked()
     }
 }

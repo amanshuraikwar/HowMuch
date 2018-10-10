@@ -1,5 +1,6 @@
 package io.github.amanshuraikwar.howmuch.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,12 +34,12 @@ public class Util {
 
     public static int getCurMonthNumber() {
         Calendar cal = Calendar.getInstance();
-        return Integer.parseInt(new SimpleDateFormat("MM", Locale.UK).format(cal.getTime())) + 2;
+        return Integer.parseInt(new SimpleDateFormat("MM", Locale.UK).format(cal.getTime())) + 3;
     }
 
     public static int getCurYearNumber() {
         Calendar cal = Calendar.getInstance();
-        return Integer.parseInt(new SimpleDateFormat("YY", Locale.UK).format(cal.getTime()));
+        return Integer.parseInt(new SimpleDateFormat("YY", Locale.UK).format(cal.getTime())) + 1;
     }
 
     public static String getCurDateTime() {
@@ -49,6 +50,26 @@ public class Util {
     public static String getCurTime() {
         Calendar cal = Calendar.getInstance();
         return new SimpleDateFormat("HH:mm:ss", Locale.UK).format(cal.getTime());
+    }
+
+    public static String getCurDate() {
+        Calendar cal = Calendar.getInstance();
+        return new SimpleDateFormat("dd-MM-yyyy", Locale.UK).format(cal.getTime());
+    }
+
+    public static String getCurDateBeautiful() {
+        Calendar cal = Calendar.getInstance();
+        return new SimpleDateFormat("dd MMMM yyyy", Locale.UK).format(cal.getTime());
+    }
+
+    public static String beautifyDate(String uglyDate) throws ParseException {
+        Date date = new SimpleDateFormat("dd-MM-yyyy", Locale.UK).parse(uglyDate);
+        return new SimpleDateFormat("dd MMMM yyyy", Locale.UK).format(date);
+    }
+
+    public static String unBeautifyDate(String beautifulDate) throws ParseException {
+        Date date = new SimpleDateFormat("dd MMMM yyyy", Locale.UK).parse(beautifulDate);
+        return new SimpleDateFormat("dd-MM-yyyy", Locale.UK).format(date);
     }
 
     public static String createSpreadsheetTitle() {

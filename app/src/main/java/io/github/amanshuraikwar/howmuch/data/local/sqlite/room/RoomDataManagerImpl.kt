@@ -10,24 +10,30 @@ import javax.inject.Inject
 class RoomDataManagerImpl
 @Inject constructor(private val spreadsheetDao: SpreadsheetDao): SqliteDataManager {
 
-    override fun getSpreadsheetIdForYearAndMonth(year: Int, month: Int): Observable<String> {
+    override fun getSpreadsheetIdForYearAndMonthAndEmail(year: Int,
+                                                         month: Int,
+                                                         email: String): Observable<String> {
         return Observable.create {
             e ->
-            e.onNext(spreadsheetDao.findByYearAndMonth(year, month)?.spreadsheetId ?: "")
+            e.onNext(spreadsheetDao.findByYearAndMonthAndEmail(year, month, email)?.spreadsheetId ?: "")
             e.onComplete()
         }
     }
 
-    override fun addSpreadsheetIdForYearAndMonth(spreadsheetId: String, year: Int, month: Int): Completable {
+    override fun addSpreadsheetIdForYearAndMonthAndEmail(spreadsheetId: String,
+                                                         year: Int,
+                                                         month: Int,
+                                                         email: String): Completable {
 
         return Completable.create {
 
             e ->
 
-            var spreadsheet: Spreadsheet? = spreadsheetDao.findByYearAndMonth(year, month)
+            var spreadsheet: Spreadsheet? =
+                    spreadsheetDao.findByYearAndMonthAndEmail(year, month, email)
 
             if (spreadsheet == null) { // if null insert
-                spreadsheet = Spreadsheet(year, month, spreadsheetId, SpreadsheetState.CREATED)
+                spreadsheet = Spreadsheet(year, month, email, spreadsheetId, SpreadsheetState.CREATED)
                 spreadsheetDao.insertAll(spreadsheet)
             } else { // else update
                 spreadsheet.spreadsheetId = spreadsheetId
@@ -39,13 +45,14 @@ class RoomDataManagerImpl
     }
 
     @Throws(SqliteDataManager.SpreadsheetDoesNotExistException::class)
-    override fun isSpreadsheetReady(year: Int, month: Int): Observable<Boolean> {
+    override fun isSpreadsheetReady(year: Int, month: Int, email: String): Observable<Boolean> {
 
         return Observable.create {
 
             e ->
 
-            val spreadsheet: Spreadsheet? = spreadsheetDao.findByYearAndMonth(year, month)
+            val spreadsheet: Spreadsheet? =
+                    spreadsheetDao.findByYearAndMonthAndEmail(year, month, email)
 
             if (spreadsheet == null) {
                 throw SqliteDataManager.SpreadsheetDoesNotExistException(
@@ -57,13 +64,14 @@ class RoomDataManagerImpl
     }
 
     @Throws(SqliteDataManager.SpreadsheetDoesNotExistException::class)
-    override fun setSpreadsheetReady(year: Int, month: Int): Completable {
+    override fun setSpreadsheetReady(year: Int, month: Int, email: String): Completable {
 
         return Completable.create {
 
             e ->
 
-            val spreadsheet: Spreadsheet? = spreadsheetDao.findByYearAndMonth(year, month)
+            val spreadsheet: Spreadsheet? =
+                    spreadsheetDao.findByYearAndMonthAndEmail(year, month, email)
 
             if (spreadsheet == null) {
                 throw SqliteDataManager.SpreadsheetDoesNotExistException(

@@ -7,7 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="android:statusBarColor">@color/gray2</item>
+        <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
 
         <item name="android:windowActivityTransitions">true</item>
@@ -54,16 +54,22 @@
         name="Widget.HowMuch.Button"
         parent="@android:style/Widget.Material.Button">
         <item name="android:textAppearance">@style/TextAppearance.Button</item>
+        <item name="android:stateListAnimator">@animator/button_elevation</item>
     </style>
 
     <style
-        name="Widget.HowMuch.Button.Onboarding"
-        parent="@android:style/Widget.Material.Button">
+        name="Widget.HowMuch.Button.Onboarding">
         <item name="android:paddingStart">@dimen/padding_very_large</item>
         <item name="android:paddingEnd">@dimen/padding_very_large</item>
         <item name="backgroundTint">@color/green</item>
         <item name="android:stateListAnimator">@animator/button_elevation</item>
         <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style
+        name="Widget.HowMuch.Button.Onboarding.Alternate">
+        <item name="backgroundTint">@color/white</item>
+        <item name="android:textColor">@color/secondaryText</item>
     </style>
 
     <style
@@ -300,6 +306,14 @@
 
     <style
         name="TextAppearance.SpreadSheetId"
+        parent="@style/TextAppearance.Subhead">
+
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+    </style>
+
+    <style
+        name="TextAppearance.SpreadSheetName"
         parent="@style/TextAppearance.Caption">
 
         <item name="android:textColor">@color/green</item>
@@ -307,8 +321,32 @@
     </style>
 
     <style
-        name="TextAppearance.SpreadSheetName"
-        parent="@style/TextAppearance.Caption">
+        name="TextAppearance.NameLarge"
+        parent="@style/TextAppearance.Title">
+
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:fontFamily">@font/roboto_mono</item>
+    </style>
+
+    <style
+        name="TextAppearance.EmailLarge"
+        parent="@style/TextAppearance.Body1">
+
+        <item name="android:textColor">@color/secondaryText</item>
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+    </style>
+
+    <style
+        name="TextAppearance.Setting"
+        parent="@style/TextAppearance.Subhead">
+
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+    </style>
+
+    <style
+        name="TextAppearance.CurrencyLarge"
+        parent="@style/TextAppearance.Headline">
 
         <item name="android:textColor">@color/green</item>
         <item name="android:fontFamily">@font/roboto_mono_medium</item>

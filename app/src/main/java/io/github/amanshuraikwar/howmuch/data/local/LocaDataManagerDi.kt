@@ -18,6 +18,7 @@ import javax.inject.Singleton
 
 interface LocaDataManagerDi {
 
+    @Suppress("unused")
     @Module
     abstract class LocalDataManagerModule {
 

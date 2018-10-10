@@ -2,9 +2,10 @@ package io.github.amanshuraikwar.howmuch.data.local.sqlite
 
 import android.arch.persistence.room.Entity
 
-@Entity(primaryKeys = ["year","month"])
+@Entity(primaryKeys = ["year", "month", "email"])
 data class Spreadsheet(var year: Int,
                        var month: Int,
+                       var email: String,
                        var spreadsheetId: String,
                        var state: SpreadsheetState)
 

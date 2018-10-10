@@ -9,4 +9,8 @@
     <dimen name="text_size_small">12sp</dimen>
     <dimen name="margin_small">8dp</dimen>
     <dimen name="padding_very_large">48dp</dimen>
+    <dimen name="avatar_size_padding">72dp</dimen>
+    <dimen name="avatar_size_margin">72dp</dimen>
+    <dimen name="avatar_size">72dp</dimen>
+    <dimen name="elevation_very_small">1dp</dimen>
 </resources>

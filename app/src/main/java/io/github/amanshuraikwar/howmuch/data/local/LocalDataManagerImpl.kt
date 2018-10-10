@@ -14,27 +14,27 @@ class LocalDataManagerImpl
     override fun isSignedIn() =
             prefsDataManager.isSignedIn()
 
-    override fun isSpreadsheetReady() =
-            prefsDataManager.isSpreadsheetReady()
-
     override fun setInitialOnboardingDone(value: Boolean) =
             prefsDataManager.setInitialOnboardingDone(value)
 
     override fun setSignedIn(value: Boolean) =
             prefsDataManager.setSignedIn(value)
 
-    override fun setSpreadsheetReady(value: Boolean) =
-            prefsDataManager.setSpreadsheetReady(value)
+    override fun getSpreadsheetIdForYearAndMonthAndEmail(year: Int, month: Int, email: String) =
+            sqliteDataManager.getSpreadsheetIdForYearAndMonthAndEmail(year, month, email)
 
-    override fun getSpreadsheetIdForYearAndMonth(year: Int, month: Int) =
-            sqliteDataManager.getSpreadsheetIdForYearAndMonth(year, month)
+    override fun addSpreadsheetIdForYearAndMonthAndEmail(spreadsheetId: String, year: Int, month: Int, email: String) =
+            sqliteDataManager.addSpreadsheetIdForYearAndMonthAndEmail(spreadsheetId, year, month, email)
 
-    override fun addSpreadsheetIdForYearAndMonth(spreadsheetId: String, year: Int, month: Int) =
-            sqliteDataManager.addSpreadsheetIdForYearAndMonth(spreadsheetId, year, month)
+    override fun isSpreadsheetReady(year: Int, month: Int, email: String) =
+            sqliteDataManager.isSpreadsheetReady(year, month, email)
 
-    override fun isSpreadsheetReady(year: Int, month: Int) =
-            sqliteDataManager.isSpreadsheetReady(year, month)
+    override fun setSpreadsheetReady(year: Int, month: Int, email: String) =
+            sqliteDataManager.setSpreadsheetReady(year, month, email)
 
-    override fun setSpreadsheetReady(year: Int, month: Int) =
-            sqliteDataManager.setSpreadsheetReady(year, month)
+    override fun getCurrency() = prefsDataManager.getCurrency()
+
+    override fun setCurrency(currency: String) {
+        prefsDataManager.setCurrency(currency)
+    }
 }

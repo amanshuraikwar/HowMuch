@@ -12,7 +12,7 @@ class PrefsDataManagerImpl
     companion object {
         private const val KEY_INITIAL_ONBOARDING_DONE = "initial_onboarding_done"
         private const val KEY_SIGNED_IN = "signed_in"
-        private const val KEY_SPREADSHEET_READY = "spreadsheet_ready"
+        private const val KEY_CURRENCY_SYMBOL = "currency_symbol"
     }
 
     override fun isInitialOnboardingDone(): Observable<Boolean> {
@@ -25,13 +25,6 @@ class PrefsDataManagerImpl
     override fun isSignedIn(): Observable<Boolean> {
         return Observable.create {
             it.onNext(sharedPrefs.getBoolean(KEY_SIGNED_IN, false))
-            it.onComplete()
-        }
-    }
-
-    override fun isSpreadsheetReady(): Observable<Boolean> {
-        return Observable.create {
-            it.onNext(sharedPrefs.getBoolean(KEY_SPREADSHEET_READY, false))
             it.onComplete()
         }
     }
@@ -58,14 +51,14 @@ class PrefsDataManagerImpl
         }
     }
 
-    @SuppressLint("ApplySharedPref")
-    override fun setSpreadsheetReady(value: Boolean): Completable {
-        return Completable.create{
-            with (sharedPrefs.edit()) {
-                putBoolean(KEY_SPREADSHEET_READY, value)
-                commit()
-            }
-            it.onComplete()
+    override fun getCurrency(): String {
+        return sharedPrefs.getString(KEY_CURRENCY_SYMBOL, "₹")
+    }
+
+    override fun setCurrency(currency: String) {
+        with (sharedPrefs.edit()) {
+            putString(KEY_CURRENCY_SYMBOL, currency)
+            apply()
         }
     }
 }

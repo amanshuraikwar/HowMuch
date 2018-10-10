@@ -4,7 +4,7 @@
     android:id="@+id/containerRl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray1">
+    android:background="@color/white">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"

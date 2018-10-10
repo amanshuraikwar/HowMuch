@@ -11,6 +11,7 @@ import io.github.amanshuraikwar.howmuch.ui.history.HistoryDi
 import io.github.amanshuraikwar.howmuch.ui.home.HomeActivity
 import io.github.amanshuraikwar.howmuch.ui.home.HomeDi
 import io.github.amanshuraikwar.howmuch.ui.onboarding.OnboardingDi
+import io.github.amanshuraikwar.howmuch.ui.settings.SettingsDi
 import io.github.amanshuraikwar.howmuch.ui.signin.SignInDi
 import io.github.amanshuraikwar.howmuch.ui.stats.StatsDi
 
@@ -30,7 +31,8 @@ import io.github.amanshuraikwar.howmuch.ui.stats.StatsDi
                 (StatsDi.StatsModule::class),
                 (SignInDi.SignInModule::class),
                 (OnboardingDi.ModuleAct::class),
-                (CreateSheetDi.ModuleAct::class)])
+                (CreateSheetDi.ModuleAct::class),
+                (SettingsDi.ModuleAct::class)])
     abstract fun home(): HomeActivity
 
     @ActivityScope

@@ -25,6 +25,7 @@ import io.github.amanshuraikwar.howmuch.ui.addexpense.AddExpenseFragment
 import io.github.amanshuraikwar.howmuch.ui.base.BaseActivity
 import io.github.amanshuraikwar.howmuch.ui.history.HistoryFragment
 import io.github.amanshuraikwar.howmuch.ui.onboarding.OnboardingFragment
+import io.github.amanshuraikwar.howmuch.ui.settings.SettingsFragment
 import io.github.amanshuraikwar.howmuch.ui.signin.SignInFragment
 import io.github.amanshuraikwar.howmuch.ui.stats.StatsFragment
 import io.github.amanshuraikwar.howmuch.util.Util
@@ -51,6 +52,9 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
     lateinit var statsFragment: StatsFragment
 
     @Inject
+    lateinit var settingsFragment: SettingsFragment
+
+    @Inject
     lateinit var onboardingFragment: OnboardingFragment
 
     @BindArray(R.array.tab_names)
@@ -60,7 +64,7 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
             intArrayOf(
                     R.drawable.home_drawable_selector,
                     R.drawable.history_drawable_selector,
-                    R.drawable.stats_drawable_selector)
+                    R.drawable.settings_drawable_selector)
 
     //region activity overrides
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,10 +72,13 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
         setContentView(R.layout.activity_home)
         ButterKnife.bind(this)
 
+        // todo later
+        /*
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             (findViewById<View>(android.R.id.content)).systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
             window.navigationBarColor = getColor(R.color.gray1)
         }
+        */
 
         init()
         initTabs()
@@ -144,6 +151,7 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
             NavigationPage.STATS -> loadFragment(statsFragment)
             NavigationPage.SIGN_IN -> loadFragment(signInFragment)
             NavigationPage.ONBOARDING-> loadFragment(onboardingFragment)
+            NavigationPage.SETTINGS -> loadFragment(settingsFragment)
         }
     }
 
@@ -202,5 +210,11 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
                 .setBackOff(ExponentialBackOff())
                 .setSelectedAccount(googleAccount)
     }
+
+    override fun setCurPage(index: Int) {
+        bottomTl.getTabAt(index)?.select()
+        updateTabSelection(index)
+    }
+
     //endregion
 }

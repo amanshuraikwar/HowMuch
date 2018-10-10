@@ -6,6 +6,7 @@ import io.github.amanshuraikwar.howmuch.bus.AppBus
 import io.github.amanshuraikwar.howmuch.data.DataManager
 import io.github.amanshuraikwar.howmuch.data.network.sheets.AuthenticationManager
 import io.github.amanshuraikwar.howmuch.model.Expense
+import io.github.amanshuraikwar.howmuch.ui.base.AccountPresenter
 import io.github.amanshuraikwar.howmuch.ui.base.BasePresenterImpl
 import io.github.amanshuraikwar.howmuch.ui.list.date.DateListItem
 import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyListItem
@@ -14,18 +15,14 @@ import io.github.amanshuraikwar.howmuch.util.Util
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposables
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class HistoryPresenter @Inject constructor(appBus: AppBus,
-                                           dataManager: DataManager,
-                                           private val authMan: AuthenticationManager = dataManager.getAuthenticationManager())
-    : BasePresenterImpl<HistoryContract.View>(appBus, dataManager), HistoryContract.Presenter {
+                                           dataManager: DataManager)
+    : AccountPresenter<HistoryContract.View>(appBus, dataManager), HistoryContract.Presenter {
 
     private val TAG = Util.getTag(this)
-
-    private val disposables: CompositeDisposable = CompositeDisposable()
 
     override fun onAttach(wasViewRecreated: Boolean) {
         super.onAttach(wasViewRecreated)
@@ -35,33 +32,15 @@ class HistoryPresenter @Inject constructor(appBus: AppBus,
         }
     }
 
-    @Suppress("LiftReturnOrAssignment")
-    private fun getAccount(): Account? {
-
-        if (authMan.hasPermissions()) {
-
-            val account = authMan.getLastSignedAccount()?.account
-
-            if (account == null) {
-                // todo invalid state
-                return null
-            } else {
-                return account
-            }
-        } else {
-            // todo invalid state
-            return null
-        }
-    }
-
     private fun getHistory(account: Account) {
 
         getDataManager().let {
             dm ->
             dm
-                    .getSpreadsheetIdForYearAndMonth(
+                    .getSpreadsheetIdForYearAndMonthAndEmail(
                             Util.getCurYearNumber(),
-                            Util.getCurMonthNumber()
+                            Util.getCurMonthNumber(),
+                            getEmail()
                     )
                     .flatMap {
                         id ->
@@ -102,11 +81,24 @@ class HistoryPresenter @Inject constructor(appBus: AppBus,
     }
 
     private fun getExpenseList(input: MutableList<MutableList<Any>>): List<Expense> {
+
+        val currencySymbol = getDataManager().getCurrency()
+
         val list = mutableListOf<Expense>()
         var count = 0
+
         if (input.size > 1) {
             input.subList(1, input.size).forEach {
-                list.add(Expense(count.toString(), it[0].toString(), it[1].toString(), it[2].toString(), it[3].toString(), it[4].toString()))
+                list.add(
+                        Expense(
+                                id = count.toString(),
+                                date = it[0].toString(),
+                                time = it[1].toString(),
+                                amount = currencySymbol+it[2].toString(),
+                                description = it[3].toString(),
+                                category = it[4].toString()
+                        )
+                )
                 count++
             }
         }
@@ -121,7 +113,7 @@ class HistoryPresenter @Inject constructor(appBus: AppBus,
         while (i < inputSorted.size) {
             if (date != inputSorted[i].date) {
                 date = inputSorted[i].date
-                list.add(DateListItem(date))
+                list.add(DateListItem(Util.beautifyDate(date)))
             }
             list.add(ExpenseListItem(inputSorted[i]))
             i += 1

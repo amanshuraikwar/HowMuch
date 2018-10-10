@@ -22,6 +22,7 @@ import javax.inject.Inject
 class CreateSheetFragment @Inject constructor()
     : BaseFragment<CreateSheetContract.View, CreateSheetContract.Presenter>(), CreateSheetContract.View, OnboardingScreen {
 
+    @Suppress("PrivatePropertyName")
     private val TAG = Util.getTag(this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -42,6 +43,15 @@ class CreateSheetFragment @Inject constructor()
         }
         proceedBtn.setOnClickListener {
             presenter.onProceedClicked()
+        }
+        haveSpreadsheetBtn.setOnClickListener {
+            presenter.haveSpreadsheetClicked()
+        }
+        createSheetInsteadBtn.setOnClickListener {
+            presenter.createSheetInsteadClicked()
+        }
+        saveIdBtn.setOnClickListener {
+            presenter.saveIdClicked(spreadsheetIdEt.text.toString())
         }
     }
 
@@ -84,21 +94,20 @@ class CreateSheetFragment @Inject constructor()
     }
 
     override fun showId(id: String) {
-        spreadSheetIdTv.visibility = VISIBLE
-        spreadSheetIdTv.text = id
+        spreadsheetIdFl.visibility = VISIBLE
+        spreadsheetIdEt.setText(id)
     }
 
     override fun hideId() {
-        spreadSheetIdTv.visibility = INVISIBLE
+        spreadsheetIdFl.visibility = INVISIBLE
     }
 
     override fun showName(name: String) {
-        spreadSheetNameTv.visibility = VISIBLE
-        spreadSheetNameTv.text = name
+        // do nothing
     }
 
     override fun hideName() {
-        spreadSheetNameTv.visibility = INVISIBLE
+        // do nothing
     }
 
     override fun showCompleteSetupButton() {
@@ -119,5 +128,33 @@ class CreateSheetFragment @Inject constructor()
 
     override fun selected() {
         presenter.onScreenSelected()
+    }
+
+    override fun hideCreateSheetInsteadButton() {
+        createSheetInsteadBtn.visibility = GONE
+    }
+
+    override fun hideSaveIdButton() {
+        saveIdBtn.visibility = GONE
+    }
+
+    override fun showHaveSpreadsheetButton() {
+        haveSpreadsheetBtn.visibility = VISIBLE
+    }
+
+    override fun hideHaveSpreadsheetButton() {
+        haveSpreadsheetBtn.visibility = GONE
+    }
+
+    override fun showCreateSheetInsteadButton() {
+        createSheetInsteadBtn.visibility = VISIBLE
+    }
+
+    override fun showSaveIdButton() {
+        saveIdBtn.visibility = VISIBLE
+    }
+
+    override fun showSpreadsheetIdError(message: String) {
+        spreadsheetIdEt.error = message
     }
 }

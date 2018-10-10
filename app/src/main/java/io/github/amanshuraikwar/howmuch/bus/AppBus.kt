@@ -13,4 +13,6 @@ class AppBus {
 
     val signInSuccessful: PublishSubject<Any> = PublishSubject.create<Any>()
     val onBoardingScreenState: PublishSubject<OnboardingScreen.State> = PublishSubject.create<OnboardingScreen.State>()
+    val onLogout: PublishSubject<Any> = PublishSubject.create()
+    val onCurrencyChanged: PublishSubject<String> = PublishSubject.create()
 }

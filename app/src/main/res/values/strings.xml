@@ -18,7 +18,7 @@
     <string name="done">done</string>
     <string name="submit">submit</string>
     <string name="person">Person</string>
-    <string name="date">date</string>
+    <string name="date">Date</string>
     <string name="loading_text">hang on…</string>
     <string name="retry">retry</string>
     <string name="amount">AMOUNT</string>
@@ -37,9 +37,18 @@
     <string name="sign_in_cc">Sign In</string>
     <string name="profile_pic">profile pic</string>
     <string name="complete_setup">complete setup</string>
+    <string name="create_sheet">Create Sheet</string>
+    <string name="spreadsheet_id">Spreadsheet id</string>
+    <string name="have_a_spreadsheet"> Already have a spreadsheet?</string>
+    <string name="create_a_spreadsheet_instead">Create a spreadsheet instead.</string>
+    <string name="title_settings">Settings</string>
+    <string name="currency">Currency</string>
+    <string name="about">About</string>
+    <string name="log_out">Log Out</string>
 
     <array name="tab_names">
         <item>@string/app_name</item>
         <item>history</item>
+        <item>settings</item>
     </array>
 </resources>

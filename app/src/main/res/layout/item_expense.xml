@@ -68,7 +68,7 @@
                 android:layout_height="12dp"
                 android:layout_marginEnd="16dp"
                 android:layout_gravity="center_vertical|end"
-                android:src="@drawable/twotone_category_24"
+                android:src="@drawable/baseline_category_24"
                 android:contentDescription="@string/category" />
 
         </FrameLayout>

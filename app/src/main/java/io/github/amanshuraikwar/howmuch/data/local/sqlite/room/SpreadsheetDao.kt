@@ -18,6 +18,6 @@ interface SpreadsheetDao {
     @Query("SELECT * FROM Spreadsheet")
     fun findAll(): List<Spreadsheet>
 
-    @Query("SELECT * FROM Spreadsheet where year = :year AND month = :month")
-    fun findByYearAndMonth(year: Int, month: Int): Spreadsheet?
+    @Query("SELECT * FROM Spreadsheet where year = :year AND month = :month AND email = :email")
+    fun findByYearAndMonthAndEmail(year: Int, month: Int, email: String): Spreadsheet?
 }

@@ -62,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/bottomFl"
+        android:layout_above="@+id/bottomLl"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:paddingStart="16dp"
@@ -79,7 +79,7 @@
         style="@style/Widget.HowMuch.Button" />
 
     <FrameLayout
-        android:id="@+id/bottomFl"
+        android:id="@+id/bottomLl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

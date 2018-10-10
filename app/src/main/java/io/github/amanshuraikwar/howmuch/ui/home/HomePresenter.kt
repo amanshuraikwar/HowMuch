@@ -4,9 +4,8 @@ import android.accounts.Account
 import android.util.Log
 import io.github.amanshuraikwar.howmuch.bus.AppBus
 import io.github.amanshuraikwar.howmuch.data.DataManager
-import io.github.amanshuraikwar.howmuch.data.network.sheets.AuthenticationManager
 import io.github.amanshuraikwar.howmuch.data.network.sheets.SheetsDataSource
-import io.github.amanshuraikwar.howmuch.ui.base.BasePresenterImpl
+import io.github.amanshuraikwar.howmuch.ui.base.AccountPresenter
 import io.github.amanshuraikwar.howmuch.ui.onboarding.OnboardingScreen
 import io.github.amanshuraikwar.howmuch.util.Util
 import io.reactivex.Observable
@@ -21,9 +20,8 @@ import javax.inject.Inject
  * Created by Amanshu Raikwar on 30/04/18.
  */
 class HomePresenter @Inject constructor(appBus: AppBus,
-                                        dataManager: DataManager,
-                                        private val authMan: AuthenticationManager = dataManager.getAuthenticationManager())
-    : BasePresenterImpl<HomeContract.View>(appBus, dataManager), HomeContract.Presenter {
+                                        dataManager: DataManager)
+    : AccountPresenter<HomeContract.View>(appBus, dataManager), HomeContract.Presenter {
 
     @Suppress("PrivatePropertyName")
     private val TAG = Util.getTag(this)
@@ -34,6 +32,31 @@ class HomePresenter @Inject constructor(appBus: AppBus,
 
         if (wasViewRecreated) {
             init()
+            getAppBus()
+                    .onLogout
+                    .flatMap {
+                        getDataManager()
+                                .setInitialOnboardingDone(false)
+                                .toSingleDefault(Any())
+                                .toObservable()
+                    }
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            {
+                                Log.d(TAG, "onLogout: onNext: called")
+                                init()
+                                getView()?.hideBottomNav()
+                            },
+                            {
+
+                            },
+                            {
+                                Log.d(TAG, "onLogout: onComplete: called")
+                                init()
+                                getView()?.hideBottomNav()
+                            }
+                    )
         }
     }
     //endregion
@@ -56,8 +79,8 @@ class HomePresenter @Inject constructor(appBus: AppBus,
                     }
                     .filter { done -> done }
                     .flatMap {
-                        dm.getSpreadsheetIdForYearAndMonth(
-                                curYear, curMonth
+                        dm.getSpreadsheetIdForYearAndMonthAndEmail(
+                                curYear, curMonth, getEmail()
                         )
                     }
                     .flatMap {
@@ -68,6 +91,7 @@ class HomePresenter @Inject constructor(appBus: AppBus,
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             {
+                                getView()?.setCurPage(0)
                                 getView()?.loadPage(NavigationPage.ADD_EXPENSE)
                                 getView()?.showBottomNav()
                                 getView()?.hideLoading()
@@ -80,6 +104,7 @@ class HomePresenter @Inject constructor(appBus: AppBus,
                                 getView()?.hideLoading()
                             },
                             {
+                                getView()?.showLoading()
                                 getView()?.updateLoading("Hang on...")
                             }
                     )
@@ -93,6 +118,7 @@ class HomePresenter @Inject constructor(appBus: AppBus,
                     @Suppress("NON_EXHAUSTIVE_WHEN")
                     when(it) {
                         OnboardingScreen.State.ONBOARDING_COMPLETE -> {
+                            getView()?.setCurPage(0)
                             getView()?.loadPage(NavigationPage.ADD_EXPENSE)
                             getView()?.showBottomNav()
                         }
@@ -110,7 +136,7 @@ class HomePresenter @Inject constructor(appBus: AppBus,
                     .flatMap {
                         newId ->
                         getDataManager()
-                                .addSpreadsheetIdForYearAndMonth(newId, year, month)
+                                .addSpreadsheetIdForYearAndMonthAndEmail(newId, year, month, getEmail())
                                 .toSingleDefault(newId)
                                 .toObservable()
                     }
@@ -121,13 +147,13 @@ class HomePresenter @Inject constructor(appBus: AppBus,
                     .flatMap {
                         newId ->
                         getDataManager()
-                                .setSpreadsheetReady(year, month)
+                                .setSpreadsheetReady(year, month, getEmail())
                                 .toSingleDefault(newId)
                                 .toObservable()
                     }
         } else {
             return getDataManager()
-                    .isSpreadsheetReady(year, month)
+                    .isSpreadsheetReady(year, month, getEmail())
                     .flatMap {
                         ready ->
                         obsForSpreadsheetReady(ready, curId, year, month)
@@ -147,7 +173,7 @@ class HomePresenter @Inject constructor(appBus: AppBus,
                     .flatMap {
                         _ ->
                         getDataManager()
-                                .setSpreadsheetReady(year, month)
+                                .setSpreadsheetReady(year, month, getEmail())
                                 .toSingleDefault(spreadSheetId)
                                 .toObservable()
                     }
@@ -194,32 +220,17 @@ class HomePresenter @Inject constructor(appBus: AppBus,
                             getView()!!.getGoogleAccountCredential(getAccount()!!)
                     )
 
-    @Suppress("LiftReturnOrAssignment")
-    private fun getAccount(): Account? {
-
-        if (authMan.hasPermissions()) {
-
-            val account = authMan.getLastSignedAccount()?.account
-
-            if (account == null) {
-                // todo invalid state
-                return null
-            } else {
-                return account
-            }
-        } else {
-            // todo invalid state
-            return null
-        }
-    }
-
     override fun onNavigationItemSelected(position: Int) {
         Log.d(TAG, "onNavigationItemSelected:called")
         Log.i(TAG, "onNavigationItemSelected: position = $position")
         when(position) {
             0 -> getView()?.loadPage(NavigationPage.ADD_EXPENSE)
             1 -> getView()?.loadPage(NavigationPage.HISTORY)
-            2 -> getView()?.loadPage(NavigationPage.STATS)
+            2 -> getView()?.loadPage(NavigationPage.SETTINGS)
         }
+    }
+
+    override fun onRetryClicked() {
+        init()
     }
 }

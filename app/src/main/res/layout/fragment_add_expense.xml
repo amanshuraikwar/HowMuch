@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@color/gray1">
+    android:background="@color/white">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -64,7 +64,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_gravity="center_vertical"
                     android:tint="@color/inactiveIcon"
-                    android:src="@drawable/twotone_today_24"
+                    android:src="@drawable/ic_today_black_24dp"
                     android:contentDescription="@string/date"/>
             </FrameLayout>
 
@@ -94,7 +94,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_gravity="center_vertical"
                     android:tint="@color/inactiveIcon"
-                    android:src="@drawable/twotone_money_24"
+                    android:src="@drawable/baseline_money_24"
                     android:contentDescription="@string/amount"/>
 
                 <View
@@ -131,7 +131,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_gravity="center_vertical"
                     android:tint="@color/inactiveIcon"
-                    android:src="@drawable/twotone_category_24"
+                    android:src="@drawable/baseline_category_24"
                     android:contentDescription="@string/category"/>
             </FrameLayout>
 
@@ -159,7 +159,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_gravity="center_vertical"
                     android:tint="@color/inactiveIcon"
-                    android:src="@drawable/twotone_receipt_24"
+                    android:src="@drawable/baseline_receipt_24"
                     android:contentDescription="@string/description"/>
             </FrameLayout>
 

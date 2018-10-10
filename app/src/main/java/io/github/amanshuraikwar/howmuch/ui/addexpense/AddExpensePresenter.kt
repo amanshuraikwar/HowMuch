@@ -1,11 +1,9 @@
 package io.github.amanshuraikwar.howmuch.ui.addexpense
 
 import android.accounts.Account
-import android.util.Log
 import io.github.amanshuraikwar.howmuch.bus.AppBus
 import io.github.amanshuraikwar.howmuch.data.DataManager
 import io.github.amanshuraikwar.howmuch.data.network.sheets.AuthenticationManager
-import io.github.amanshuraikwar.howmuch.data.network.sheets.SheetsAPIDataSource
 import io.github.amanshuraikwar.howmuch.data.network.sheets.SheetsDataSource
 import io.github.amanshuraikwar.howmuch.model.Expense
 import io.github.amanshuraikwar.howmuch.ui.base.BasePresenterImpl
@@ -20,13 +18,14 @@ class AddExpensePresenter
                         private val authMan: AuthenticationManager = dataManager.getAuthenticationManager())
     : BasePresenterImpl<AddExpenseContract.View>(appBus, dataManager), AddExpenseContract.Presenter {
 
+    @Suppress("PrivatePropertyName", "unused")
     private val TAG = Util.getTag(this)
 
     override fun onAttach(wasViewRecreated: Boolean) {
         super.onAttach(wasViewRecreated)
 
         if (wasViewRecreated) {
-            getCategories(getAccount()!!)
+            getCategories(getAccount()!!, getEmail()!!)
         }
     }
 
@@ -49,14 +48,34 @@ class AddExpensePresenter
         }
     }
 
-    private fun getCategories(account: Account) {
+    @Suppress("LiftReturnOrAssignment")
+    private fun getEmail(): String? {
+
+        if (authMan.hasPermissions()) {
+
+            val email = authMan.getLastSignedAccount()?.email
+
+            if (email == null) {
+                // todo invalid state
+                return null
+            } else {
+                return email
+            }
+        } else {
+            // todo invalid state
+            return null
+        }
+    }
+
+    private fun getCategories(account: Account, email: String) {
 
         getDataManager().let {
             dm ->
             dm
-                    .getSpreadsheetIdForYearAndMonth(
+                    .getSpreadsheetIdForYearAndMonthAndEmail(
                             Util.getCurYearNumber(),
-                            Util.getCurMonthNumber()
+                            Util.getCurMonthNumber(),
+                            email
                     )
                     .flatMap {
                         id ->
@@ -107,17 +126,18 @@ class AddExpensePresenter
             return
         }
 
-        addExpense(expense, getAccount()!!)
+        addExpense(expense, getAccount()!!, getEmail()!!)
     }
 
-    private fun addExpense(expense: Expense, account: Account) {
+    private fun addExpense(expense: Expense, account: Account, email:String) {
 
         getDataManager().let {
             dm ->
             dm
-                    .getSpreadsheetIdForYearAndMonth(
+                    .getSpreadsheetIdForYearAndMonthAndEmail(
                             Util.getCurYearNumber(),
-                            Util.getCurMonthNumber()
+                            Util.getCurMonthNumber(),
+                            email
                     )
                     .flatMap {
                         id ->
@@ -172,6 +192,6 @@ class AddExpensePresenter
     }
 
     override fun onLoadingRetryClicked() {
-        getCategories(getAccount()!!)
+        getCategories(getAccount()!!, getEmail()!!)
     }
 }
