@@ -42,18 +42,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/dateEt"
+                <TextView
+                    android:id="@+id/dateTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="72dp"
                     android:paddingEnd="16dp"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
-                    android:hint="@string/date"
-                    android:inputType="date"
                     android:lines="1"
-                    android:focusable="false"
                     android:background="@color/gray1"
                     android:textAppearance="@style/TextAppearance.Date"
                     android:textColor="@color/secondaryText"/>

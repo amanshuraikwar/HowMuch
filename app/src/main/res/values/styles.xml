@@ -351,4 +351,12 @@
         <item name="android:textColor">@color/green</item>
         <item name="android:fontFamily">@font/roboto_mono_medium</item>
     </style>
+
+    <style
+        name="TextAppearance.TimeSmall"
+        parent="@style/TextAppearance.Caption">
+
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
 </resources>

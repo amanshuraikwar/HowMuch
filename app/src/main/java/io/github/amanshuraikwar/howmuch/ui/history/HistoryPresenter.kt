@@ -93,7 +93,7 @@ class HistoryPresenter @Inject constructor(appBus: AppBus,
                         Expense(
                                 id = count.toString(),
                                 date = it[0].toString(),
-                                time = it[1].toString(),
+                                time = Util.beautifyTime(it[1].toString()),
                                 amount = currencySymbol+it[2].toString(),
                                 description = it[3].toString(),
                                 category = it[4].toString()

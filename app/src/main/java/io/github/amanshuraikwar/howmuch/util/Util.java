@@ -27,6 +27,27 @@ public class Util {
         return cls.getClass().getSimpleName();
     }
 
+    public static int getDayOfMonth() {
+        Calendar cal = Calendar.getInstance();
+        return cal.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public static int getMonthOfYear() {
+        Calendar cal = Calendar.getInstance();
+        return cal.get(Calendar.MONTH);
+    }
+
+    public static int getYear() {
+        Calendar cal = Calendar.getInstance();
+        return cal.get(Calendar.YEAR);
+    }
+
+    public static String getDate(int dayOfMonth, int monthOfYear, int year) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, monthOfYear, dayOfMonth);
+        return new SimpleDateFormat("dd-MM-yyyy", Locale.UK).format(cal.getTime());
+    }
+
     public static String getCurMonth() {
         Calendar cal = Calendar.getInstance();
         return new SimpleDateFormat("MMMM", Locale.UK).format(cal.getTime());
@@ -58,16 +79,30 @@ public class Util {
     }
 
     public static String getCurDateBeautiful() {
-        Calendar cal = Calendar.getInstance();
-        return new SimpleDateFormat("dd MMMM yyyy", Locale.UK).format(cal.getTime());
+        return "Today";
     }
 
     public static String beautifyDate(String uglyDate) throws ParseException {
+
+        if (uglyDate.equals(getCurDate())) {
+            return "Today";
+        }
+
         Date date = new SimpleDateFormat("dd-MM-yyyy", Locale.UK).parse(uglyDate);
         return new SimpleDateFormat("dd MMMM yyyy", Locale.UK).format(date);
     }
 
+    public static String beautifyTime(String uglyTime) throws ParseException {
+        Date date = new SimpleDateFormat("HH:mm:ss", Locale.UK).parse(uglyTime);
+        return new SimpleDateFormat("hh:mm aa", Locale.UK).format(date);
+    }
+
     public static String unBeautifyDate(String beautifulDate) throws ParseException {
+
+        if (beautifulDate.equals("Today")) {
+            return getCurDate();
+        }
+
         Date date = new SimpleDateFormat("dd MMMM yyyy", Locale.UK).parse(beautifulDate);
         return new SimpleDateFormat("dd-MM-yyyy", Locale.UK).format(date);
     }

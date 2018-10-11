@@ -40,6 +40,33 @@
             android:src="@drawable/twotone_compare_arrows_24"
             android:contentDescription="@string/amount"/>
 
+        <FrameLayout
+            android:id="@+id/timeFl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="@dimen/margin_normal">
+
+            <TextView
+                android:id="@+id/timeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="4dp"
+                android:paddingEnd="40dp"
+                android:textColor="@color/secondaryText"
+                android:textAppearance="@style/TextAppearance.TimeSmall"
+                android:background="@color/gray2"
+                tools:text="12:34"/>
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="center_vertical|end"
+                android:src="@drawable/ic_access_time_white_24dp"
+                android:tint="@color/activeIcon"
+                android:contentDescription="@string/category" />
+        </FrameLayout>
     </FrameLayout>
 
     <RelativeLayout
@@ -69,6 +96,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_gravity="center_vertical|end"
                 android:src="@drawable/baseline_category_24"
+                android:tint="@color/activeIcon"
                 android:contentDescription="@string/category" />
 
         </FrameLayout>

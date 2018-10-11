@@ -35,6 +35,20 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             debuggable false
+
+            applicationIdSuffix ".release"
+            manifestPlaceholders = [ applicationLabel : APP_NAME_RELEASE]
+        }
+
+        debug {
+            applicationIdSuffix ".debug"
+            manifestPlaceholders = [ applicationLabel : APP_NAME_DEBUG]
+        }
+
+        usable {
+            initWith debug
+            applicationIdSuffix ".usable"
+            manifestPlaceholders = [ applicationLabel : APP_NAME_USABLE]
         }
     }
 }
@@ -98,4 +112,6 @@ dependencies {
 
     implementation "android.arch.persistence.room:runtime:1.1.1"
     kapt "android.arch.persistence.room:compiler:1.1.1"
+
+    compile 'com.github.sundeepk:compact-calendar-view:3.0.0'
 }

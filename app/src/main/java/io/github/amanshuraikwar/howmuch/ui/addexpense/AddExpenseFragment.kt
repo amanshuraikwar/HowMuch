@@ -3,9 +3,6 @@ package io.github.amanshuraikwar.howmuch.ui.addexpense
 import android.accounts.Account
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -19,14 +16,16 @@ import com.google.api.services.sheets.v4.SheetsScopes
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.model.Expense
 import io.github.amanshuraikwar.howmuch.ui.base.BaseFragment
-import io.github.amanshuraikwar.howmuch.util.ExtendedCurrency
 import io.github.amanshuraikwar.howmuch.util.Util
 import kotlinx.android.synthetic.main.fragment_add_expense.*
-import kotlinx.android.synthetic.main.item_expense.*
 import kotlinx.android.synthetic.main.layout_loading_overlay.*
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import android.app.DatePickerDialog.OnDateSetListener
+import android.app.DatePickerDialog
+
+
 
 class AddExpenseFragment @Inject constructor()
     : BaseFragment<AddExpenseContract.View, AddExpenseContract.Presenter>(), AddExpenseContract.View {
@@ -45,16 +44,35 @@ class AddExpenseFragment @Inject constructor()
     }
 
     private fun init() {
+
         submitBtn.setOnClickListener {
             presenter.onSubmitClicked(
                     Expense("",
-                            Util.unBeautifyDate(dateEt.text.toString()),
+                            Util.unBeautifyDate(dateTv.text.toString()),
                             Util.getCurTime(),
                             amountEt.text.toString(),
                             descriptionEt.text.toString(),
                             categorySp.selectedItem.toString()))
         }
-        dateEt.setText(Util.getCurDateBeautiful())
+
+        dateTv.text = Util.getCurDateBeautiful()
+
+        val datePickerDialog =
+                DatePickerDialog(
+                        activity,
+                        OnDateSetListener {
+                            _, year, monthOfYear, dayOfMonth ->
+                            dateTv.text =
+                                    Util.beautifyDate(Util.getDate(dayOfMonth, monthOfYear, year))
+                        },
+                        Util.getYear(),
+                        Util.getMonthOfYear(),
+                        Util.getDayOfMonth()
+                )
+
+        dateTv.setOnClickListener {
+            datePickerDialog.show()
+        }
     }
 
     private fun initLoading() {
