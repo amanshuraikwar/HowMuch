@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentLl"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:foreground="?attr/selectableItemBackground"
     android:background="@color/white"
+    android:stateListAnimator="@animator/expense_elevation"
+    android:clickable="true"
+    android:focusable="true"
     android:elevation="1dp">
 
     <TextView
@@ -28,6 +33,7 @@
             android:layout_marginTop="@dimen/margin_normal"
             android:layout_marginBottom="@dimen/margin_normal"
             android:textAppearance="@style/TextAppearance.AmountSmall"
+            android:textColor="@color/primaryText"
             tools:text="544.50" />
 
         <ImageView
@@ -39,34 +45,6 @@
             android:tint="@color/inactiveIcon"
             android:src="@drawable/twotone_compare_arrows_24"
             android:contentDescription="@string/amount"/>
-
-        <FrameLayout
-            android:id="@+id/timeFl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="@dimen/margin_normal">
-
-            <TextView
-                android:id="@+id/timeTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="4dp"
-                android:paddingEnd="40dp"
-                android:textColor="@color/secondaryText"
-                android:textAppearance="@style/TextAppearance.TimeSmall"
-                android:background="@color/gray2"
-                tools:text="12:34"/>
-
-            <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:layout_marginEnd="16dp"
-                android:layout_gravity="center_vertical|end"
-                android:src="@drawable/ic_access_time_white_24dp"
-                android:tint="@color/activeIcon"
-                android:contentDescription="@string/category" />
-        </FrameLayout>
     </FrameLayout>
 
     <RelativeLayout
@@ -112,6 +90,22 @@
             android:textAppearance="@style/TextAppearance.DescriptionSmall"
             tools:text="pg rent" />
     </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/timeFl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:layout_marginStart="@dimen/avatar_size_margin">
+
+        <TextView
+            android:id="@+id/timeTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/disableHintText"
+            android:textAppearance="@style/TextAppearance.TimeSmall"
+            tools:text="12:34"/>
+    </FrameLayout>
 
     <View
         android:layout_width="match_parent"

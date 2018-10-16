@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contentFl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/white">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title=""
+        style="@style/Widget.HowMuch.Toolbar.SmallCapsTitle"
+        android:stateListAnimator="@animator/toolbar_elevation">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/closeIb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_normal"
+                android:src="@drawable/ic_cancel_black_24dp"
+                android:background="?attr/selectableItemBackground"
+                android:tint="@color/activeIcon"
+                tools:ignore="ContentDescription" />
+        </FrameLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/dateTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="72dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:lines="1"
+                android:background="@color/gray1"
+                android:textAppearance="@style/TextAppearance.Date"
+                android:textColor="@color/secondaryText"/>
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_gravity="center_vertical"
+                android:tint="@color/inactiveIcon"
+                android:src="@drawable/ic_today_black_24dp"
+                android:contentDescription="@string/date"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:elevation="1dp">
+
+            <EditText
+                android:id="@+id/amountEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="72dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:hint="@string/amount"
+                android:inputType="numberDecimal"
+                android:lines="1"
+                android:background="@color/white"
+                android:textAppearance="@style/TextAppearance.Amount"/>
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_gravity="center_vertical"
+                android:tint="@color/inactiveIcon"
+                android:src="@drawable/baseline_money_24"
+                android:contentDescription="@string/amount"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="72dp"
+                android:layout_gravity="bottom"
+                android:background="@color/divider"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:elevation="1dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_gravity="top"
+                android:layout_marginStart="72dp"
+                android:background="@color/divider"/>
+
+            <Spinner
+                android:id="@+id/categorySp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="64dp"
+                android:paddingEnd="0dp"/>
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_gravity="center_vertical"
+                android:tint="@color/inactiveIcon"
+                android:src="@drawable/baseline_category_24"
+                android:contentDescription="@string/category"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/descriptionEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="72dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:background="@color/gray1"
+                android:hint="@string/description"
+                android:inputType="text"
+                android:textAppearance="@style/TextAppearance.Description"
+                android:textColor="@color/secondaryText"/>
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_gravity="center_vertical"
+                android:tint="@color/inactiveIcon"
+                android:src="@drawable/baseline_receipt_24"
+                android:contentDescription="@string/description"/>
+        </FrameLayout>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/submitBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_normal"
+            app:backgroundTint="@color/colorPrimary"
+            android:textColor="@color/white"
+            android:text="@string/save"
+            style="@style/Widget.HowMuch.Button"/>
+    </LinearLayout>
+</RelativeLayout>

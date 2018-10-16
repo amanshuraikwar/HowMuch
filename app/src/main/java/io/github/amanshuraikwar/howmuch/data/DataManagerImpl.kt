@@ -103,4 +103,9 @@ class DataManagerImpl @Inject constructor(
     override fun setCurrency(currency: String) {
         localDataManager.setCurrency(currency)
     }
+
+    override fun getCategories() = localDataManager.getCategories()
+
+    override fun setCategories(categories: Set<String>) =
+            localDataManager.setCategories(categories)
 }

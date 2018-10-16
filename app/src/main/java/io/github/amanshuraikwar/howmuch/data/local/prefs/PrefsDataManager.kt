@@ -10,4 +10,6 @@ interface PrefsDataManager {
     fun setSignedIn(value: Boolean): Completable
     fun getCurrency(): String
     fun setCurrency(currency: String)
+    fun getCategories(): Observable<Set<String>>
+    fun setCategories(categories: Set<String>): Completable
 }

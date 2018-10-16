@@ -1,23 +1,19 @@
-package io.github.amanshuraikwar.howmuch.ui.addexpense
+package io.github.amanshuraikwar.howmuch.ui.expense
 
 import android.accounts.Account
 import io.github.amanshuraikwar.howmuch.bus.AppBus
 import io.github.amanshuraikwar.howmuch.data.DataManager
-import io.github.amanshuraikwar.howmuch.data.network.sheets.AuthenticationManager
 import io.github.amanshuraikwar.howmuch.data.network.sheets.SheetsDataSource
 import io.github.amanshuraikwar.howmuch.model.Expense
 import io.github.amanshuraikwar.howmuch.ui.base.AccountPresenter
-import io.github.amanshuraikwar.howmuch.ui.base.BasePresenterImpl
 import io.github.amanshuraikwar.howmuch.util.Util
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class AddExpensePresenter
-    @Inject constructor(appBus: AppBus,
-                        dataManager: DataManager)
-    : AccountPresenter<AddExpenseContract.View>(appBus, dataManager), AddExpenseContract.Presenter {
+class ExpensePresenter @Inject constructor(appBus: AppBus,
+                                           dataManager: DataManager)
+    : AccountPresenter<ExpenseContract.View>(appBus, dataManager), ExpenseContract.Presenter {
 
     @Suppress("PrivatePropertyName", "unused")
     private val TAG = Util.getTag(this)
@@ -26,71 +22,32 @@ class AddExpensePresenter
         super.onAttach(wasViewRecreated)
 
         if (wasViewRecreated) {
-            getCategories(getAccount()!!, getEmail())
+            getCategories()
         }
     }
 
-    private fun getCategories(account: Account, email: String) {
+    private fun getCategories() {
 
         getDataManager().let {
             dm ->
             dm
                     .getCategories()
-                    .flatMap {
-                        categoriesSet ->
-                        if (categoriesSet.isEmpty()) {
-                            dm
-                                    .getSpreadsheetIdForYearAndMonthAndEmail(
-                                            Util.getCurYearNumber(),
-                                            Util.getCurMonthNumber(),
-                                            email
-                                    )
-                                    .flatMap {
-                                        id ->
-                                        dm
-                                                .readSpreadSheet(
-                                                        id,
-                                                        Util.getDefaultCategoriesSpreadSheetRange(),
-                                                        getView()!!.getGoogleAccountCredential(account)
-                                                )
-                                    }
-                                    .map { convertToCategoriesArray(it) }
-                                    .flatMap {
-                                        categoriesList ->
-                                        dm
-                                                .setCategories(categoriesList.toSet())
-                                                .toSingleDefault(categoriesList)
-                                                .toObservable()
-                                    }
-                        } else {
-                            Observable.just(categoriesSet.toList())
-                        }
-                    }
+                    .map { it.toList() }
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                            {
-                                getView()?.populateCategories(it)
-                                getView()?.hideLoadingOverlay()
-                            },
-                            {
-                                getView()?.showErrorOverlay()
-                            },
-                            {
-
-                            },
-                            {
-                                getView()?.showLoadingOverlay()
-                            })
+                    .subscribe {
+                        categoriesList ->
+                        getView()?.populateCategories(categoriesList)
+                        getView()?.getCurExpense()?.let {
+                            getView()?.initUi(
+                                    Util.beautifyDate(it.date),
+                                    it.amount,
+                                    it.category,
+                                    it.description
+                            )
+                        }
+                    }
         }
-    }
-
-    private fun convertToCategoriesArray(input: MutableList<MutableList<Any>>): List<String> {
-        val categories = mutableListOf<String>()
-        input.forEach {
-            categories.add(it[0].toString())
-        }
-        return categories
     }
 
     override fun onSubmitClicked(expense: Expense) {
@@ -105,10 +62,10 @@ class AddExpensePresenter
             return
         }
 
-        addExpense(expense, getAccount()!!, getEmail())
+        updateExpense(expense, getAccount()!!, getEmail())
     }
 
-    private fun addExpense(expense: Expense, account: Account, email:String) {
+    private fun updateExpense(expense: Expense, account: Account, email:String) {
 
         getDataManager().let {
             dm ->
@@ -121,9 +78,9 @@ class AddExpensePresenter
                     .flatMap {
                         id ->
                         dm
-                                .appendToSpreadSheet(
+                                .updateSpreadSheet(
                                         id,
-                                        Util.getDefaultTransactionsSpreadSheetRange(),
+                                        expense.cellRange,
                                         SheetsDataSource.VALUE_INPUT_OPTION,
                                         listOf(
                                                 listOf(
@@ -142,10 +99,9 @@ class AddExpensePresenter
                     .subscribe(
                             {
                                 if (it != null) {
-                                    getView()?.showSnackBar("Added successfully!")
-                                    getView()?.resetInputFields()
+                                    getView()?.showSnackBar("Updated successfully!")
                                 } else {
-                                    getView()?.showSnackBar("Could not add expense!")
+                                    getView()?.showSnackBar("Could not update expense!")
                                 }
                             },
                             {
@@ -168,9 +124,5 @@ class AddExpensePresenter
                                 }
                             })
         }
-    }
-
-    override fun onLoadingRetryClicked() {
-        getCategories(getAccount()!!, getEmail())
     }
 }

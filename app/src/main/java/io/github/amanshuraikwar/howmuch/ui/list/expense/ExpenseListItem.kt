@@ -8,7 +8,7 @@ import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 
 @Suppress("MemberVisibilityCanBePrivate")
 class ExpenseListItem(val expense: Expense)
-    : ListItem<SimpleListItemOnClickListener, ListItemTypeFactory>() {
+    : ListItem<ExpenseOnClickListener, ListItemTypeFactory>() {
 
     override fun id() = expense.id
 

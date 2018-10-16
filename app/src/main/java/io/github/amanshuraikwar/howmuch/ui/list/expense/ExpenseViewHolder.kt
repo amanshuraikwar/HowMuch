@@ -19,9 +19,13 @@ class ExpenseViewHolder(itemView: View) : ViewHolder<ExpenseListItem>(itemView) 
 
     override fun bind(listItem: ExpenseListItem, host: FragmentActivity) {
         itemView.dateTv.text = listItem.expense.date
-        itemView.timeTv.text = listItem.expense.time
+        itemView.timeTv.text = "Added ${listItem.expense.time}"
         itemView.amountTv.text = listItem.expense.amount
         itemView.descriptionTv.text = listItem.expense.description
         itemView.categoryTv.text = listItem.expense.category
+
+        itemView.parentLl.setOnClickListener {
+            listItem.onClickListener.onClick(listItem.expense)
+        }
     }
 }

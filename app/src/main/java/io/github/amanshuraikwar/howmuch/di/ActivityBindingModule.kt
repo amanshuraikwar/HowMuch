@@ -7,6 +7,8 @@ import io.github.amanshuraikwar.howmuch.ui.addexpense.AddExpenseDi
 import io.github.amanshuraikwar.howmuch.ui.createsheet.CreateSheetDi
 import io.github.amanshuraikwar.howmuch.ui.demo.DemoActivity
 import io.github.amanshuraikwar.howmuch.ui.demo.DemoDi
+import io.github.amanshuraikwar.howmuch.ui.expense.ExpenseActivity
+import io.github.amanshuraikwar.howmuch.ui.expense.ExpenseDi
 import io.github.amanshuraikwar.howmuch.ui.history.HistoryDi
 import io.github.amanshuraikwar.howmuch.ui.home.HomeActivity
 import io.github.amanshuraikwar.howmuch.ui.home.HomeDi
@@ -43,4 +45,11 @@ import io.github.amanshuraikwar.howmuch.ui.stats.StatsDi
                 (SignInDi.SignInModule::class),
                 (CreateSheetDi.ModuleAct::class)])
     abstract fun demo(): DemoActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector(
+            modules = [
+                (ExpenseDi.ModuleAct::class),
+                (GoogleSignInProvides::class)])
+    abstract fun expense(): ExpenseActivity
 }

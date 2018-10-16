@@ -13,6 +13,7 @@ class PrefsDataManagerImpl
         private const val KEY_INITIAL_ONBOARDING_DONE = "initial_onboarding_done"
         private const val KEY_SIGNED_IN = "signed_in"
         private const val KEY_CURRENCY_SYMBOL = "currency_symbol"
+        private const val KEY_CATEGORIES = "categories"
     }
 
     override fun isInitialOnboardingDone(): Observable<Boolean> {
@@ -59,6 +60,20 @@ class PrefsDataManagerImpl
         with (sharedPrefs.edit()) {
             putString(KEY_CURRENCY_SYMBOL, currency)
             apply()
+        }
+    }
+
+    override fun getCategories(): Observable<Set<String>> {
+        return Observable.just(sharedPrefs.getStringSet(KEY_CATEGORIES, setOf()))
+    }
+
+    @SuppressLint("ApplySharedPref")
+    override fun setCategories(categories: Set<String>): Completable {
+        return Completable.fromCallable {
+            with (sharedPrefs.edit()) {
+                putStringSet(KEY_CATEGORIES, categories)
+                commit()
+            }
         }
     }
 }

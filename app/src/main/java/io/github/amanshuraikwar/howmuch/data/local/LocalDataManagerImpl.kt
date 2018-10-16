@@ -2,6 +2,8 @@ package io.github.amanshuraikwar.howmuch.data.local
 
 import io.github.amanshuraikwar.howmuch.data.local.prefs.PrefsDataManager
 import io.github.amanshuraikwar.howmuch.data.local.sqlite.SqliteDataManager
+import io.reactivex.Completable
+import io.reactivex.Observable
 import javax.inject.Inject
 
 class LocalDataManagerImpl
@@ -37,4 +39,9 @@ class LocalDataManagerImpl
     override fun setCurrency(currency: String) {
         prefsDataManager.setCurrency(currency)
     }
+
+    override fun getCategories() = prefsDataManager.getCategories()
+
+    override fun setCategories(categories: Set<String>) =
+            prefsDataManager.setCategories(categories)
 }

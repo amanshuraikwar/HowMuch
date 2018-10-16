@@ -97,6 +97,11 @@ public class Util {
         return new SimpleDateFormat("hh:mm aa", Locale.UK).format(date);
     }
 
+    public static String unbeautifyTime(String beautifulTime) throws ParseException {
+        Date date = new SimpleDateFormat("hh:mm aa", Locale.UK).parse(beautifulTime);
+        return new SimpleDateFormat("HH:mm:ss", Locale.UK).format(date);
+    }
+
     public static String unBeautifyDate(String beautifulDate) throws ParseException {
 
         if (beautifulDate.equals("Today")) {
@@ -144,6 +149,29 @@ public class Util {
 
     public static String getDefaultTransactionsSpreadSheetRange() {
         return "Transactions!B3:F";
+    }
+
+    public static String getDefaultTransactionsSheetTitle() {
+        return "Transactions";
+    }
+
+    public static String getDefaultTransactionsSpreadSheetStartCol() {
+        return "B";
+    }
+
+    public static String getDefaultTransactionsSpreadSheetEndCol() {
+        return "F";
+    }
+
+    public static int getDefaultTransactionsSpreadSheetStartPosition() {
+        return 3;
+    }
+
+    public static String getCellRange(String sheetTitle,
+                                      String startCol,
+                                      String endCol,
+                                      int position) {
+        return sheetTitle + "!" + startCol + position + ":" + endCol;
     }
 
     public static List<List<String>> getDefaultTransactionsHeading() {

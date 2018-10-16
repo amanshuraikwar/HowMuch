@@ -1,6 +1,7 @@
 package io.github.amanshuraikwar.howmuch.ui.history
 
 import android.accounts.Account
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -12,7 +13,9 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccoun
 import com.google.api.client.util.ExponentialBackOff
 import com.google.api.services.sheets.v4.SheetsScopes
 import io.github.amanshuraikwar.howmuch.R
+import io.github.amanshuraikwar.howmuch.model.Expense
 import io.github.amanshuraikwar.howmuch.ui.base.BaseFragment
+import io.github.amanshuraikwar.howmuch.ui.expense.ExpenseActivity
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
@@ -84,5 +87,11 @@ class HistoryFragment
 
     override fun showSnackBar(message: String) {
         Snackbar.make(containerRl, message, Snackbar.LENGTH_SHORT).show()
+    }
+
+    override fun startExpenseActivity(expense: Expense) {
+        val intent = Intent(activity, ExpenseActivity::class.java)
+        intent.putExtra(ExpenseActivity.KEY_EXPENSE, expense)
+        activity?.startActivity(intent)
     }
 }

@@ -52,7 +52,8 @@ class AddExpenseFragment @Inject constructor()
                             Util.getCurTime(),
                             amountEt.text.toString(),
                             descriptionEt.text.toString(),
-                            categorySp.selectedItem.toString()))
+                            categorySp.selectedItem.toString(),
+                            ""))
         }
 
         dateTv.text = Util.getCurDateBeautiful()

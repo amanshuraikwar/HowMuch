@@ -11,6 +11,7 @@ import io.github.amanshuraikwar.howmuch.ui.base.BasePresenterImpl
 import io.github.amanshuraikwar.howmuch.ui.list.date.DateListItem
 import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyListItem
 import io.github.amanshuraikwar.howmuch.ui.list.expense.ExpenseListItem
+import io.github.amanshuraikwar.howmuch.ui.list.expense.ExpenseOnClickListener
 import io.github.amanshuraikwar.howmuch.util.Util
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -82,6 +83,7 @@ class HistoryPresenter @Inject constructor(appBus: AppBus,
 
     private fun getExpenseList(input: MutableList<MutableList<Any>>): List<Expense> {
 
+        val startCellPosition = Util.getDefaultTransactionsSpreadSheetStartPosition() + 1
         val currencySymbol = getDataManager().getCurrency()
 
         val list = mutableListOf<Expense>()
@@ -96,7 +98,13 @@ class HistoryPresenter @Inject constructor(appBus: AppBus,
                                 time = Util.beautifyTime(it[1].toString()),
                                 amount = currencySymbol+it[2].toString(),
                                 description = it[3].toString(),
-                                category = it[4].toString()
+                                category = it[4].toString(),
+                                cellRange = Util.getCellRange(
+                                        Util.getDefaultTransactionsSheetTitle(),
+                                        Util.getDefaultTransactionsSpreadSheetStartCol(),
+                                        Util.getDefaultTransactionsSpreadSheetEndCol(),
+                                        startCellPosition + count
+                                )
                         )
                 )
                 count++
@@ -106,8 +114,17 @@ class HistoryPresenter @Inject constructor(appBus: AppBus,
     }
 
     private fun processData(input: List<Expense>): List<ListItem<*, *>> {
-        val inputSorted = input.sortedBy { it.date }.reversed()
+
+        val inputSorted = input.sortedBy { it.date + it.time }.reversed()
         val list = mutableListOf<ListItem<*, *>>()
+
+        val onClickListener = object : ExpenseOnClickListener {
+            override fun onClick(expense: Expense) {
+                expense.amount = expense.amount.substring(1)
+                getView()?.startExpenseActivity(expense)
+            }
+        }
+
         var date = ""
         var i = 0
         while (i < inputSorted.size) {
@@ -115,13 +132,13 @@ class HistoryPresenter @Inject constructor(appBus: AppBus,
                 date = inputSorted[i].date
                 list.add(DateListItem(Util.beautifyDate(date)))
             }
-            list.add(ExpenseListItem(inputSorted[i]))
+            list.add(ExpenseListItem(inputSorted[i]).setOnClickListener(onClickListener))
             i += 1
         }
         if(list.size == 0) {
             list.add(EmptyListItem("No transactions!!\no_o"))
         } else {
-            list.add(DateListItem("All Done!"))
+            list.add(DateListItem(""))
         }
 
         return list
