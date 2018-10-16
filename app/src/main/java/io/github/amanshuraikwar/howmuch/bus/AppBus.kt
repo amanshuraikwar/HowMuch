@@ -1,5 +1,6 @@
 package io.github.amanshuraikwar.howmuch.bus
 
+import io.github.amanshuraikwar.howmuch.model.Expense
 import io.github.amanshuraikwar.howmuch.ui.onboarding.OnboardingScreen
 import io.reactivex.subjects.PublishSubject
 
@@ -15,4 +16,6 @@ class AppBus {
     val onBoardingScreenState: PublishSubject<OnboardingScreen.State> = PublishSubject.create<OnboardingScreen.State>()
     val onLogout: PublishSubject<Any> = PublishSubject.create()
     val onCurrencyChanged: PublishSubject<String> = PublishSubject.create()
+    val onExpenseUpdated: PublishSubject<Expense> = PublishSubject.create()
+    val onExpenseDeleted: PublishSubject<Expense> = PublishSubject.create()
 }

@@ -100,6 +100,7 @@ class ExpensePresenter @Inject constructor(appBus: AppBus,
                             {
                                 if (it != null) {
                                     getView()?.showSnackBar("Updated successfully!")
+                                    getAppBus().onExpenseUpdated.onNext(expense)
                                 } else {
                                     getView()?.showSnackBar("Could not update expense!")
                                 }
@@ -121,6 +122,65 @@ class ExpensePresenter @Inject constructor(appBus: AppBus,
                                 getView()?.run {
                                     disableSubmitBtn()
                                     setSubmitBtnText("saving...")
+                                }
+                            })
+        }
+    }
+
+    override fun onDeleteClicked(expense: Expense) {
+        deleteExpense(expense, getAccount()!!, getEmail())
+    }
+
+    private fun deleteExpense(expense: Expense, account: Account, email:String) {
+
+        getDataManager().let {
+            dm ->
+            dm
+                    .getSpreadsheetIdForYearAndMonthAndEmail(
+                            Util.getCurYearNumber(),
+                            Util.getCurMonthNumber(),
+                            email
+                    )
+                    .flatMap {
+                        id ->
+                        dm
+                                .deleteRows(
+                                        id,
+                                        Util.getDefaultTransactionsSheetTitle(),
+                                        Util.getRowNumber(expense.cellRange) - 1,
+                                        Util.getRowNumber(expense.cellRange),
+                                        getView()!!.getGoogleAccountCredential(account)
+                                )
+                    }
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            {
+                                if (it != null) {
+                                    getView()?.showSnackBar("Deleted successfully!")
+                                    getView()?.close()
+                                    getAppBus().onExpenseDeleted.onNext(expense)
+                                } else {
+                                    getView()?.showSnackBar("Could not delete expense!")
+                                }
+                            },
+                            {
+                                getView()?.run {
+                                    showSnackBar("Could not delete expense!")
+                                    enableSubmitBtn()
+                                    setSubmitBtnText("save")
+                                }
+                            },
+                            {
+                                getView()?.run {
+                                    enableSubmitBtn()
+                                    setSubmitBtnText("save")
+                                }
+                            },
+                            {
+                                getView()?.run {
+                                    disableSubmitBtn()
+                                    setSubmitBtnText("deleting...")
                                 }
                             })
         }

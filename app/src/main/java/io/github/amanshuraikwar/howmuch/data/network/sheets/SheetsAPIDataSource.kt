@@ -8,6 +8,11 @@ import com.google.api.services.sheets.v4.Sheets
 import com.google.api.services.sheets.v4.model.*
 import io.github.amanshuraikwar.howmuch.util.Util
 import io.reactivex.Observable
+import com.google.api.services.sheets.v4.model.DimensionRange
+import com.google.api.services.sheets.v4.model.DeleteDimensionRequest
+import com.google.api.services.sheets.v4.model.BatchUpdateSpreadsheetRequest
+
+
 
 
 /**
@@ -126,5 +131,44 @@ class SheetsAPIDataSource(private val googleAccountCredential: GoogleAccountCred
 
                     response.spreadsheetId
                 }
+    }
+
+    override fun deleteRows(spreadsheetId: String,
+                            sheetTitle: String,
+                            startIndex: Int,
+                            endIndex: Int): Observable<String> {
+
+        Log.d(TAG, "deleteRows: called")
+
+        return Observable.fromCallable {
+
+            Log.d(TAG, "deleteRows: executing")
+
+            val spreadsheet = sheetsAPI.spreadsheets().get(spreadsheetId).execute()
+
+            val content = BatchUpdateSpreadsheetRequest()
+            val request = Request()
+            val deleteDimensionRequest = DeleteDimensionRequest()
+            val dimensionRange = DimensionRange()
+            dimensionRange.dimension = "ROWS"
+            dimensionRange.startIndex = startIndex
+            dimensionRange.endIndex = endIndex
+
+            dimensionRange.sheetId =
+                    spreadsheet
+                            .sheets
+                            .find { it.properties.title == sheetTitle }!!
+                            .properties.sheetId
+
+            deleteDimensionRequest.range = dimensionRange
+
+            request.deleteDimension = deleteDimensionRequest
+
+            content.requests = listOf(request)
+
+            val response = sheetsAPI.spreadsheets().batchUpdate(spreadsheetId, content).execute()
+
+            spreadsheetId
+        }
     }
 }

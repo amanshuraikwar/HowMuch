@@ -20,4 +20,9 @@ class UtilUnitTest {
     fun curDateTime_isCorrect() {
         System.out.println(Util.getCurDateTime())
     }
+
+    @Test
+    fun rowIndex_isCorrect() {
+        assertEquals(34, Util.getRowNumber("Transactions!AAA34:BCD"))
+    }
 }

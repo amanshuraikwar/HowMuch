@@ -174,6 +174,10 @@ public class Util {
         return sheetTitle + "!" + startCol + position + ":" + endCol;
     }
 
+    public static int getRowNumber(String cellRange) {
+        return Integer.parseInt(cellRange.split("[a-zA-Z]+[!][A-Z]+|[:][A-Z]+")[1]);
+    }
+
     public static List<List<String>> getDefaultTransactionsHeading() {
         return
                 Arrays.asList(

@@ -29,8 +29,28 @@ class HistoryPresenter @Inject constructor(appBus: AppBus,
         super.onAttach(wasViewRecreated)
 
         if (wasViewRecreated) {
-            getHistory(getAccount()!!)
+            init()
         }
+    }
+
+    private fun init() {
+        getHistory(getAccount()!!)
+
+        getAppBus()
+                .onExpenseUpdated
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    getHistory(getAccount()!!)
+                }
+
+        getAppBus()
+                .onExpenseDeleted
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    getHistory(getAccount()!!)
+                }
     }
 
     private fun getHistory(account: Account) {

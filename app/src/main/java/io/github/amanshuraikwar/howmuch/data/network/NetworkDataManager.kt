@@ -50,4 +50,15 @@ interface NetworkDataManager {
     fun createSpreadSheet(spreadSheetTitle: String, sheetTitles: List<String>): Observable<String>
 
     fun createSpreadSheet(spreadSheetTitle: String, sheetTitles: List<String>, googleAccountCredential: GoogleAccountCredential): Observable<String>
+
+    fun deleteRows(spreadsheetId : String,
+                   sheetTitle: String,
+                   startIndex: Int,
+                   endIndex: Int): Observable<String>
+
+    fun deleteRows(spreadsheetId : String,
+                   sheetTitle: String,
+                   startIndex: Int,
+                   endIndex: Int,
+                   googleAccountCredential: GoogleAccountCredential): Observable<String>
 }

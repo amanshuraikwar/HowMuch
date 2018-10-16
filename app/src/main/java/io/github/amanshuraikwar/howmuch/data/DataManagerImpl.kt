@@ -108,4 +108,10 @@ class DataManagerImpl @Inject constructor(
 
     override fun setCategories(categories: Set<String>) =
             localDataManager.setCategories(categories)
+
+    override fun deleteRows(spreadsheetId: String, sheetTitle: String, startIndex: Int, endIndex: Int): Observable<String> =
+            networkDataManager.deleteRows(spreadsheetId, sheetTitle, startIndex, endIndex)
+
+    override fun deleteRows(spreadsheetId: String, sheetTitle: String, startIndex: Int, endIndex: Int, googleAccountCredential: GoogleAccountCredential): Observable<String> =
+            networkDataManager.deleteRows(spreadsheetId, sheetTitle, startIndex, endIndex, googleAccountCredential)
 }

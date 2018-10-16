@@ -80,4 +80,13 @@ class NetworkDataManagerImpl @Inject constructor(
         sheetsDataSource = SheetsAPIDataSource(googleAccountCredential, httpTransport, jsonFactory)
         return sheetsDataSource!!.createSpreadSheet(spreadSheetTitle, sheetTitles)
     }
+
+    override fun deleteRows(spreadsheetId: String, sheetTitle: String, startIndex: Int, endIndex: Int): Observable<String> {
+        return sheetsDataSource!!.deleteRows(spreadsheetId, sheetTitle, startIndex, endIndex)
+    }
+
+    override fun deleteRows(spreadsheetId: String, sheetTitle: String, startIndex: Int, endIndex: Int, googleAccountCredential: GoogleAccountCredential): Observable<String> {
+        sheetsDataSource = SheetsAPIDataSource(googleAccountCredential, httpTransport, jsonFactory)
+        return sheetsDataSource!!.deleteRows(spreadsheetId, sheetTitle, startIndex, endIndex)
+    }
 }

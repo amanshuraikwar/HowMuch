@@ -20,9 +20,14 @@ interface SheetsDataSource {
                             values: List<List<Any>>): Observable<String>
 
     fun updateSpreadSheet(spreadsheetId : String,
-                            spreadsheetRange : String,
-                            valueInputOption: String,
-                            values: List<List<Any>>): Observable<String>
+                          spreadsheetRange : String,
+                          valueInputOption: String,
+                          values: List<List<Any>>): Observable<String>
 
     fun createSpreadSheet(spreadSheetTitle: String, sheetTitles: List<String>): Observable<String>
+
+    fun deleteRows(spreadsheetId : String,
+                   sheetTitle: String,
+                   startIndex: Int,
+                   endIndex: Int): Observable<String>
 }

@@ -20,9 +20,11 @@ interface ExpenseContract {
         fun showAmountError(message: String)
         fun showDescriptionError(message: String)
         fun initUi(date: String, amount: String, category: String, description: String)
+        fun close()
     }
 
     interface Presenter : BasePresenter<View> {
         fun onSubmitClicked(expense: Expense)
+        fun onDeleteClicked(expense: Expense)
     }
 }

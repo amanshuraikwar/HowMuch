@@ -65,6 +65,18 @@ class ExpenseActivity : BaseActivity<ExpenseContract.View, ExpenseContract.Prese
         closeIb.setOnClickListener {
             finish()
         }
+
+        deleteIb.setOnClickListener {
+            presenter.onDeleteClicked(
+                    Expense("",
+                            Util.unBeautifyDate(dateTv.text.toString()),
+                            Util.unbeautifyTime(getCurExpense().time),
+                            amountEt.text.toString(),
+                            descriptionEt.text.toString(),
+                            categorySp.selectedItem.toString(),
+                            getCurExpense().cellRange)
+            )
+        }
     }
 
     override fun getCurExpense(): Expense {
@@ -110,5 +122,9 @@ class ExpenseActivity : BaseActivity<ExpenseContract.View, ExpenseContract.Prese
         amountEt.setText(amount)
         categorySp.setSelection((categorySp.adapter as ArrayAdapter<String>).getPosition(category))
         descriptionEt.setText(description)
+    }
+
+    override fun close() {
+        finish()
     }
 }
