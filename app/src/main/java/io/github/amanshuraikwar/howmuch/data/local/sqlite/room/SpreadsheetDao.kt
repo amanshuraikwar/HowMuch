@@ -1,6 +1,6 @@
 package io.github.amanshuraikwar.howmuch.data.local.sqlite.room
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import io.github.amanshuraikwar.howmuch.data.local.sqlite.Spreadsheet
 
 @Dao

@@ -1,7 +1,7 @@
 package io.github.amanshuraikwar.howmuch.ui.list.expense
 
-import android.support.annotation.LayoutRes
-import android.support.v4.app.FragmentActivity
+import androidx.annotation.LayoutRes
+import androidx.fragment.app.FragmentActivity
 import android.view.View
 import io.github.amanshuraikwar.multiitemlistadapter.ViewHolder
 import io.github.amanshuraikwar.howmuch.R
@@ -17,7 +17,7 @@ class ExpenseViewHolder(itemView: View) : ViewHolder<ExpenseListItem>(itemView) 
         val LAYOUT = R.layout.item_expense
     }
 
-    override fun bind(listItem: ExpenseListItem, host: FragmentActivity) {
+    override fun bind(listItem: ExpenseListItem, host: androidx.fragment.app.FragmentActivity) {
         itemView.dateTv.text = listItem.expense.date
         itemView.timeTv.text = "Added ${listItem.expense.time}"
         itemView.amountTv.text = listItem.expense.amount

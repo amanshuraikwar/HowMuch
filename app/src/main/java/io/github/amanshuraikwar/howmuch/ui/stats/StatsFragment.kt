@@ -3,8 +3,8 @@ package io.github.amanshuraikwar.howmuch.ui.stats
 import android.accounts.Account
 import android.os.Build
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +36,7 @@ class StatsFragment @Inject constructor()
     }
 
     private fun init() {
-        itemsRv.layoutManager = LinearLayoutManager(activity)
+        itemsRv.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
         if (adapter == null) {
             adapter = MultiItemListAdapter(activity!!, ListItemTypeFactory())
         }

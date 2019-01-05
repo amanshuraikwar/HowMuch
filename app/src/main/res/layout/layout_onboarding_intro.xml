@@ -27,7 +27,7 @@
         android:textAppearance="@style/TextAppearance.AppTagLine"
         android:text="Minimally manage your expenses"/>
 
-    <android.support.v7.widget.AppCompatButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/loadingRetryBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

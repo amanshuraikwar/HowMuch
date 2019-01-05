@@ -13,7 +13,7 @@ import io.github.amanshuraikwar.howmuch.util.Util
 import kotlinx.android.synthetic.main.fragment_settings.*
 import javax.inject.Inject
 import android.content.DialogInterface
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 
 
 class SettingsFragment @Inject constructor()

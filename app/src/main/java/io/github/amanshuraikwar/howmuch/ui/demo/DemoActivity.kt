@@ -2,7 +2,7 @@ package io.github.amanshuraikwar.howmuch.ui.demo
 
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.View
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.ui.base.BaseActivity
@@ -27,7 +27,7 @@ class DemoActivity : BaseActivity<DemoContract.View, DemoContract.Presenter>(), 
         loadFragment(fragment)
     }
 
-    private fun loadFragment(fragment: Fragment): Boolean {
+    private fun loadFragment(fragment: androidx.fragment.app.Fragment): Boolean {
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.parentFl, fragment)

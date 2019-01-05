@@ -1,7 +1,7 @@
 package io.github.amanshuraikwar.howmuch.ui.list.expensecategorysummary
 
-import android.support.annotation.LayoutRes
-import android.support.v4.app.FragmentActivity
+import androidx.annotation.LayoutRes
+import androidx.fragment.app.FragmentActivity
 import android.util.Log
 import android.view.View
 import android.view.View.INVISIBLE
@@ -21,7 +21,7 @@ class ExpenseCategorySummaryViewHolder(itemView: View) : ViewHolder<ExpenseCateg
         val LAYOUT = R.layout.item_expense_category_summary
     }
 
-    override fun bind(listItem: ExpenseCategorySummaryListItem, host: FragmentActivity) {
+    override fun bind(listItem: ExpenseCategorySummaryListItem, host: androidx.fragment.app.FragmentActivity) {
         itemView.nameTv.text = listItem.expenseCategorySummary.name
         itemView.plannedTv.text = listItem.expenseCategorySummary.planned
         itemView.actualTv.text = listItem.expenseCategorySummary.actual

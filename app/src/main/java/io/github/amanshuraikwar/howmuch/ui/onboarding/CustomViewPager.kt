@@ -2,11 +2,11 @@ package io.github.amanshuraikwar.howmuch.ui.onboarding
 
 import android.content.Context
 import android.view.MotionEvent
-import android.support.v4.view.ViewPager
+import androidx.viewpager.widget.ViewPager
 import android.util.AttributeSet
 
 
-class CustomViewPager(context: Context, attrs: AttributeSet) : ViewPager(context, attrs) {
+class CustomViewPager(context: Context, attrs: AttributeSet) : androidx.viewpager.widget.ViewPager(context, attrs) {
 
     private var pagingEnabled: Boolean = false
 

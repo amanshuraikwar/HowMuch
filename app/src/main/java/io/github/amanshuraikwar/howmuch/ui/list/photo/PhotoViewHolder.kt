@@ -1,7 +1,7 @@
 package io.github.amanshuraikwar.howmuch.ui.list.photo
 
-import android.support.annotation.LayoutRes
-import android.support.v4.app.FragmentActivity
+import androidx.annotation.LayoutRes
+import androidx.fragment.app.FragmentActivity
 import android.view.View
 import io.github.amanshuraikwar.multiitemlistadapter.ViewHolder
 import io.github.amanshuraikwar.howmuch.R
@@ -22,7 +22,7 @@ class PhotoViewHolder(itemView: View) : ViewHolder<PhotoListItem>(itemView) {
         val LAYOUT = R.layout.item_photo
     }
 
-    override fun bind(listItem: PhotoListItem, host: FragmentActivity) {
+    override fun bind(listItem: PhotoListItem, host: androidx.fragment.app.FragmentActivity) {
 
     }
 }

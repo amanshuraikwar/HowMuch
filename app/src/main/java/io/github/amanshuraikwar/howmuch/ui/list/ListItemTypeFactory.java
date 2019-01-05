@@ -1,6 +1,6 @@
 package io.github.amanshuraikwar.howmuch.ui.list;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.View;
 
 import io.github.amanshuraikwar.howmuch.ui.list.date.DateListItem;

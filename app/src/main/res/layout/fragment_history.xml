@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
                 android:gravity="center_horizontal"
                 android:textAppearance="@style/TextAppearance.ToolbarTitle.SmallCaps"
                 android:text="@string/title_history"/>
-        </android.support.v7.widget.Toolbar>
+        </androidx.appcompat.widget.Toolbar>
 
         <FrameLayout
             android:id="@+id/fragmentContainerFl"
@@ -30,7 +30,7 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/toolbar">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/itemsRv"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

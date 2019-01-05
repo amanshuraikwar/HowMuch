@@ -2,7 +2,7 @@ package io.github.amanshuraikwar.howmuch.ui.createsheet
 
 import android.accounts.Account
 import android.os.Bundle
-import android.support.design.widget.Snackbar
+import com.google.android.material.snackbar.Snackbar
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View

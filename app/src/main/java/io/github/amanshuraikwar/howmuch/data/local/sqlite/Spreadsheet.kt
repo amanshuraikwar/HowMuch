@@ -1,6 +1,6 @@
 package io.github.amanshuraikwar.howmuch.data.local.sqlite
 
-import android.arch.persistence.room.Entity
+import androidx.room.Entity
 
 @Entity(primaryKeys = ["year", "month", "email"])
 data class Spreadsheet(var year: Int,

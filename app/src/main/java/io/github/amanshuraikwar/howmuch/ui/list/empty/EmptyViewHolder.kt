@@ -1,7 +1,7 @@
 package io.github.amanshuraikwar.howmuch.ui.list.empty
 
-import android.support.annotation.LayoutRes
-import android.support.v4.app.FragmentActivity
+import androidx.annotation.LayoutRes
+import androidx.fragment.app.FragmentActivity
 import android.view.View
 import io.github.amanshuraikwar.multiitemlistadapter.ViewHolder
 import io.github.amanshuraikwar.howmuch.R
@@ -17,7 +17,7 @@ class EmptyViewHolder(itemView: View) : ViewHolder<EmptyListItem>(itemView) {
         val LAYOUT = R.layout.item_empty
     }
 
-    override fun bind(listItem: EmptyListItem, host: FragmentActivity) {
+    override fun bind(listItem: EmptyListItem, host: androidx.fragment.app.FragmentActivity) {
         itemView.messageTv.text = listItem.message
     }
 }

@@ -1,14 +1,14 @@
 package io.github.amanshuraikwar.howmuch.ui.onboarding
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 
-class ViewPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+class ViewPagerAdapter(fragmentManager: androidx.fragment.app.FragmentManager) : androidx.fragment.app.FragmentPagerAdapter(fragmentManager) {
 
-    private val fragmentList = mutableListOf<Fragment>()
+    private val fragmentList = mutableListOf<androidx.fragment.app.Fragment>()
 
-    override fun getItem(i: Int): Fragment {
+    override fun getItem(i: Int): androidx.fragment.app.Fragment {
         return fragmentList[i]
     }
 
@@ -16,7 +16,7 @@ class ViewPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(
         return fragmentList.size
     }
 
-    fun addFragment(fragment: Fragment) {
+    fun addFragment(fragment: androidx.fragment.app.Fragment) {
         fragmentList.add(fragment)
     }
 }

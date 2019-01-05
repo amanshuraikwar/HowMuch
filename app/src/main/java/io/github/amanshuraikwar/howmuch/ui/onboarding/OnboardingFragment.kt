@@ -2,7 +2,7 @@ package io.github.amanshuraikwar.howmuch.ui.onboarding
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.view.ViewPager
+import androidx.viewpager.widget.ViewPager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -59,7 +59,7 @@ class OnboardingFragment @Inject constructor()
     private fun init() {
 
         viewPager.addOnPageChangeListener(
-                object : ViewPager.OnPageChangeListener {
+                object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
 
                     override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {
 

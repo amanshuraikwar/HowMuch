@@ -3,7 +3,7 @@ package io.github.amanshuraikwar.howmuch.ui.expense
 import android.accounts.Account
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.support.design.widget.Snackbar
+import com.google.android.material.snackbar.Snackbar
 import android.widget.ArrayAdapter
 import butterknife.ButterKnife
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
