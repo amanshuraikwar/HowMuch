@@ -6,10 +6,7 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
-def versionMajor = 0
-def versionMinor = 3
-def versionPatch = 2
-def versionBuild = 0 // bump for dogfood builds, public betas, etc.
+apply from: "$project.rootDir/script-git-version.gradle"
 
 android {
     compileSdkVersion 28
@@ -17,15 +14,13 @@ android {
         applicationId "io.github.amanshuraikwar.howmuch"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
-        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
 
     ext{
-        APP_NAME_DEBUG = "@string/app_name_debug"
-        APP_NAME_RELEASE = "@string/app_name_release"
+        APP_NAME_DEV = "@string/app_name_dev"
+        APP_NAME_PROD = "@string/app_name_prod"
         APP_NAME_USABLE = "@string/app_name_usable"
     }
 
@@ -35,25 +30,45 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             debuggable false
-
-            applicationIdSuffix ".release"
-            manifestPlaceholders = [ applicationLabel : APP_NAME_RELEASE]
-        }
-
-        debug {
-            applicationIdSuffix ".debug"
-            manifestPlaceholders = [ applicationLabel : APP_NAME_DEBUG]
-        }
-
-        usable {
-            initWith debug
-            applicationIdSuffix ".usable"
-            manifestPlaceholders = [ applicationLabel : APP_NAME_USABLE]
         }
 
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
+        }
+    }
+
+    // automatic version code and version name from git tag
+    flavorDimensions "version"
+
+    productFlavors {
+
+        dev {
+            applicationIdSuffix ".dev"
+            versionCode gitVersionCodeTime
+            versionName gitVersionName
+            manifestPlaceholders = [ applicationLabel : APP_NAME_DEV]
+        }
+
+        usable {
+            applicationIdSuffix ".usable"
+            versionCode gitVersionCodeTime
+            versionName gitVersionName
+            manifestPlaceholders = [ applicationLabel : APP_NAME_USABLE]
+        }
+
+        prod {
+            applicationIdSuffix ".prod"
+            versionCode gitVersionCode
+            versionName gitVersionName
+            manifestPlaceholders = [ applicationLabel : APP_NAME_PROD]
+        }
+    }
+
+    // apk file name
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = new File("HowMuch-" + variant.versionName + "-(" + variant.versionCode + ")-" + variant.buildType.name + ".apk")
         }
     }
 }
@@ -75,6 +90,7 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
     implementation "com.google.dagger:dagger:$daggerVersion"
+    //noinspection GradleDependency
     implementation "com.google.dagger:dagger-android:$daggerAndroidVersion"
     implementation "com.google.dagger:dagger-android-support:$daggerAndroidVersion"
 

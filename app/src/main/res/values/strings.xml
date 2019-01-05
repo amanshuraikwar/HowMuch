@@ -1,7 +1,7 @@
 <resources>
 
-    <string name="app_name_release">HowMuch</string>
-    <string name="app_name_debug">HowMuch-DEBUG</string>
+    <string name="app_name_prod">HowMuch</string>
+    <string name="app_name_dev">HowMuch-DEV</string>
     <string name="app_name_usable">HowMuch-USABLE</string>
 
     <string name="title_home">Home</string>
