@@ -1,19 +1,25 @@
 package io.github.amanshuraikwar.howmuch.ui.history
 
 import android.accounts.Account
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.google.api.client.util.ExponentialBackOff
 import com.google.api.services.sheets.v4.SheetsScopes
+import dagger.Binds
+import dagger.Module
 import io.github.amanshuraikwar.howmuch.R
-import io.github.amanshuraikwar.howmuch.model.Expense
+import io.github.amanshuraikwar.howmuch.model.Transaction
 import io.github.amanshuraikwar.howmuch.ui.base.BaseFragment
 import io.github.amanshuraikwar.howmuch.ui.expense.ExpenseActivity
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
@@ -24,30 +30,41 @@ import kotlinx.android.synthetic.main.layout_loading_overlay.*
 import java.util.*
 import javax.inject.Inject
 
+
 class HistoryFragment
 @Inject constructor(): BaseFragment<HistoryContract.View, HistoryContract.Presenter>(), HistoryContract.View {
 
+    companion object {
+        private const val REQ_CODE_TRANSACTION = 10069
+    }
+
     private var adapter: MultiItemListAdapter<*>? = null
 
+    @SuppressLint("InflateParams")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_history, null)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         init()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQ_CODE_TRANSACTION) {
+            if (resultCode == Activity.RESULT_OK) {
+                presenter.onTransactionEdited()
+            }
+        }
     }
 
     private fun init() {
         itemsRv.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
         if (adapter == null) {
-            adapter = MultiItemListAdapter(activity!!, ListItemTypeFactory())
+            adapter = MultiItemListAdapter(activity, ListItemTypeFactory())
         }
         itemsRv.adapter = adapter
-
-        loadingRetryBtn.setOnClickListener {
-            presenter.onLoadingRetryClicked()
-        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             itemsRv.setOnScrollChangeListener {
@@ -55,43 +72,50 @@ class HistoryFragment
                 toolbar.isSelected = itemsRv.canScrollVertically(-1)
             }
         }
+
+        srl.setOnRefreshListener {
+            presenter.onRefresh()
+        }
     }
 
-    override fun getGoogleAccountCredential(account: Account): GoogleAccountCredential {
+    override fun getGoogleAccountCredential(googleAccount: Account): GoogleAccountCredential {
         return GoogleAccountCredential.usingOAuth2(activity, Arrays.asList(SheetsScopes.SPREADSHEETS))
                 .setBackOff(ExponentialBackOff())
-                .setSelectedAccount(account)
+                .setSelectedAccount(googleAccount)
     }
 
     override fun submitList(list: List<ListItem<*, *>>) {
         adapter?.submitList(list)
     }
 
-    override fun showLoadingOverlay() {
-        loadingParentLl.visibility = View.VISIBLE
-        loadingPb.visibility = View.VISIBLE
-        loadingTv.visibility = View.VISIBLE
-        loadingRetryBtn.visibility = View.GONE
+    override fun startTransactionActivity(transaction: Transaction) {
+        val intent = Intent(activity, ExpenseActivity::class.java)
+        intent.putExtra(ExpenseActivity.KEY_TRANSACTION, transaction)
+        startActivityForResult(intent, REQ_CODE_TRANSACTION)
     }
 
-    override fun hideLoadingOverlay() {
-        loadingParentLl.visibility = View.GONE
+    override fun showToast(message: String) {
+        Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
     }
 
-    override fun showErrorOverlay() {
-        loadingParentLl.visibility = View.VISIBLE
-        loadingPb.visibility = View.GONE
-        loadingTv.visibility = View.GONE
-        loadingRetryBtn.visibility = View.VISIBLE
-    }
-
-    override fun showSnackBar(message: String) {
+    override fun showSnackbar(message: String) {
         Snackbar.make(containerRl, message, Snackbar.LENGTH_SHORT).show()
     }
 
-    override fun startExpenseActivity(expense: Expense) {
-        val intent = Intent(activity, ExpenseActivity::class.java)
-        intent.putExtra(ExpenseActivity.KEY_EXPENSE, expense)
-        activity?.startActivity(intent)
+    override fun showLoading(message: String) {
+        srl.isRefreshing = true
+    }
+
+    override fun hideLoading() {
+        srl.isRefreshing = false
+    }
+
+    override fun showError(message: String) {
+    }
+
+    @Module
+    abstract class HistoryModule {
+        @Binds
+        abstract fun presenter(presenter: HistoryContract.HistoryPresenter): HistoryContract.Presenter
     }
 }

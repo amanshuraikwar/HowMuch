@@ -9,7 +9,7 @@ import android.view.View.VISIBLE
 import io.github.amanshuraikwar.multiitemlistadapter.ViewHolder
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.util.Util
-import kotlinx.android.synthetic.main.item_expense.view.*
+import kotlinx.android.synthetic.main.item_transaction.view.*
 import kotlinx.android.synthetic.main.item_expense_category_summary.view.*
 
 class ExpenseCategorySummaryViewHolder(itemView: View) : ViewHolder<ExpenseCategorySummaryListItem>(itemView) {

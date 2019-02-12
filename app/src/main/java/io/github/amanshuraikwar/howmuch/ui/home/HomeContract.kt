@@ -1,9 +1,13 @@
 package io.github.amanshuraikwar.howmuch.ui.home
 
-import android.accounts.Account
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
-import io.github.amanshuraikwar.howmuch.ui.base.BasePresenter
-import io.github.amanshuraikwar.howmuch.ui.base.BaseView
+import io.github.amanshuraikwar.howmuch.bus.AppBus
+import io.github.amanshuraikwar.howmuch.data.DataManager
+import io.github.amanshuraikwar.howmuch.ui.base.*
+import io.github.amanshuraikwar.howmuch.ui.onboarding.OnboardingScreen
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 /**
  * MVP contract of HomeActivity.
@@ -13,23 +17,55 @@ import io.github.amanshuraikwar.howmuch.ui.base.BaseView
  */
 interface HomeContract {
 
-    interface View : BaseView {
-        fun setCurPage(index: Int)
-        fun loadPage(navigationPage: NavigationPage)
-        fun hideBottomNav()
-        fun showBottomNav()
-        fun hideMainFragmentContainer()
-        fun showMainFragmentContainer()
-        fun showToast(message: String)
-        fun showLoading()
-        fun hideLoading()
-        fun showError(message: String)
-        fun updateLoading(message: String)
-        fun getGoogleAccountCredential(googleAccount: Account): GoogleAccountCredential
+    enum class NavigationPage {
+        ADD_EXPENSE, HISTORY, STATS, SIGN_IN, ONBOARDING, SETTINGS
     }
 
-    interface Presenter : BasePresenter<View> {
-        fun onNavigationItemSelected(position: Int)
-        fun onRetryClicked()
+    interface View : BaseView, LoadingView, UiMessageView, GoogleAccountView {
+        fun startOnboardingActivity()
+        fun close()
+        fun loadSignInFragment()
+        fun loadHistoryFragment()
+        fun showAddTransactionBtn()
+    }
+
+    interface Presenter : BasePresenter<View>
+
+    class HomePresenter
+    @Inject constructor(appBus: AppBus,
+                        dataManager: DataManager)
+        : BasePresenterImpl<View>(appBus, dataManager), Presenter {
+
+        override fun onAttach(wasViewRecreated: Boolean) {
+
+            super.onAttach(wasViewRecreated)
+
+            if (wasViewRecreated) {
+                init()
+            }
+        }
+
+        private fun init() {
+            getView()?.loadSignInFragment()
+            attachToAppBus()
+        }
+
+        private fun attachToAppBus() {
+
+            getAppBus()
+                    .onBoardingScreenState
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe {
+                        if (it == OnboardingScreen.State.ONBOARDING_COMPLETE) {
+                            getView()?.run {
+                                loadHistoryFragment()
+                                showAddTransactionBtn()
+                            }
+                        }
+                    }
+                    .addToCleanup()
+
+        }
     }
 }

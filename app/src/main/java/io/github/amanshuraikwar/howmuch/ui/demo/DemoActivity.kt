@@ -12,9 +12,6 @@ import javax.inject.Inject
 
 class DemoActivity : BaseActivity<DemoContract.View, DemoContract.Presenter>(), DemoContract.View {
 
-    @Inject
-    lateinit var fragment: CreateSheetFragment
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_demo)
@@ -24,7 +21,6 @@ class DemoActivity : BaseActivity<DemoContract.View, DemoContract.Presenter>(), 
             window.navigationBarColor = getColor(R.color.gray1)
         }
 
-        loadFragment(fragment)
     }
 
     private fun loadFragment(fragment: androidx.fragment.app.Fragment): Boolean {

@@ -7,91 +7,53 @@ import io.github.amanshuraikwar.howmuch.data.DataManager
 import io.github.amanshuraikwar.howmuch.data.network.sheets.AuthenticationManager
 
 open class AccountPresenter<View: BaseView>
+
 constructor(appBus: AppBus,
             dataManager: DataManager,
             private val authMan: AuthenticationManager = dataManager.getAuthenticationManager())
+
     : BasePresenterImpl<View>(appBus, dataManager), BasePresenter<View> {
 
-    private var account: Account? = null
-    private lateinit var email: String
-    private var googleSignInAccount: GoogleSignInAccount? = null
-
-    override fun onAttach(wasViewRecreated: Boolean) {
-        super.onAttach(wasViewRecreated)
-
-        if (wasViewRecreated) {
-            account = getAccountAct()
-            email = getEmailAct()
-            googleSignInAccount = getGoogleSignInAccountAct()
-
-            if (account == null || email == "" || googleSignInAccount == null) {
-                onInvalidState(account, email)
-            }
-        }
-    }
-
-    protected fun getAccount() = account
-    protected fun getEmail() = email
-    protected fun getGoogleSignInAccount() = googleSignInAccount
-
-    /**
-     * Called during invalid state related to account or email.
-     * i.e. When either of them is null.
-     * @param account Account.
-     * @param email Email
-     */
-    open fun onInvalidState(account: Account?, email: String?) {
-        // do nothing
-    }
-
-    @Suppress("LiftReturnOrAssignment")
-    private fun getAccountAct(): Account? {
-
-        if (authMan.hasPermissions()) {
-
-            val account = authMan.getLastSignedAccount()?.account
-
-            if (account == null) {
-                return null
-            } else {
-                return account
-            }
+    protected fun getAccount(): Account? {
+        return if (authMan.hasPermissions()) {
+            authMan.getLastSignedAccount()?.account
         } else {
-            return null
+            null
         }
     }
 
-    @Suppress("LiftReturnOrAssignment")
-    private fun getGoogleSignInAccountAct(): GoogleSignInAccount? {
-
-        if (authMan.hasPermissions()) {
-
-            val account = authMan.getLastSignedAccount()
-
-            if (account == null) {
-                return null
-            } else {
-                return account
-            }
+    protected fun getEmail(): String? {
+        return if (authMan.hasPermissions()) {
+            authMan.getLastSignedAccount()?.email
         } else {
-            return null
+            null
         }
     }
 
-    @Suppress("LiftReturnOrAssignment")
-    private fun getEmailAct(): String {
-
-        if (authMan.hasPermissions()) {
-
-            val email = authMan.getLastSignedAccount()?.email
-
-            if (email == null) {
-                return ""
-            } else {
-                return email
-            }
+    protected fun getDisplayName(): String? {
+        return if (authMan.hasPermissions()) {
+            authMan.getLastSignedAccount()?.displayName
         } else {
-            return ""
+            null
         }
     }
+
+    protected fun getPhotoUrl(): String? {
+        return if (authMan.hasPermissions()) {
+            authMan.getLastSignedAccount()?.photoUrl.toString()
+        } else {
+            null
+        }
+    }
+
+    protected fun getGoogleSignInAccount(): GoogleSignInAccount? {
+        return if (authMan.hasPermissions()) {
+            authMan.getLastSignedAccount()
+        } else {
+            null
+        }
+    }
+
+    protected fun isSignedIn()
+            = authMan.hasPermissions() && (authMan.getLastSignedAccount() != null)
 }

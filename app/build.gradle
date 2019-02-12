@@ -8,6 +8,10 @@ apply plugin: 'kotlin-kapt'
 
 apply from: "$project.rootDir/script-git-version.gradle"
 
+androidExtensions {
+    experimental = true
+}
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -44,7 +48,7 @@ android {
     productFlavors {
 
         dev {
-            applicationIdSuffix ".dev"
+            applicationIdSuffix ".debug"
             versionCode gitVersionCodeTime
             versionName gitVersionName
             manifestPlaceholders = [ applicationLabel : APP_NAME_DEV]
@@ -96,7 +100,7 @@ dependencies {
 
     //Rx
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroidVersion"
-    implementation "io.reactivex.rxjava2:rxjava:$rxjavaVersion"
+    implementation "io.reactivex:rxkotlin:$rxjavaVersion"
 
     // room
     implementation 'androidx.room:room-runtime:2.1.0-alpha03'

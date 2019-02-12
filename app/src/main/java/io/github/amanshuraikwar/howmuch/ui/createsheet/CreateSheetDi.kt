@@ -10,11 +10,9 @@ class CreateSheetDi {
 
     @Module abstract class ModuleAct {
 
-        @ActivityScope
         @Binds
         abstract fun prsntr(presenter: CreateSheetPresenter): CreateSheetContract.Presenter
 
-        @FragmentScope
         @ContributesAndroidInjector
         internal abstract fun frgmnt(): CreateSheetFragment
     }

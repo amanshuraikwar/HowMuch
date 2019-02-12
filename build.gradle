@@ -38,7 +38,7 @@ ext{
     constraintLayoutVersion = "1.1.3"
     roomVersion = "1.1.1"
     rxandroidVersion = "2.0.2"
-    rxjavaVersion = "2.1.10"
+    rxjavaVersion = "2.0.0-RC1"
     pagingVersion = "1.0.1"
     glideVersion = "4.7.1"
 }

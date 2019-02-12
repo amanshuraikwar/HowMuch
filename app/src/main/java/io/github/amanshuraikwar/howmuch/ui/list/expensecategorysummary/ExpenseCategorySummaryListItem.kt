@@ -1,6 +1,5 @@
 package io.github.amanshuraikwar.howmuch.ui.list.expensecategorysummary
 
-import io.github.amanshuraikwar.howmuch.model.Expense
 import io.github.amanshuraikwar.howmuch.model.ExpenseCategorySummary
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.SimpleListItemOnClickListener

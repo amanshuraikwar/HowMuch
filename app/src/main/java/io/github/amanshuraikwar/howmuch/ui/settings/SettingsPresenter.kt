@@ -28,20 +28,20 @@ class SettingsPresenter
     }
 
     private fun init() {
-        getView()?.run {
-            updateProfilePic(getGoogleSignInAccount()?.photoUrl.toString())
-            updateName(getGoogleSignInAccount()?.displayName ?: "")
-            updateEmail(getEmail())
-            updateCurrency(getDataManager().getCurrency())
-        }
-
-        getAppBus()
-                .onCurrencyChanged
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    getView()?.updateCurrency(getDataManager().getCurrency())
-                }
+//        getView()?.run {
+//            updateProfilePic(getGoogleSignInAccount()?.photoUrl.toString())
+//            updateName(getGoogleSignInAccount()?.displayName ?: "")
+//            updateEmail(getEmail())
+//            updateCurrency(getDataManager().getCurrency())
+//        }
+//
+//        getAppBus()
+//                .onCurrencyChanged
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe {
+//                    getView()?.updateCurrency(getDataManager().getCurrency())
+//                }
     }
 
     override fun onCurrencyClicked() {

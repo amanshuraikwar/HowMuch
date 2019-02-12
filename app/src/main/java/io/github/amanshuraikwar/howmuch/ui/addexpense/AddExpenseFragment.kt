@@ -14,7 +14,7 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccoun
 import com.google.api.client.util.ExponentialBackOff
 import com.google.api.services.sheets.v4.SheetsScopes
 import io.github.amanshuraikwar.howmuch.R
-import io.github.amanshuraikwar.howmuch.model.Expense
+import io.github.amanshuraikwar.howmuch.model.Transaction
 import io.github.amanshuraikwar.howmuch.ui.base.BaseFragment
 import io.github.amanshuraikwar.howmuch.util.Util
 import kotlinx.android.synthetic.main.fragment_add_expense.*
@@ -46,14 +46,14 @@ class AddExpenseFragment @Inject constructor()
     private fun init() {
 
         submitBtn.setOnClickListener {
-            presenter.onSubmitClicked(
-                    Expense("",
-                            Util.unBeautifyDate(dateTv.text.toString()),
-                            Util.getCurTime(),
-                            amountEt.text.toString(),
-                            descriptionEt.text.toString(),
-                            categorySp.selectedItem.toString(),
-                            ""))
+//            presenter.onSubmitClicked(
+//                    Expense("",
+//                            Util.unBeautifyDate(dateTv.text.toString()),
+//                            Util.getCurTime(),
+//                            amountEt.text.toString(),
+//                            descriptionEt.text.toString(),
+//                            categorySp.selectedItem.toString(),
+//                            ""))
         }
 
         dateTv.text = Util.getCurDateBeautiful()

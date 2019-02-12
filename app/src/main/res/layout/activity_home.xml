@@ -7,7 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/green"
     tools:context=".ui.home.HomeActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -38,12 +37,26 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toTopOf="@id/bottomTl">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/iconIv"
+            android:layout_width="@dimen/onboarding_icon_size"
+            android:layout_height="@dimen/onboarding_icon_size"
             android:layout_gravity="center"
-            android:text="@string/app_name_prod" />
+            android:src="@mipmap/ic_launcher"
+            android:contentDescription="@string/app_icon" />
     </FrameLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addTransactionFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:layout_marginBottom="@dimen/margin_large"
+        android:src="@drawable/ic_add_white_24dp"
+        android:tint="@color/activeIcon"
+        android:visibility="gone" />
 
     <include
         layout="@layout/layout_loading_overlay"

@@ -8,7 +8,9 @@
     android:gravity="center"
     android:background="@color/white"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:visibility="gone"
+    android:elevation="@dimen/elevation_very_large">
 
     <ProgressBar
         android:id="@+id/loadingPb"

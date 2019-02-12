@@ -1,6 +1,7 @@
 package io.github.amanshuraikwar.howmuch.ui.base
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -25,6 +26,13 @@ abstract class BaseFragment<View: BaseView, Presenter: BasePresenter<View>>
      * Generally queried by the presenter.
      */
     private var wasViewRecreated: Boolean = true
+
+    protected lateinit var activity: BaseActivity<*, *>
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        activity = getActivity() as io.github.amanshuraikwar.howmuch.ui.base.BaseActivity<*, *>
+    }
 
     @Suppress("UNCHECKED_CAST")
     override fun onResume() {

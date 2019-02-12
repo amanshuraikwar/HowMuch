@@ -62,7 +62,7 @@
                     android:layout_gravity="center_vertical"
                     android:tint="@color/inactiveIcon"
                     android:src="@drawable/ic_today_black_24dp"
-                    android:contentDescription="@string/date"/>
+                    android:contentDescription=""/>
             </FrameLayout>
 
             <FrameLayout
@@ -79,7 +79,6 @@
                     android:paddingEnd="16dp"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
-                    android:hint="@string/amount"
                     android:inputType="numberDecimal"
                     android:lines="1"
                     android:background="@color/white"
@@ -92,7 +91,7 @@
                     android:layout_gravity="center_vertical"
                     android:tint="@color/inactiveIcon"
                     android:src="@drawable/baseline_money_24"
-                    android:contentDescription="@string/amount"/>
+                    android:contentDescription=""/>
 
                 <View
                     android:layout_width="match_parent"

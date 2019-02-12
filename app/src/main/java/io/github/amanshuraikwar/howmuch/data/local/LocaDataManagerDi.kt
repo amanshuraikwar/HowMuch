@@ -12,7 +12,7 @@ import io.github.amanshuraikwar.howmuch.data.local.prefs.PrefsDataManagerImpl
 import io.github.amanshuraikwar.howmuch.data.local.sqlite.room.AppDatabase
 import io.github.amanshuraikwar.howmuch.data.local.sqlite.SqliteDataManager
 import io.github.amanshuraikwar.howmuch.data.local.sqlite.room.RoomDataManagerImpl
-import io.github.amanshuraikwar.howmuch.data.local.sqlite.room.SpreadsheetDao
+import io.github.amanshuraikwar.howmuch.data.local.sqlite.room.spreadsheet.SpreadsheetDao
 import io.github.amanshuraikwar.howmuch.di.ApplicationContext
 import javax.inject.Singleton
 

@@ -2,7 +2,7 @@ package io.github.amanshuraikwar.howmuch.ui.addexpense
 
 import android.accounts.Account
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
-import io.github.amanshuraikwar.howmuch.model.Expense
+import io.github.amanshuraikwar.howmuch.model.Transaction
 import io.github.amanshuraikwar.howmuch.ui.base.BasePresenter
 import io.github.amanshuraikwar.howmuch.ui.base.BaseView
 
@@ -25,7 +25,7 @@ interface AddExpenseContract {
     }
 
     interface Presenter : BasePresenter<View> {
-        fun onSubmitClicked(expense: Expense)
+        fun onSubmitClicked(expense: Transaction)
         fun onLoadingRetryClicked()
     }
 }

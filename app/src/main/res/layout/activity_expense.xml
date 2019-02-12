@@ -1,188 +1,260 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/contentFl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
     android:background="@color/white">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/toolbarCl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title=""
-        style="@style/Widget.HowMuch.Toolbar.SmallCapsTitle"
-        android:stateListAnimator="@animator/toolbar_elevation">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/white"
+        android:stateListAnimator="@animator/toolbar_elevation" >
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageButton
-                android:id="@+id/closeIb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/padding_normal"
-                android:src="@drawable/ic_cancel_black_24dp"
-                android:background="?attr/selectableItemBackground"
-                android:tint="@color/activeIcon"
-                tools:ignore="ContentDescription" />
-
-            <ImageButton
-                android:id="@+id/deleteIb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:padding="@dimen/padding_normal"
-                android:src="@drawable/ic_delete_black_24dp"
-                android:background="?attr/selectableItemBackground"
-                android:tint="@color/activeIcon"
-                tools:ignore="ContentDescription" />
-        </FrameLayout>
-    </androidx.appcompat.widget.Toolbar>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
-        android:orientation="vertical"
-        android:gravity="center">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/dateTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="72dp"
-                android:paddingEnd="16dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                android:lines="1"
-                android:background="@color/gray1"
-                android:textAppearance="@style/TextAppearance.Date"
-                android:textColor="@color/secondaryText"/>
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="24dp"
-                android:layout_gravity="center_vertical"
-                android:tint="@color/inactiveIcon"
-                android:src="@drawable/ic_today_black_24dp"
-                android:contentDescription="@string/date"/>
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/backIb"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:elevation="1dp">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/toolbar"
+            android:layout_margin="@dimen/padding_normal"
+            android:src="@drawable/ic_keyboard_backspace_white_24dp"
+            style="@style/Widget.HowMuch.ImageButton.Borderless"
+            android:contentDescription="@string/done" />
 
-            <EditText
-                android:id="@+id/amountEt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="72dp"
-                android:paddingEnd="16dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                android:hint="@string/amount"
-                android:inputType="numberDecimal"
-                android:lines="1"
-                android:background="@color/white"
-                android:textAppearance="@style/TextAppearance.Amount"/>
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="24dp"
-                android:layout_gravity="center_vertical"
-                android:tint="@color/inactiveIcon"
-                android:src="@drawable/baseline_money_24"
-                android:contentDescription="@string/amount"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="72dp"
-                android:layout_gravity="bottom"
-                android:background="@color/divider"/>
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:elevation="1dp">
+            app:layout_constraintStart_toEndOf="@id/backIb"
+            app:layout_constraintEnd_toStartOf="@id/barrier1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title=""
+            style="@style/Widget.HowMuch.Toolbar.SmallCapsTitle" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_gravity="top"
-                android:layout_marginStart="72dp"
-                android:background="@color/divider"/>
-
-            <Spinner
-                android:id="@+id/categorySp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="64dp"
-                android:paddingEnd="0dp"/>
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="24dp"
-                android:layout_gravity="center_vertical"
-                android:tint="@color/inactiveIcon"
-                android:src="@drawable/baseline_category_24"
-                android:contentDescription="@string/category"/>
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/descriptionEt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="72dp"
-                android:paddingEnd="16dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                android:background="@color/gray1"
-                android:hint="@string/description"
-                android:inputType="text"
-                android:textAppearance="@style/TextAppearance.Description"
-                android:textColor="@color/secondaryText"/>
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="24dp"
-                android:layout_gravity="center_vertical"
-                android:tint="@color/inactiveIcon"
-                android:src="@drawable/baseline_receipt_24"
-                android:contentDescription="@string/description"/>
-        </FrameLayout>
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="doneBtn,editIb"
+            app:barrierDirection="start" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/submitBtn"
-            android:layout_width="match_parent"
+            android:id="@+id/doneBtn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_normal"
+            app:layout_constraintStart_toEndOf="@id/barrier1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/toolbar"
+            app:layout_constraintBottom_toBottomOf="@id/toolbar"
             android:layout_marginStart="@dimen/margin_normal"
             android:layout_marginEnd="@dimen/margin_normal"
-            app:backgroundTint="@color/colorPrimary"
-            android:textColor="@color/white"
             android:text="@string/save"
-            style="@style/Widget.HowMuch.Button"/>
-    </LinearLayout>
-</RelativeLayout>
+            style="@style/Widget.HowMuch.Button.Small"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/editIb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/barrier1"
+            app:layout_constraintEnd_toStartOf="@id/deleteIb"
+            app:layout_constraintTop_toTopOf="@id/toolbar"
+            app:layout_constraintBottom_toBottomOf="@id/toolbar"
+            android:layout_margin="@dimen/margin_normal"
+            android:src="@drawable/ic_edit_white_24dp"
+            style="@style/Widget.HowMuch.ImageButton.Borderless"
+            android:contentDescription="@string/done" />
+
+        <ImageButton
+            android:id="@+id/deleteIb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/editIb"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/toolbar"
+            app:layout_constraintBottom_toBottomOf="@id/toolbar"
+            android:layout_margin="@dimen/margin_normal"
+            android:src="@drawable/ic_delete_white_24dp"
+            style="@style/Widget.HowMuch.ImageButton.Borderless"
+            android:contentDescription="@string/delete" />
+
+        <ImageButton
+            android:id="@+id/transactionTypeIb"
+            android:layout_width="@dimen/input_field_icon_size"
+            android:layout_height="@dimen/input_field_icon_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_margin="@dimen/padding_normal"
+            android:src="@drawable/ic_arrow_drop_down_white_24dp"
+            android:tint="@color/red"
+            style="@style/Widget.HowMuch.ImageButton.Borderless"
+            android:contentDescription="@string/amount_hint" />
+
+        <EditText
+            android:id="@+id/amountEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="@dimen/input_field_offset"
+            android:paddingStart="0dp"
+            android:paddingEnd="@dimen/padding_normal"
+            android:inputType="none"
+            android:lines="1"
+            android:hint="@string/amount_hint"
+            android:textAppearance="@style/TextAppearance.Amount"
+            android:textColor="@color/red"
+            style="@style/Widget.HowMuch.InputEditText"
+            android:importantForAutofill="no"
+            tools:targetApi="o"
+            tools:text="169.48"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:id="@+id/contentSv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarCl"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/titleEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:inputType="none"
+                    android:hint="@string/title_hint"
+                    android:textAppearance="@style/TextAppearance.InputField"
+                    style="@style/Widget.HowMuch.InputEditText"
+                    android:importantForAutofill="no"
+                    tools:targetApi="o" />
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_title_white_24dp"
+                    android:contentDescription="@string/title_hint"
+                    style="@style/InputImageView" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <Spinner
+                    android:id="@+id/categorySp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/input_field_offset_spinner"
+                    android:paddingEnd="0dp"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/categoryTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:hint="@string/category_hint"
+                    android:textAppearance="@style/TextAppearance.InputField"
+                    android:background="?attr/selectableItemBackground"
+                    style="@style/Widget.HowMuch.InputTextView" />
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/baseline_category_24"
+                    android:contentDescription="@string/category_hint"
+                    style="@style/InputImageView" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/dateTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:hint="@string/date_hint"
+                    android:textAppearance="@style/TextAppearance.InputField"
+                    android:background="?attr/selectableItemBackground"
+                    style="@style/Widget.HowMuch.InputTextView" />
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_today_black_24dp"
+                    android:contentDescription="@string/date_hint"
+                    style="@style/InputImageView" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/timeTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:hint="@string/time_hint"
+                    android:textAppearance="@style/TextAppearance.InputField"
+                    android:background="?attr/selectableItemBackground"
+                    style="@style/Widget.HowMuch.InputTextView" />
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_access_time_white_24dp"
+                    android:contentDescription="@string/time_hint"
+                    style="@style/InputImageView" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/descriptionEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:inputType="none"
+                    android:hint="@string/description_hint"
+                    android:textAppearance="@style/TextAppearance.InputField"
+                    style="@style/Widget.HowMuch.InputEditText"
+                    android:importantForAutofill="no"
+                    tools:targetApi="o" />
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/baseline_receipt_24"
+                    android:contentDescription="@string/description_hint"
+                    style="@style/InputImageView" />
+            </FrameLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <include layout="@layout/layout_loading_overlay" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

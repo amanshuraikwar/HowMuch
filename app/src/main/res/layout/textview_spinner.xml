@@ -7,4 +7,4 @@
     android:paddingTop="16dp"
     android:paddingStart="8dp"
     android:paddingEnd="0dp"
-    android:textAppearance="@style/TextAppearance.Category"/>
+    android:textAppearance="@style/TextAppearance.InputField"/>

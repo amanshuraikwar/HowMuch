@@ -14,51 +14,44 @@ import io.reactivex.Observable
  */
 interface NetworkDataManager {
 
-    fun getAllPhotos(page: Int, orderBy: String, perPage: Int): List<Photo>?
-
     fun getAuthenticationManager(): AuthenticationManager
 
-    fun readSpreadSheet(spreadsheetId: String,
-                        spreadsheetRange: String): Observable<MutableList<MutableList<Any>>>
 
     fun readSpreadSheet(spreadsheetId: String,
+                        sheetTitle: String,
                         spreadsheetRange: String,
-                        googleAccountCredential: GoogleAccountCredential): Observable<MutableList<MutableList<Any>>>
+                        googleAccountCredential: GoogleAccountCredential)
+            : Observable<MutableList<MutableList<Any>>>
+
 
     fun updateSpreadSheet(spreadsheetId : String,
-                            spreadsheetRange : String,
-                            valueInputOption: String,
-                            values: List<List<Any>>): Observable<String>
+                          sheetTitle: String,
+                          spreadsheetRange : String,
+                          values: List<List<Any>>,
+                          googleAccountCredential: GoogleAccountCredential)
+            : Observable<String>
 
-    fun updateSpreadSheet(spreadsheetId : String,
+
+    fun appendToSpreadSheet(spreadsheetId : String,
+                            sheetTitle: String,
                             spreadsheetRange : String,
-                            valueInputOption: String,
                             values: List<List<Any>>,
                             googleAccountCredential: GoogleAccountCredential): Observable<String>
 
-    fun appendToSpreadSheet(spreadsheetId : String,
-                            spreadsheetRange : String,
-                            valueInputOption: String,
-                            values: List<List<Any>>): Observable<String>
 
-    fun appendToSpreadSheet(spreadsheetId : String,
-                            spreadsheetRange : String,
-                            valueInputOption: String,
-                            values: List<List<Any>>,
-                            googleAccountCredential: GoogleAccountCredential): Observable<String>
+    fun createSpreadSheet(spreadSheetTitle: String,
+                          sheetTitles: List<String>,
+                          googleAccountCredential: GoogleAccountCredential): Observable<String>
 
-    fun createSpreadSheet(spreadSheetTitle: String, sheetTitles: List<String>): Observable<String>
-
-    fun createSpreadSheet(spreadSheetTitle: String, sheetTitles: List<String>, googleAccountCredential: GoogleAccountCredential): Observable<String>
-
-    fun deleteRows(spreadsheetId : String,
-                   sheetTitle: String,
-                   startIndex: Int,
-                   endIndex: Int): Observable<String>
+    fun isValidSpreadSheetId(spreadsheetId: String,
+                             googleAccountCredential: GoogleAccountCredential): Observable<Boolean>
 
     fun deleteRows(spreadsheetId : String,
                    sheetTitle: String,
                    startIndex: Int,
                    endIndex: Int,
                    googleAccountCredential: GoogleAccountCredential): Observable<String>
+
+    fun getSheetTitles(spreadsheetId : String,
+                       googleAccountCredential: GoogleAccountCredential): Observable<List<String>>
 }

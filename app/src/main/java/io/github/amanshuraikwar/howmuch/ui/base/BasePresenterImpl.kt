@@ -20,7 +20,7 @@ constructor(private val appBus: AppBus,
     private var view: View? = null
 
     //region RxJava Disposable methods
-    private var disposables: CompositeDisposable = CompositeDisposable()
+    private lateinit var disposables: MutableList<Disposable>
 
     /**
      * Add the current disposable to be disposed/cleaned when the view is detached.
@@ -76,7 +76,9 @@ constructor(private val appBus: AppBus,
      * @param wasViewRecreated boolean telling if the corresponding view was recreated.
      */
     protected open fun onAttach(wasViewRecreated: Boolean) {
-        // do nothing
+        if (wasViewRecreated) {
+            disposables = mutableListOf()
+        }
     }
 
     /**
@@ -84,10 +86,8 @@ constructor(private val appBus: AppBus,
      * Presenter should perform clean-ups here.
      */
     protected open fun onDetach() {
-
-        // disposing all disposables
-        if (!disposables.isDisposed) {
-            disposables.dispose()
-        }
+        disposables
+                .filter { !it.isDisposed }
+                .forEach { it.dispose() }
     }
 }

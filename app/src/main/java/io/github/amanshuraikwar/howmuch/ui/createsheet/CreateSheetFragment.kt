@@ -35,7 +35,7 @@ class CreateSheetFragment @Inject constructor()
     }
 
     private fun init() {
-        createSheetBtn.setOnClickListener {
+        signInBtn.setOnClickListener {
             presenter.onCreateSheetClicked()
         }
         completeSetupBtn.setOnClickListener {
@@ -82,15 +82,15 @@ class CreateSheetFragment @Inject constructor()
     }
 
     override fun showCreateSheetButton() {
-        createSheetBtn.visibility = VISIBLE
+        signInBtn.visibility = VISIBLE
     }
 
     override fun hideCreateSheetButton() {
-        createSheetBtn.visibility = GONE
+        signInBtn.visibility = GONE
     }
 
     override fun showSnackBar(message: String) {
-        Snackbar.make(parentRl, message, Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(parentCl, message, Snackbar.LENGTH_SHORT).show()
     }
 
     override fun showId(id: String) {
@@ -121,7 +121,7 @@ class CreateSheetFragment @Inject constructor()
     override fun showIndefiniteErrorSnackbar(message: String) {
         Log.d(TAG, "showIndefiniteErrorSnackbar: called")
         Snackbar
-                .make(parentRl, message, Snackbar.LENGTH_INDEFINITE)
+                .make(parentCl, message, Snackbar.LENGTH_INDEFINITE)
                 .setAction("Retry") { presenter.onIndefiniteRetryClicked() }
                 .show()
     }

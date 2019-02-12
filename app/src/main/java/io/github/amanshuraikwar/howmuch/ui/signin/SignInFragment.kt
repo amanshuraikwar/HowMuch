@@ -1,5 +1,7 @@
 package io.github.amanshuraikwar.howmuch.ui.signin
 
+import android.accounts.Account
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
@@ -11,24 +13,25 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
+import com.google.api.client.util.ExponentialBackOff
+import com.google.api.services.sheets.v4.SheetsScopes
+import dagger.Binds
+import dagger.Module
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.data.network.sheets.AuthenticationManager
 import io.github.amanshuraikwar.howmuch.ui.base.BaseFragment
-import io.github.amanshuraikwar.howmuch.ui.onboarding.OnboardingScreen
 import io.github.amanshuraikwar.howmuch.util.Util
 import kotlinx.android.synthetic.main.fragment_sign_in.*
-import javax.inject.Inject
+import java.util.*
 
 
-class SignInFragment @Inject constructor()
-    : BaseFragment<SignInContract.View, SignInContract.Presenter>(), SignInContract.View, OnboardingScreen {
+class SignInFragment
+    : BaseFragment<SignInContract.View, SignInContract.Presenter>(), SignInContract.View {
 
-    private val TAG = Util.getTag(this)
+    private val logTag = Util.getTag(this)
 
-    @Inject
-    lateinit var googleSignInClient: GoogleSignInClient
-
+    @SuppressLint("InflateParams")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_sign_in, null)
     }
@@ -39,7 +42,7 @@ class SignInFragment @Inject constructor()
     }
 
     private fun init() {
-        createSheetBtn.setOnClickListener {
+        signInBtn.setOnClickListener {
             presenter.onSignInBtnClicked()
         }
 
@@ -47,18 +50,18 @@ class SignInFragment @Inject constructor()
             presenter.onProceedBtnClicked()
         }
 
-        emailBtn.setOnClickListener {
-            presenter.onEmailBtnClicked()
+        editIb.setOnClickListener {
+            presenter.onEditBtnClicked()
         }
 
-        profileCv.isEnabled = false
-        emailBtn.isEnabled = false
-
+        horizontalPb.max = 100
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
         super.onActivityResult(requestCode, resultCode, data)
-        Log.d(TAG, "onActivityResult: called")
+
+        Log.d(logTag, "onActivityResult: called")
 
         if (requestCode == AuthenticationManager.CODE_SIGN_IN) {
             presenter.onSignInResult(GoogleSignIn.getSignedInAccountFromIntent(data).isSuccessful)
@@ -66,27 +69,46 @@ class SignInFragment @Inject constructor()
     }
 
     override fun initiateSignIn() {
-        startActivityForResult(googleSignInClient.signInIntent, AuthenticationManager.CODE_SIGN_IN)
+        startActivityForResult(
+                activity.googleSignInClient.signInIntent,
+                AuthenticationManager.CODE_SIGN_IN
+        )
     }
 
     override fun initiateSignOut() {
-        googleSignInClient.signOut()
+        activity.googleSignInClient.signOut()
+    }
+
+    override fun showSignInInfo() {
+        titleTv.visibility = VISIBLE
+        descriptionTv.visibility = VISIBLE
+        dummyV.visibility = VISIBLE
     }
 
     override fun hideSignInBtn() {
-        createSheetBtn.visibility = GONE
+        signInBtn.visibility = GONE
     }
 
     override fun showSignInBtn() {
-        createSheetBtn.visibility = VISIBLE
+        signInBtn.visibility = VISIBLE
     }
 
     override fun hideProceedBtn() {
         proceedBtn.visibility = GONE
     }
 
-    override fun showProceedBtn() {
+    @SuppressLint("SetTextI18n")
+    override fun showProceedBtn(name: String) {
+        proceedBtn.text = "Continue as $name"
         proceedBtn.visibility = VISIBLE
+    }
+
+    override fun hideGoogleAccountEdit() {
+        editIb.visibility = GONE
+    }
+
+    override fun showGoogleAccountEdit() {
+        editIb.visibility = VISIBLE
     }
 
     override fun showToast(message: String) {
@@ -94,26 +116,63 @@ class SignInFragment @Inject constructor()
     }
 
     override fun showSnackbar(message: String) {
-        Snackbar.make(parentRl, message, Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(parentCl, message, Snackbar.LENGTH_SHORT).show()
     }
 
-    override fun showGoogleUserInfo(photoUrl: String, email: String) {
-        profileCv.visibility = VISIBLE
-        emailBtn.visibility = VISIBLE
-        emailBtn.isEnabled = true
-        profileCv.isEnabled = true
-        Glide.with(activity!!).load(photoUrl).into(profileIv)
-        emailBtn.text = email
+    override fun showGoogleUserInfo(name: String, photoUrl: String, email: String) {
+
+        profilePicCv.visibility = VISIBLE
+        nameTv.visibility = VISIBLE
+        emailTv.visibility = VISIBLE
+        editIb.visibility = VISIBLE
+
+        Glide.with(activity).load(photoUrl).into(profilePicIv)
+        nameTv.text = name
+        emailTv.text = email
     }
 
     override fun hideGoogleUserInfo() {
-        profileCv.visibility = INVISIBLE
-        emailBtn.visibility = INVISIBLE
-        emailBtn.isEnabled = false
-        profileCv.isEnabled = false
+
+        profilePicCv.visibility = GONE
+        nameTv.visibility = GONE
+        emailTv.visibility = GONE
+        editIb.visibility = GONE
+
+        Glide.with(activity).clear(profilePicIv)
+        nameTv.text  = ""
+        emailTv.text  = ""
     }
 
-    override fun selected() {
-        presenter.onScreenSelected()
+    override fun getGoogleAccountCredential(account: Account): GoogleAccountCredential {
+        return GoogleAccountCredential
+                .usingOAuth2(activity, Arrays.asList(SheetsScopes.SPREADSHEETS))
+                .setBackOff(ExponentialBackOff())
+                .setSelectedAccount(account)
+    }
+
+    override fun showProgress(progress: Int) {
+        horizontalPb.progress = progress
+    }
+
+    override fun showLoading(message: String) {
+        loadingPb.visibility = VISIBLE
+        loadingPbScrim.visibility = VISIBLE
+        horizontalPb.visibility = VISIBLE
+    }
+
+    override fun hideLoading() {
+        loadingPb.visibility = GONE
+        loadingPbScrim.visibility = GONE
+        horizontalPb.visibility = GONE
+    }
+
+    override fun showError(message: String) {
+        // do nothing
+    }
+
+    @Module
+    abstract class SignInModule {
+        @Binds
+        abstract fun presenter(presenter: SignInContract.SignInPresenter): SignInContract.Presenter
     }
 }

@@ -166,9 +166,24 @@ class SheetsAPIDataSource(private val googleAccountCredential: GoogleAccountCred
 
             content.requests = listOf(request)
 
-            val response = sheetsAPI.spreadsheets().batchUpdate(spreadsheetId, content).execute()
+            val response =
+                    sheetsAPI.spreadsheets().batchUpdate(spreadsheetId, content).execute()
 
             spreadsheetId
+        }
+    }
+
+    override fun getSheetTitles(spreadsheetId: String): Observable<List<String>> {
+
+        Log.d(TAG, "getSheetTitles: executing")
+
+        return Observable.fromCallable {
+            sheetsAPI
+                    .spreadsheets()
+                    .get(spreadsheetId)
+                    .execute()
+                    .sheets
+                    .map { it.properties.title }
         }
     }
 }

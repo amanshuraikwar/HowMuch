@@ -1,6 +1,5 @@
 package io.github.amanshuraikwar.howmuch.ui.list.date
 
-import io.github.amanshuraikwar.howmuch.model.Expense
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.SimpleListItemOnClickListener
 import io.github.amanshuraikwar.howmuch.model.Photo

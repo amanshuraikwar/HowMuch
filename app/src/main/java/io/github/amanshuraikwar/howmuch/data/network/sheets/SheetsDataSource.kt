@@ -30,4 +30,6 @@ interface SheetsDataSource {
                    sheetTitle: String,
                    startIndex: Int,
                    endIndex: Int): Observable<String>
+
+    fun getSheetTitles(spreadsheetId : String): Observable<List<String>>
 }

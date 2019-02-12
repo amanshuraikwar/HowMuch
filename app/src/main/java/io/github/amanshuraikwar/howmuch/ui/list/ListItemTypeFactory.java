@@ -7,8 +7,8 @@ import io.github.amanshuraikwar.howmuch.ui.list.date.DateListItem;
 import io.github.amanshuraikwar.howmuch.ui.list.date.DateViewHolder;
 import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyListItem;
 import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyViewHolder;
-import io.github.amanshuraikwar.howmuch.ui.list.expense.ExpenseListItem;
-import io.github.amanshuraikwar.howmuch.ui.list.expense.ExpenseViewHolder;
+import io.github.amanshuraikwar.howmuch.ui.list.expense.TransactionListItem;
+import io.github.amanshuraikwar.howmuch.ui.list.expense.TransactionViewHolder;
 import io.github.amanshuraikwar.howmuch.ui.list.expensecategorysummary.ExpenseCategorySummaryListItem;
 import io.github.amanshuraikwar.howmuch.ui.list.expensecategorysummary.ExpenseCategorySummaryViewHolder;
 import io.github.amanshuraikwar.multiitemlistadapter.BaseTypeFactory;
@@ -34,7 +34,7 @@ public class ListItemTypeFactory extends BaseTypeFactory {
         return 0;
     }
 
-    public int type(ExpenseListItem item) {
+    public int type(TransactionListItem item) {
         return 1;
     }
 
@@ -61,7 +61,7 @@ public class ListItemTypeFactory extends BaseTypeFactory {
             case 0:
                 return PhotoViewHolder.Companion.getLAYOUT();
             case 1:
-                return ExpenseViewHolder.Companion.getLAYOUT();
+                return TransactionViewHolder.Companion.getLAYOUT();
             case 2:
                 return ExpenseCategorySummaryViewHolder.Companion.getLAYOUT();
             case 3:
@@ -89,7 +89,7 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 viewHolder = new PhotoViewHolder(parent);
                 break;
             case 1:
-                viewHolder = new ExpenseViewHolder(parent);
+                viewHolder = new TransactionViewHolder(parent);
                 break;
             case 2:
                 viewHolder = new ExpenseCategorySummaryViewHolder(parent);

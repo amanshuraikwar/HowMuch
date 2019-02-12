@@ -22,10 +22,10 @@ class DemoDi {
 
     @Module abstract class DemoModule {
 
-        @ActivityScope @Binds
+        @Binds
         abstract fun prsntr(presenter: DemoPresenter): DemoContract.Presenter
 
-        @ActivityScope @Binds @ActivityContext
+        @Binds @ActivityContext
         abstract fun activity(activity: DemoActivity): AppCompatActivity
     }
 }

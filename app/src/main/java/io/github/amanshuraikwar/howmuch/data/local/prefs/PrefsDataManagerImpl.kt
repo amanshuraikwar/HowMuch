@@ -6,74 +6,55 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import javax.inject.Inject
 
+@SuppressLint("ApplySharedPref")
 class PrefsDataManagerImpl
-@Inject constructor(private val sharedPrefs: SharedPreferences): PrefsDataManager {
+@Inject constructor(private val sharedPrefs: SharedPreferences)
+    : PrefsDataManager {
 
     companion object {
         private const val KEY_INITIAL_ONBOARDING_DONE = "initial_onboarding_done"
-        private const val KEY_SIGNED_IN = "signed_in"
         private const val KEY_CURRENCY_SYMBOL = "currency_symbol"
         private const val KEY_CATEGORIES = "categories"
     }
 
-    override fun isInitialOnboardingDone(): Observable<Boolean> {
-        return Observable.create {
-            it.onNext(sharedPrefs.getBoolean(KEY_INITIAL_ONBOARDING_DONE, false))
-            it.onComplete()
-        }
-    }
+    override fun isInitialOnboardingDone() =
+            Observable.just(sharedPrefs.getBoolean(KEY_INITIAL_ONBOARDING_DONE, false))!!
 
-    override fun isSignedIn(): Observable<Boolean> {
-        return Observable.create {
-            it.onNext(sharedPrefs.getBoolean(KEY_SIGNED_IN, false))
-            it.onComplete()
-        }
-    }
+    override fun setInitialOnboardingDone(value: Boolean) =
 
-    @SuppressLint("ApplySharedPref")
-    override fun setInitialOnboardingDone(value: Boolean): Completable {
-        return Completable.create{
-            with (sharedPrefs.edit()) {
-                putBoolean(KEY_INITIAL_ONBOARDING_DONE, value)
-                commit()
-            }
-            it.onComplete()
-        }
-    }
+            Completable.fromCallable {
 
-    @SuppressLint("ApplySharedPref")
-    override fun setSignedIn(value: Boolean): Completable {
-        return Completable.create{
-            with (sharedPrefs.edit()) {
-                putBoolean(KEY_SIGNED_IN, value)
-                commit()
-            }
-            it.onComplete()
-        }
-    }
+                with (sharedPrefs.edit()) {
+                    putBoolean(KEY_INITIAL_ONBOARDING_DONE, value)
+                    commit()
+                }
 
-    override fun getCurrency(): String {
-        return sharedPrefs.getString(KEY_CURRENCY_SYMBOL, "₹")
-    }
+            }!!
 
-    override fun setCurrency(currency: String) {
-        with (sharedPrefs.edit()) {
-            putString(KEY_CURRENCY_SYMBOL, currency)
-            apply()
-        }
-    }
+    override fun getCurrency() = sharedPrefs.getString(KEY_CURRENCY_SYMBOL, "₹")!!
 
-    override fun getCategories(): Observable<Set<String>> {
-        return Observable.just(sharedPrefs.getStringSet(KEY_CATEGORIES, setOf()))
-    }
+    override fun setCurrency(currency: String) =
 
-    @SuppressLint("ApplySharedPref")
-    override fun setCategories(categories: Set<String>): Completable {
-        return Completable.fromCallable {
-            with (sharedPrefs.edit()) {
-                putStringSet(KEY_CATEGORIES, categories)
-                commit()
-            }
-        }
-    }
+            Completable.fromCallable {
+
+                with (sharedPrefs.edit()) {
+                    putString(KEY_CURRENCY_SYMBOL, currency)
+                    commit()
+                }
+
+            }!!
+
+    override fun getCategories(): Observable<Set<String>> =
+            Observable.just(sharedPrefs.getStringSet(KEY_CATEGORIES, setOf()))
+
+    override fun setCategories(categories: Set<String>) =
+
+            Completable.fromCallable {
+
+                with (sharedPrefs.edit()) {
+                    putStringSet(KEY_CATEGORIES, categories)
+                    commit()
+                }
+
+            }!!
 }

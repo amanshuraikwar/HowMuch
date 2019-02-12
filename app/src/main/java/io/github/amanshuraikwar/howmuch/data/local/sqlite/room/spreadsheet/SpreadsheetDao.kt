@@ -1,7 +1,6 @@
-package io.github.amanshuraikwar.howmuch.data.local.sqlite.room
+package io.github.amanshuraikwar.howmuch.data.local.sqlite.room.spreadsheet
 
 import androidx.room.*
-import io.github.amanshuraikwar.howmuch.data.local.sqlite.Spreadsheet
 
 @Dao
 interface SpreadsheetDao {
@@ -18,6 +17,6 @@ interface SpreadsheetDao {
     @Query("SELECT * FROM Spreadsheet")
     fun findAll(): List<Spreadsheet>
 
-    @Query("SELECT * FROM Spreadsheet where year = :year AND month = :month AND email = :email")
-    fun findByYearAndMonthAndEmail(year: Int, month: Int, email: String): Spreadsheet?
+    @Query("SELECT * FROM Spreadsheet WHERE email = :email")
+    fun findByEmail(email: String): Spreadsheet?
 }

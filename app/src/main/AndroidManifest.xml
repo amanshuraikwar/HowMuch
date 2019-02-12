@@ -34,6 +34,9 @@
 
         <activity android:name=".ui.expense.ExpenseActivity" />
 
+        <activity android:name=".ui.onboarding.activity.OnboardingActivity" />
+        <activity android:name=".ui.addexpense.activity.AddExpenseActivity" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

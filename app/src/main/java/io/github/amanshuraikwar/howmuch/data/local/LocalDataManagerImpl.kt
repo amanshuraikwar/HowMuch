@@ -2,8 +2,6 @@ package io.github.amanshuraikwar.howmuch.data.local
 
 import io.github.amanshuraikwar.howmuch.data.local.prefs.PrefsDataManager
 import io.github.amanshuraikwar.howmuch.data.local.sqlite.SqliteDataManager
-import io.reactivex.Completable
-import io.reactivex.Observable
 import javax.inject.Inject
 
 class LocalDataManagerImpl
@@ -13,35 +11,30 @@ class LocalDataManagerImpl
     override fun isInitialOnboardingDone() =
             prefsDataManager.isInitialOnboardingDone()
 
-    override fun isSignedIn() =
-            prefsDataManager.isSignedIn()
-
     override fun setInitialOnboardingDone(value: Boolean) =
             prefsDataManager.setInitialOnboardingDone(value)
 
-    override fun setSignedIn(value: Boolean) =
-            prefsDataManager.setSignedIn(value)
+    override fun getCurrency()=
+            prefsDataManager.getCurrency()
 
-    override fun getSpreadsheetIdForYearAndMonthAndEmail(year: Int, month: Int, email: String) =
-            sqliteDataManager.getSpreadsheetIdForYearAndMonthAndEmail(year, month, email)
+    override fun setCurrency(currency: String) =
+            prefsDataManager.setCurrency(currency)
 
-    override fun addSpreadsheetIdForYearAndMonthAndEmail(spreadsheetId: String, year: Int, month: Int, email: String) =
-            sqliteDataManager.addSpreadsheetIdForYearAndMonthAndEmail(spreadsheetId, year, month, email)
-
-    override fun isSpreadsheetReady(year: Int, month: Int, email: String) =
-            sqliteDataManager.isSpreadsheetReady(year, month, email)
-
-    override fun setSpreadsheetReady(year: Int, month: Int, email: String) =
-            sqliteDataManager.setSpreadsheetReady(year, month, email)
-
-    override fun getCurrency() = prefsDataManager.getCurrency()
-
-    override fun setCurrency(currency: String) {
-        prefsDataManager.setCurrency(currency)
-    }
-
-    override fun getCategories() = prefsDataManager.getCategories()
+    override fun getCategories() =
+            prefsDataManager.getCategories()
 
     override fun setCategories(categories: Set<String>) =
             prefsDataManager.setCategories(categories)
+
+    override fun getSpreadsheetIdForEmail(email: String) =
+            sqliteDataManager.getSpreadsheetIdForEmail(email)
+
+    override fun addSpreadsheetIdForEmail(spreadsheetId: String, email: String) =
+            sqliteDataManager.addSpreadsheetIdForEmail(spreadsheetId, email)
+
+    override fun isSpreadsheetReady(email: String) =
+            sqliteDataManager.isSpreadsheetReady(email)
+
+    override fun setSpreadsheetReady(email: String) =
+            sqliteDataManager.setSpreadsheetReady(email)
 }

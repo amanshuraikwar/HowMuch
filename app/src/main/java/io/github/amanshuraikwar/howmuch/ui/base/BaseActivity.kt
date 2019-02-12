@@ -1,6 +1,7 @@
 package io.github.amanshuraikwar.howmuch.ui.base
 
 import android.annotation.SuppressLint
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
@@ -26,6 +27,9 @@ abstract class BaseActivity<View: BaseView, Presenter: BasePresenter<View>>
      */
     private var wasViewRecreated: Boolean = true
 
+    @Inject
+    lateinit var googleSignInClient: GoogleSignInClient
+
     @Suppress("UNCHECKED_CAST")
     override fun onResume() {
         super.onResume()
@@ -40,4 +44,5 @@ abstract class BaseActivity<View: BaseView, Presenter: BasePresenter<View>>
         presenter.detachView()
         wasViewRecreated = true
     }
+
 }

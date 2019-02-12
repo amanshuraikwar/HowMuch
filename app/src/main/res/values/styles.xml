@@ -26,8 +26,6 @@
         <item name="titleTextAppearance">
             @android:style/TextAppearance.Material.Widget.ActionBar.Title</item>
         <item name="android:background">@color/white</item>
-        <!--<item name="android:elevation">@dimen/elevation_normal</item>-->
-        <!--<item name="elevation">@dimen/elevation_normal</item>-->
     </style>
 
     <style name="Widget.HowMuch.Toolbar.SmallCapsTitle">
@@ -55,15 +53,14 @@
         parent="@android:style/Widget.Material.Button">
         <item name="android:textAppearance">@style/TextAppearance.Button</item>
         <item name="android:stateListAnimator">@animator/button_elevation</item>
+        <item name="backgroundTint">@color/green</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style
         name="Widget.HowMuch.Button.Onboarding">
         <item name="android:paddingStart">@dimen/padding_very_large</item>
         <item name="android:paddingEnd">@dimen/padding_very_large</item>
-        <item name="backgroundTint">@color/green</item>
-        <item name="android:stateListAnimator">@animator/button_elevation</item>
-        <item name="android:textColor">@color/white</item>
     </style>
 
     <style
@@ -73,10 +70,52 @@
     </style>
 
     <style
-        name="Widget.HowMuch.Button.Small"
-        parent="@android:style/Widget.Material.Button">
+        name="Widget.HowMuch.Button.Small">
 
-        <item name="android:textAppearance">@style/TextAppearance.Button.Small</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+    </style>
+
+    <style
+        name="Widget.HowMuch.ImageButton"
+        parent="@style/Widget.AppCompat.ImageButton">
+        <item name="android:tint">@color/activeIcon</item>
+        <item name="android:stateListAnimator">@animator/button_elevation</item>
+    </style>
+
+    <style name="Widget.HowMuch.ImageButton.Borderless">
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style
+        name="Widget.HowMuch.InputEditText"
+        parent="@style/Widget.AppCompat.EditText">
+        <item name="android:paddingStart">@dimen/input_field_offset</item>
+        <item name="android:paddingEnd">@dimen/padding_normal</item>
+        <item name="android:paddingTop">@dimen/padding_normal</item>
+        <item name="android:paddingBottom">@dimen/padding_normal</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style
+        name="Widget.HowMuch.InputTextView"
+        parent="@style/Widget.AppCompat.TextView">
+        <item name="android:paddingStart">@dimen/input_field_offset</item>
+        <item name="android:paddingEnd">@dimen/padding_normal</item>
+        <item name="android:paddingTop">@dimen/padding_normal</item>
+        <item name="android:paddingBottom">@dimen/padding_normal</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="InputImageView">
+        <item name="android:layout_width">@dimen/input_field_icon_size</item>
+        <item name="android:layout_height">@dimen/input_field_icon_size</item>
+        <item name="android:layout_marginStart">@dimen/margin_normal</item>
+        <item name="android:tint">@color/activeIcon</item>
     </style>
 
     <!-- text appearance -->
@@ -143,14 +182,16 @@
     <style name="TextAppearance.ToolbarTitle"
         parent="@android:style/TextAppearance.Material.Widget.ActionBar.Title">
 
-        <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextAppearance.ToolbarTitle.SmallCaps">
 
-        <item name="android:fontFeatureSettings">smcp</item>
-        <item name="android:letterSpacing">0.1</item>
+        <item name="android:textAllCaps">true</item>
+        <!--<item name="android:fontFeatureSettings">smcp</item>-->
+        <item name="android:letterSpacing">0.05</item>
     </style>
 
     <style name="TextAppearance.ToolbarTitle.Bold">
@@ -163,7 +204,8 @@
         name="TextAppearance.Button"
         parent="@android:style/TextAppearance.Material.Widget.Button">
 
-        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:letterSpacing">0.1</item>
         <item name="android:textColor">@color/primaryText</item>
     </style>
@@ -178,15 +220,23 @@
         name="TextAppearance.Date"
         parent="@style/TextAppearance.Subhead">
 
-        <item name="android:fontFamily">@font/roboto_mono_medium</item>
-        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style
+        name="TextAppearance.InputField"
+        parent="@style/TextAppearance.Subhead">
+
+        <item name="android:fontFamily">@font/rubik</item>
+        <item name="android:textColor">@color/primaryText</item>
     </style>
 
     <style
         name="TextAppearance.DateSmall"
-        parent="@style/TextAppearance.Body1">
+        parent="@style/TextAppearance.Caption">
 
-        <item name="android:fontFamily">@font/roboto_mono_bold</item>
+        <item name="android:fontFamily">@font/rubik</item>
+        <item name="android:fontFeatureSettings">smcp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style
@@ -198,18 +248,21 @@
 
     <style
         name="TextAppearance.Amount"
-        parent="@style/TextAppearance.Display2">
+        parent="@style/TextAppearance.Display1">
 
-        <item name="android:fontFamily">@font/roboto_mono_light</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
     <style
         name="TextAppearance.AmountSmall"
-        parent="@style/TextAppearance.Display1">
+        parent="@style/TextAppearance.Headline">
 
-        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/primaryText</item>
     </style>
 
     <style
@@ -218,6 +271,13 @@
 
         <item name="android:fontFamily">@font/roboto_mono</item>
         <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style
+        name="TextAppearance.TransactionTitle"
+        parent="@style/TextAppearance.Title">
+
+        <item name="android:textColor">@color/primaryText</item>
     </style>
 
     <style
@@ -238,8 +298,7 @@
         name="TextAppearance.Category"
         parent="@style/TextAppearance.Subhead">
 
-        <item name="android:fontFamily">@font/roboto_mono_medium</item>
-        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/primaryText</item>
     </style>
 
     <style
@@ -292,15 +351,23 @@
         parent="@style/TextAppearance.Body1">
 
         <item name="android:textColor">@color/secondaryText</item>
-        <item name="android:fontFamily">@font/roboto_mono</item>
+        <item name="android:fontFamily">@font/rubik</item>
+    </style>
+
+    <style
+        name="TextAppearance.Name"
+        parent="@style/TextAppearance.Subhead">
+
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
     </style>
 
     <style
         name="TextAppearance.EmailSmall"
         parent="@style/TextAppearance.Body1">
 
-        <item name="android:textColor">@color/green</item>
-        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:textColor">@color/secondaryText</item>
+        <item name="android:fontFamily">@font/rubik</item>
     </style>
 
     <style
@@ -352,11 +419,19 @@
     </style>
 
     <style
-        name="TextAppearance.TimeSmall"
-        parent="@style/TextAppearance.Caption">
+        name="TextAppearance.CurrencySmall"
+        parent="@style/TextAppearance.Title">
 
-        <item name="android:fontFamily">@font/roboto_mono</item>
+        <item name="android:fontFamily">@font/eczar</item>
+    </style>
+
+    <style
+        name="TextAppearance.TransactionTimeSmall"
+        parent="@style/TextAppearance.Body1">
+
+        <item name="android:fontFamily">@font/rubik</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textStyle">italic</item>
+        <item name="android:fontFeatureSettings">smcp</item>
+        <item name="android:textColor">@color/secondaryText</item>
     </style>
 </resources>

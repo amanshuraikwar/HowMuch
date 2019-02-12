@@ -2,13 +2,18 @@ package io.github.amanshuraikwar.howmuch.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import javax.annotation.Nonnull;
+
+import io.github.amanshuraikwar.howmuch.Constants;
+import io.github.amanshuraikwar.howmuch.data.network.sheets.SpreadSheetException;
+import kotlin.jvm.Throws;
 
 /**
  * Utility class for the app.
@@ -19,12 +24,23 @@ import java.util.Locale;
 
 public class Util {
 
+    @Nonnull
     public static String getTag(Object object) {
         return object.getClass().getSimpleName();
     }
 
     public static String getTag(Class cls) {
         return cls.getClass().getSimpleName();
+    }
+
+    public static int getHourOfDay() {
+        Calendar cal = Calendar.getInstance();
+        return cal.get(Calendar.HOUR_OF_DAY);
+    }
+
+    public static int getMinute() {
+        Calendar cal = Calendar.getInstance();
+        return cal.get(Calendar.MINUTE);
     }
 
     public static int getDayOfMonth() {
@@ -48,6 +64,13 @@ public class Util {
         return new SimpleDateFormat("dd-MM-yyyy", Locale.UK).format(cal.getTime());
     }
 
+    public static String getTime(int minute, int hourOfDay) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.MINUTE, minute);
+        cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        return new SimpleDateFormat("HH:mm:ss", Locale.UK).format(cal.getTime());
+    }
+
     public static String getCurMonth() {
         Calendar cal = Calendar.getInstance();
         return new SimpleDateFormat("MMMM", Locale.UK).format(cal.getTime());
@@ -55,12 +78,26 @@ public class Util {
 
     public static int getCurMonthNumber() {
         Calendar cal = Calendar.getInstance();
-        return Integer.parseInt(new SimpleDateFormat("MM", Locale.UK).format(cal.getTime())) + 3;
+        return Integer.parseInt(new SimpleDateFormat("MM", Locale.UK).format(cal.getTime()));
+    }
+
+    public static int getMonthNumber(String dateStr) throws ParseException {
+        Date date = new SimpleDateFormat("dd-MM-yyyy", Locale.UK).parse(dateStr);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return Integer.parseInt(new SimpleDateFormat("MM", Locale.UK).format(cal.getTime()));
     }
 
     public static int getCurYearNumber() {
         Calendar cal = Calendar.getInstance();
-        return Integer.parseInt(new SimpleDateFormat("YY", Locale.UK).format(cal.getTime())) + 1;
+        return Integer.parseInt(new SimpleDateFormat("YYYY", Locale.UK).format(cal.getTime()));
+    }
+
+    public static int getYearNumber(String dateStr) throws ParseException {
+        Date date = new SimpleDateFormat("dd-MM-yyyy", Locale.UK).parse(dateStr);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return Integer.parseInt(new SimpleDateFormat("YYYY", Locale.UK).format(cal.getTime()));
     }
 
     public static String getCurDateTime() {
@@ -76,6 +113,36 @@ public class Util {
     public static String getCurDate() {
         Calendar cal = Calendar.getInstance();
         return new SimpleDateFormat("dd-MM-yyyy", Locale.UK).format(cal.getTime());
+    }
+
+    public static int[] getDateParts(String dateStr) throws ParseException {
+        Date date = new SimpleDateFormat("dd-MM-yyyy", Locale.UK).parse(dateStr);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return new int[] {
+                cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH), cal.get(Calendar.YEAR)
+        };
+    }
+
+    public static int[] getTimeParts(String timeStr) throws ParseException {
+        Date date = new SimpleDateFormat("HH:mm:ss", Locale.UK).parse(timeStr);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return new int[] {
+                cal.get(Calendar.MINUTE), cal.get(Calendar.HOUR_OF_DAY)
+        };
+    }
+
+    public static boolean compareDateTime(String dateStr1, String dateStr2) throws ParseException {
+        Date date1 = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.UK).parse(dateStr1);
+        Date date2 = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.UK).parse(dateStr2);
+        return date2.after(date1);
+    }
+
+    public static boolean compareTime(String timeStr1, String timeStr2) throws ParseException {
+        Date date1 = new SimpleDateFormat("HH:mm:ss", Locale.UK).parse(timeStr1);
+        Date date2 = new SimpleDateFormat("HH:mm:ss", Locale.UK).parse(timeStr2);
+        return date2.after(date1);
     }
 
     public static String getCurDateBeautiful() {
@@ -97,7 +164,7 @@ public class Util {
         return new SimpleDateFormat("hh:mm aa", Locale.UK).format(date);
     }
 
-    public static String unbeautifyTime(String beautifulTime) throws ParseException {
+    public static String unBeautifyTime(String beautifulTime) throws ParseException {
         Date date = new SimpleDateFormat("hh:mm aa", Locale.UK).parse(beautifulTime);
         return new SimpleDateFormat("HH:mm:ss", Locale.UK).format(date);
     }
@@ -112,59 +179,16 @@ public class Util {
         return new SimpleDateFormat("dd-MM-yyyy", Locale.UK).format(date);
     }
 
-    public static String createSpreadsheetTitle() {
-        return "HowMuch-" + getCurMonth() + "-" + getCurDateTime();
-    }
-
-    public static List<String> getDefaultSheetTitles() {
-        return Arrays.asList("Metadata", "Transactions");
-    }
-
-    public static List<List<String>> getDefaultCategoriesWithHeading() {
-        return
-                Arrays.asList(
-                        Collections.singletonList("Categories"),
-                        Collections.singletonList("Food"),
-                        Collections.singletonList("Health/Medical"),
-                        Collections.singletonList("Home"),
-                        Collections.singletonList("Transportation"),
-                        Collections.singletonList("Personal"),
-                        Collections.singletonList("Utilities"),
-                        Collections.singletonList("Travel"),
-                        Collections.singletonList("Debt"),
-                        Collections.singletonList("Other"));
-    }
-
-    public static String getDefaultCategoriesSpreadSheetRangeWithHeading() {
-        return "Metadata!B2:B";
-    }
-
-    public static String getDefaultTransactionsSpreadSheetRangeWithHeading() {
-        return "Transactions!B2:F";
-    }
-
     public static String getDefaultCategoriesSpreadSheetRange() {
         return "Metadata!B3:B";
-    }
-
-    public static String getDefaultTransactionsSpreadSheetRange() {
-        return "Transactions!B3:F";
     }
 
     public static String getDefaultTransactionsSheetTitle() {
         return "Transactions";
     }
 
-    public static String getDefaultTransactionsSpreadSheetStartCol() {
-        return "B";
-    }
-
-    public static String getDefaultTransactionsSpreadSheetEndCol() {
-        return "F";
-    }
-
     public static int getDefaultTransactionsSpreadSheetStartPosition() {
-        return 3;
+        return 4;
     }
 
     public static String getCellRange(String sheetTitle,
@@ -175,13 +199,6 @@ public class Util {
     }
 
     public static int getRowNumber(String cellRange) {
-        return Integer.parseInt(cellRange.split("[a-zA-Z]+[!][A-Z]+|[:][A-Z]+")[1]);
-    }
-
-    public static List<List<String>> getDefaultTransactionsHeading() {
-        return
-                Arrays.asList(
-                        Collections.singletonList("Transactions"),
-                        Arrays.asList("Date", "Time", "Amount", "Description", "Category"));
+        return Integer.parseInt(cellRange.split("[a-zA-Z]+-[0-9]{4}[!][A-Z]+|[:][A-Z]+")[1]);
     }
 }

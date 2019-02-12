@@ -13,7 +13,7 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccoun
 import com.google.api.client.util.ExponentialBackOff
 import com.google.api.services.sheets.v4.SheetsScopes
 import io.github.amanshuraikwar.howmuch.R
-import io.github.amanshuraikwar.howmuch.model.Expense
+import io.github.amanshuraikwar.howmuch.model.Transaction
 import io.github.amanshuraikwar.howmuch.ui.base.BaseFragment
 import io.github.amanshuraikwar.howmuch.ui.createsheet.CreateSheetFragment
 import io.github.amanshuraikwar.howmuch.ui.signin.SignInFragment

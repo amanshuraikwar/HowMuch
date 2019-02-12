@@ -6,35 +6,23 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:title=""
-            style="@style/Widget.HowMuch.Toolbar.SmallCapsTitle"
-            android:stateListAnimator="@animator/toolbar_elevation">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/title_history"
+        style="@style/Widget.HowMuch.Toolbar.SmallCapsTitle"
+        android:stateListAnimator="@animator/toolbar_elevation" />
 
-            <TextView
-                android:id="@+id/toolbarTitleTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_normal"
-                android:gravity="center_horizontal"
-                android:textAppearance="@style/TextAppearance.ToolbarTitle.SmallCaps"
-                android:text="@string/title_history"/>
-        </androidx.appcompat.widget.Toolbar>
-
-        <FrameLayout
-            android:id="@+id/fragmentContainerFl"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar">
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/srl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/itemsRv"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
-        <include layout="@layout/layout_loading_overlay" />
-    </FrameLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </RelativeLayout>
