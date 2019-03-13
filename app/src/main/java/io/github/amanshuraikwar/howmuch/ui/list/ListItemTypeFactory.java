@@ -13,8 +13,6 @@ import io.github.amanshuraikwar.howmuch.ui.list.expensecategorysummary.ExpenseCa
 import io.github.amanshuraikwar.howmuch.ui.list.expensecategorysummary.ExpenseCategorySummaryViewHolder;
 import io.github.amanshuraikwar.multiitemlistadapter.BaseTypeFactory;
 import io.github.amanshuraikwar.multiitemlistadapter.ViewHolder;
-import io.github.amanshuraikwar.howmuch.ui.list.photo.PhotoListItem;
-import io.github.amanshuraikwar.howmuch.ui.list.photo.PhotoViewHolder;
 
 /**
  * List item type factory responsible for getting layout id and ViewHolder instance.
@@ -30,10 +28,6 @@ public class ListItemTypeFactory extends BaseTypeFactory {
      * @param item list item
      * @return type of the provided list item
      */
-    public int type(PhotoListItem item) {
-        return 0;
-    }
-
     public int type(TransactionListItem item) {
         return 1;
     }
@@ -58,8 +52,6 @@ public class ListItemTypeFactory extends BaseTypeFactory {
      */
     public int getLayout(int viewType) {
         switch (viewType) {
-            case 0:
-                return PhotoViewHolder.Companion.getLAYOUT();
             case 1:
                 return TransactionViewHolder.Companion.getLAYOUT();
             case 2:
@@ -85,9 +77,6 @@ public class ListItemTypeFactory extends BaseTypeFactory {
         ViewHolder viewHolder;
 
         switch (type) {
-            case 0:
-                viewHolder = new PhotoViewHolder(parent);
-                break;
             case 1:
                 viewHolder = new TransactionViewHolder(parent);
                 break;

@@ -1,6 +1,6 @@
 package io.github.amanshuraikwar.howmuch.ui.base
 
-import android.annotation.SuppressLint
+import android.accounts.Account
 import android.os.Bundle
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -11,7 +11,6 @@ import javax.inject.Inject
  * @author Amanshu Raikwar
  * Created by Amanshu Raikwar on 06/03/18.
  */
-@SuppressLint("Registered")
 abstract class BaseFragment<View: BaseView, Presenter: BasePresenter<View>>
     : DaggerFragment(), BaseView {
 
@@ -31,21 +30,22 @@ abstract class BaseFragment<View: BaseView, Presenter: BasePresenter<View>>
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        activity = getActivity() as io.github.amanshuraikwar.howmuch.ui.base.BaseActivity<*, *>
+        activity = getActivity() as BaseActivity<*, *>
     }
 
     @Suppress("UNCHECKED_CAST")
     override fun onResume() {
         super.onResume()
-
         presenter.attachView(this as View, wasViewRecreated)
         wasViewRecreated = false
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-
         presenter.detachView()
         wasViewRecreated = true
     }
+
+    override fun getGoogleAccountCredential(googleAccount: Account) =
+            activity.getGoogleAccountCredential(googleAccount)
 }

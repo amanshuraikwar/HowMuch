@@ -12,6 +12,7 @@ public interface Constants {
     String DEFAULT_USER_EMAIL = "user@example.com";
 
     String METADATA_SHEET_TITLE = "Metadata";
+    String TRANSACTIONS_SHEET_TITLE = "Transactions-1";
 
     String CATEGORIES_CELL_RANGE_WITH_HEADING = "B2:B";
     String CATEGORIES_CELL_RANGE_WITHOUT_HEADING = "B3:B";

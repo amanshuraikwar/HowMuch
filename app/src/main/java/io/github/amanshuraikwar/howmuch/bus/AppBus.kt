@@ -3,7 +3,6 @@ package io.github.amanshuraikwar.howmuch.bus
 import dagger.Module
 import dagger.Provides
 import io.github.amanshuraikwar.howmuch.model.Transaction
-import io.github.amanshuraikwar.howmuch.ui.onboarding.OnboardingScreen
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Singleton
 
@@ -15,7 +14,8 @@ import javax.inject.Singleton
 class AppBus {
 
     val signInSuccessful: PublishSubject<Any> = PublishSubject.create<Any>()
-    val onBoardingScreenState: PublishSubject<OnboardingScreen.State> = PublishSubject.create<OnboardingScreen.State>()
+    val onBoardingComplete: PublishSubject<Any> = PublishSubject.create<Any>()
+    val onTransactionAdded: PublishSubject<Any> = PublishSubject.create<Any>()
     val onLogout: PublishSubject<Any> = PublishSubject.create()
     val onCurrencyChanged: PublishSubject<String> = PublishSubject.create()
     val onExpenseUpdated: PublishSubject<Transaction> = PublishSubject.create()

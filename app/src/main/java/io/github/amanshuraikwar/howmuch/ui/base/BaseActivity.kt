@@ -1,8 +1,12 @@
 package io.github.amanshuraikwar.howmuch.ui.base
 
-import android.annotation.SuppressLint
+import android.accounts.Account
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
+import com.google.api.client.util.ExponentialBackOff
+import com.google.api.services.sheets.v4.SheetsScopes
 import dagger.android.support.DaggerAppCompatActivity
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -11,7 +15,6 @@ import javax.inject.Inject
  * @author Amanshu Raikwar
  * Created by Amanshu Raikwar on 06/03/18.
  */
-@SuppressLint("Registered")
 abstract class BaseActivity<View: BaseView, Presenter: BasePresenter<View>>
     : DaggerAppCompatActivity(), BaseView {
 
@@ -33,16 +36,19 @@ abstract class BaseActivity<View: BaseView, Presenter: BasePresenter<View>>
     @Suppress("UNCHECKED_CAST")
     override fun onResume() {
         super.onResume()
-
         presenter.attachView(this as View, wasViewRecreated)
         wasViewRecreated = false
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
         presenter.detachView()
         wasViewRecreated = true
     }
 
+    override fun getGoogleAccountCredential(googleAccount: Account) =
+            GoogleAccountCredential
+                    .usingOAuth2(this, Arrays.asList(SheetsScopes.SPREADSHEETS))
+                    .setBackOff(ExponentialBackOff())
+                    .setSelectedAccount(googleAccount)!!
 }

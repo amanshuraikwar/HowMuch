@@ -1,6 +1,7 @@
-package io.github.amanshuraikwar.howmuch.ui.addexpense.activity
+package io.github.amanshuraikwar.howmuch.ui.addexpense
 
 import android.accounts.Account
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.res.ColorStateList
@@ -25,7 +26,7 @@ import kotlinx.android.synthetic.main.layout_loading_overlay.*
 import java.util.*
 
 class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContract.Presenter>()
-        , AddExpenseContract.View  {
+        , AddExpenseContract.View {
 
     private var transactionType = TransactionType.DEBIT
 
@@ -119,7 +120,8 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
         categorySp.adapter = ArrayAdapter(this, R.layout.textview_spinner, categories)
     }
 
-    override fun close() {
+    override fun close(success: Boolean) {
+        setResult(if(success) Activity.RESULT_OK else Activity.RESULT_CANCELED)
         finish()
     }
 

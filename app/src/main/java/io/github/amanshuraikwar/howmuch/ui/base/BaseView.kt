@@ -7,4 +7,4 @@ package io.github.amanshuraikwar.howmuch.ui.base
  * @author Amanshu Raikwar
  * Created by Amanshu Raikwar on 06/03/18.
  */
-interface BaseView
+interface BaseView : GoogleAccountView

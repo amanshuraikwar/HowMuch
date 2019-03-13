@@ -199,6 +199,6 @@ public class Util {
     }
 
     public static int getRowNumber(String cellRange) {
-        return Integer.parseInt(cellRange.split("[a-zA-Z]+-[0-9]{4}[!][A-Z]+|[:][A-Z]+")[1]);
+        return Integer.parseInt(cellRange.split("[a-zA-Z]+-[0-9][!][A-Z]+|[:][A-Z]+")[1]);
     }
 }

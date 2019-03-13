@@ -8,8 +8,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
@@ -26,7 +24,6 @@ import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
 import kotlinx.android.synthetic.main.fragment_history.*
-import kotlinx.android.synthetic.main.layout_loading_overlay.*
 import java.util.*
 import javax.inject.Inject
 

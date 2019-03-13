@@ -319,7 +319,7 @@ class ExpenseActivity : BaseActivity<ExpenseContract.View, ExpenseContract.Prese
                 .setMessage(R.string.delete_confirm)
                 .setNegativeButton("Delete") {
                     dialog, _ ->
-                    presenter.onDeleteComfirmedClicked()
+                    presenter.onDeleteConfirmedClicked()
                     dialog.dismiss()
                 }
                 .setPositiveButton("Cancel") { dialog, _ -> dialog.dismiss() }

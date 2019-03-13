@@ -27,20 +27,13 @@ class SheetsHelper @Inject constructor(val dataManager: DataManager) {
 
     private val tag = Util.getTag(this)
 
-    private var curYear = Util.getCurYearNumber()
-    private var curMonth = Util.getCurMonthNumber()
-
-    fun reset() {
-        curYear = Util.getCurYearNumber()
-        curMonth = Util.getCurMonthNumber()
-    }
-
     fun createNewSpreadSheet(googleAccountCredential: GoogleAccountCredential) =
             dataManager.createSpreadSheet(
-                    spreadSheetTitle = createSpreadsheetTitle(),
-                    sheetTitles = getDefaultSheetTitles(curMonth, curYear),
-                    googleAccountCredential = googleAccountCredential
+                spreadSheetTitle = createSpreadsheetTitle(),
+                sheetTitles = getDefaultSheetTitles(),
+                googleAccountCredential = googleAccountCredential
             )
+
 
     fun initMetadata(spreadsheetId: String,
                      googleAccountCredential: GoogleAccountCredential) =
@@ -53,27 +46,29 @@ class SheetsHelper @Inject constructor(val dataManager: DataManager) {
             )
 
     fun initTransactions(spreadsheetId: String,
+                         sheetTitle: String = Constants.TRANSACTIONS_SHEET_TITLE,
                          googleAccountCredential: GoogleAccountCredential) =
             dataManager.updateSpreadSheet(
                     spreadsheetId = spreadsheetId,
-                    sheetTitle = getSheetName(curMonth, curYear),
+                    sheetTitle = sheetTitle,
                     spreadsheetRange = Constants.TRANSACTIONS_CELL_RANGE_WITH_HEADING,
                     values = Constants.TRANSACTIONS_HEADING,
                     googleAccountCredential = googleAccountCredential
             )
 
     fun fetchTransactions(spreadsheetId: String,
-                          sheetName: String,
+                          sheetTitle: String = Constants.TRANSACTIONS_SHEET_TITLE,
                           googleAccountCredential: GoogleAccountCredential) =
             dataManager.readSpreadSheet(
                     spreadsheetId,
-                    sheetName,
+                    sheetTitle,
                     Constants.TRANSACTIONS_CELL_RANGE_WITH_HEADING,
                     googleAccountCredential
-            ).map { getTransactionList(it) }!!
+            ).map { getTransactionList(it, sheetTitle) }!!
 
     @Throws(InvalidTransactionEntryException::class)
-    fun List<Any>.toTransaction(cellPosition: Int): Transaction {
+    private fun List<Any>.toTransaction(cellPosition: Int,
+                                        sheetTitle: String): Transaction {
 
         if (this.size != Constants.TRANSACTION_ROW_COLUMN_COUNT) {
 
@@ -92,10 +87,9 @@ class SheetsHelper @Inject constructor(val dataManager: DataManager) {
 
         val txnMonth = Util.getMonthNumber(this[0].toString())
         val txnYear = Util.getYearNumber(this[0].toString())
-        val txnSheetName = getSheetName(monthNumber = txnMonth, initialYear = txnYear)
 
         val cellRange = Util.getCellRange(
-                txnSheetName,
+                sheetTitle,
                 Constants.TRANSACTION_START_COL,
                 Constants.TRANSACTION_END_COL,
                 cellPosition
@@ -110,7 +104,7 @@ class SheetsHelper @Inject constructor(val dataManager: DataManager) {
         } catch (e: NumberFormatException) {
 
             val errorMessage = "Transaction entry at $cellRange" +
-                    " of sheet $txnSheetName" +
+                    " of sheet $sheetTitle" +
                     " has invalid amount ${this[2]}."
 
             Log.e(tag, "toTransaction: $errorMessage", e)
@@ -118,7 +112,7 @@ class SheetsHelper @Inject constructor(val dataManager: DataManager) {
             throw InvalidTransactionEntryException(
                     errorMessage,
                     cellRange,
-                    txnSheetName
+                    sheetTitle
             )
         }
 
@@ -131,7 +125,7 @@ class SheetsHelper @Inject constructor(val dataManager: DataManager) {
         } catch (e: IllegalArgumentException) {
 
             val errorMessage = "Transaction entry at $cellRange" +
-                    " of sheet $$txnSheetName" +
+                    " of sheet $$sheetTitle" +
                     " has invalid type ${this[6]}."
 
             Log.e(tag, "toTransaction: $errorMessage", e)
@@ -139,7 +133,7 @@ class SheetsHelper @Inject constructor(val dataManager: DataManager) {
             throw InvalidTransactionEntryException(
                     errorMessage,
                     cellRange,
-                    txnSheetName
+                    sheetTitle
             )
         }
 
@@ -158,7 +152,8 @@ class SheetsHelper @Inject constructor(val dataManager: DataManager) {
     }
 
     @Throws(InvalidTransactionEntryException::class)
-    private fun getTransactionList(input: MutableList<MutableList<Any>>): List<Transaction> {
+    private fun getTransactionList(input: MutableList<MutableList<Any>>,
+                                   sheetTitle: String): List<Transaction> {
 
         val startCellPosition = Util.getDefaultTransactionsSpreadSheetStartPosition() + 1
 
@@ -170,7 +165,7 @@ class SheetsHelper @Inject constructor(val dataManager: DataManager) {
         if (input.size > 2) {
             list =  input.subList(2, input.size).map {
                 count++
-                it.toTransaction(startCellPosition + count - 1)
+                it.toTransaction(startCellPosition + count - 1, sheetTitle)
 
             }
         }
@@ -215,11 +210,12 @@ class SheetsHelper @Inject constructor(val dataManager: DataManager) {
 
     fun addTransaction(transaction: Transaction,
                        spreadsheetId: String,
+                       sheetTitle: String = Constants.TRANSACTIONS_SHEET_TITLE,
                        googleAccountCredential: GoogleAccountCredential) =
             dataManager
                     .appendToSpreadSheet(
                             spreadsheetId = spreadsheetId,
-                            sheetTitle = getSheetName(curMonth, curYear),
+                            sheetTitle = sheetTitle,
                             spreadsheetRange = Constants.TRANSACTIONS_CELL_RANGE_WITHOUT_HEADING,
                             values = listOf(listOf(
                                     transaction.date,
@@ -287,30 +283,10 @@ class SheetsHelper @Inject constructor(val dataManager: DataManager) {
     }
 
     @Throws(SpreadSheetException::class)
-    private fun getSheetName(monthNumber: Int, initialYear: Int) =
-        when (monthNumber) {
-            1 -> "JANUARY"
-            2 -> "FEBRUARY"
-            3 -> "MARCH"
-            4 -> "APRIL"
-            5 -> "MAY"
-            6 -> "JUNE"
-            7 -> "JULY"
-            8 -> "AUGUST"
-            9 -> "SEPTEMBER"
-            10 -> "OCTOBER"
-            11 -> "NOVEMBER"
-            12 -> "DECEMBER"
-            else -> throw SpreadSheetException(
-                    "Sheet name does not exist for month number $monthNumber."
-            )
-        }.plus("-$initialYear")
-
-    @Throws(SpreadSheetException::class)
-    private fun getDefaultSheetTitles(initialMonthNumber: Int, initialYear: Int) =
+    private fun getDefaultSheetTitles() =
         Arrays.asList(
                 Constants.METADATA_SHEET_TITLE,
-                getSheetName(initialMonthNumber, initialYear)
+                Constants.TRANSACTIONS_SHEET_TITLE
         )
 
     private fun createSpreadsheetTitle() = "HowMuch-" + Util.getCurDateTime()

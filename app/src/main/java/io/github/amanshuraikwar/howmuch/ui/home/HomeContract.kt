@@ -3,33 +3,22 @@ package io.github.amanshuraikwar.howmuch.ui.home
 import io.github.amanshuraikwar.howmuch.bus.AppBus
 import io.github.amanshuraikwar.howmuch.data.DataManager
 import io.github.amanshuraikwar.howmuch.ui.base.*
-import io.github.amanshuraikwar.howmuch.ui.onboarding.OnboardingScreen
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-/**
- * MVP contract of HomeActivity.
- *
- * @author Amanshu Raikwar
- * Created by Amanshu Raikwar on 30/04/18.
- */
 interface HomeContract {
 
-    enum class NavigationPage {
-        ADD_EXPENSE, HISTORY, STATS, SIGN_IN, ONBOARDING, SETTINGS
-    }
-
-    interface View : BaseView, LoadingView, UiMessageView, GoogleAccountView {
-        fun startOnboardingActivity()
+    interface View : BaseView {
         fun close()
         fun loadSignInFragment()
         fun loadHistoryFragment()
         fun showAddTransactionBtn()
     }
 
-    interface Presenter : BasePresenter<View>
+    interface Presenter : BasePresenter<View> {
+        fun onTransactionAdded()
+    }
 
     class HomePresenter
     @Inject constructor(appBus: AppBus,
@@ -41,23 +30,22 @@ interface HomeContract {
             super.onAttach(wasViewRecreated)
 
             if (wasViewRecreated) {
+                attachToAppBus()
                 init()
             }
         }
 
         private fun init() {
-            getView()?.loadSignInFragment()
-            attachToAppBus()
-        }
 
-        private fun attachToAppBus() {
-
-            getAppBus()
-                    .onBoardingScreenState
+            getDataManager()
+                    .isInitialOnboardingDone()
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe {
-                        if (it == OnboardingScreen.State.ONBOARDING_COMPLETE) {
+                        done ->
+                        if (!done) {
+                            getView()?.loadSignInFragment()
+                        } else {
                             getView()?.run {
                                 loadHistoryFragment()
                                 showAddTransactionBtn()
@@ -65,7 +53,26 @@ interface HomeContract {
                         }
                     }
                     .addToCleanup()
+        }
 
+        private fun attachToAppBus() {
+
+            getAppBus()
+                    .onBoardingComplete
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe {
+                        getView()?.run {
+                            loadHistoryFragment()
+                            showAddTransactionBtn()
+                        }
+                    }
+                    .addToCleanup()
+
+        }
+
+        override fun onTransactionAdded() {
+            getAppBus().onTransactionAdded.onNext(Any())
         }
     }
 }

@@ -33,8 +33,6 @@ interface HistoryContract {
                                                dataManager: DataManager)
         : AccountPresenter<View>(appBus, dataManager), HistoryContract.Presenter {
 
-        private val tag = Util.getTag(this)
-
         @Inject
         lateinit var sheetsHelper: SheetsHelper
 
@@ -47,8 +45,22 @@ interface HistoryContract {
         override fun onAttach(wasViewRecreated: Boolean) {
             super.onAttach(wasViewRecreated)
             if (wasViewRecreated) {
+                attachToAppBus()
                 fetchTransactions()
             }
+        }
+
+        private fun attachToAppBus() {
+
+            getAppBus()
+                    .onTransactionAdded
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe {
+                        fetchTransactions()
+                    }
+                    .addToCleanup()
+
         }
 
         private fun fetchTransactions() {

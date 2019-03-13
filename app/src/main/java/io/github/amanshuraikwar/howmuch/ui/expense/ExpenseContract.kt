@@ -56,14 +56,12 @@ interface ExpenseContract {
 
         fun onEditDiscardClicked()
         fun onDeleteBtnClicked()
-        fun onDeleteComfirmedClicked()
+        fun onDeleteConfirmedClicked()
     }
 
     class ExpensePresenter @Inject constructor(appBus: AppBus,
                                                dataManager: DataManager)
         : AccountPresenter<View>(appBus, dataManager), Presenter {
-
-        private val tag = Util.getTag(this)
 
         @Inject
         lateinit var sheetsHelper: SheetsHelper
@@ -239,7 +237,7 @@ interface ExpenseContract {
             getView()?.showDeleteDialog()
         }
 
-        override fun onDeleteComfirmedClicked() {
+        override fun onDeleteConfirmedClicked() {
             getDataManager()
                     .getSpreadsheetIdForEmail(getEmail()!!)
                     .flatMapCompletable {

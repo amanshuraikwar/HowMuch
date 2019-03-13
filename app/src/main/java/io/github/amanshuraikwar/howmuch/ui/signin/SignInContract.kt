@@ -1,15 +1,12 @@
 package io.github.amanshuraikwar.howmuch.ui.signin
 
-import android.accounts.Account
 import android.util.Log
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import io.github.amanshuraikwar.howmuch.Constants
 import io.github.amanshuraikwar.howmuch.bus.AppBus
 import io.github.amanshuraikwar.howmuch.data.DataManager
 import io.github.amanshuraikwar.howmuch.data.network.sheets.SpreadSheetException
 import io.github.amanshuraikwar.howmuch.ui.SheetsHelper
 import io.github.amanshuraikwar.howmuch.ui.base.*
-import io.github.amanshuraikwar.howmuch.ui.onboarding.OnboardingScreen
 import io.github.amanshuraikwar.howmuch.util.Util
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -31,7 +28,6 @@ interface SignInContract {
         fun showGoogleAccountEdit()
         fun showGoogleUserInfo(name: String, photoUrl: String, email: String)
         fun hideGoogleUserInfo()
-        fun getGoogleAccountCredential(account: Account): GoogleAccountCredential
         fun showProgress(progress: Int)
     }
 
@@ -86,9 +82,7 @@ interface SignInContract {
                             {
                                 onboardingDone ->
                                 if (onboardingDone) {
-                                    getAppBus()
-                                            .onBoardingScreenState
-                                            .onNext(OnboardingScreen.State.ONBOARDING_COMPLETE)
+                                    getAppBus().onBoardingComplete.onNext(Any())
                                 } else {
                                     initSignIn()
                                 }
@@ -98,8 +92,6 @@ interface SignInContract {
                             }
                     )
                     .addToCleanup()
-
-
         }
 
         private fun initSignIn() {
@@ -114,7 +106,8 @@ interface SignInContract {
                     showGoogleUserInfo(
                             name = getDisplayName() ?: Constants.DEFAULT_USER_NAME,
                             email = getEmail() ?: Constants.DEFAULT_USER_EMAIL,
-                            photoUrl = getPhotoUrl() ?: "")
+                            photoUrl = getPhotoUrl() ?: ""
+                    )
                 }
 
             } else {
@@ -126,7 +119,6 @@ interface SignInContract {
                     showSignInBtn()
                     hideGoogleUserInfo()
                 }
-
             }
         }
 
@@ -141,9 +133,6 @@ interface SignInContract {
         }
 
         private fun startOnboardingProcess() {
-
-            // resetting sheets helper for getting latest month and year
-            sheetsHelper.reset()
 
             getDataManager().let {
 
@@ -254,8 +243,8 @@ interface SignInContract {
                             id ->
                             sheetsHelper
                                     .initTransactions(
-                                            id,
-                                            getView()?.getGoogleAccountCredential(getAccount()!!)!!
+                                            spreadsheetId = id,
+                                            googleAccountCredential = getView()?.getGoogleAccountCredential(getAccount()!!)!!
                                     )
                         }
                         // setting spread sheet ready in local db
@@ -298,8 +287,8 @@ interface SignInContract {
 
                                     // inform the system of onboarding complete
                                     getAppBus()
-                                            .onBoardingScreenState
-                                            .onNext(OnboardingScreen.State.ONBOARDING_COMPLETE)
+                                            .onBoardingComplete
+                                            .onNext(Any())
                                 },
                                 {
                                     Log.e(tag, "startOnboardingProcess: onError: ", it)
