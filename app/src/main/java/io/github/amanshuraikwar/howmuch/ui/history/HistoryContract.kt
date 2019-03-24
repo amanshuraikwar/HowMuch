@@ -26,7 +26,7 @@ interface HistoryContract {
     interface Presenter : BasePresenter<View> {
         fun onRetryClicked()
         fun onTransactionEdited()
-        fun onRefresh()
+        fun onRefreshClicked()
     }
 
     class HistoryPresenter @Inject constructor(appBus: AppBus,
@@ -155,8 +155,6 @@ interface HistoryContract {
             }
             if(list.size == 0) {
                 list.add(EmptyListItem("O_O"))
-            } else {
-                list.add(DateListItem(""))
             }
 
             return list
@@ -169,7 +167,7 @@ interface HistoryContract {
             fetchTransactions()
         }
 
-        override fun onRefresh() {
+        override fun onRefreshClicked() {
             fetchTransactions()
         }
     }

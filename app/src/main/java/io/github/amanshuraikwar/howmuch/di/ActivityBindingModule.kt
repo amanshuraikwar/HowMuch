@@ -8,6 +8,7 @@ import io.github.amanshuraikwar.howmuch.ui.expense.ExpenseActivity
 import io.github.amanshuraikwar.howmuch.ui.history.HistoryFragment
 import io.github.amanshuraikwar.howmuch.ui.home.HomeActivity
 import io.github.amanshuraikwar.howmuch.ui.signin.SignInFragment
+import io.github.amanshuraikwar.howmuch.ui.stats.StatsFragment
 
 /**
  * Created by Amanshu Raikwar on 07/03/18.
@@ -39,4 +40,9 @@ import io.github.amanshuraikwar.howmuch.ui.signin.SignInFragment
             modules = [HistoryFragment.HistoryModule::class]
     )
     internal abstract fun historyFragment(): HistoryFragment
+
+    @ContributesAndroidInjector(
+            modules = [StatsFragment.StatsModule::class]
+    )
+    internal abstract fun statsFragment(): StatsFragment
 }

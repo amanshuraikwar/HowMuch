@@ -143,11 +143,11 @@ class SignInFragment
         emailTv.text  = ""
     }
 
-    override fun getGoogleAccountCredential(account: Account): GoogleAccountCredential {
+    override fun getGoogleAccountCredential(googleAccount: Account): GoogleAccountCredential {
         return GoogleAccountCredential
                 .usingOAuth2(activity, Arrays.asList(SheetsScopes.SPREADSHEETS))
                 .setBackOff(ExponentialBackOff())
-                .setSelectedAccount(account)
+                .setSelectedAccount(googleAccount)
     }
 
     override fun showProgress(progress: Int) {

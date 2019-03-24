@@ -14,6 +14,7 @@ interface HomeContract {
         fun loadSignInFragment()
         fun loadHistoryFragment()
         fun showAddTransactionBtn()
+        fun showBnv()
     }
 
     interface Presenter : BasePresenter<View> {
@@ -23,7 +24,7 @@ interface HomeContract {
     class HomePresenter
     @Inject constructor(appBus: AppBus,
                         dataManager: DataManager)
-        : BasePresenterImpl<View>(appBus, dataManager), Presenter {
+        : AccountPresenter<View>(appBus, dataManager), Presenter {
 
         override fun onAttach(wasViewRecreated: Boolean) {
 
@@ -49,6 +50,7 @@ interface HomeContract {
                             getView()?.run {
                                 loadHistoryFragment()
                                 showAddTransactionBtn()
+                                showBnv()
                             }
                         }
                     }
@@ -65,6 +67,7 @@ interface HomeContract {
                         getView()?.run {
                             loadHistoryFragment()
                             showAddTransactionBtn()
+                            showBnv()
                         }
                     }
                     .addToCleanup()

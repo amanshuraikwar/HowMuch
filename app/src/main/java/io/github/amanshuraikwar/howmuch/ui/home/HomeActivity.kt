@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import dagger.Binds
 import dagger.Module
 import io.github.amanshuraikwar.howmuch.R
@@ -13,6 +15,7 @@ import io.github.amanshuraikwar.howmuch.ui.addexpense.AddExpenseActivity
 import io.github.amanshuraikwar.howmuch.ui.base.BaseActivity
 import io.github.amanshuraikwar.howmuch.ui.history.HistoryFragment
 import io.github.amanshuraikwar.howmuch.ui.signin.SignInFragment
+import io.github.amanshuraikwar.howmuch.ui.stats.StatsFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), HomeContract.View {
@@ -37,11 +40,32 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
     }
 
     private fun init() {
+
         addTransactionFab.setOnClickListener {
             startActivityForResult(
                     Intent(this, AddExpenseActivity::class.java),
                     REQ_CODE_TRANSACTION
             )
+        }
+
+        bnv.setOnNavigationItemSelectedListener {
+
+            when(it.itemId) {
+
+                R.id.navigation_stats -> {
+                    loadFragment(StatsFragment())
+                    return@setOnNavigationItemSelectedListener true
+                }
+
+                R.id.navigation_history -> {
+                    loadFragment(HistoryFragment())
+                    return@setOnNavigationItemSelectedListener true
+                }
+
+                else -> {
+                    return@setOnNavigationItemSelectedListener false
+                }
+            }
         }
     }
 
@@ -50,19 +74,25 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
     }
 
     override fun loadSignInFragment() {
-        supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerFl, SignInFragment())
-                .commit()
+        loadFragment(SignInFragment())
     }
 
     override fun loadHistoryFragment() {
+        loadFragment(StatsFragment())
+    }
+
+    private fun loadFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerFl, HistoryFragment())
+                .replace(R.id.fragmentContainerFl, fragment)
                 .commit()
     }
 
     override fun showAddTransactionBtn() {
         addTransactionFab.visibility = VISIBLE
+    }
+
+    override fun showBnv() {
+        bnv.visibility = VISIBLE
     }
 
     @Module

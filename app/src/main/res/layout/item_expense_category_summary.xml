@@ -62,17 +62,13 @@
         android:layout_marginStart="72dp"
         android:layout_marginTop="@dimen/margin_small">
 
-        <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
             android:id="@+id/pb"
             android:layout_width="match_parent"
             android:layout_height="16dp"
-            app:rcProgress="40"
-            app:rcMax="100"
-            app:rcRadius="0dp"
-            app:rcBackgroundPadding="0dp"
-            app:rcProgressColor="@color/colorPrimary"
-            app:rcSecondaryProgressColor="#B71C1C"
-            app:rcBackgroundColor="@color/gray2" />
+            app:mpb_progressStyle="horizontal"
+            app:mpb_useIntrinsicPadding="false"
+            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
 
 
         <ImageView

@@ -9,7 +9,6 @@ import android.view.View.VISIBLE
 import io.github.amanshuraikwar.multiitemlistadapter.ViewHolder
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.util.Util
-import kotlinx.android.synthetic.main.item_transaction.view.*
 import kotlinx.android.synthetic.main.item_expense_category_summary.view.*
 
 class ExpenseCategorySummaryViewHolder(itemView: View) : ViewHolder<ExpenseCategorySummaryListItem>(itemView) {
@@ -26,8 +25,8 @@ class ExpenseCategorySummaryViewHolder(itemView: View) : ViewHolder<ExpenseCateg
         itemView.plannedTv.text = listItem.expenseCategorySummary.planned
         itemView.actualTv.text = listItem.expenseCategorySummary.actual
 
-        val actual = listItem.expenseCategorySummary.actual.substring(1).replace(",", "").toFloat()
-        val planned = listItem.expenseCategorySummary.planned.substring(1).replace(",", "").toFloat()
+        val actual = listItem.expenseCategorySummary.actual.toFloat()
+        val planned = listItem.expenseCategorySummary.planned.toFloat()
 
         var progress = actual * 100 / planned
         var secondaryProgress = 0f
@@ -41,7 +40,7 @@ class ExpenseCategorySummaryViewHolder(itemView: View) : ViewHolder<ExpenseCateg
 
         Log.wtf(TAG, progress.toString() + " " + secondaryProgress.toString())
 
-        itemView.pb.progress = progress
-        itemView.pb.secondaryProgress = secondaryProgress
+        itemView.pb.progress = progress.toInt()
+        itemView.pb.secondaryProgress = secondaryProgress.toInt()
     }
 }

@@ -1,40 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/containerRl"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/gray1">
+    android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title=""
-        style="@style/Widget.HowMuch.Toolbar.SmallCapsTitle"
-        android:stateListAnimator="@animator/toolbar_elevation">
+        android:layout_height="@dimen/tall_toolbar_height">
 
-        <TextView
-            android:id="@+id/toolbarTitleTv"
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_normal"
-            android:gravity="center_horizontal"
-            android:textAppearance="@style/TextAppearance.ToolbarTitle.SmallCaps"
-            android:text="@string/title_stats"/>
-    </androidx.appcompat.widget.Toolbar>
+            android:layout_height="match_parent"
+            app:contentScrim="@color/white"
+            app:expandedTitleGravity="bottom"
+            android:background="@color/white"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-    <FrameLayout
-        android:id="@+id/fragmentContainerFl"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:title="Stats"
+                app:layout_collapseMode="pin"
+                android:clickable="false"/>
+
+            <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+                android:id="@+id/pb"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="bottom"
+                android:indeterminate="true"
+                app:mpb_progressStyle="horizontal"
+                app:mpb_useIntrinsicPadding="false"
+                android:visibility="gone"
+                style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/itemsRv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/itemsRv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <include layout="@layout/layout_loading_overlay" />
-    </FrameLayout>
-</RelativeLayout>
+        android:paddingBottom="@dimen/padding_very_very_large"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

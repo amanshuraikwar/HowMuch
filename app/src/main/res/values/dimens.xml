@@ -19,6 +19,8 @@
     <dimen name="avatar_size_padding">72dp</dimen>
     <dimen name="avatar_size_margin">72dp</dimen>
     <dimen name="avatar_size">72dp</dimen>
+    <dimen name="avatar_size_very_small">32dp</dimen>
+    <dimen name="avatar_size_very_small_radius">16dp</dimen>
     <dimen name="avatar_size_small">48dp</dimen>
     <dimen name="avatar_size_small_radius">24dp</dimen>
 
@@ -34,4 +36,5 @@
     <dimen name="input_field_icon_size">24dp</dimen>
     <dimen name="input_field_offset">72dp</dimen>
     <dimen name="input_field_offset_spinner">64dp</dimen>
+    <dimen name="tall_toolbar_height">128dp</dimen>
 </resources>
