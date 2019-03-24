@@ -108,8 +108,10 @@ interface HistoryContract {
                             },
                             {
                                 it.printStackTrace()
-                                getView()?.hideLoading()
-                                getView()?.showSnackbar(it.message ?: "Please try again!")
+                                getView()?.run {
+                                    showError(it.message ?: "Please try again!")
+                                    hideLoading()
+                                }
                             }
                     )
                     .addToCleanup()

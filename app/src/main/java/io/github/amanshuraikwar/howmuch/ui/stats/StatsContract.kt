@@ -80,8 +80,8 @@ interface StatsContract {
 
                                 Log.e(tag, "fetchStats: Error: ${it.message}")
 
-                                getView()?.run{
-                                    showError(it.message ?: "Please retry!")
+                                getView()?.run {
+                                    showError(it.message ?: "Please try again!")
                                     hideLoading()
                                 }
                             }

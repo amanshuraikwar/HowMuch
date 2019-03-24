@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import dagger.Binds
 import dagger.Module
+import io.github.amanshuraikwar.howmuch.BuildConfig
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.di.ActivityContext
 import io.github.amanshuraikwar.howmuch.ui.addexpense.AddExpenseActivity
@@ -67,6 +68,8 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
                 }
             }
         }
+
+        versionTv.text =  "[${BuildConfig.FLAVOR}] ${BuildConfig.VERSION_NAME} [${BuildConfig.FLAVOR}]"
     }
 
     override fun close() {

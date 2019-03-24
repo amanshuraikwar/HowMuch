@@ -89,6 +89,7 @@ class StatsFragment
     }
 
     override fun showError(message: String) {
+        showToast(message)
     }
 
     @Module
