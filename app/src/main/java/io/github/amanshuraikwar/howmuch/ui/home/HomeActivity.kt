@@ -3,10 +3,10 @@ package io.github.amanshuraikwar.howmuch.ui.home
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.Glide
 import dagger.Binds
 import dagger.Module
 import io.github.amanshuraikwar.howmuch.BuildConfig
@@ -15,6 +15,7 @@ import io.github.amanshuraikwar.howmuch.di.ActivityContext
 import io.github.amanshuraikwar.howmuch.ui.addexpense.AddExpenseActivity
 import io.github.amanshuraikwar.howmuch.ui.base.BaseActivity
 import io.github.amanshuraikwar.howmuch.ui.history.HistoryFragment
+import io.github.amanshuraikwar.howmuch.ui.profile.ProfileFragment
 import io.github.amanshuraikwar.howmuch.ui.signin.SignInFragment
 import io.github.amanshuraikwar.howmuch.ui.stats.StatsFragment
 import kotlinx.android.synthetic.main.activity_home.*
@@ -55,11 +56,19 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
 
                 R.id.navigation_stats -> {
                     loadFragment(StatsFragment())
+                    showAddTransactionBtn()
                     return@setOnNavigationItemSelectedListener true
                 }
 
                 R.id.navigation_history -> {
                     loadFragment(HistoryFragment())
+                    showAddTransactionBtn()
+                    return@setOnNavigationItemSelectedListener true
+                }
+
+                R.id.navigation_profile-> {
+                    loadFragment(ProfileFragment())
+                    hideAddTransactionBtn()
                     return@setOnNavigationItemSelectedListener true
                 }
 
@@ -68,8 +77,6 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
                 }
             }
         }
-
-        versionTv.text =  "[${BuildConfig.FLAVOR}] ${BuildConfig.VERSION_NAME} [${BuildConfig.FLAVOR}]"
     }
 
     override fun close() {
@@ -91,11 +98,19 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
     }
 
     override fun showAddTransactionBtn() {
-        addTransactionFab.visibility = VISIBLE
+        addTransactionFab.show()
     }
 
     override fun showBnv() {
         bnv.visibility = VISIBLE
+    }
+
+    override fun hideAddTransactionBtn() {
+        addTransactionFab.hide()
+    }
+
+    override fun hideBnv() {
+        bnv.visibility = GONE
     }
 
     @Module

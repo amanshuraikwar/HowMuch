@@ -3,16 +3,16 @@
 
     <item
         android:id="@+id/navigation_stats"
-        android:icon="@drawable/baseline_pie_chart_24"
+        android:icon="@drawable/twotone_pie_chart_24"
         android:title="@string/title_stats" />
 
     <item
         android:id="@+id/navigation_history"
-        android:icon="@drawable/baseline_view_list_24"
+        android:icon="@drawable/twotone_list_alt_24"
         android:title="@string/title_history" />
 
-    <!--<item-->
-        <!--android:id="@+id/navigation_settings"-->
-        <!--android:icon="@drawable/ic_settings_white_24dp"-->
-        <!--android:title="@string/title_settings" />-->
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/twotone_person_24"
+        android:title="@string/title_profile" />
 </menu>

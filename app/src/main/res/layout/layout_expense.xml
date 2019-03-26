@@ -36,7 +36,7 @@
             app:layout_constraintStart_toEndOf="@id/backIb"
             app:layout_constraintEnd_toStartOf="@id/doneBtn"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="add transaction"
+            app:title="Add Transaction"
             style="@style/Widget.HowMuch.Toolbar.SmallCapsTitle" />
 
         <androidx.appcompat.widget.AppCompatButton

@@ -15,7 +15,9 @@
             app:contentScrim="@color/white"
             app:expandedTitleGravity="bottom"
             android:background="@color/white"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:expandedTitleTextAppearance="@style/TextAppearance.ToolbarTitleExpanded.SmallCaps"
+            app:collapsedTitleTextAppearance="@style/TextAppearance.ToolbarTitle.SmallCaps">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"

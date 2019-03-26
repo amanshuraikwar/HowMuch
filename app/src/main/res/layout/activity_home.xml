@@ -37,25 +37,13 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/versionTv"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:itemIconTint="?colorPrimary"
         app:menu="@menu/main_navigation"
+        app:itemTextAppearanceActive="@style/TextAppearance.BnvItem.Active"
+        app:itemTextAppearanceInactive="@style/TextAppearance.BnvItem.Inactive"
+        android:elevation="@dimen/elevation_normal"
+        app:elevation="@dimen/elevation_normal"
+        android:background="@color/white"
         android:visibility="gone"/>
-
-    <TextView
-        android:id="@+id/versionTv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:gravity="center"
-        android:padding="@dimen/padding_very_small"
-        android:textAppearance="@style/TextAppearance.Caption"
-        android:textAllCaps="true"
-        android:textStyle="bold"
-        android:textColor="#aaa"
-        android:background="#eee"
-        android:textSize="8sp"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

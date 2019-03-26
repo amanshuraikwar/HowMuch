@@ -14,7 +14,9 @@ interface HomeContract {
         fun loadSignInFragment()
         fun loadHistoryFragment()
         fun showAddTransactionBtn()
+        fun hideAddTransactionBtn()
         fun showBnv()
+        fun hideBnv()
     }
 
     interface Presenter : BasePresenter<View> {
@@ -72,6 +74,19 @@ interface HomeContract {
                     }
                     .addToCleanup()
 
+            getAppBus()
+                    .onLogout
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe {
+                        getDataManager().setInitialOnboardingDone(false).subscribe().addToCleanup()
+                        getView()?.run {
+                            hideAddTransactionBtn()
+                            hideBnv()
+                            loadSignInFragment()
+                        }
+                    }
+                    .addToCleanup()
         }
 
         override fun onTransactionAdded() {

@@ -15,17 +15,17 @@
     <TextView
         android:id="@+id/titleTv"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/barrier1"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/timeTv"
-        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_height="20dp"
         android:layout_marginStart="@dimen/margin_normal"
         android:layout_marginTop="@dimen/margin_normal"
-        android:lines="1"
         android:ellipsize="end"
+        android:lines="1"
         android:textAppearance="@style/TextAppearance.TransactionTitle"
+        app:layout_constraintBottom_toTopOf="@id/timeTv"
+        app:layout_constraintEnd_toStartOf="@id/barrier1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
         tools:text="Flat Rent" />
 
     <TextView

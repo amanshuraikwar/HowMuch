@@ -36,5 +36,5 @@
     <dimen name="input_field_icon_size">24dp</dimen>
     <dimen name="input_field_offset">72dp</dimen>
     <dimen name="input_field_offset_spinner">64dp</dimen>
-    <dimen name="tall_toolbar_height">128dp</dimen>
+    <dimen name="tall_toolbar_height">108dp</dimen>
 </resources>

@@ -1,17 +1,13 @@
-package io.github.amanshuraikwar.howmuch.ui.stats
+package io.github.amanshuraikwar.howmuch.ui.profile
 
-import android.accounts.Account
 import android.annotation.SuppressLint
-import android.os.Build
 import android.os.Bundle
-import android.view.*
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
-import com.google.api.client.util.ExponentialBackOff
-import com.google.api.services.sheets.v4.SheetsScopes
 import dagger.Binds
 import dagger.Module
 import io.github.amanshuraikwar.howmuch.R
@@ -19,13 +15,11 @@ import io.github.amanshuraikwar.howmuch.ui.base.BaseFragment
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
-import kotlinx.android.synthetic.main.fragment_stats.*
-import java.util.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 import javax.inject.Inject
 
-
-class StatsFragment
-@Inject constructor(): BaseFragment<StatsContract.View, StatsContract.Presenter>(), StatsContract.View {
+class ProfileFragment
+@Inject constructor(): BaseFragment<ProfileContract.View, ProfileContract.Presenter>(), ProfileContract.View {
 
     private var adapter: MultiItemListAdapter<*>? = null
 
@@ -33,7 +27,7 @@ class StatsFragment
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_stats, null)
+        return inflater.inflate(R.layout.fragment_profile, null)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -50,22 +44,28 @@ class StatsFragment
         }
 
         itemsRv.adapter = adapter
-
-        toolbar.inflateMenu(R.menu.refresh_navigation)
-        toolbar.setOnMenuItemClickListener {
-            presenter.onRefreshClicked()
-            return@setOnMenuItemClickListener true
-        }
-    }
-
-    override fun getGoogleAccountCredential(googleAccount: Account): GoogleAccountCredential {
-        return GoogleAccountCredential.usingOAuth2(activity, Arrays.asList(SheetsScopes.SPREADSHEETS))
-                .setBackOff(ExponentialBackOff())
-                .setSelectedAccount(googleAccount)
     }
 
     override fun submitList(list: List<ListItem<*, *>>) {
         adapter?.submitList(list)
+    }
+
+    override fun initiateSignOut() {
+        activity.googleSignInClient.signOut()
+    }
+
+    override fun showSignOutAlertDialog() {
+        AlertDialog
+                .Builder(activity)
+                .setMessage(R.string.sign_out_message)
+                .setNegativeButton("Sign Out") {
+                    dialog, _ ->
+                    presenter.onSignOutClicked()
+                    dialog.dismiss()
+                }
+                .setPositiveButton("Cancel") { dialog, _ -> dialog.dismiss() }
+                .setCancelable(true)
+                .show()
     }
 
     override fun showToast(message: String) {
@@ -77,11 +77,11 @@ class StatsFragment
     }
 
     override fun showLoading(message: String) {
-        pb.visibility = VISIBLE
+        pb.visibility = View.VISIBLE
     }
 
     override fun hideLoading() {
-        pb.visibility = GONE
+        pb.visibility = View.GONE
     }
 
     override fun showError(message: String) {
@@ -89,8 +89,8 @@ class StatsFragment
     }
 
     @Module
-    abstract class StatsModule {
+    abstract class DiModule {
         @Binds
-        abstract fun presenter(presenter: StatsContract.StatsPresenter): StatsContract.Presenter
+        abstract fun presenter(presenter: ProfileContract.ProfilePresenter): ProfileContract.Presenter
     }
 }

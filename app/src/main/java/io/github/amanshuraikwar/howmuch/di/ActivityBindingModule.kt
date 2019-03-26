@@ -7,6 +7,7 @@ import io.github.amanshuraikwar.howmuch.ui.addexpense.AddExpenseActivity
 import io.github.amanshuraikwar.howmuch.ui.expense.ExpenseActivity
 import io.github.amanshuraikwar.howmuch.ui.history.HistoryFragment
 import io.github.amanshuraikwar.howmuch.ui.home.HomeActivity
+import io.github.amanshuraikwar.howmuch.ui.profile.ProfileFragment
 import io.github.amanshuraikwar.howmuch.ui.signin.SignInFragment
 import io.github.amanshuraikwar.howmuch.ui.stats.StatsFragment
 
@@ -45,4 +46,9 @@ import io.github.amanshuraikwar.howmuch.ui.stats.StatsFragment
             modules = [StatsFragment.StatsModule::class]
     )
     internal abstract fun statsFragment(): StatsFragment
+
+    @ContributesAndroidInjector(
+            modules = [ProfileFragment.DiModule::class]
+    )
+    internal abstract fun settingsFragment(): ProfileFragment
 }

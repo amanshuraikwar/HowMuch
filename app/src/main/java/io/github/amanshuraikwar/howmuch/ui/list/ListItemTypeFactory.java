@@ -44,6 +44,14 @@ public class ListItemTypeFactory extends BaseTypeFactory {
         return 4;
     }
 
+    public int type(UserInfo.Item item) {
+        return 5;
+    }
+
+    public int type(Setting.Item item) {
+        return 6;
+    }
+
     /**
      * To get layout file id (R.layout.*) for a corresponding list item/view type.
      *
@@ -60,6 +68,10 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 return DateViewHolder.Companion.getLAYOUT();
             case 4:
                 return EmptyViewHolder.Companion.getLAYOUT();
+            case 5:
+                return UserInfo.Holder.Companion.getLAYOUT();
+            case 6:
+                return Setting.Holder.Companion.getLAYOUT();
             default:
                 return super.getLayout(viewType);
         }
@@ -88,6 +100,12 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 break;
             case 4:
                 viewHolder = new EmptyViewHolder(parent);
+                break;
+            case 5:
+                viewHolder = new UserInfo.Holder(parent);
+                break;
+            case 6:
+                viewHolder = new Setting.Holder(parent);
                 break;
             default:
                 viewHolder = super.createViewHolder(parent, type);

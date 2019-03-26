@@ -50,14 +50,14 @@ android {
         dev {
             applicationIdSuffix ".debug"
             versionCode gitVersionCodeTime
-            versionName gitVersionName
+            versionName gitVersionName + "-DEV"
             manifestPlaceholders = [ applicationLabel : APP_NAME_DEV]
         }
 
         usable {
             applicationIdSuffix ".usable"
             versionCode gitVersionCodeTime
-            versionName gitVersionName
+            versionName gitVersionName + "-USABLE"
             manifestPlaceholders = [ applicationLabel : APP_NAME_USABLE]
         }
 

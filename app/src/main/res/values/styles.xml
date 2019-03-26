@@ -183,13 +183,12 @@
         parent="@android:style/TextAppearance.Material.Widget.ActionBar.Title">
 
         <item name="android:textColor">@color/primaryText</item>
-        <item name="android:fontFamily">sans-serif-condensed</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
     </style>
 
     <style name="TextAppearance.ToolbarTitle.SmallCaps">
 
-        <item name="android:textAllCaps">true</item>
+        <!--<item name="android:textAllCaps">true</item>-->
         <!--<item name="android:fontFeatureSettings">smcp</item>-->
         <item name="android:letterSpacing">0.05</item>
     </style>
@@ -198,6 +197,38 @@
 
         <item name="textAllCaps">false</item>
         <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="TextAppearance.ToolbarTitleExpanded"
+        parent="@style/TextAppearance.Design.CollapsingToolbar.Expanded">
+
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+    </style>
+
+    <style name="TextAppearance.ToolbarTitleExpanded.SmallCaps">
+
+        <!--<item name="android:textAllCaps">true</item>-->
+        <!--<item name="android:fontFeatureSettings">smcp</item>-->
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+
+    <style
+        name="TextAppearance.BnvItem.Active"
+        parent="@style/TextAppearance.AppCompat.Caption">
+
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="android:textColor">?colorPrimary</item>
+    </style>
+
+    <style
+        name="TextAppearance.BnvItem.Inactive"
+        parent="@style/TextAppearance.AppCompat.Caption">
+
+        <item name="android:fontFamily">@font/roboto_mono</item>
+        <item name="android:textColor">@color/secondaryText</item>
+
     </style>
 
     <style
@@ -234,8 +265,15 @@
         name="TextAppearance.DateSmall"
         parent="@style/TextAppearance.Caption">
 
+        <item name="android:fontFamily">@font/roboto_mono_bold</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style
+        name="TextAppearance.Setting"
+        parent="@style/TextAppearance.Body1">
+
         <item name="android:fontFamily">@font/rubik</item>
-        <item name="android:fontFeatureSettings">smcp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -250,9 +288,8 @@
         name="TextAppearance.Amount"
         parent="@style/TextAppearance.Display1">
 
-        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
         <item name="android:textColor">@color/primaryText</item>
-        <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
@@ -260,7 +297,7 @@
         name="TextAppearance.AmountSmall"
         parent="@style/TextAppearance.Headline">
 
-        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/primaryText</item>
     </style>
@@ -275,9 +312,11 @@
 
     <style
         name="TextAppearance.TransactionTitle"
-        parent="@style/TextAppearance.Title">
+        parent="@style/TextAppearance.Subhead">
 
         <item name="android:textColor">@color/primaryText</item>
+        <item name="android:fontFamily">@font/rubik</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style
@@ -403,14 +442,6 @@
     </style>
 
     <style
-        name="TextAppearance.Setting"
-        parent="@style/TextAppearance.Subhead">
-
-        <item name="android:textColor">@color/primaryText</item>
-        <item name="android:fontFamily">@font/roboto_mono_medium</item>
-    </style>
-
-    <style
         name="TextAppearance.CurrencyLarge"
         parent="@style/TextAppearance.Headline">
 
@@ -427,11 +458,10 @@
 
     <style
         name="TextAppearance.TransactionTimeSmall"
-        parent="@style/TextAppearance.Body1">
+        parent="@style/TextAppearance.Caption">
 
         <item name="android:fontFamily">@font/rubik</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:fontFeatureSettings">smcp</item>
         <item name="android:textColor">@color/secondaryText</item>
     </style>
 </resources>
