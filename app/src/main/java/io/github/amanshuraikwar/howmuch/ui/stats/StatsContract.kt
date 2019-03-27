@@ -18,6 +18,8 @@ interface StatsContract {
 
     interface View : BaseView, UiMessageView, LoadingView, GoogleAccountView {
         fun submitList(list: List<ListItem<*, *>>)
+        fun setSyncError()
+        fun clearSyncError()
     }
 
     interface Presenter : BasePresenter<View> {
@@ -62,7 +64,10 @@ interface StatsContract {
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe {
-                        getView()?.showLoading("Fetching stats...")
+                        getView()?.run{
+                            showLoading("Fetching stats...")
+                            clearSyncError()
+                        }
                     }
                     .subscribe(
                             {
@@ -83,6 +88,7 @@ interface StatsContract {
                                 getView()?.run {
                                     showError(it.message ?: "Please try again!")
                                     hideLoading()
+                                    setSyncError()
                                 }
                             }
                     )

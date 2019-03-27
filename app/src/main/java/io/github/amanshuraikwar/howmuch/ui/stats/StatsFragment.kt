@@ -8,6 +8,7 @@ import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.google.api.client.util.ExponentialBackOff
@@ -66,6 +67,16 @@ class StatsFragment
 
     override fun submitList(list: List<ListItem<*, *>>) {
         adapter?.submitList(list)
+    }
+
+    override fun setSyncError() {
+        toolbar.menu.getItem(0).icon =
+                ContextCompat.getDrawable(activity, R.drawable.ic_sync_problem_red_24dp)
+    }
+
+    override fun clearSyncError() {
+        toolbar.menu.getItem(0).icon =
+                ContextCompat.getDrawable(activity, R.drawable.ic_autorenew_black_24dp)
     }
 
     override fun showToast(message: String) {

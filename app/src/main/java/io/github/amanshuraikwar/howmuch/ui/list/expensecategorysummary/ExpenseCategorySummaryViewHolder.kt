@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
+import androidx.core.content.ContextCompat
 import io.github.amanshuraikwar.multiitemlistadapter.ViewHolder
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.util.Util
@@ -21,26 +22,8 @@ class ExpenseCategorySummaryViewHolder(itemView: View) : ViewHolder<ExpenseCateg
     }
 
     override fun bind(listItem: ExpenseCategorySummaryListItem, host: androidx.fragment.app.FragmentActivity) {
-        itemView.nameTv.text = listItem.expenseCategorySummary.name
-        itemView.plannedTv.text = listItem.expenseCategorySummary.planned
-        itemView.actualTv.text = listItem.expenseCategorySummary.actual
-
-        val actual = listItem.expenseCategorySummary.actual.toFloat()
-        val planned = listItem.expenseCategorySummary.planned.toFloat()
-
-        var progress = actual * 100 / planned
-        var secondaryProgress = 0f
-        itemView.pbIconIv.visibility = INVISIBLE
-
-        if (actual > planned) {
-            progress = planned * 100 / (actual)
-            secondaryProgress = 100f
-            itemView.pbIconIv.visibility = VISIBLE
-        }
-
-        Log.wtf(TAG, progress.toString() + " " + secondaryProgress.toString())
-
-        itemView.pb.progress = progress.toInt()
-        itemView.pb.secondaryProgress = secondaryProgress.toInt()
+        itemView.titleTv.text = listItem.expenseCategorySummary.name
+        itemView.amountTv.text = "-${listItem.expenseCategorySummary.actual}"
+        itemView.amountTv.setTextColor(ContextCompat.getColor(host, R.color.red))
     }
 }

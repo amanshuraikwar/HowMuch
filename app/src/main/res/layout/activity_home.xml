@@ -43,7 +43,8 @@
         app:itemTextAppearanceActive="@style/TextAppearance.BnvItem.Active"
         app:itemTextAppearanceInactive="@style/TextAppearance.BnvItem.Inactive"
         android:elevation="@dimen/elevation_normal"
-        app:elevation="@dimen/elevation_normal"
+        app:elevation="@dimen/elevation_very_large"
         android:background="@color/white"
+        app:labelVisibilityMode="unlabeled"
         android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

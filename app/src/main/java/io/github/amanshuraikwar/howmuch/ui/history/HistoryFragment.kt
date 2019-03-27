@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.google.api.client.util.ExponentialBackOff
 import com.google.api.services.sheets.v4.SheetsScopes
@@ -93,6 +94,16 @@ class HistoryFragment
         val intent = Intent(activity, ExpenseActivity::class.java)
         intent.putExtra(ExpenseActivity.KEY_TRANSACTION, transaction)
         startActivityForResult(intent, REQ_CODE_TRANSACTION)
+    }
+
+    override fun setSyncError() {
+        toolbar.menu.getItem(0).icon =
+                ContextCompat.getDrawable(activity, R.drawable.ic_sync_problem_red_24dp)
+    }
+
+    override fun clearSyncError() {
+        toolbar.menu.getItem(0).icon =
+                ContextCompat.getDrawable(activity, R.drawable.ic_autorenew_black_24dp)
     }
 
     override fun showToast(message: String) {

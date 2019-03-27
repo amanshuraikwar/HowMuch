@@ -21,6 +21,8 @@ interface HistoryContract {
     interface View : BaseView, UiMessageView, LoadingView, GoogleAccountView {
         fun submitList(list: List<ListItem<*, *>>)
         fun startTransactionActivity(transaction: Transaction)
+        fun setSyncError()
+        fun clearSyncError()
     }
 
     interface Presenter : BasePresenter<View> {
@@ -96,7 +98,10 @@ interface HistoryContract {
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe {
-                        getView()?.showLoading("Fetching transactions...")
+                        getView()?.run{
+                            showLoading("Fetching transactions...")
+                            clearSyncError()
+                        }
                     }
                     .subscribe(
                             {
@@ -111,6 +116,7 @@ interface HistoryContract {
                                 getView()?.run {
                                     showError(it.message ?: "Please try again!")
                                     hideLoading()
+                                    setSyncError()
                                 }
                             }
                     )

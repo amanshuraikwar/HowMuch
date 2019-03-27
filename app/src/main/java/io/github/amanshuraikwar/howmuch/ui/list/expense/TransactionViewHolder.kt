@@ -1,5 +1,6 @@
 package io.github.amanshuraikwar.howmuch.ui.list.expense
 
+import android.content.res.ColorStateList
 import androidx.annotation.LayoutRes
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -27,15 +28,30 @@ class TransactionViewHolder(itemView: View) : ViewHolder<TransactionListItem>(it
         itemView.amountTv.text = transaction.amount.toString()
 
         if (transaction.type == TransactionType.DEBIT) {
+
             itemView.currencyTv.text = ""
             itemView.currencyTv.setTextColor(ContextCompat.getColor(host, R.color.red))
             itemView.amountTv.setTextColor(ContextCompat.getColor(host, R.color.red))
-            itemView.amountTv.text = "-${transaction.currency}${transaction.amount}"
+            itemView.amountTv.text = "-${transaction.amount}"
+
+            itemView.transactionTypeIb.imageTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(host, R.color.red)
+            )
+
+            itemView.transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp)
+
         } else {
+
             itemView.currencyTv.text = ""
             itemView.currencyTv.setTextColor(ContextCompat.getColor(host, R.color.green))
             itemView.amountTv.setTextColor(ContextCompat.getColor(host, R.color.green))
-            itemView.amountTv.text = "+${transaction.currency}${transaction.amount}"
+            itemView.amountTv.text = "+${transaction.amount}"
+
+            itemView.transactionTypeIb.imageTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(host, R.color.green)
+            )
+
+            itemView.transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp)
         }
 
         itemView.timeTv.text = Util.beautifyTime(transaction.time)
