@@ -1,6 +1,6 @@
 package io.github.amanshuraikwar.howmuch
 
-import io.github.amanshuraikwar.howmuch.util.Util
+import io.github.amanshuraikwar.howmuch.base.util.Util;
 import org.junit.Test
 
 import org.junit.Assert.*

@@ -1,8 +1,8 @@
 package io.github.amanshuraikwar.howmuch.ui.home
 
-import io.github.amanshuraikwar.howmuch.bus.AppBus
-import io.github.amanshuraikwar.howmuch.data.DataManager
-import io.github.amanshuraikwar.howmuch.ui.base.*
+import io.github.amanshuraikwar.howmuch.base.bus.AppBus
+import io.github.amanshuraikwar.howmuch.base.data.DataManager
+import io.github.amanshuraikwar.howmuch.base.ui.base.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -26,7 +26,7 @@ interface HomeContract {
     class HomePresenter
     @Inject constructor(appBus: AppBus,
                         dataManager: DataManager)
-        : AccountPresenter<View>(appBus, dataManager), Presenter {
+        : BasePresenterImpl<View>(appBus, dataManager), Presenter {
 
         override fun onAttach(wasViewRecreated: Boolean) {
 
@@ -41,19 +41,19 @@ interface HomeContract {
         private fun init() {
 
             getDataManager()
-                    .isInitialOnboardingDone()
+                    .isSignedIn()
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe {
-                        done ->
-                        if (!done) {
-                            getView()?.loadSignInFragment()
-                        } else {
+                        signedIn ->
+                        if (signedIn) {
                             getView()?.run {
                                 loadHistoryFragment()
                                 showAddTransactionBtn()
                                 showBnv()
                             }
+                        } else {
+                            getView()?.loadSignInFragment()
                         }
                     }
                     .addToCleanup()
@@ -62,7 +62,7 @@ interface HomeContract {
         private fun attachToAppBus() {
 
             getAppBus()
-                    .onBoardingComplete
+                    .onSignInSuccessful
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe {
@@ -75,11 +75,11 @@ interface HomeContract {
                     .addToCleanup()
 
             getAppBus()
-                    .onLogout
+                    .onSignOut
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe {
-                        getDataManager().setInitialOnboardingDone(false).subscribe().addToCleanup()
+                        getDataManager().signOut().subscribe().addToCleanup()
                         getView()?.run {
                             hideAddTransactionBtn()
                             hideBnv()

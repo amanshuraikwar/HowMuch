@@ -2,7 +2,7 @@ package io.github.amanshuraikwar.howmuch.di
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import io.github.amanshuraikwar.howmuch.di.modules.GoogleSignInProvides
+import io.github.amanshuraikwar.howmuch.googlesheetsprotocol.di.GoogleSignInProvides
 import io.github.amanshuraikwar.howmuch.ui.addexpense.AddExpenseActivity
 import io.github.amanshuraikwar.howmuch.ui.expense.ExpenseActivity
 import io.github.amanshuraikwar.howmuch.ui.history.HistoryFragment
@@ -18,37 +18,45 @@ import io.github.amanshuraikwar.howmuch.ui.stats.StatsFragment
 @Module abstract class ActivityBindingModule {
 
     @ContributesAndroidInjector(
-            modules = [HomeActivity.HomeModule::class, GoogleSignInProvides::class]
+            modules = [HomeActivity.HomeModule::class]
     )
-    abstract fun home(): HomeActivity
+    abstract fun a(): HomeActivity
 
     @ContributesAndroidInjector(
-            modules = [AddExpenseActivity.AddTransactionModule::class, GoogleSignInProvides::class]
+            modules = [AddExpenseActivity.AddTransactionModule::class]
     )
-    abstract fun addExpense(): AddExpenseActivity
+    abstract fun b(): AddExpenseActivity
 
     @ContributesAndroidInjector(
-            modules = [ExpenseActivity.ExpenseModule::class, GoogleSignInProvides::class]
+            modules = [ExpenseActivity.ExpenseModule::class]
     )
-    abstract fun expense(): ExpenseActivity
+    abstract fun c(): ExpenseActivity
 
     @ContributesAndroidInjector(
-            modules = [SignInFragment.SignInModule::class]
+            modules = [
+                SignInFragment.DiModule::class,
+                GoogleSignInProvides::class,
+                SignInFragment.DiProvides::class
+            ]
     )
-    internal abstract fun signInFragment(): SignInFragment
+    internal abstract fun d(): SignInFragment
 
     @ContributesAndroidInjector(
             modules = [HistoryFragment.HistoryModule::class]
     )
-    internal abstract fun historyFragment(): HistoryFragment
+    internal abstract fun e(): HistoryFragment
 
     @ContributesAndroidInjector(
             modules = [StatsFragment.StatsModule::class]
     )
-    internal abstract fun statsFragment(): StatsFragment
+    internal abstract fun f(): StatsFragment
 
     @ContributesAndroidInjector(
-            modules = [ProfileFragment.DiModule::class]
+            modules = [
+                ProfileFragment.DiModule::class,
+                GoogleSignInProvides::class,
+                ProfileFragment.DiProvides::class
+            ]
     )
-    internal abstract fun settingsFragment(): ProfileFragment
+    internal abstract fun g(): ProfileFragment
 }

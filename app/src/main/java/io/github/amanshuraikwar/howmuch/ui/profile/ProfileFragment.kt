@@ -7,11 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import io.github.amanshuraikwar.howmuch.R
-import io.github.amanshuraikwar.howmuch.ui.base.BaseFragment
+import io.github.amanshuraikwar.howmuch.base.di.ActivityContext
+import io.github.amanshuraikwar.howmuch.base.ui.base.BaseFragment
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
@@ -22,6 +26,9 @@ class ProfileFragment
 @Inject constructor(): BaseFragment<ProfileContract.View, ProfileContract.Presenter>(), ProfileContract.View {
 
     private var adapter: MultiItemListAdapter<*>? = null
+
+    @Inject
+    lateinit var googleSignInClient: GoogleSignInClient
 
     @SuppressLint("InflateParams")
     override fun onCreateView(inflater: LayoutInflater,
@@ -51,7 +58,7 @@ class ProfileFragment
     }
 
     override fun initiateSignOut() {
-        activity.googleSignInClient.signOut()
+        googleSignInClient.signOut()
     }
 
     override fun showSignOutAlertDialog() {
@@ -90,7 +97,18 @@ class ProfileFragment
 
     @Module
     abstract class DiModule {
+
         @Binds
         abstract fun presenter(presenter: ProfileContract.ProfilePresenter): ProfileContract.Presenter
+    }
+
+    @Module
+    class DiProvides {
+
+        @Provides
+        @ActivityContext
+        fun activity(a: ProfileFragment): AppCompatActivity {
+            return a.activity
+        }
     }
 }

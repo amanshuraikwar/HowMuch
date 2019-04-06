@@ -1,6 +1,5 @@
 package io.github.amanshuraikwar.howmuch.ui.history
 
-import android.accounts.Account
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
@@ -11,20 +10,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
-import com.google.api.client.util.ExponentialBackOff
-import com.google.api.services.sheets.v4.SheetsScopes
 import dagger.Binds
 import dagger.Module
 import io.github.amanshuraikwar.howmuch.R
-import io.github.amanshuraikwar.howmuch.model.Transaction
-import io.github.amanshuraikwar.howmuch.ui.base.BaseFragment
+import io.github.amanshuraikwar.howmuch.protocol.Transaction
+import io.github.amanshuraikwar.howmuch.base.ui.base.BaseFragment
 import io.github.amanshuraikwar.howmuch.ui.expense.ExpenseActivity
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
 import kotlinx.android.synthetic.main.fragment_history.*
-import java.util.*
 import javax.inject.Inject
 
 
@@ -78,12 +73,6 @@ class HistoryFragment
             return@setOnMenuItemClickListener true
         }
 
-    }
-
-    override fun getGoogleAccountCredential(googleAccount: Account): GoogleAccountCredential {
-        return GoogleAccountCredential.usingOAuth2(activity, Arrays.asList(SheetsScopes.SPREADSHEETS))
-                .setBackOff(ExponentialBackOff())
-                .setSelectedAccount(googleAccount)
     }
 
     override fun submitList(list: List<ListItem<*, *>>) {

@@ -1,9 +1,11 @@
 package io.github.amanshuraikwar.howmuch;
 
+import android.util.Log;
+
 import dagger.android.AndroidInjector;
 import dagger.android.DaggerApplication;
 import io.github.amanshuraikwar.howmuch.di.DaggerAppComponent;
-import io.reactivex.functions.Consumer;
+import io.github.amanshuraikwar.howmuch.base.util.Util;
 import io.reactivex.plugins.RxJavaPlugins;
 
 /**
@@ -14,12 +16,15 @@ import io.reactivex.plugins.RxJavaPlugins;
  */
 public class MyApp extends DaggerApplication {
 
+    private final String TAG = Util.getTag(this);
+
     @Override
     public void onCreate() {
         super.onCreate();
         RxJavaPlugins.setErrorHandler(
                 throwable -> {
-                    // do nothing
+                    throwable.printStackTrace();
+                    Log.w(TAG, "onCreate: RxJavaPlugins", throwable);
                 }
         );
     }

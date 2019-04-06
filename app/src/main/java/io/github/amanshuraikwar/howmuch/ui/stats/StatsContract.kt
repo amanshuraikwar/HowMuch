@@ -1,14 +1,13 @@
 package io.github.amanshuraikwar.howmuch.ui.stats
 
 import android.util.Log
-import io.github.amanshuraikwar.howmuch.bus.AppBus
-import io.github.amanshuraikwar.howmuch.data.DataManager
-import io.github.amanshuraikwar.howmuch.model.ExpenseCategorySummary
-import io.github.amanshuraikwar.howmuch.model.Transaction
-import io.github.amanshuraikwar.howmuch.ui.SheetsHelper
-import io.github.amanshuraikwar.howmuch.ui.base.*
-import io.github.amanshuraikwar.howmuch.ui.list.expensecategorysummary.ExpenseCategorySummaryListItem
-import io.github.amanshuraikwar.howmuch.util.Util
+import io.github.amanshuraikwar.howmuch.base.bus.AppBus
+import io.github.amanshuraikwar.howmuch.base.data.DataManager
+import io.github.amanshuraikwar.howmuch.ui.list.stats.Stats
+import io.github.amanshuraikwar.howmuch.protocol.Transaction
+import io.github.amanshuraikwar.howmuch.base.ui.base.*
+import io.github.amanshuraikwar.howmuch.ui.list.stats.StatsListItem
+import io.github.amanshuraikwar.howmuch.base.util.Util;
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -16,7 +15,7 @@ import javax.inject.Inject
 
 interface StatsContract {
 
-    interface View : BaseView, UiMessageView, LoadingView, GoogleAccountView {
+    interface View : BaseView, UiMessageView, LoadingView {
         fun submitList(list: List<ListItem<*, *>>)
         fun setSyncError()
         fun clearSyncError()
@@ -29,12 +28,9 @@ interface StatsContract {
 
     class StatsPresenter @Inject constructor(appBus: AppBus,
                                              dataManager: DataManager)
-        : AccountPresenter<View>(appBus, dataManager), Presenter {
+        : BasePresenterImpl<View>(appBus, dataManager), Presenter {
 
         private val tag = Util.getTag(this)
-
-        @Inject
-        lateinit var sheetsHelper: SheetsHelper
 
         override fun onAttach(wasViewRecreated: Boolean) {
             super.onAttach(wasViewRecreated)
@@ -46,14 +42,8 @@ interface StatsContract {
         private fun fetchStats() {
 
             getDataManager()
-                    .getSpreadsheetIdForEmail(getEmail()!!)
-                    .flatMap {
-                        id ->
-                        sheetsHelper.fetchTransactions(
-                                spreadsheetId = id,
-                                googleAccountCredential = getView()?.getGoogleAccountCredential(getAccount()!!)!!
-                        )
-                    }
+                    .getAllTransactions()
+                    .map { it.toList() }
                     .map {
                         transactions ->
                         val listItems =
@@ -98,24 +88,24 @@ interface StatsContract {
         private fun List<Transaction>.getListItems(): List<ListItem<*, *>> {
 
             return this
-                    .groupBy { it.category }
+                    .groupBy { it.categoryId }
                     .mapValues {
                         (_, transactions) ->
                         transactions.sumByDouble { it.amount }
                     }
                     .map {
                         (category, amountSum) ->
-                        ExpenseCategorySummary(category, category, "0", "$amountSum")
+                        Stats(category, category, "0", "%.2f".format(amountSum))
                     }
-                    .map { ExpenseCategorySummaryListItem(it) }
+                    .map { StatsListItem(it) }
 
 
         }
 
         private fun List<Transaction>.getTotalListItem(): ListItem<*, *> {
 
-            return ExpenseCategorySummaryListItem(
-                    ExpenseCategorySummary(
+            return StatsListItem(
+                    Stats(
                             "Total",
                             "Total",
                             "0",

@@ -1,24 +1,22 @@
 package io.github.amanshuraikwar.howmuch.ui.history
 
-import io.github.amanshuraikwar.howmuch.bus.AppBus
-import io.github.amanshuraikwar.howmuch.data.DataManager
-import io.github.amanshuraikwar.howmuch.model.Transaction
-import io.github.amanshuraikwar.howmuch.ui.SheetsHelper
-import io.github.amanshuraikwar.howmuch.ui.base.*
-import io.github.amanshuraikwar.howmuch.ui.list.date.DateListItem
+import io.github.amanshuraikwar.howmuch.base.bus.AppBus
+import io.github.amanshuraikwar.howmuch.base.data.DataManager
+import io.github.amanshuraikwar.howmuch.protocol.Transaction
+import io.github.amanshuraikwar.howmuch.base.ui.base.*
+import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderListItem
 import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyListItem
-import io.github.amanshuraikwar.howmuch.ui.list.expense.TransactionListItem
-import io.github.amanshuraikwar.howmuch.ui.list.expense.TransactionOnClickListener
-import io.github.amanshuraikwar.howmuch.util.Util
+import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionListItem
+import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionOnClickListener
+import io.github.amanshuraikwar.howmuch.base.util.Util;
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 interface HistoryContract {
 
-    interface View : BaseView, UiMessageView, LoadingView, GoogleAccountView {
+    interface View : BaseView, UiMessageView, LoadingView {
         fun submitList(list: List<ListItem<*, *>>)
         fun startTransactionActivity(transaction: Transaction)
         fun setSyncError()
@@ -26,19 +24,16 @@ interface HistoryContract {
     }
 
     interface Presenter : BasePresenter<View> {
-        fun onRetryClicked()
         fun onTransactionEdited()
         fun onRefreshClicked()
     }
 
     class HistoryPresenter @Inject constructor(appBus: AppBus,
                                                dataManager: DataManager)
-        : AccountPresenter<View>(appBus, dataManager), HistoryContract.Presenter {
+        : BasePresenterImpl<View>(appBus, dataManager), HistoryContract.Presenter {
 
-        @Inject
-        lateinit var sheetsHelper: SheetsHelper
-
-        private val transactionOnClickListener= object : TransactionOnClickListener {
+        private val transactionOnClickListener=
+                object : TransactionOnClickListener {
             override fun onClick(transaction: Transaction) {
                 getView()?.startTransactionActivity(transaction)
             }
@@ -68,33 +63,8 @@ interface HistoryContract {
         private fun fetchTransactions() {
 
             getDataManager()
-                    .getSpreadsheetIdForEmail(getEmail()!!)
-                    .flatMap {
-                        id ->
-                        getDataManager()
-                                .getSheetTitles(
-                                        id,
-                                        getView()?.getGoogleAccountCredential(getAccount()!!)!!
-                                )
-                                .map {
-                                    sheetTitles ->
-                                    sheetTitles
-                                            .filterNot { it == "Metadata" }
-                                            .map { Pair(id, it) }
-                                }.flatMap { Observable.fromIterable(it) }
-                    }
-                    .concatMapEager {
-                        idSheetTitlesPair ->
-                        sheetsHelper
-                                .fetchTransactions(
-                                        idSheetTitlesPair.first,
-                                        idSheetTitlesPair.second,
-                                        getView()?.getGoogleAccountCredential(getAccount()!!)!!
-                                )
-                    }
-                    .toList()
-                    .map { it.flatten() }
-                    .map { it.getListItems() }
+                    .getAllTransactions()
+                    .map { it.toList().getListItems() }
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe {
@@ -156,7 +126,7 @@ interface HistoryContract {
             while (i < inputSorted.size) {
                 if (date != inputSorted[i].date) {
                     date = inputSorted[i].date
-                    list.add(DateListItem(Util.beautifyDate(date).toUpperCase()))
+                    list.add(HeaderListItem(Util.beautifyDate(date).toUpperCase()))
                 }
                 list.add(TransactionListItem(inputSorted[i]).setOnClickListener(transactionOnClickListener))
                 i += 1
@@ -166,9 +136,6 @@ interface HistoryContract {
             }
 
             return list
-        }
-
-        override fun onRetryClicked() {
         }
 
         override fun onTransactionEdited() {

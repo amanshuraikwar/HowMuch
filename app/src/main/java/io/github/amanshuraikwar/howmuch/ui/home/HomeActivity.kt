@@ -9,11 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import dagger.Binds
 import dagger.Module
-import io.github.amanshuraikwar.howmuch.BuildConfig
 import io.github.amanshuraikwar.howmuch.R
-import io.github.amanshuraikwar.howmuch.di.ActivityContext
+import io.github.amanshuraikwar.howmuch.base.di.ActivityContext
 import io.github.amanshuraikwar.howmuch.ui.addexpense.AddExpenseActivity
-import io.github.amanshuraikwar.howmuch.ui.base.BaseActivity
+import io.github.amanshuraikwar.howmuch.base.ui.base.BaseActivity
 import io.github.amanshuraikwar.howmuch.ui.history.HistoryFragment
 import io.github.amanshuraikwar.howmuch.ui.profile.ProfileFragment
 import io.github.amanshuraikwar.howmuch.ui.signin.SignInFragment

@@ -16,7 +16,7 @@ import com.google.api.services.sheets.v4.SheetsScopes
 import dagger.Binds
 import dagger.Module
 import io.github.amanshuraikwar.howmuch.R
-import io.github.amanshuraikwar.howmuch.ui.base.BaseFragment
+import io.github.amanshuraikwar.howmuch.base.ui.base.BaseFragment
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
@@ -57,12 +57,6 @@ class StatsFragment
             presenter.onRefreshClicked()
             return@setOnMenuItemClickListener true
         }
-    }
-
-    override fun getGoogleAccountCredential(googleAccount: Account): GoogleAccountCredential {
-        return GoogleAccountCredential.usingOAuth2(activity, Arrays.asList(SheetsScopes.SPREADSHEETS))
-                .setBackOff(ExponentialBackOff())
-                .setSelectedAccount(googleAccount)
     }
 
     override fun submitList(list: List<ListItem<*, *>>) {

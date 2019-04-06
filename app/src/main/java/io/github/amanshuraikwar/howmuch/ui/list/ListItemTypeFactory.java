@@ -3,14 +3,16 @@ package io.github.amanshuraikwar.howmuch.ui.list;
 import androidx.annotation.NonNull;
 import android.view.View;
 
-import io.github.amanshuraikwar.howmuch.ui.list.date.DateListItem;
-import io.github.amanshuraikwar.howmuch.ui.list.date.DateViewHolder;
+import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderListItem;
+import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderViewHolder;
 import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyListItem;
 import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyViewHolder;
-import io.github.amanshuraikwar.howmuch.ui.list.expense.TransactionListItem;
-import io.github.amanshuraikwar.howmuch.ui.list.expense.TransactionViewHolder;
-import io.github.amanshuraikwar.howmuch.ui.list.expensecategorysummary.ExpenseCategorySummaryListItem;
-import io.github.amanshuraikwar.howmuch.ui.list.expensecategorysummary.ExpenseCategorySummaryViewHolder;
+import io.github.amanshuraikwar.howmuch.ui.list.items.Setting;
+import io.github.amanshuraikwar.howmuch.ui.list.items.UserInfo;
+import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionListItem;
+import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionViewHolder;
+import io.github.amanshuraikwar.howmuch.ui.list.stats.StatsListItem;
+import io.github.amanshuraikwar.howmuch.ui.list.stats.StatsViewHolder;
 import io.github.amanshuraikwar.multiitemlistadapter.BaseTypeFactory;
 import io.github.amanshuraikwar.multiitemlistadapter.ViewHolder;
 
@@ -32,11 +34,11 @@ public class ListItemTypeFactory extends BaseTypeFactory {
         return 1;
     }
 
-    public int type(ExpenseCategorySummaryListItem item) {
+    public int type(StatsListItem item) {
         return 2;
     }
 
-    public int type(DateListItem item) {
+    public int type(HeaderListItem item) {
         return 3;
     }
 
@@ -63,9 +65,9 @@ public class ListItemTypeFactory extends BaseTypeFactory {
             case 1:
                 return TransactionViewHolder.Companion.getLAYOUT();
             case 2:
-                return ExpenseCategorySummaryViewHolder.Companion.getLAYOUT();
+                return StatsViewHolder.Companion.getLAYOUT();
             case 3:
-                return DateViewHolder.Companion.getLAYOUT();
+                return HeaderViewHolder.Companion.getLAYOUT();
             case 4:
                 return EmptyViewHolder.Companion.getLAYOUT();
             case 5:
@@ -93,10 +95,10 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 viewHolder = new TransactionViewHolder(parent);
                 break;
             case 2:
-                viewHolder = new ExpenseCategorySummaryViewHolder(parent);
+                viewHolder = new StatsViewHolder(parent);
                 break;
             case 3:
-                viewHolder = new DateViewHolder(parent);
+                viewHolder = new HeaderViewHolder(parent);
                 break;
             case 4:
                 viewHolder = new EmptyViewHolder(parent);

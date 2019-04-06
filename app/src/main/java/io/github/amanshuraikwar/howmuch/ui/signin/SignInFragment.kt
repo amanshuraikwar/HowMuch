@@ -1,6 +1,5 @@
 package io.github.amanshuraikwar.howmuch.ui.signin
 
-import android.accounts.Account
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
@@ -11,25 +10,29 @@ import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
-import com.google.api.client.util.ExponentialBackOff
-import com.google.api.services.sheets.v4.SheetsScopes
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import io.github.amanshuraikwar.howmuch.R
-import io.github.amanshuraikwar.howmuch.data.network.sheets.AuthenticationManager
-import io.github.amanshuraikwar.howmuch.ui.base.BaseFragment
-import io.github.amanshuraikwar.howmuch.util.Util
+import io.github.amanshuraikwar.howmuch.base.di.ActivityContext
+import io.github.amanshuraikwar.howmuch.base.ui.base.BaseFragment
+import io.github.amanshuraikwar.howmuch.base.util.Util;
+import io.github.amanshuraikwar.howmuch.googlesheetsprotocol.api.AuthenticationManager
 import kotlinx.android.synthetic.main.fragment_sign_in.*
-import java.util.*
+import javax.inject.Inject
 
 
 class SignInFragment
     : BaseFragment<SignInContract.View, SignInContract.Presenter>(), SignInContract.View {
 
     private val logTag = Util.getTag(this)
+
+    @Inject
+    lateinit var googleSignInClient: GoogleSignInClient
 
     @SuppressLint("InflateParams")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -70,13 +73,13 @@ class SignInFragment
 
     override fun initiateSignIn() {
         startActivityForResult(
-                activity.googleSignInClient.signInIntent,
+                googleSignInClient.signInIntent,
                 AuthenticationManager.CODE_SIGN_IN
         )
     }
 
     override fun initiateSignOut() {
-        activity.googleSignInClient.signOut()
+        googleSignInClient.signOut()
     }
 
     override fun showSignInInfo() {
@@ -143,17 +146,6 @@ class SignInFragment
         emailTv.text  = ""
     }
 
-    override fun getGoogleAccountCredential(googleAccount: Account): GoogleAccountCredential {
-        return GoogleAccountCredential
-                .usingOAuth2(activity, Arrays.asList(SheetsScopes.SPREADSHEETS))
-                .setBackOff(ExponentialBackOff())
-                .setSelectedAccount(googleAccount)
-    }
-
-    override fun showProgress(progress: Int) {
-        horizontalPb.progress = progress
-    }
-
     override fun showLoading(message: String) {
         loadingPb.visibility = VISIBLE
         loadingPbScrim.visibility = VISIBLE
@@ -171,8 +163,19 @@ class SignInFragment
     }
 
     @Module
-    abstract class SignInModule {
+    abstract class DiModule {
+
         @Binds
         abstract fun presenter(presenter: SignInContract.SignInPresenter): SignInContract.Presenter
+    }
+
+    @Module
+    class DiProvides {
+
+        @Provides
+        @ActivityContext
+        fun activity(a: SignInFragment): AppCompatActivity {
+            return a.activity
+        }
     }
 }

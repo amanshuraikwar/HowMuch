@@ -1,19 +1,19 @@
 package io.github.amanshuraikwar.howmuch.di
 
 import android.app.Application
+import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import io.github.amanshuraikwar.howmuch.MyApp
-import io.github.amanshuraikwar.howmuch.bus.AppBus
-import io.github.amanshuraikwar.howmuch.bus.AppBusModule
-import io.github.amanshuraikwar.howmuch.data.DataManager
-import io.github.amanshuraikwar.howmuch.data.DataManagerModule
-import io.github.amanshuraikwar.howmuch.data.DataManagerModuleProvides
-import io.github.amanshuraikwar.howmuch.data.local.LocaDataManagerDi
-import io.github.amanshuraikwar.howmuch.data.network.NetworkDataManagerModule
-import io.github.amanshuraikwar.howmuch.data.network.NetworkManagerProvides
+import io.github.amanshuraikwar.howmuch.base.bus.AppBus
+import io.github.amanshuraikwar.howmuch.base.bus.AppBusModule
+import io.github.amanshuraikwar.howmuch.base.data.DataManager
+import io.github.amanshuraikwar.howmuch.base.data.DataManagerModule
+import io.github.amanshuraikwar.howmuch.base.di.ApplicationContext
+import io.github.amanshuraikwar.howmuch.googlesheetsprotocol.di.GoogleSheetsDataManagerModule
+import io.github.amanshuraikwar.howmuch.googlesheetsprotocol.di.GoogleSheetsDataManagerProvides
 import javax.inject.Singleton
 
 /**
@@ -22,23 +22,21 @@ import javax.inject.Singleton
 @Singleton
 @Component(
         modules = [
-            (AppModule::class),
-            (NetworkDataManagerModule::class),
-            (NetworkManagerProvides::class),
-            (LocaDataManagerDi.LocalDataManagerModule::class),
-            (LocaDataManagerDi.LocalDataManagerProvides::class),
-            (DataManagerModule::class),
-            (DataManagerModuleProvides::class),
-            (AppBusModule::class),
-            (ActivityBindingModule::class),
-            (AndroidSupportInjectionModule::class)])
+            AppModule::class,
+            GoogleSheetsDataManagerModule::class,
+            GoogleSheetsDataManagerProvides::class,
+            DataManagerModule::class,
+            AppBusModule::class,
+            ActivityBindingModule::class,
+            AndroidSupportInjectionModule::class])
 interface AppComponent : AndroidInjector<MyApp> {
 
     // abstract functions to get data manager and app bus from app component
     // this has to be explicitly specified otherwise
     // app component will not file instances from dependent components
-    fun dataManager(): DataManager
-    fun appBus(): AppBus
+    fun a(): DataManager
+    fun b(): AppBus
+    @ApplicationContext fun c(): Context
 
     @Component.Builder interface Builder {
 

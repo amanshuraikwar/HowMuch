@@ -2,10 +2,8 @@ package io.github.amanshuraikwar.howmuch.ui.list.empty
 
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.SimpleListItemOnClickListener
-import io.github.amanshuraikwar.howmuch.model.Photo
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 
-@Suppress("MemberVisibilityCanBePrivate")
 class EmptyListItem(val message: String)
     : ListItem<SimpleListItemOnClickListener, ListItemTypeFactory>() {
 

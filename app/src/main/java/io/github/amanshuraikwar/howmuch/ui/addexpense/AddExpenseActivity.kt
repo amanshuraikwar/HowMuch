@@ -1,6 +1,5 @@
 package io.github.amanshuraikwar.howmuch.ui.addexpense
 
-import android.accounts.Account
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -11,25 +10,19 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
-import com.google.api.client.util.ExponentialBackOff
-import com.google.api.services.sheets.v4.SheetsScopes
 import dagger.Binds
 import dagger.Module
 import io.github.amanshuraikwar.howmuch.R
-import io.github.amanshuraikwar.howmuch.di.ActivityContext
-import io.github.amanshuraikwar.howmuch.model.TransactionType
-import io.github.amanshuraikwar.howmuch.ui.base.BaseActivity
+import io.github.amanshuraikwar.howmuch.base.di.ActivityContext
+import io.github.amanshuraikwar.howmuch.base.ui.base.BaseActivity
+import io.github.amanshuraikwar.howmuch.protocol.Category
+import io.github.amanshuraikwar.howmuch.protocol.Wallet
 import kotlinx.android.synthetic.main.layout_expense.*
 import kotlinx.android.synthetic.main.layout_loading_overlay.*
-import java.util.*
 
 class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContract.Presenter>()
         , AddExpenseContract.View {
-
-    private var transactionType = TransactionType.DEBIT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,23 +40,7 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
         }
 
         transactionTypeIb.setOnClickListener {
-            synchronized(transactionType) {
-                if (transactionType == TransactionType.DEBIT) {
-                    transactionType = TransactionType.CREDIT
-                    transactionTypeIb.imageTintList = ColorStateList.valueOf(
-                            ContextCompat.getColor(this, R.color.green)
-                    )
-                    amountEt.setTextColor(ContextCompat.getColor(this, R.color.green))
-                    transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp)
-                } else {
-                    transactionType = TransactionType.DEBIT
-                    transactionTypeIb.imageTintList = ColorStateList.valueOf(
-                            ContextCompat.getColor(this, R.color.red)
-                    )
-                    amountEt.setTextColor(ContextCompat.getColor(this, R.color.red))
-                    transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp)
-                }
-            }
+            presenter.onTransactionTypeBtnClicked()
         }
 
         dateTv.setOnClickListener {
@@ -81,8 +58,9 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
                     amount = amountEt.text.toString(),
                     title = titleEt.text.toString(),
                     description = descriptionEt.text.toString(),
-                    category = categorySp.selectedItem.toString(),
-                    type = transactionType
+                    category = categorySp.selectedItem as Category,
+                    // todo
+                    wallet = Wallet("", "", 1.0)
             )
         }
 
@@ -111,13 +89,8 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
     override fun showError(message: String) {
     }
 
-    override fun getGoogleAccountCredential(googleAccount: Account): GoogleAccountCredential {
-        return GoogleAccountCredential.usingOAuth2(this, Arrays.asList(SheetsScopes.SPREADSHEETS))
-                .setBackOff(ExponentialBackOff())
-                .setSelectedAccount(googleAccount)
-    }
-
-    override fun showCategories(categories: List<String>) {
+    override fun showCategories(categories: List<Category>) {
+        // todo debug
         categorySp.adapter = ArrayAdapter(this, R.layout.textview_spinner, categories)
     }
 
@@ -168,6 +141,22 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
     override fun showTitleError(message: String) {
         titleEt.error = message
         titleEt.requestFocus()
+    }
+
+    override fun switchToCredit() {
+        transactionTypeIb.imageTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(this, R.color.green)
+        )
+        amountEt.setTextColor(ContextCompat.getColor(this, R.color.green))
+        transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp)
+    }
+
+    override fun switchToDebit() {
+        transactionTypeIb.imageTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(this, R.color.red)
+        )
+        amountEt.setTextColor(ContextCompat.getColor(this, R.color.red))
+        transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp)
     }
 
     @Module

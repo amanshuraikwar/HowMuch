@@ -1,0 +1,85 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+
+
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+    }
+
+    flavorDimensions "version"
+    productFlavors {
+
+        dev {
+        }
+
+        usable {
+        }
+
+        prod {
+        }
+    }
+
+}
+
+dependencies {
+
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test:runner:$testRunnerVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+
+    implementation project(':protocol')
+    implementation project(':base')
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "io.reactivex:rxkotlin:$rxjavaVersion"
+
+    implementation "com.google.android.gms:play-services-auth:$playServicesAuthVersion"
+
+    implementation("com.google.api-client:google-api-client-android:$googleApiClientVersion") {
+        exclude group: 'org.apache.httpcomponents'
+    }
+    implementation("com.google.apis:google-api-services-sheets:$googleSheetsApiVersion") {
+        exclude group: 'org.apache.httpcomponents'
+    }
+
+    // Dagger
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "com.google.dagger:dagger-android:$daggerAndroidVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerAndroidVersion"
+
+    // room
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+}
+repositories {
+    mavenCentral()
+}

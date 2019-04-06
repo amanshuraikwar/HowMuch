@@ -1,28 +1,31 @@
 package io.github.amanshuraikwar.howmuch.ui.addexpense
 
+import android.util.Log
 import io.github.amanshuraikwar.howmuch.Constants
-import io.github.amanshuraikwar.howmuch.bus.AppBus
-import io.github.amanshuraikwar.howmuch.data.DataManager
-import io.github.amanshuraikwar.howmuch.model.Transaction
-import io.github.amanshuraikwar.howmuch.model.TransactionType
-import io.github.amanshuraikwar.howmuch.ui.SheetsHelper
-import io.github.amanshuraikwar.howmuch.ui.base.*
-import io.github.amanshuraikwar.howmuch.util.Util
+import io.github.amanshuraikwar.howmuch.base.bus.AppBus
+import io.github.amanshuraikwar.howmuch.base.ui.base.*
+import io.github.amanshuraikwar.howmuch.base.data.DataManager
+import io.github.amanshuraikwar.howmuch.protocol.Category
+import io.github.amanshuraikwar.howmuch.protocol.Transaction
+import io.github.amanshuraikwar.howmuch.protocol.TransactionType
+import io.github.amanshuraikwar.howmuch.protocol.Wallet
+import io.github.amanshuraikwar.howmuch.ui.ExpenseDataInputView
+import io.github.amanshuraikwar.howmuch.base.util.Util;
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 interface AddExpenseContract {
 
-    interface View : BaseView, UiMessageView, LoadingView, GoogleAccountView {
-        fun showCategories(categories: List<String>)
+    interface View : BaseView, UiMessageView, LoadingView, ExpenseDataInputView {
+        fun showCategories(categories: List<Category>)
         fun close(success: Boolean)
         fun showDatePicker(day: Int, month: Int, year: Int)
         fun showDate(date: String)
         fun showTime(time: String)
         fun showTimePicker(minute: Int, hourOfDay: Int)
-        fun showAmountError(message: String)
-        fun showTitleError(message: String)
+        fun switchToCredit()
+        fun switchToDebit()
     }
 
     interface Presenter: BasePresenter<View> {
@@ -31,25 +34,28 @@ interface AddExpenseContract {
                           amount: String,
                           title: String,
                           description: String,
-                          category: String,
-                          type: TransactionType)
+                          category: Category,
+                          wallet: Wallet)
         fun onDateTvClicked(date: String)
         fun onTimeTvClicked(time: String)
         fun onDateSelected(dayOfMonth: Int, monthOfYear: Int, yearNo: Int)
         fun onTimeSelected(minute: Int, hourOfDay: Int)
         fun onBackIbPressed()
+        fun onTransactionTypeBtnClicked()
     }
 
     class AddExpensePresenter @Inject constructor(appBus: AppBus,
                                                   dataManager: DataManager)
-        : AccountPresenter<View>(appBus, dataManager), Presenter {
+        : BasePresenterImpl<View>(appBus, dataManager), Presenter {
 
-        @Inject
-        lateinit var sheetsHelper: SheetsHelper
+        private val tag = Util.getTag(this)
+
+        private lateinit var categories: List<Category>
+
+        private var curTransactionType = TransactionType.DEBIT
 
         override fun onAttach(wasViewRecreated: Boolean) {
             super.onAttach(wasViewRecreated)
-
             if (wasViewRecreated) {
                 init()
             }
@@ -58,18 +64,18 @@ interface AddExpenseContract {
         private fun init() {
 
             // show cur date and cur time
-            getView()?.showDate(Util.beautifyDate(Util.getCurDate()))
-            getView()?.showTime(Util.beautifyTime(Util.getCurTime()))
+            getView()?.run {
+                showDate(Util.beautifyDate(Util.getCurDate()))
+                showTime(Util.beautifyTime(Util.getCurTime()))
+            }
+
+            refreshCategories()
+        }
+
+        private fun refreshCategories() {
 
             getDataManager()
-                    .getSpreadsheetIdForEmail(getEmail()!!)
-                    .flatMap {
-                        spreadSheetId ->
-                        sheetsHelper.fetchCategories(
-                                spreadSheetId,
-                                getView()?.getGoogleAccountCredential(getAccount()!!)!!
-                        )
-                    }
+                    .getAllCategories()
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe {
@@ -78,17 +84,25 @@ interface AddExpenseContract {
                     .subscribe(
                             {
                                 categories ->
+                                this.categories = categories.toList()
                                 getView()?.run {
-                                    showCategories(categories)
+                                    showCategories(
+                                            categories.filter {
+                                                it.type == TransactionType.DEBIT
+                                            }
+                                    )
                                     hideLoading()
                                 }
                             },
                             {
                                 it.printStackTrace()
+                                Log.e(tag, "refreshCategories: getAllCategories", it)
+
                                 // todo handle specific errors
+
                                 getView()?.run {
-                                    showToast(it.message ?: Constants.DEFAULT_ERROR_MESSAGE)
                                     hideLoading()
+                                    showError(it.message ?: Constants.DEFAULT_ERROR_MESSAGE)
                                     close(false)
                                 }
                             }
@@ -101,8 +115,8 @@ interface AddExpenseContract {
                                    amount: String,
                                    title: String,
                                    description: String,
-                                   category: String,
-                                   type: TransactionType) {
+                                   category: Category,
+                                   wallet: Wallet) {
 
             if (amount.isEmpty()) {
                 getView()?.showAmountError("Amount cannot be empty!")
@@ -115,27 +129,19 @@ interface AddExpenseContract {
             }
 
             getDataManager()
-                    .getSpreadsheetIdForEmail(getEmail()!!)
-                    .flatMapCompletable {
-                        spreadSheetId ->
-                        sheetsHelper
-                                .addTransaction(
-                                        transaction = Transaction(
-                                                id = "",
-                                                date = Util.unBeautifyDate(date),
-                                                time = Util.unBeautifyTime(time),
-                                                currency = getDataManager().getCurrency(),
-                                                amount = amount.toDouble(),
-                                                title = title,
-                                                description = description,
-                                                category = category,
-                                                type = type,
-                                                cellRange = ""
-                                        ),
-                                        spreadsheetId = spreadSheetId,
-                                        googleAccountCredential = getView()?.getGoogleAccountCredential(getAccount()!!)!!
-                                )
-                    }
+                    .addTransaction(
+                            Transaction(
+                                    id = "",
+                                    date = Util.unBeautifyDate(date),
+                                    time = Util.unBeautifyTime(time),
+                                    amount = amount.toDouble(),
+                                    title = title,
+                                    description = description,
+                                    categoryId = category.id,
+                                    type = curTransactionType,
+                                    walletId = wallet.id
+                            )
+                    )
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe {
@@ -143,14 +149,21 @@ interface AddExpenseContract {
                     }
                     .subscribe(
                             {
-
-                                getView()?.hideLoading()
-                                getView()?.close(true)
+                                getView()?.run {
+                                    hideLoading()
+                                    close(true)
+                                }
                             },
                             {
                                 it.printStackTrace()
-                                getView()?.hideLoading()
-                                getView()?.showToast("Error!")
+                                Log.e(tag, "onSaveClicked: addTransaction", it)
+
+                                // todo handle specific errors
+
+                                getView()?.run {
+                                    hideLoading()
+                                    showError(it.message ?: Constants.DEFAULT_ERROR_MESSAGE)
+                                }
                             }
                     )
                     .addToCleanup()
@@ -177,6 +190,18 @@ interface AddExpenseContract {
 
         override fun onBackIbPressed() {
             getView()?.close(false)
+        }
+
+        override fun onTransactionTypeBtnClicked() {
+            synchronized(curTransactionType) {
+                if (curTransactionType == TransactionType.DEBIT) {
+                    curTransactionType = TransactionType.CREDIT
+                    getView()?.switchToCredit()
+                } else {
+                    curTransactionType = TransactionType.DEBIT
+                    getView()?.switchToDebit()
+                }
+            }
         }
     }
 }

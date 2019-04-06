@@ -1,6 +1,5 @@
 package io.github.amanshuraikwar.howmuch.ui.expense
 
-import android.accounts.Account
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -15,29 +14,21 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
-import com.google.api.client.util.ExponentialBackOff
-import com.google.api.services.sheets.v4.SheetsScopes
 import dagger.Binds
 import dagger.Module
 import io.github.amanshuraikwar.howmuch.R
-import io.github.amanshuraikwar.howmuch.di.ActivityContext
-import io.github.amanshuraikwar.howmuch.model.Transaction
-import io.github.amanshuraikwar.howmuch.model.TransactionType
-import io.github.amanshuraikwar.howmuch.ui.base.BaseActivity
-import io.github.amanshuraikwar.howmuch.util.Util
+import io.github.amanshuraikwar.howmuch.base.di.ActivityContext
+import io.github.amanshuraikwar.howmuch.protocol.Transaction
+import io.github.amanshuraikwar.howmuch.protocol.TransactionType
+import io.github.amanshuraikwar.howmuch.base.ui.base.BaseActivity
+import io.github.amanshuraikwar.howmuch.protocol.Category
+import io.github.amanshuraikwar.howmuch.protocol.Wallet
 import kotlinx.android.synthetic.main.activity_expense.*
 import kotlinx.android.synthetic.main.layout_loading_overlay.*
-import java.util.*
 
-class ExpenseActivity : BaseActivity<ExpenseContract.View, ExpenseContract.Presenter>(),
-        ExpenseContract.View {
-
-    private val tag = Util.getTag(this)
-
-    private var transactionType = TransactionType.DEBIT
+class ExpenseActivity
+    : BaseActivity<ExpenseContract.View, ExpenseContract.Presenter>(), ExpenseContract.View {
 
     companion object {
         const val KEY_TRANSACTION = "transaction"
@@ -82,12 +73,6 @@ class ExpenseActivity : BaseActivity<ExpenseContract.View, ExpenseContract.Prese
     override fun showError(message: String) {
     }
 
-    override fun getGoogleAccountCredential(googleAccount: Account): GoogleAccountCredential {
-        return GoogleAccountCredential.usingOAuth2(this, Arrays.asList(SheetsScopes.SPREADSHEETS))
-                .setBackOff(ExponentialBackOff())
-                .setSelectedAccount(googleAccount)
-    }
-
     override fun getTransaction(): Transaction {
         return intent.getParcelableExtra(KEY_TRANSACTION)
     }
@@ -99,13 +84,13 @@ class ExpenseActivity : BaseActivity<ExpenseContract.View, ExpenseContract.Prese
     override fun showTransaction(amount: String,
                                  transactionType: TransactionType,
                                  title: String,
-                                 category: String,
+                                 category: Category,
                                  date: String,
                                  time: String,
-                                 description: String?) {
-        amountEt.setText(amount)
+                                 description: String?,
+                                 categories: List<Category>) {
 
-        this.transactionType = transactionType
+        amountEt.setText(amount)
 
         if (transactionType == TransactionType.DEBIT) {
             transactionTypeIb.imageTintList = ColorStateList.valueOf(
@@ -123,19 +108,21 @@ class ExpenseActivity : BaseActivity<ExpenseContract.View, ExpenseContract.Prese
 
         titleEt.setText(title)
 
+        // todo debug
+        categorySp.adapter = ArrayAdapter(this, R.layout.textview_spinner, categories)
         categorySp.setSelection(getCategoryIndex(category))
 
-        categoryTv.text = category
+        categoryTv.text = category.name
         dateTv.text = date
         timeTv.text = time
 
         descriptionEt.setText(description)
     }
 
-    private fun getCategoryIndex(category: String): Int {
+    private fun getCategoryIndex(category: Category): Int {
         var i = 0
         while (i < categorySp.count) {
-            if (categorySp.adapter.getItem(i).toString() == category) {
+            if (categorySp.adapter.getItem(i) == category) {
                 return i
             }
             i++
@@ -164,30 +151,16 @@ class ExpenseActivity : BaseActivity<ExpenseContract.View, ExpenseContract.Prese
                     amount = amountEt.text.toString(),
                     title = titleEt.text.toString(),
                     description = descriptionEt.text.toString(),
-                    category = categorySp.selectedItem.toString(),
-                    type = transactionType
+                    category = categorySp.selectedItem as Category,
+                    // todo
+                    wallet = Wallet("", "", 1.0)
             )
         }
 
         transactionTypeIb.isClickable = true
+
         transactionTypeIb.setOnClickListener {
-            synchronized(transactionType) {
-                if (transactionType == TransactionType.DEBIT) {
-                    transactionType = TransactionType.CREDIT
-                    transactionTypeIb.imageTintList = ColorStateList.valueOf(
-                            ContextCompat.getColor(this, R.color.green)
-                    )
-                    amountEt.setTextColor(ContextCompat.getColor(this, R.color.green))
-                    transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp)
-                } else {
-                    transactionType = TransactionType.DEBIT
-                    transactionTypeIb.imageTintList = ColorStateList.valueOf(
-                            ContextCompat.getColor(this, R.color.red)
-                    )
-                    amountEt.setTextColor(ContextCompat.getColor(this, R.color.red))
-                    transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp)
-                }
-            }
+            presenter.onTransactionTypeBtnClicked()
         }
 
         amountEt.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
@@ -247,10 +220,6 @@ class ExpenseActivity : BaseActivity<ExpenseContract.View, ExpenseContract.Prese
 
         descriptionEt.inputType = InputType.TYPE_NULL
         descriptionEt.clearFocus()
-    }
-
-    override fun showCategories(categories: List<String>) {
-        categorySp.adapter = ArrayAdapter(this, R.layout.textview_spinner, categories)
     }
 
     override fun close(success: Boolean) {
@@ -326,6 +295,22 @@ class ExpenseActivity : BaseActivity<ExpenseContract.View, ExpenseContract.Prese
                 .setPositiveButton("Cancel") { dialog, _ -> dialog.dismiss() }
                 .setCancelable(true)
                 .show()
+    }
+
+    override fun switchToCredit() {
+        transactionTypeIb.imageTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(this, R.color.green)
+        )
+        amountEt.setTextColor(ContextCompat.getColor(this, R.color.green))
+        transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp)
+    }
+
+    override fun switchToDebit() {
+        transactionTypeIb.imageTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(this, R.color.red)
+        )
+        amountEt.setTextColor(ContextCompat.getColor(this, R.color.red))
+        transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp)
     }
 
     @Module

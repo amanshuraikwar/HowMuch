@@ -1,12 +1,16 @@
 package io.github.amanshuraikwar.howmuch.ui.expense
 
-import io.github.amanshuraikwar.howmuch.bus.AppBus
-import io.github.amanshuraikwar.howmuch.data.DataManager
-import io.github.amanshuraikwar.howmuch.model.Transaction
-import io.github.amanshuraikwar.howmuch.model.TransactionType
-import io.github.amanshuraikwar.howmuch.ui.SheetsHelper
-import io.github.amanshuraikwar.howmuch.ui.base.*
-import io.github.amanshuraikwar.howmuch.util.Util
+import android.util.Log
+import io.github.amanshuraikwar.howmuch.Constants
+import io.github.amanshuraikwar.howmuch.base.bus.AppBus
+import io.github.amanshuraikwar.howmuch.base.data.DataManager
+import io.github.amanshuraikwar.howmuch.protocol.Transaction
+import io.github.amanshuraikwar.howmuch.protocol.TransactionType
+import io.github.amanshuraikwar.howmuch.base.ui.base.*
+import io.github.amanshuraikwar.howmuch.protocol.Category
+import io.github.amanshuraikwar.howmuch.protocol.Wallet
+import io.github.amanshuraikwar.howmuch.ui.ExpenseDataInputView
+import io.github.amanshuraikwar.howmuch.base.util.Util;
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.lang.Exception
@@ -14,28 +18,28 @@ import javax.inject.Inject
 
 interface ExpenseContract {
 
-    interface View : BaseView, UiMessageView, LoadingView, GoogleAccountView {
+    interface View : BaseView, UiMessageView, LoadingView, ExpenseDataInputView {
         fun getTransaction(): Transaction
         fun setTransaction(transaction: Transaction)
         fun showTransaction(amount: String,
                             transactionType: TransactionType,
                             title: String,
-                            category: String,
+                            category: Category,
                             date: String,
                             time: String,
-                            description: String?)
+                            description: String?,
+                            categories: List<Category>)
         fun showEditMode()
         fun hideEditMode()
-        fun showCategories(categories: List<String>)
         fun close(success: Boolean)
         fun showDatePicker(day: Int, month: Int, year: Int)
         fun showTimePicker(minute: Int, hourOfDay: Int)
         fun showDate(date: String)
         fun showTime(time: String)
         fun showEditCloseDialog()
-        fun showAmountError(message: String)
-        fun showTitleError(message: String)
         fun showDeleteDialog()
+        fun switchToCredit()
+        fun switchToDebit()
     }
 
     interface Presenter : BasePresenter<View> {
@@ -51,28 +55,34 @@ interface ExpenseContract {
                               amount: String,
                               title: String,
                               description: String,
-                              category: String,
-                              type: TransactionType)
+                              category: Category,
+                              wallet: Wallet)
 
         fun onEditDiscardClicked()
         fun onDeleteBtnClicked()
         fun onDeleteConfirmedClicked()
+        fun onTransactionTypeBtnClicked()
     }
+
+    class TransactionNotFoundException(msg: String) : Exception(msg)
+    class InvalidCategoryException(msg: String) : Exception(msg)
 
     class ExpensePresenter @Inject constructor(appBus: AppBus,
                                                dataManager: DataManager)
-        : AccountPresenter<View>(appBus, dataManager), Presenter {
+        : BasePresenterImpl<View>(appBus, dataManager), Presenter {
 
-        @Inject
-        lateinit var sheetsHelper: SheetsHelper
+        private val tag = Util.getTag(this)
 
         private lateinit var curTransaction: Transaction
+
+        private lateinit var categories: List<Category>
+
+        private lateinit var curTransactionType : TransactionType
 
         private var updated: Boolean = false
 
         override fun onAttach(wasViewRecreated: Boolean) {
             super.onAttach(wasViewRecreated)
-
             if (wasViewRecreated) {
                 init()
             }
@@ -81,51 +91,61 @@ interface ExpenseContract {
         private fun init() {
 
             getDataManager()
-                    .getSpreadsheetIdForEmail(getEmail()!!)
-                    .flatMap {
-                        spreadSheetId ->
-                        sheetsHelper.fetchCategories(
-                                spreadSheetId,
-                                getView()?.getGoogleAccountCredential(getAccount()!!)!!
-                        )
-                    }
+                    .getAllCategories()
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe {
+                        getView()?.showLoading("Fetching categories...")
+                    }
                     .subscribe(
                             {
-                                categories  ->
-                                getView()?.showCategories(categories)
-                                initUi()
+                                categories ->
+                                this.categories = categories.toList()
+                                initTransaction()
                             },
                             {
                                 it.printStackTrace()
-                                getView()?.showToast(it.message ?: "Something went wrong!")
-                                getView()?.close(updated)
-                                // todo handle errors
+                                Log.e(tag, "refreshCategories: getAllCategories", it)
+
+                                // todo handle specific errors
+
+                                getView()?.run {
+                                    hideLoading()
+                                    showError(it.message ?: Constants.DEFAULT_ERROR_MESSAGE)
+                                    close(false)
+                                }
                             }
                     )
                     .addToCleanup()
-
-
         }
 
-        @Throws(Exception::class)
-        private fun initUi() {
-            curTransaction = getView()?.getTransaction() ?: throw Exception("Transaction not found!")
-            showTransactionData()
+        @Throws(TransactionNotFoundException::class)
+        private fun initTransaction() {
+            curTransaction =
+                    getView()?.getTransaction()
+                            ?: throw TransactionNotFoundException(
+                                    "Transaction was not returned from the view!"
+                            )
+            curTransactionType = curTransaction.type
+            curTransaction.show()
             getView()?.hideEditMode()
         }
 
-        @Throws(Exception::class)
-        private fun showTransactionData() {
+        @Throws(InvalidCategoryException::class)
+        private fun Transaction.show() {
             getView()?.showTransaction(
-                    curTransaction.amount.toString(),
-                    curTransaction.type,
-                    curTransaction.title,
-                    curTransaction.category,
-                    Util.beautifyDate(curTransaction.date),
-                    Util.beautifyTime(curTransaction.time),
-                    if (curTransaction.description == "") null else curTransaction.description
+                    this.amount.toString(),
+                    this.type,
+                    this.title,
+                    categories.find { it.id == this.categoryId }
+                            ?: throw InvalidCategoryException(
+                                    "Invalid category with id ${this.categoryId} " +
+                                            "for transaction with id ${this.id}!"
+                            ),
+                    Util.beautifyDate(this.date),
+                    Util.beautifyTime(this.time),
+                    this.description,
+                    categories.filter { it.id == this.categoryId }
             )
         }
 
@@ -156,7 +176,7 @@ interface ExpenseContract {
         }
 
         override fun onEditBtnClicked() {
-            showTransactionData()
+            curTransaction.show()
             getView()?.showEditMode()
         }
 
@@ -165,8 +185,8 @@ interface ExpenseContract {
                                        amount: String,
                                        title: String,
                                        description: String,
-                                       category: String,
-                                       type: TransactionType) {
+                                       category: Category,
+                                       wallet: Wallet) {
 
             if (amount.isEmpty()) {
                 getView()?.showAmountError("Amount cannot be empty!")
@@ -179,31 +199,19 @@ interface ExpenseContract {
             }
 
             val newTransaction = Transaction(
-                    id = "",
+                    id = curTransaction.id,
                     date = Util.unBeautifyDate(date),
                     time = Util.unBeautifyTime(time),
-                    currency = "",
                     amount = amount.toDouble(),
                     title = title,
                     description = description,
-                    category = category,
-                    type = type,
-                    cellRange = curTransaction.cellRange
+                    categoryId = category.id,
+                    type = curTransactionType,
+                    walletId = wallet.id
             )
 
             getDataManager()
-                    .getSpreadsheetIdForEmail(getEmail()!!)
-                    .flatMapCompletable {
-                        spreadSheetId ->
-                        sheetsHelper
-                                .updateTransaction(
-                                        newTransaction,
-                                        spreadSheetId,
-                                        getView()?.getGoogleAccountCredential(
-                                                getAccount()!!
-                                        )!!
-                                )
-                    }
+                    .updateTransaction(newTransaction)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe {
@@ -213,15 +221,20 @@ interface ExpenseContract {
                             {
                                 updated = true
                                 getView()?.setTransaction(newTransaction)
-                                initUi()
+                                initTransaction()
                                 getView()?.showSnackbar("Transaction updated!")
                                 getView()?.hideLoading()
                             },
                             {
                                 it.printStackTrace()
-                                getView()?.showToast(it.message ?: "Something went wrong!")
-                                getView()?.hideLoading()
-                                // todo handle errors
+                                Log.e(tag, "onEditSaveClicked: updateTransaction", it)
+
+                                // todo handle specific errors
+
+                                getView()?.run {
+                                    hideLoading()
+                                    showError(it.message ?: Constants.DEFAULT_ERROR_MESSAGE)
+                                }
                             }
                     )
                     .addToCleanup()
@@ -229,7 +242,7 @@ interface ExpenseContract {
         }
 
         override fun onEditDiscardClicked() {
-            showTransactionData()
+            curTransaction.show()
             getView()?.hideEditMode()
         }
 
@@ -239,18 +252,7 @@ interface ExpenseContract {
 
         override fun onDeleteConfirmedClicked() {
             getDataManager()
-                    .getSpreadsheetIdForEmail(getEmail()!!)
-                    .flatMapCompletable {
-                        id ->
-                        sheetsHelper
-                                .deleteTransaction(
-                                        curTransaction,
-                                        id,
-                                        getView()?.getGoogleAccountCredential(
-                                                getAccount()!!
-                                        )!!
-                                )
-                    }
+                    .deleteTransaction(curTransaction)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe {
@@ -259,18 +261,37 @@ interface ExpenseContract {
                     .subscribe(
                             {
                                 updated = true
-                                getView()?.close(updated)
-                                getView()?.hideLoading()
+                                getView()?.run {
+                                    close(updated)
+                                    hideLoading()
+                                }
                             },
                             {
                                 it.printStackTrace()
-                                getView()?.showToast(it.message ?: "Something went wrong!")
-                                getView()?.hideLoading()
-                                // todo handle errors
+                                Log.e(tag, "onDeleteConfirmedClicked: deleteTransaction", it)
+
+                                // todo handle specific error codes
+
+                                getView()?.run {
+                                    hideLoading()
+                                    showError(it.message ?: Constants.DEFAULT_ERROR_MESSAGE)
+                                }
                             }
                     )
                     .addToCleanup()
 
+        }
+
+        override fun onTransactionTypeBtnClicked() {
+            synchronized(curTransactionType) {
+                if (curTransactionType == TransactionType.DEBIT) {
+                    curTransactionType = TransactionType.CREDIT
+                    getView()?.switchToCredit()
+                } else {
+                    curTransactionType = TransactionType.DEBIT
+                    getView()?.switchToDebit()
+                }
+            }
         }
     }
 }
