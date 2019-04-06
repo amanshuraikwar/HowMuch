@@ -10,7 +10,7 @@ import io.github.amanshuraikwar.howmuch.base.ui.base.*
 import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.protocol.Wallet
 import io.github.amanshuraikwar.howmuch.ui.ExpenseDataInputView
-import io.github.amanshuraikwar.howmuch.base.util.Util;
+import io.github.amanshuraikwar.howmuch.base.util.Util
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.lang.Exception
@@ -40,6 +40,7 @@ interface ExpenseContract {
         fun showDeleteDialog()
         fun switchToCredit()
         fun switchToDebit()
+        fun showCategories(categories: List<Category>)
     }
 
     interface Presenter : BasePresenter<View> {
@@ -101,6 +102,7 @@ interface ExpenseContract {
                             {
                                 categories ->
                                 this.categories = categories.toList()
+                                getView()?.hideLoading()
                                 initTransaction()
                             },
                             {
@@ -145,7 +147,7 @@ interface ExpenseContract {
                     Util.beautifyDate(this.date),
                     Util.beautifyTime(this.time),
                     this.description,
-                    categories.filter { it.id == this.categoryId }
+                    categories.filter { it.type == this.type }
             )
         }
 
@@ -287,9 +289,11 @@ interface ExpenseContract {
                 if (curTransactionType == TransactionType.DEBIT) {
                     curTransactionType = TransactionType.CREDIT
                     getView()?.switchToCredit()
+                    getView()?.showCategories(categories.filter { it.type == TransactionType.CREDIT })
                 } else {
                     curTransactionType = TransactionType.DEBIT
                     getView()?.switchToDebit()
+                    getView()?.showCategories(categories.filter { it.type == TransactionType.DEBIT })
                 }
             }
         }

@@ -10,7 +10,6 @@ import android.text.InputType
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +23,7 @@ import io.github.amanshuraikwar.howmuch.protocol.TransactionType
 import io.github.amanshuraikwar.howmuch.base.ui.base.BaseActivity
 import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.protocol.Wallet
+import io.github.amanshuraikwar.howmuch.ui.CategoryAdapter
 import kotlinx.android.synthetic.main.activity_expense.*
 import kotlinx.android.synthetic.main.layout_loading_overlay.*
 
@@ -70,9 +70,6 @@ class ExpenseActivity
         loadingTv.text = ""
     }
 
-    override fun showError(message: String) {
-    }
-
     override fun getTransaction(): Transaction {
         return intent.getParcelableExtra(KEY_TRANSACTION)
     }
@@ -109,7 +106,7 @@ class ExpenseActivity
         titleEt.setText(title)
 
         // todo debug
-        categorySp.adapter = ArrayAdapter(this, R.layout.textview_spinner, categories)
+        categorySp.adapter = CategoryAdapter(this, R.layout.textview_spinner, categories)
         categorySp.setSelection(getCategoryIndex(category))
 
         categoryTv.text = category.name
@@ -311,6 +308,10 @@ class ExpenseActivity
         )
         amountEt.setTextColor(ContextCompat.getColor(this, R.color.red))
         transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp)
+    }
+
+    override fun showCategories(categories: List<Category>) {
+        categorySp.adapter = CategoryAdapter(this, R.layout.textview_spinner, categories)
     }
 
     @Module

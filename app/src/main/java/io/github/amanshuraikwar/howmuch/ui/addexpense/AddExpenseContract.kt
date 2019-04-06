@@ -197,9 +197,11 @@ interface AddExpenseContract {
                 if (curTransactionType == TransactionType.DEBIT) {
                     curTransactionType = TransactionType.CREDIT
                     getView()?.switchToCredit()
+                    getView()?.showCategories(categories.filter { it.type == TransactionType.CREDIT })
                 } else {
                     curTransactionType = TransactionType.DEBIT
                     getView()?.switchToDebit()
+                    getView()?.showCategories(categories.filter { it.type == TransactionType.DEBIT })
                 }
             }
         }

@@ -137,7 +137,7 @@ class SheetsHelper @Inject constructor(private val sheetsDataSource: SheetsDataS
         }
 
         return Transaction(
-                id = "$sheetTitle!$cellPosition",
+                id = "$sheetTitle!${Constants.TRANSACTION_START_COL}$cellPosition:${Constants.TRANSACTION_END_COL}",
                 date = this[0].toString(),
                 time = this[1].toString(),
                 amount = amount,
@@ -199,10 +199,12 @@ class SheetsHelper @Inject constructor(private val sheetsDataSource: SheetsDataS
                                             transaction.time,
                                             transaction.amount,
                                             transaction.title,
-                                            transaction.description ?: "",
+                                            // todo
+                                            if (transaction.description == "") " " else transaction.description ?: " ",
                                             transaction.categoryId,
                                             transaction.type.toString(),
-                                            transaction.walletId
+                                            // todo
+                                            if (transaction.walletId == "") " " else transaction.walletId
                                     )
                             ),
                             googleAccountCredential = googleAccountCredential
@@ -223,10 +225,12 @@ class SheetsHelper @Inject constructor(private val sheetsDataSource: SheetsDataS
                                             transaction.time,
                                             transaction.amount,
                                             transaction.title,
-                                            transaction.description ?: "",
+                                            // todo
+                                            if (transaction.description == "") " " else transaction.description ?: " ",
                                             transaction.categoryId,
                                             transaction.type.toString(),
-                                            transaction.walletId
+                                            // todo
+                                            if (transaction.walletId == "") " " else transaction.walletId
                             )),
                             googleAccountCredential = googleAccountCredential
                     )
@@ -259,9 +263,9 @@ class SheetsHelper @Inject constructor(private val sheetsDataSource: SheetsDataS
         try {
             return this.map {
                 Category(
-                        id = it[1].toString(),
-                        name = it[1].toString(),
-                        type = TransactionType.valueOf(it[2].toString())
+                        id = it[0].toString(),
+                        name = it[0].toString(),
+                        type = TransactionType.valueOf(it[1].toString())
                 )
             }
         } catch (e: IndexOutOfBoundsException) {

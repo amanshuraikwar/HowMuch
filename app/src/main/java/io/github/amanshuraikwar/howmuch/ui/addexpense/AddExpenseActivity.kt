@@ -7,7 +7,6 @@ import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -18,6 +17,7 @@ import io.github.amanshuraikwar.howmuch.base.di.ActivityContext
 import io.github.amanshuraikwar.howmuch.base.ui.base.BaseActivity
 import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.protocol.Wallet
+import io.github.amanshuraikwar.howmuch.ui.CategoryAdapter
 import kotlinx.android.synthetic.main.layout_expense.*
 import kotlinx.android.synthetic.main.layout_loading_overlay.*
 
@@ -86,12 +86,8 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
         loadingTv.text = ""
     }
 
-    override fun showError(message: String) {
-    }
-
     override fun showCategories(categories: List<Category>) {
-        // todo debug
-        categorySp.adapter = ArrayAdapter(this, R.layout.textview_spinner, categories)
+        categorySp.adapter = CategoryAdapter(this, R.layout.textview_spinner, categories)
     }
 
     override fun close(success: Boolean) {

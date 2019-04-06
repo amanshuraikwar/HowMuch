@@ -1,5 +1,6 @@
 package io.github.amanshuraikwar.howmuch.base.ui.base
 
+import android.content.Context
 import android.os.Bundle
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -27,9 +28,14 @@ abstract class BaseFragment<View: BaseView, Presenter: BasePresenter<View>>
 
     protected lateinit var activity: BaseActivity<*, *>
 
+    override fun onAttach(context: Context) {
+        activity = getActivity() as BaseActivity<*, *>
+        super.onAttach(context)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        activity = getActivity() as BaseActivity<*, *>
+//        activity = getActivity() as BaseActivity<*, *>
     }
 
     @Suppress("UNCHECKED_CAST")

@@ -35,7 +35,7 @@ class GoogleSheetsUserDataManager
     }
 
     private fun GoogleSignInAccount.user(): User {
-        return User(this.id!!, this.displayName!!, this.email!!, this.photoUrl!!.toString())
+        return User(this.id!!, this.displayName!!, this.email!!, this.photoUrl?.toString() ?: "")
     }
 
     override fun signIn(user: User): Observable<User> {
