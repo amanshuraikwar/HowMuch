@@ -24,6 +24,7 @@ import io.github.amanshuraikwar.howmuch.base.ui.base.BaseActivity
 import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.protocol.Wallet
 import io.github.amanshuraikwar.howmuch.ui.CategoryAdapter
+import io.github.amanshuraikwar.howmuch.ui.WalletAdapter
 import kotlinx.android.synthetic.main.activity_expense.*
 import kotlinx.android.synthetic.main.layout_loading_overlay.*
 
@@ -78,10 +79,15 @@ class ExpenseActivity
         intent.putExtra(KEY_TRANSACTION,  transaction)
     }
 
+    override fun showWallets(wallets: List<Wallet>) {
+        walletSp.adapter = WalletAdapter(this, R.layout.textview_spinner, wallets)
+    }
+
     override fun showTransaction(amount: String,
                                  transactionType: TransactionType,
                                  title: String,
                                  category: Category,
+                                 wallet: Wallet,
                                  date: String,
                                  time: String,
                                  description: String?,
@@ -105,11 +111,13 @@ class ExpenseActivity
 
         titleEt.setText(title)
 
-        // todo debug
         categorySp.adapter = CategoryAdapter(this, R.layout.textview_spinner, categories)
         categorySp.setSelection(getCategoryIndex(category))
-
         categoryTv.text = category.name
+
+        walletSp.setSelection(getWalletIndex(wallet))
+        walletTv.text = wallet.name
+
         dateTv.text = date
         timeTv.text = time
 
@@ -120,6 +128,17 @@ class ExpenseActivity
         var i = 0
         while (i < categorySp.count) {
             if (categorySp.adapter.getItem(i) == category) {
+                return i
+            }
+            i++
+        }
+        return 0
+    }
+
+    private fun getWalletIndex(wallet: Wallet): Int {
+        var i = 0
+        while (i < walletSp.count) {
+            if (walletSp.adapter.getItem(i) == wallet) {
                 return i
             }
             i++
@@ -149,8 +168,7 @@ class ExpenseActivity
                     title = titleEt.text.toString(),
                     description = descriptionEt.text.toString(),
                     category = categorySp.selectedItem as Category,
-                    // todo
-                    wallet = Wallet("", "", 1.0)
+                    wallet = walletSp.selectedItem as Wallet
             )
         }
 
@@ -162,8 +180,12 @@ class ExpenseActivity
 
         amountEt.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
         titleEt.inputType = InputType.TYPE_CLASS_TEXT
+
         categoryTv.visibility = GONE
         categorySp.visibility = VISIBLE
+
+        walletTv.visibility = GONE
+        walletSp.visibility = VISIBLE
 
         dateTv.isClickable = true
         dateTv.setOnClickListener {
@@ -206,8 +228,12 @@ class ExpenseActivity
         amountEt.clearFocus()
         titleEt.inputType = InputType.TYPE_NULL
         titleEt.clearFocus()
+
         categoryTv.visibility = VISIBLE
         categorySp.visibility = GONE
+
+        walletTv.visibility = VISIBLE
+        walletSp.visibility = GONE
 
         dateTv.isClickable = false
         dateTv.setOnClickListener(null)

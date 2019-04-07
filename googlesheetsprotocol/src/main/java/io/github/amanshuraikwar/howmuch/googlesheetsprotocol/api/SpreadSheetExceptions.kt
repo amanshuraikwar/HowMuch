@@ -10,3 +10,7 @@ class InvalidTransactionEntryException(message: String, cellRange: String, sheet
 class NoCategoriesFoundException(message: String) : SpreadSheetException(message)
 
 class InvalidCategoryException(message: String) : SpreadSheetException(message)
+
+class NoWalletsFoundException(message: String) : SpreadSheetException(message)
+
+class InvalidWalletException(message: String) : SpreadSheetException(message)

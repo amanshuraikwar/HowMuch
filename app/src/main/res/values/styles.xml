@@ -320,6 +320,15 @@
     </style>
 
     <style
+        name="TextAppearance.WalletName"
+        parent="@style/TextAppearance.Subhead">
+
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:fontFamily">@font/rubik</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style
         name="TextAppearance.Description"
         parent="@style/TextAppearance.Subhead">
 

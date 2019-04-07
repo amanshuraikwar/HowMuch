@@ -7,7 +7,11 @@ import io.github.amanshuraikwar.howmuch.ui.list.stats.Stats
 import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.base.ui.base.*
 import io.github.amanshuraikwar.howmuch.ui.list.stats.StatsListItem
-import io.github.amanshuraikwar.howmuch.base.util.Util;
+import io.github.amanshuraikwar.howmuch.base.util.Util
+import io.github.amanshuraikwar.howmuch.protocol.Wallet
+import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderListItem
+import io.github.amanshuraikwar.howmuch.ui.list.items.HorizontalList
+import io.github.amanshuraikwar.howmuch.ui.list.items.WalletItem
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -50,6 +54,43 @@ interface StatsContract {
                                 mutableListOf(transactions.getTotalListItem())
                         listItems.addAll(transactions.getListItems())
                         return@map listItems
+                    }
+                    .flatMap {
+                        list ->
+                        getDataManager()
+                                .getAllWallets()
+                                .map {
+                                    wallets ->
+                                    wallets.map {
+                                        WalletItem
+                                                .Item(WalletItem(it))
+                                                .setOnClickListener(
+                                                        object : WalletItem.WalletOnClickListener {
+                                                            override fun onClick(wallet: Wallet) {
+                                                                // todo
+                                                                getView()?.showToast(
+                                                                        "wallet clicked: $wallet"
+                                                                )
+                                                            }
+                                                        }
+                                                )
+                                    }
+                                }
+                                .map {
+                                    HorizontalList.Eager.Item(
+                                            HorizontalList.Eager("wallets", it)
+                                    )
+                                }
+                                .map {
+                                    val newList =
+                                            mutableListOf<ListItem<*, *>>(
+                                                    HeaderListItem("Wallets"),
+                                                    it,
+                                                    HeaderListItem("Statistics")
+                                            )
+                                    newList.addAll(list)
+                                    return@map newList
+                                }
                     }
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())

@@ -61,6 +61,7 @@
     <string name="refresh_btn_cd">Refresh</string>
     <string name="title_profile">Profile</string>
     <string name="setting_icon">Setting icon</string>
+    <string name="wallet_icon">Wallet icon</string>
 
     <array name="tab_names">
         <item>@string/app_name</item>

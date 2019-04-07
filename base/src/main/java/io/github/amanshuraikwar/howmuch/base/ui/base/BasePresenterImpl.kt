@@ -2,6 +2,7 @@ package io.github.amanshuraikwar.howmuch.base.ui.base
 
 import io.github.amanshuraikwar.howmuch.base.bus.AppBus
 import io.github.amanshuraikwar.howmuch.base.data.DataManager
+import io.github.amanshuraikwar.howmuch.protocol.Wallet
 import io.reactivex.disposables.Disposable
 
 /**

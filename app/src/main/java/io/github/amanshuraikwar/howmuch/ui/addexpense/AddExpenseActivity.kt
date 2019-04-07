@@ -18,7 +18,8 @@ import io.github.amanshuraikwar.howmuch.base.ui.base.BaseActivity
 import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.protocol.Wallet
 import io.github.amanshuraikwar.howmuch.ui.CategoryAdapter
-import kotlinx.android.synthetic.main.layout_expense.*
+import io.github.amanshuraikwar.howmuch.ui.WalletAdapter
+import kotlinx.android.synthetic.main.activity_add_expense.*
 import kotlinx.android.synthetic.main.layout_loading_overlay.*
 
 class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContract.Presenter>()
@@ -59,8 +60,7 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
                     title = titleEt.text.toString(),
                     description = descriptionEt.text.toString(),
                     category = categorySp.selectedItem as Category,
-                    // todo
-                    wallet = Wallet("", "", 1.0)
+                    wallet = walletSp.selectedItem as Wallet
             )
         }
 
@@ -88,6 +88,10 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
 
     override fun showCategories(categories: List<Category>) {
         categorySp.adapter = CategoryAdapter(this, R.layout.textview_spinner, categories)
+    }
+
+    override fun showWallets(wallets: List<Wallet>) {
+        walletSp.adapter = WalletAdapter(this, R.layout.textview_spinner, wallets)
     }
 
     override fun close(success: Boolean) {

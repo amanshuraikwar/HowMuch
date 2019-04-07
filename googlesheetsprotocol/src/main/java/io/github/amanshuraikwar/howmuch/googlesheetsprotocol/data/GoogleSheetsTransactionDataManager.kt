@@ -47,7 +47,6 @@ class GoogleSheetsTransactionDataManager
                             authenticationManager.getLastSignedAccount()!!.credential()
                     )
                 }
-
     }
 
     override fun getTransactionById(id: String): Observable<Transaction> {
@@ -55,6 +54,7 @@ class GoogleSheetsTransactionDataManager
     }
 
     override fun addTransaction(transaction: Transaction): Observable<Transaction> {
+
         return userDataManager
                 .getSignedInUser()
                 .flatMap {

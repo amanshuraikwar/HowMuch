@@ -21,10 +21,12 @@ interface ExpenseContract {
     interface View : BaseView, UiMessageView, LoadingView, ExpenseDataInputView {
         fun getTransaction(): Transaction
         fun setTransaction(transaction: Transaction)
+        fun showWallets(wallets: List<Wallet>)
         fun showTransaction(amount: String,
                             transactionType: TransactionType,
                             title: String,
                             category: Category,
+                            wallet: Wallet,
                             date: String,
                             time: String,
                             description: String?,
@@ -77,6 +79,7 @@ interface ExpenseContract {
         private lateinit var curTransaction: Transaction
 
         private lateinit var categories: List<Category>
+        private lateinit var wallets: List<Wallet>
 
         private lateinit var curTransactionType : TransactionType
 
@@ -93,6 +96,12 @@ interface ExpenseContract {
 
             getDataManager()
                     .getAllCategories()
+                    .doOnNext {
+                        this.categories = it.toList()
+                    }
+                    .flatMap {
+                        getDataManager().getAllWallets()
+                    }
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe {
@@ -100,9 +109,12 @@ interface ExpenseContract {
                     }
                     .subscribe(
                             {
-                                categories ->
-                                this.categories = categories.toList()
-                                getView()?.hideLoading()
+                                wallets ->
+                                this.wallets = wallets.toList()
+                                getView()?.run {
+                                    hideLoading()
+                                    showWallets(this@ExpensePresenter.wallets)
+                                }
                                 initTransaction()
                             },
                             {
@@ -142,6 +154,11 @@ interface ExpenseContract {
                     categories.find { it.id == this.categoryId }
                             ?: throw InvalidCategoryException(
                                     "Invalid category with id ${this.categoryId} " +
+                                            "for transaction with id ${this.id}!"
+                            ),
+                    wallets.find { it.id == this.walletId }
+                            ?: throw InvalidCategoryException(
+                                    "Invalid wallet with id ${this.walletId} " +
                                             "for transaction with id ${this.id}!"
                             ),
                     Util.beautifyDate(this.date),

@@ -1,8 +1,236 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/contentFl"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <include layout="@layout/layout_expense" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/toolbarCl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/white"
+            android:stateListAnimator="@animator/toolbar_elevation" >
+
+            <ImageButton
+                android:id="@+id/backIb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/toolbar"
+                android:layout_margin="@dimen/padding_normal"
+                android:src="@drawable/ic_keyboard_backspace_white_24dp"
+                style="@style/Widget.HowMuch.ImageButton.Borderless"
+                android:contentDescription="@string/done" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/backIb"
+                app:layout_constraintEnd_toStartOf="@id/doneBtn"
+                app:layout_constraintTop_toTopOf="parent"
+                app:title="Add Transaction"
+                style="@style/Widget.HowMuch.Toolbar.SmallCapsTitle" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/doneBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/toolbar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/toolbar"
+                app:layout_constraintBottom_toBottomOf="@id/toolbar"
+                android:layout_marginEnd="@dimen/margin_normal"
+                android:text="@string/save"
+                style="@style/Widget.HowMuch.Button.Small" />
+
+            <ImageButton
+                android:id="@+id/transactionTypeIb"
+                android:layout_width="@dimen/input_field_icon_size"
+                android:layout_height="@dimen/input_field_icon_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="@dimen/padding_normal"
+                android:src="@drawable/ic_arrow_drop_down_white_24dp"
+                android:tint="@color/red"
+                style="@style/Widget.HowMuch.ImageButton.Borderless"
+                android:contentDescription="@string/amount_hint" />
+
+            <EditText
+                android:id="@+id/amountEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="@dimen/input_field_offset"
+                android:paddingStart="0dp"
+                android:paddingEnd="@dimen/padding_normal"
+                android:inputType="numberDecimal"
+                android:lines="1"
+                android:hint="@string/amount_hint"
+                android:textAppearance="@style/TextAppearance.Amount"
+                android:textColor="@color/red"
+                style="@style/Widget.HowMuch.InputEditText"
+                android:importantForAutofill="no"
+                tools:targetApi="o"
+                tools:text="169.48"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ScrollView
+            android:id="@+id/contentSv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbarCl"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/titleEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lines="1"
+                        android:inputType="text"
+                        android:hint="@string/title_hint"
+                        android:textAppearance="@style/TextAppearance.InputField"
+                        style="@style/Widget.HowMuch.InputEditText"
+                        android:importantForAutofill="no"
+                        tools:targetApi="o" />
+
+                    <ImageView
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_title_white_24dp"
+                        android:contentDescription="@string/title_hint"
+                        style="@style/InputImageView" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
+
+                    <Spinner
+                        android:id="@+id/categorySp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/input_field_offset_spinner"
+                        android:paddingEnd="0dp"/>
+
+                    <ImageView
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/baseline_category_24"
+                        android:contentDescription="@string/category_hint"
+                        style="@style/InputImageView" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
+
+                    <Spinner
+                        android:id="@+id/walletSp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/input_field_offset_spinner"
+                        android:paddingEnd="0dp"/>
+
+                    <ImageView
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_account_balance_wallet_white_24dp"
+                        android:contentDescription="@string/wallet_icon"
+                        style="@style/InputImageView" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/dateTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lines="1"
+                        android:hint="@string/date_hint"
+                        android:textAppearance="@style/TextAppearance.InputField"
+                        android:background="?attr/selectableItemBackground"
+                        style="@style/Widget.HowMuch.InputTextView" />
+
+                    <ImageView
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_today_black_24dp"
+                        android:contentDescription="@string/date_hint"
+                        style="@style/InputImageView" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/timeTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lines="1"
+                        android:hint="@string/time_hint"
+                        android:textAppearance="@style/TextAppearance.InputField"
+                        android:background="?attr/selectableItemBackground"
+                        style="@style/Widget.HowMuch.InputTextView" />
+
+                    <ImageView
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_access_time_white_24dp"
+                        android:contentDescription="@string/time_hint"
+                        style="@style/InputImageView" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/descriptionEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lines="1"
+                        android:inputType="text"
+                        android:hint="@string/description_hint"
+                        android:textAppearance="@style/TextAppearance.InputField"
+                        style="@style/Widget.HowMuch.InputEditText"
+                        android:importantForAutofill="no"
+                        tools:targetApi="o" />
+
+                    <ImageView
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/baseline_receipt_24"
+                        android:contentDescription="@string/description_hint"
+                        style="@style/InputImageView" />
+                </FrameLayout>
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <include layout="@layout/layout_loading_overlay" />
 </FrameLayout>

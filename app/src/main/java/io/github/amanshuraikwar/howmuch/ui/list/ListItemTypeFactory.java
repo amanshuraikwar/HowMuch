@@ -7,8 +7,10 @@ import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderListItem;
 import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderViewHolder;
 import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyListItem;
 import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyViewHolder;
+import io.github.amanshuraikwar.howmuch.ui.list.items.HorizontalList;
 import io.github.amanshuraikwar.howmuch.ui.list.items.Setting;
 import io.github.amanshuraikwar.howmuch.ui.list.items.UserInfo;
+import io.github.amanshuraikwar.howmuch.ui.list.items.WalletItem;
 import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionListItem;
 import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionViewHolder;
 import io.github.amanshuraikwar.howmuch.ui.list.stats.StatsListItem;
@@ -54,6 +56,14 @@ public class ListItemTypeFactory extends BaseTypeFactory {
         return 6;
     }
 
+    public int type(HorizontalList.Eager.Item item) {
+        return 7;
+    }
+
+    public int type(WalletItem.Item item) {
+        return 8;
+    }
+
     /**
      * To get layout file id (R.layout.*) for a corresponding list item/view type.
      *
@@ -74,6 +84,10 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 return UserInfo.Holder.Companion.getLAYOUT();
             case 6:
                 return Setting.Holder.Companion.getLAYOUT();
+            case 7:
+                return HorizontalList.Eager.Holder.Companion.getLAYOUT();
+            case 8:
+                return WalletItem.Holder.Companion.getLAYOUT();
             default:
                 return super.getLayout(viewType);
         }
@@ -108,6 +122,12 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 break;
             case 6:
                 viewHolder = new Setting.Holder(parent);
+                break;
+            case 7:
+                viewHolder = new HorizontalList.Eager.Holder(parent);
+                break;
+            case 8:
+                viewHolder = new WalletItem.Holder(parent);
                 break;
             default:
                 viewHolder = super.createViewHolder(parent, type);

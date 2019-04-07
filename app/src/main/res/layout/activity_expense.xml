@@ -189,6 +189,36 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <Spinner
+                    android:id="@+id/walletSp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/input_field_offset_spinner"
+                    android:paddingEnd="0dp"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/walletTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:hint="@string/category_hint"
+                    android:textAppearance="@style/TextAppearance.InputField"
+                    android:background="?attr/selectableItemBackground"
+                    style="@style/Widget.HowMuch.InputTextView" />
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_account_balance_wallet_white_24dp"
+                    android:contentDescription="@string/wallet_icon"
+                    style="@style/InputImageView" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView

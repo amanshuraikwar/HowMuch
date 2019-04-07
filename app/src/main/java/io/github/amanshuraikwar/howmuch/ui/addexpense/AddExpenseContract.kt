@@ -10,7 +10,7 @@ import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.protocol.TransactionType
 import io.github.amanshuraikwar.howmuch.protocol.Wallet
 import io.github.amanshuraikwar.howmuch.ui.ExpenseDataInputView
-import io.github.amanshuraikwar.howmuch.base.util.Util;
+import io.github.amanshuraikwar.howmuch.base.util.Util
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -19,6 +19,7 @@ interface AddExpenseContract {
 
     interface View : BaseView, UiMessageView, LoadingView, ExpenseDataInputView {
         fun showCategories(categories: List<Category>)
+        fun showWallets(wallets: List<Wallet>)
         fun close(success: Boolean)
         fun showDatePicker(day: Int, month: Int, year: Int)
         fun showDate(date: String)
@@ -51,6 +52,7 @@ interface AddExpenseContract {
         private val tag = Util.getTag(this)
 
         private lateinit var categories: List<Category>
+        private lateinit var wallets: List<Wallet>
 
         private var curTransactionType = TransactionType.DEBIT
 
@@ -76,21 +78,31 @@ interface AddExpenseContract {
 
             getDataManager()
                     .getAllCategories()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnNext {
+                        categories ->
+                        this.categories = categories.toList()
+                        getView()?.showCategories(
+                                categories.filter {
+                                    it.type == TransactionType.DEBIT
+                                }
+                        )
+                    }
+                    .observeOn(Schedulers.newThread())
+                    .flatMap {
+                        getDataManager().getAllWallets()
+                    }
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe {
-                        getView()?.showLoading("Fetching categories...")
+                        getView()?.showLoading("Initialising...")
                     }
                     .subscribe(
                             {
-                                categories ->
-                                this.categories = categories.toList()
+                                wallets ->
+                                this.wallets = wallets.toList()
                                 getView()?.run {
-                                    showCategories(
-                                            categories.filter {
-                                                it.type == TransactionType.DEBIT
-                                            }
-                                    )
+                                    showWallets(this@AddExpensePresenter.wallets)
                                     hideLoading()
                                 }
                             },
