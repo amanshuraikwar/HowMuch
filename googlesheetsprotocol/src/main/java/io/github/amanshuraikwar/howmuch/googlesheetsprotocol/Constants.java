@@ -60,7 +60,8 @@ public interface Constants {
     List<List<String>> DEFAULT_WALLETS_WITH_HEADING = Arrays.asList(
             Collections.singletonList("Wallets"),
             Arrays.asList("Name", "Balance"),
-            Arrays.asList("Primary", "0.0")
+            Arrays.asList("Corporate", "0.0"),
+            Arrays.asList("Personal", "0.0")
     );
 
     //endregion
