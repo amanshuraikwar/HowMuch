@@ -41,8 +41,22 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
             }
         }
 
+
         transactionTypeIb.setOnClickListener {
             presenter.onTransactionTypeBtnClicked()
+        }
+
+        titleEt.setOnFocusChangeListener {
+            _, hasFocus ->
+            if (hasFocus) {
+                // show time animation
+                (titleIv.drawable as Animatable).start()
+            }
+        }
+
+        titleEt.setOnClickListener {
+            // show time animation
+            (titleIv.drawable as Animatable).start()
         }
 
         dateTv.setOnClickListener {
@@ -109,6 +123,10 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
                 this,
                 DatePickerDialog.OnDateSetListener {
                     _, yearNo, monthOfYear, dayOfMonth ->
+
+                    // show time animation
+                    (dateIv.drawable as Animatable).start()
+
                     presenter.onDateSelected(dayOfMonth, monthOfYear, yearNo)
                 },
                 year,

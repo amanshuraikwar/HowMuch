@@ -28,15 +28,31 @@
             android:textAppearance="@style/TextAppearance.WalletName"
             tools:text="Primary" />
 
-        <TextView
-            android:id="@+id/balanceTv"
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_normal"
-            android:layout_marginEnd="@dimen/margin_large"
-            android:layout_marginTop="@dimen/margin_large"
-            android:textAppearance="@style/TextAppearance.AmountSmall"
-            tools:text="100.88" />
+            android:layout_marginTop="@dimen/margin_large">
+
+            <ImageView
+                android:id="@+id/transactionFlowIb"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:tint="@color/activeIcon"
+                android:src="@drawable/ic_account_balance_wallet_white_24dp"
+                android:contentDescription="@string/wallet_icon" />
+
+            <TextView
+                android:id="@+id/balanceTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:textAppearance="@style/TextAppearance.AmountSmall"
+                tools:text="100.88" />
+        </FrameLayout>
+
 
         <ImageView
             android:layout_width="18dp"

@@ -233,7 +233,7 @@
 
                 <ImageView
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_today_black_24dp"
+                    android:src="@drawable/avd_today"
                     android:contentDescription="@string/date_hint"
                     style="@style/InputImageView" />
             </FrameLayout>

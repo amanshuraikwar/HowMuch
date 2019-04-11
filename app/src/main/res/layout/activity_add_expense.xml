@@ -120,8 +120,9 @@
                         tools:targetApi="o" />
 
                     <ImageView
+                        android:id="@+id/titleIv"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_title_white_24dp"
+                        app:srcCompat="@drawable/avd_title"
                         android:contentDescription="@string/title_hint"
                         style="@style/InputImageView" />
                 </FrameLayout>
@@ -179,8 +180,9 @@
                         style="@style/Widget.HowMuch.InputTextView" />
 
                     <ImageView
+                        android:id="@+id/dateIv"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_today_black_24dp"
+                        app:srcCompat="@drawable/avd_today"
                         android:contentDescription="@string/date_hint"
                         style="@style/InputImageView" />
                 </FrameLayout>
