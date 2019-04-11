@@ -61,8 +61,22 @@ class GoogleSheetsWalletDataManager
     }
 
     override fun updateWallet(wallet: Wallet): Observable<Wallet> {
-        // todo
-        return Observable.fromCallable { Wallet("", "", 0.0) }
+        return userDataManager
+                .getSignedInUser()
+                .flatMap {
+                    localDataManager.getSpreadsheetIdForEmail(it.email)
+                }
+                .flatMap {
+                    sheetsHelper
+                            .updateWallet(
+                                    spreadsheetId = it,
+                                    wallet = wallet,
+                                    googleAccountCredential =
+                                    authenticationManager.getLastSignedAccount()!!.credential()
+                            )
+                            .toSingleDefault(wallet)
+                            .toObservable()
+                }
     }
 
     override fun deleteWallet(wallet: Wallet): Observable<Wallet> {

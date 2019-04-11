@@ -91,6 +91,10 @@
         <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
     </style>
 
+    <style name="Widget.HowMuch.ImageButton.Border">
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
     <style
         name="Widget.HowMuch.InputEditText"
         parent="@style/Widget.AppCompat.EditText">
@@ -296,6 +300,15 @@
     <style
         name="TextAppearance.AmountSmall"
         parent="@style/TextAppearance.Headline">
+
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style
+        name="TextAppearance.AmountInputField"
+        parent="@style/TextAppearance.Subhead">
 
         <item name="android:fontFamily">@font/roboto_mono_medium</item>
         <item name="android:textAllCaps">true</item>

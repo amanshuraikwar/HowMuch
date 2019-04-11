@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.res.ColorStateList
+import android.graphics.drawable.Animatable
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -46,6 +47,10 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
 
         dateTv.setOnClickListener {
             presenter.onDateTvClicked(dateTv.text.toString())
+        }
+
+        timeIv.setOnClickListener {
+            (timeIv.drawable as Animatable).start()
         }
 
         timeTv.setOnClickListener {
@@ -125,6 +130,10 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
                 this,
                 TimePickerDialog.OnTimeSetListener {
                     _, hourOfDayNo, minuteNo ->
+
+                    // show time animation
+                    (timeIv.drawable as Animatable).start()
+
                     presenter.onTimeSelected(minuteNo, hourOfDayNo)
                 },
                 hourOfDay,
@@ -144,19 +153,27 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
     }
 
     override fun switchToCredit() {
+
+        val stateSet = intArrayOf(android.R.attr.state_checked * 1)
+        transactionTypeIb.setImageState(stateSet, true)
+
         transactionTypeIb.imageTintList = ColorStateList.valueOf(
                 ContextCompat.getColor(this, R.color.green)
         )
         amountEt.setTextColor(ContextCompat.getColor(this, R.color.green))
-        transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp)
+//        transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp)
     }
 
     override fun switchToDebit() {
+
+        val stateSet = intArrayOf(android.R.attr.state_checked * -1)
+        transactionTypeIb.setImageState(stateSet, true)
+
         transactionTypeIb.imageTintList = ColorStateList.valueOf(
                 ContextCompat.getColor(this, R.color.red)
         )
         amountEt.setTextColor(ContextCompat.getColor(this, R.color.red))
-        transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp)
+//        transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp)
     }
 
     @Module

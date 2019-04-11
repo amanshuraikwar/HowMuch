@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contentFl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/toolbarCl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/white"
+        android:stateListAnimator="@animator/toolbar_elevation" >
+
+        <ImageButton
+            android:id="@+id/backIb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/toolbar"
+            android:layout_margin="@dimen/padding_normal"
+            android:src="@drawable/ic_keyboard_backspace_white_24dp"
+            style="@style/Widget.HowMuch.ImageButton.Borderless"
+            android:contentDescription="@string/done" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/backIb"
+            app:layout_constraintEnd_toStartOf="@id/barrier1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title=""
+            style="@style/Widget.HowMuch.Toolbar.SmallCapsTitle" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="doneBtn,editIb"
+            app:barrierDirection="start" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/doneBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/barrier1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/toolbar"
+            app:layout_constraintBottom_toBottomOf="@id/toolbar"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:text="@string/save"
+            style="@style/Widget.HowMuch.Button.Small"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/editIb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/barrier1"
+            app:layout_constraintEnd_toStartOf="@id/deleteIb"
+            app:layout_constraintTop_toTopOf="@id/toolbar"
+            app:layout_constraintBottom_toBottomOf="@id/toolbar"
+            android:layout_margin="@dimen/margin_normal"
+            android:src="@drawable/ic_edit_white_24dp"
+            style="@style/Widget.HowMuch.ImageButton.Borderless"
+            android:contentDescription="@string/done" />
+
+        <ImageButton
+            android:id="@+id/deleteIb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/editIb"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/toolbar"
+            app:layout_constraintBottom_toBottomOf="@id/toolbar"
+            android:layout_margin="@dimen/margin_normal"
+            android:src="@drawable/ic_delete_white_24dp"
+            style="@style/Widget.HowMuch.ImageButton.Borderless"
+            android:visibility="gone"
+            android:contentDescription="@string/delete" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:id="@+id/contentSv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarCl"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/nameEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:inputType="none"
+                    android:hint="@string/wallet_name_hint"
+                    android:textAppearance="@style/TextAppearance.InputField"
+                    style="@style/Widget.HowMuch.InputEditText"
+                    android:importantForAutofill="no"
+                    tools:targetApi="o" />
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_title_white_24dp"
+                    android:contentDescription="@string/title_hint"
+                    style="@style/InputImageView" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <EditText
+                    android:id="@+id/balanceEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:inputType="none"
+                    android:hint="@string/wallet_balance_hine"
+                    android:textAppearance="@style/TextAppearance.AmountInputField"
+                    style="@style/Widget.HowMuch.InputEditText"
+                    android:importantForAutofill="no"
+                    tools:targetApi="o" />
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_account_balance_wallet_white_24dp"
+                    android:contentDescription="@string/wallet_icon"
+                    style="@style/InputImageView" />
+            </FrameLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <include layout="@layout/layout_loading_overlay" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

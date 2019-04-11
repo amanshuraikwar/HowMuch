@@ -3,6 +3,7 @@ package io.github.amanshuraikwar.howmuch.googlesheetsprotocol
 import android.util.Log
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import io.github.amanshuraikwar.howmuch.base.util.Util
+import io.github.amanshuraikwar.howmuch.googlesheetsprotocol.Constants.WALLETS_START_ROW_WITHOUT_HEADING
 import io.github.amanshuraikwar.howmuch.googlesheetsprotocol.api.*
 import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.protocol.Transaction
@@ -266,10 +267,12 @@ class SheetsHelper @Inject constructor(private val sheetsDataSource: SheetsDataS
             throw NoWalletsFoundException("No wallets found in the spread sheet.")
         }
 
+        var rowNum = WALLETS_START_ROW_WITHOUT_HEADING - 1
+
         try {
             return this.map {
                 Wallet(
-                        id = it[0].toString(),
+                        id = "${Constants.METADATA_SHEET_TITLE}!${Constants.WALLETS_START_COL}${++rowNum}:${Constants.WALLETS_END_COL}",
                         name = it[0].toString(),
                         balance = it[1].toString().toDouble()
                 )
@@ -279,6 +282,27 @@ class SheetsHelper @Inject constructor(private val sheetsDataSource: SheetsDataS
         } catch (e: NumberFormatException) {
             throw InvalidWalletException("Invalid wallet found in the spread sheet.")
         }
+    }
+
+    fun updateWallet(wallet: Wallet,
+                     spreadsheetId: String,
+                     googleAccountCredential: GoogleAccountCredential)
+            : Completable {
+
+        return sheetsDataSource
+                .updateSpreadSheet(
+                        spreadsheetId = spreadsheetId,
+                        spreadsheetRange = wallet.id,
+                        values =
+                        listOf(
+                                listOf(
+                                        wallet.name,
+                                        wallet.balance
+                                )
+                        ),
+                        googleAccountCredential = googleAccountCredential
+                )
+                .ignoreElements()
     }
 
     fun addTransaction(transaction: Transaction,

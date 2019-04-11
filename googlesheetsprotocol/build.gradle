@@ -52,7 +52,9 @@ dependencies {
 
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test:runner:$testRunnerVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+    androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion") {
+        exclude group: 'com.google.code.findbugs'
+    }
 
     implementation project(':protocol')
     implementation project(':base')

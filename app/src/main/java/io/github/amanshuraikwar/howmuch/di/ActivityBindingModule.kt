@@ -10,6 +10,7 @@ import io.github.amanshuraikwar.howmuch.ui.home.HomeActivity
 import io.github.amanshuraikwar.howmuch.ui.profile.ProfileFragment
 import io.github.amanshuraikwar.howmuch.ui.signin.SignInFragment
 import io.github.amanshuraikwar.howmuch.ui.stats.StatsFragment
+import io.github.amanshuraikwar.howmuch.ui.wallet.WalletActivity
 
 /**
  * Created by Amanshu Raikwar on 07/03/18.
@@ -59,4 +60,9 @@ import io.github.amanshuraikwar.howmuch.ui.stats.StatsFragment
             ]
     )
     internal abstract fun g(): ProfileFragment
+
+    @ContributesAndroidInjector(
+            modules = [WalletActivity.WalletModule::class]
+    )
+    abstract fun h(): WalletActivity
 }

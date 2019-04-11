@@ -60,7 +60,6 @@ interface ExpenseContract {
                               description: String,
                               category: Category,
                               wallet: Wallet)
-
         fun onEditDiscardClicked()
         fun onDeleteBtnClicked()
         fun onDeleteConfirmedClicked()
@@ -77,7 +76,6 @@ interface ExpenseContract {
         private val tag = Util.getTag(this)
 
         private lateinit var curTransaction: Transaction
-
         private lateinit var categories: List<Category>
         private lateinit var wallets: List<Wallet>
 
@@ -195,7 +193,6 @@ interface ExpenseContract {
         }
 
         override fun onEditBtnClicked() {
-            curTransaction.show()
             getView()?.showEditMode()
         }
 

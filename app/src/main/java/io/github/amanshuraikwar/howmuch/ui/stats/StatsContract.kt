@@ -8,6 +8,7 @@ import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.base.ui.base.*
 import io.github.amanshuraikwar.howmuch.ui.list.stats.StatsListItem
 import io.github.amanshuraikwar.howmuch.base.util.Util
+import io.github.amanshuraikwar.howmuch.protocol.TransactionType
 import io.github.amanshuraikwar.howmuch.protocol.Wallet
 import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderListItem
 import io.github.amanshuraikwar.howmuch.ui.list.items.HorizontalList
@@ -23,11 +24,13 @@ interface StatsContract {
         fun submitList(list: List<ListItem<*, *>>)
         fun setSyncError()
         fun clearSyncError()
+        fun startWalletActivity(wallet: Wallet)
     }
 
     interface Presenter : BasePresenter<View> {
         fun onRetryClicked()
         fun onRefreshClicked()
+        fun onWalletEdited()
     }
 
     class StatsPresenter @Inject constructor(appBus: AppBus,
@@ -48,13 +51,6 @@ interface StatsContract {
             getDataManager()
                     .getAllTransactions()
                     .map { it.toList() }
-                    .map {
-                        transactions ->
-                        val listItems =
-                                mutableListOf(transactions.getTotalListItem())
-                        listItems.addAll(transactions.getListItems())
-                        return@map listItems
-                    }
                     .flatMap {
                         list ->
                         getDataManager()
@@ -62,15 +58,21 @@ interface StatsContract {
                                 .map {
                                     wallets ->
                                     wallets.map {
+                                        wallet ->
                                         WalletItem
-                                                .Item(WalletItem(it))
+                                                .Item(WalletItem(
+
+                                                        wallet.copy(
+                                                                balance =
+                                                                list.filter {
+                                                                    it.walletId == wallet.id
+                                                                }.sumByDouble { if (it.type == TransactionType.DEBIT) -it.amount else it.amount }
+                                                        )
+                                                ))
                                                 .setOnClickListener(
                                                         object : WalletItem.WalletOnClickListener {
                                                             override fun onClick(wallet: Wallet) {
-                                                                // todo
-                                                                getView()?.showToast(
-                                                                        "wallet clicked: $wallet"
-                                                                )
+                                                                getView()?.startWalletActivity(wallet)
                                                             }
                                                         }
                                                 )
@@ -88,7 +90,8 @@ interface StatsContract {
                                                     it,
                                                     HeaderListItem("Statistics")
                                             )
-                                    newList.addAll(list)
+                                    newList.add(list.getTotalListItem())
+                                    newList.addAll(list.getListItems())
                                     return@map newList
                                 }
                     }
@@ -160,6 +163,10 @@ interface StatsContract {
         }
 
         override fun onRetryClicked() {
+            fetchStats()
+        }
+
+        override fun onWalletEdited() {
             fetchStats()
         }
     }

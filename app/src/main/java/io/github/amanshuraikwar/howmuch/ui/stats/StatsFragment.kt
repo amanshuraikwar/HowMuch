@@ -1,8 +1,8 @@
 package io.github.amanshuraikwar.howmuch.ui.stats
 
-import android.accounts.Account
 import android.annotation.SuppressLint
-import android.os.Build
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.view.View.GONE
@@ -10,23 +10,25 @@ import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
-import com.google.api.client.util.ExponentialBackOff
-import com.google.api.services.sheets.v4.SheetsScopes
 import dagger.Binds
 import dagger.Module
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.base.ui.base.BaseFragment
+import io.github.amanshuraikwar.howmuch.protocol.Wallet
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
+import io.github.amanshuraikwar.howmuch.ui.wallet.WalletActivity
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
 import kotlinx.android.synthetic.main.fragment_stats.*
-import java.util.*
 import javax.inject.Inject
 
 
 class StatsFragment
 @Inject constructor(): BaseFragment<StatsContract.View, StatsContract.Presenter>(), StatsContract.View {
+
+    companion object {
+        private const val REQ_CODE_WALLET = 10070
+    }
 
     private var adapter: MultiItemListAdapter<*>? = null
 
@@ -91,6 +93,21 @@ class StatsFragment
 
     override fun showError(message: String) {
         showToast(message)
+    }
+
+    override fun startWalletActivity(wallet: Wallet) {
+        val intent = Intent(activity, WalletActivity::class.java)
+        intent.putExtra(WalletActivity.KEY_WALLET, wallet)
+        startActivityForResult(intent, REQ_CODE_WALLET)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQ_CODE_WALLET) {
+            if (resultCode == Activity.RESULT_OK) {
+                presenter.onWalletEdited()
+            }
+        }
     }
 
     @Module

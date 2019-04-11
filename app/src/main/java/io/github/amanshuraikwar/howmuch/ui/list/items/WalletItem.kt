@@ -2,6 +2,7 @@ package io.github.amanshuraikwar.howmuch.ui.list.items
 
 import android.view.View
 import androidx.annotation.LayoutRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.protocol.Wallet
@@ -36,10 +37,18 @@ class WalletItem(val wallet: Wallet) {
         }
 
         override fun bind(listItem: Item, host: FragmentActivity) {
+
             itemView.nameTv.text = listItem.walletItem.wallet.name
             itemView.balanceTv.text = listItem.walletItem.wallet.balance.toString()
             itemView.parentLl.setOnClickListener {
                 listItem.onClickListener.onClick(listItem.walletItem.wallet)
+            }
+
+            if (listItem.walletItem.wallet.balance < 0) {
+                itemView.balanceTv.setTextColor(ContextCompat.getColor(host, R.color.red))
+            } else {
+                itemView.balanceTv.text = "+${itemView.balanceTv.text}"
+                itemView.balanceTv.setTextColor(ContextCompat.getColor(host, R.color.green))
             }
         }
     }
