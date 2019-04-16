@@ -35,7 +35,6 @@ class GoogleSheetsWalletDataManager
     }
 
     override fun getAllWallets(): Observable<Iterable<Wallet>> {
-
         return userDataManager
                 .getSignedInUser()
                 .flatMap {
@@ -52,12 +51,27 @@ class GoogleSheetsWalletDataManager
 
     override fun getWalletById(id: String): Observable<Wallet> {
         // todo
-        return Observable.fromCallable { Wallet("", "", 0.0) }
+        return Observable.fromCallable { Wallet("", "", 0.0, false) }
     }
 
     override fun addWallet(wallet: Wallet): Observable<Wallet> {
-        // todo
-        return Observable.fromCallable { Wallet("", "", 0.0) }
+        return userDataManager
+                .getSignedInUser()
+                .flatMap {
+                    localDataManager.getSpreadsheetIdForEmail(it.email)
+                }
+                .flatMap {
+                    sheetsHelper
+                            .addWallet(
+                                    wallet = wallet,
+                                    spreadsheetId = it,
+                                    googleAccountCredential =
+                                    authenticationManager.getLastSignedAccount()!!.credential()
+                            )
+                            // todo update id of wallet
+                            .toSingleDefault(wallet)
+                            .toObservable()
+                }
     }
 
     override fun updateWallet(wallet: Wallet): Observable<Wallet> {
@@ -80,7 +94,22 @@ class GoogleSheetsWalletDataManager
     }
 
     override fun deleteWallet(wallet: Wallet): Observable<Wallet> {
-        // todo
-        return Observable.fromCallable { Wallet("", "", 0.0) }
+        wallet.active = false
+        return userDataManager
+                .getSignedInUser()
+                .flatMap {
+                    localDataManager.getSpreadsheetIdForEmail(it.email)
+                }
+                .flatMap {
+                    sheetsHelper
+                            .updateWallet(
+                                    spreadsheetId = it,
+                                    wallet = wallet,
+                                    googleAccountCredential =
+                                    authenticationManager.getLastSignedAccount()!!.credential()
+                            )
+                            .toSingleDefault(wallet)
+                            .toObservable()
+                }
     }
 }

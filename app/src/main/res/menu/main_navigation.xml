@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/navigation_stats"
-        android:icon="@drawable/stats_drawable_selector"
+        android:icon="@drawable/pie_spin_selector"
         android:title="@string/title_stats" />
 
     <item

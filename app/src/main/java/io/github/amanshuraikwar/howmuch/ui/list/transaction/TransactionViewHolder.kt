@@ -54,7 +54,11 @@ class TransactionViewHolder(itemView: View) : ViewHolder<TransactionListItem>(it
             itemView.transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp)
         }
 
-        itemView.timeTv.text = Util.beautifyTime(transaction.time)
+        if (listItem.showDate) {
+            itemView.timeTv.text = Util.beautifyDate(transaction.date) + "  " + Util.beautifyTime(transaction.time)
+        } else {
+            itemView.timeTv.text = Util.beautifyTime(transaction.time)
+        }
 
         itemView.parentLl.setOnClickListener {
             listItem.onClickListener.onClick(transaction)

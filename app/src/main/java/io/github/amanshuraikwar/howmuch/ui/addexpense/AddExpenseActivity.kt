@@ -18,8 +18,8 @@ import io.github.amanshuraikwar.howmuch.base.di.ActivityContext
 import io.github.amanshuraikwar.howmuch.base.ui.base.BaseActivity
 import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.protocol.Wallet
-import io.github.amanshuraikwar.howmuch.ui.CategoryAdapter
-import io.github.amanshuraikwar.howmuch.ui.WalletAdapter
+import io.github.amanshuraikwar.howmuch.ui.spinner.CategoryAdapter
+import io.github.amanshuraikwar.howmuch.ui.spinner.WalletAdapter
 import kotlinx.android.synthetic.main.activity_add_expense.*
 import kotlinx.android.synthetic.main.layout_loading_overlay.*
 

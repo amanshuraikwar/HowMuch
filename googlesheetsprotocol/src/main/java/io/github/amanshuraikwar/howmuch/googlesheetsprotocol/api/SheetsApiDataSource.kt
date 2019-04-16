@@ -35,7 +35,7 @@ class SheetsApiDataSource
                     val response = sheetsAPI.spreadsheets().values()
                             .get(spreadsheetId, spreadsheetRange)
                             .execute()
-                    response.getValues()
+                    response.getValues() ?: listOf()
                 }
     }
 

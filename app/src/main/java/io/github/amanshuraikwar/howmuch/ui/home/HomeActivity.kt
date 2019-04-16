@@ -2,11 +2,13 @@ package io.github.amanshuraikwar.howmuch.ui.home
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import dagger.Binds
 import dagger.Module
 import io.github.amanshuraikwar.howmuch.R
@@ -56,6 +58,12 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
                 R.id.navigation_stats -> {
                     loadFragment(StatsFragment())
                     showAddTransactionBtn()
+
+//                    bnv.menu.getItem(0).icon  =
+//                            AnimatedVectorDrawableCompat.create(this, R.drawable.avd_pie_spin)
+//                    val anim = bnv.menu.getItem(0).icon as Animatable
+//                    anim.start()
+
                     return@setOnNavigationItemSelectedListener true
                 }
 

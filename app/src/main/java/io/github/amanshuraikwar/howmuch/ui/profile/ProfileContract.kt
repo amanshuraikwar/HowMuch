@@ -24,6 +24,7 @@ interface ProfileContract {
         fun submitList(list: List<ListItem<*, *>>)
         fun initiateSignOut()
         fun showSignOutAlertDialog()
+        fun startHistoryActivity()
     }
 
     interface Presenter : BasePresenter<View> {
@@ -96,6 +97,17 @@ interface ProfileContract {
                     HeaderListItem(
                             "Settings"
                     )
+            )
+
+            list.add(
+                    Setting.Item(
+                            Setting(
+                                    "History",
+                                    R.drawable.ic_history_white_24dp
+                            )
+                    ).setOnClickListener {
+                        getView()?.startHistoryActivity()
+                    }
             )
 
             list.add(

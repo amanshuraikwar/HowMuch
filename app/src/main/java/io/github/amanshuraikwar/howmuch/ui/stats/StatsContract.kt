@@ -8,12 +8,18 @@ import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.base.ui.base.*
 import io.github.amanshuraikwar.howmuch.ui.list.stats.StatsListItem
 import io.github.amanshuraikwar.howmuch.base.util.Util
+import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.protocol.TransactionType
 import io.github.amanshuraikwar.howmuch.protocol.Wallet
 import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderListItem
+import io.github.amanshuraikwar.howmuch.ui.list.items.Button
 import io.github.amanshuraikwar.howmuch.ui.list.items.HorizontalList
+import io.github.amanshuraikwar.howmuch.ui.list.items.StatTotal
 import io.github.amanshuraikwar.howmuch.ui.list.items.WalletItem
+import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionListItem
+import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionOnClickListener
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -25,6 +31,8 @@ interface StatsContract {
         fun setSyncError()
         fun clearSyncError()
         fun startWalletActivity(wallet: Wallet)
+        fun startTransactionActivity(transaction: Transaction)
+        fun startHistoryActivity()
     }
 
     interface Presenter : BasePresenter<View> {
@@ -39,6 +47,13 @@ interface StatsContract {
 
         private val tag = Util.getTag(this)
 
+        private val transactionOnClickListener=
+                object : TransactionOnClickListener {
+                    override fun onClick(transaction: Transaction) {
+                        getView()?.startTransactionActivity(transaction)
+                    }
+                }
+
         override fun onAttach(wasViewRecreated: Boolean) {
             super.onAttach(wasViewRecreated)
             if (wasViewRecreated) {
@@ -50,49 +65,24 @@ interface StatsContract {
 
             getDataManager()
                     .getAllTransactions()
-                    .map { it.toList() }
+                    .map {
+                        it.toList()
+                    }
                     .flatMap {
-                        list ->
-                        getDataManager()
-                                .getAllWallets()
-                                .map {
-                                    wallets ->
-                                    wallets.map {
-                                        wallet ->
-                                        WalletItem
-                                                .Item(WalletItem(
-
-                                                        wallet.copy(
-                                                                balance =
-                                                                list.filter {
-                                                                    it.walletId == wallet.id
-                                                                }.sumByDouble { if (it.type == TransactionType.DEBIT) -it.amount else it.amount }
-                                                        )
-                                                ))
-                                                .setOnClickListener(
-                                                        object : WalletItem.WalletOnClickListener {
-                                                            override fun onClick(wallet: Wallet) {
-                                                                getView()?.startWalletActivity(wallet)
-                                                            }
-                                                        }
-                                                )
-                                    }
+                        txnList ->
+                        Observable
+                                .fromCallable {
+                                    mutableListOf<ListItem<*, *>>()
                                 }
                                 .map {
-                                    HorizontalList.Eager.Item(
-                                            HorizontalList.Eager("wallets", it)
-                                    )
+                                    prevList ->
+                                    prevList.add(txnList.getTotalItem())
+                                    prevList
                                 }
                                 .map {
-                                    val newList =
-                                            mutableListOf<ListItem<*, *>>(
-                                                    HeaderListItem("Wallets"),
-                                                    it,
-                                                    HeaderListItem("Statistics")
-                                            )
-                                    newList.add(list.getTotalListItem())
-                                    newList.addAll(list.getListItems())
-                                    return@map newList
+                                    prevList ->
+                                    prevList.addAll(txnList.getListItems())
+                                    prevList
                                 }
                     }
                     .subscribeOn(Schedulers.newThread())
@@ -129,33 +119,91 @@ interface StatsContract {
                     .addToCleanup()
         }
 
-        private fun List<Transaction>.getListItems(): List<ListItem<*, *>> {
+        private fun Double.money(): Double = "%.2f".format(this).toDouble()
 
-            return this
-                    .groupBy { it.categoryId }
+        private fun List<Transaction>.getTotalItem(): ListItem<*, *> {
+
+            val totalMap = this
+                    .groupBy { it.type }
                     .mapValues {
-                        (_, transactions) ->
-                        transactions.sumByDouble { it.amount }
+                        txns ->
+                        txns.value.sumByDouble { it.amount }
                     }
-                    .map {
-                        (category, amountSum) ->
-                        Stats(category, category, "0", "%.2f".format(amountSum))
+
+            val recentTrendMap = this
+                    .groupBy { it.type }
+                    .mapValues {
+
+                        txns ->
+
+                        if (txns.value.isNotEmpty()) {
+
+                            txns.value
+                                    .subList(
+                                            maxOf(0, (txns.value.size - 1) - 6),
+                                            txns.value.size
+                                    )
+                                    .sumByDouble { it.amount }
+
+                        } else {
+                            0.0
+                        }
                     }
-                    .map { StatsListItem(it) }
+                    .mapValues {
 
+                        txns ->
 
-        }
+                        val total = totalMap[txns.key] ?: 0.0
 
-        private fun List<Transaction>.getTotalListItem(): ListItem<*, *> {
+                        if (total != 0.0) {
+                            (txns.value / total) * 100
+                        } else {
+                            0.0
+                        }
+                    }
 
-            return StatsListItem(
-                    Stats(
-                            "Total",
-                            "Total",
-                            "0",
-                            "${this.sumByDouble { it.amount }}"
+            return StatTotal.Item(
+                    StatTotal(
+                            totalMap[TransactionType.CREDIT]?.money() ?: 0.0,
+                            recentTrendMap[TransactionType.CREDIT]?.toInt() ?: 0,
+                            totalMap[TransactionType.DEBIT]?.money() ?: 0.0,
+                            recentTrendMap[TransactionType.DEBIT]?.toInt() ?: 0
                     )
             )
+        }
+
+        private fun List<Transaction>.getListItems()
+                : List<ListItem<*, *>> {
+
+            if (this.isEmpty()) {
+                return emptyList()
+            }
+
+            val list = mutableListOf<ListItem<*, *>>(
+                    HeaderListItem("Recent Transactions")
+            )
+
+            list.addAll(
+                    this
+                            .sortedBy { Util.toTimeMillisec(it.date, it.time) }
+                            .subList(kotlin.math.max(0, (this.size - 1) - 3), this.size)
+                            .reversed()
+                            .map {
+                                TransactionListItem(it, true).setOnClickListener(
+                                        transactionOnClickListener
+                                )
+                            }
+            )
+
+            list.add(
+                    Button
+                            .Item(Button("See All"))
+                            .setOnClickListener {
+                                getView()?.startHistoryActivity()
+                            }
+            )
+
+            return list
         }
 
         override fun onRefreshClicked() {

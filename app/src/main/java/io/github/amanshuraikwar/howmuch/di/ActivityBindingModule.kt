@@ -6,6 +6,7 @@ import io.github.amanshuraikwar.howmuch.googlesheetsprotocol.di.GoogleSignInProv
 import io.github.amanshuraikwar.howmuch.ui.addexpense.AddExpenseActivity
 import io.github.amanshuraikwar.howmuch.ui.expense.ExpenseActivity
 import io.github.amanshuraikwar.howmuch.ui.history.HistoryFragment
+import io.github.amanshuraikwar.howmuch.ui.history.activity.HistoryActivity
 import io.github.amanshuraikwar.howmuch.ui.home.HomeActivity
 import io.github.amanshuraikwar.howmuch.ui.profile.ProfileFragment
 import io.github.amanshuraikwar.howmuch.ui.signin.SignInFragment
@@ -65,4 +66,9 @@ import io.github.amanshuraikwar.howmuch.ui.wallet.WalletActivity
             modules = [WalletActivity.WalletModule::class]
     )
     abstract fun h(): WalletActivity
+
+    @ContributesAndroidInjector(
+            modules = [HistoryActivity.DiModule::class]
+    )
+    abstract fun i(): HistoryActivity
 }

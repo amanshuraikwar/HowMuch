@@ -52,21 +52,65 @@ class GoogleSheetsCategoriesDataManager
 
     override fun getCategoryById(id: String): Observable<Category> {
         // todo
-        return Observable.fromCallable { Category("", "", TransactionType.DEBIT) }
+        return Observable.fromCallable { Category("", "", TransactionType.DEBIT, false) }
     }
 
     override fun addCategory(category: Category): Observable<Category> {
-        // todo
-        return Observable.fromCallable { Category("", "", TransactionType.DEBIT) }
+        return userDataManager
+                .getSignedInUser()
+                .flatMap {
+                    localDataManager.getSpreadsheetIdForEmail(it.email)
+                }
+                .flatMap {
+                    sheetsHelper
+                            .addCategory(
+                                    category = category,
+                                    spreadsheetId = it,
+                                    googleAccountCredential =
+                                    authenticationManager.getLastSignedAccount()!!.credential()
+                            )
+                            // todo update id of category
+                            .toSingleDefault(category)
+                            .toObservable()
+                }
     }
 
     override fun updateCategory(category: Category): Observable<Category> {
-        // todo
-        return Observable.fromCallable { Category("", "", TransactionType.DEBIT) }
+        return userDataManager
+                .getSignedInUser()
+                .flatMap {
+                    localDataManager.getSpreadsheetIdForEmail(it.email)
+                }
+                .flatMap {
+                    sheetsHelper
+                            .updateCategory(
+                                    category = category,
+                                    spreadsheetId = it,
+                                    googleAccountCredential =
+                                    authenticationManager.getLastSignedAccount()!!.credential()
+                            )
+                            .toSingleDefault(category)
+                            .toObservable()
+                }
     }
 
     override fun deleteCategory(category: Category): Observable<Category> {
-        // todo
-        return Observable.fromCallable { Category("", "", TransactionType.DEBIT) }
+        category.active = false
+        return userDataManager
+                .getSignedInUser()
+                .flatMap {
+                    localDataManager.getSpreadsheetIdForEmail(it.email)
+                }
+                .flatMap {
+                    sheetsHelper
+                            .updateCategory(
+                                    category = category,
+                                    spreadsheetId = it,
+                                    googleAccountCredential =
+                                    authenticationManager.getLastSignedAccount()!!.credential()
+                            )
+                            .toSingleDefault(category)
+                            .toObservable()
+                }
     }
 }

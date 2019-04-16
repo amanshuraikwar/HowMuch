@@ -295,7 +295,6 @@ interface ExpenseContract {
                             }
                     )
                     .addToCleanup()
-
         }
 
         override fun onTransactionTypeBtnClicked() {

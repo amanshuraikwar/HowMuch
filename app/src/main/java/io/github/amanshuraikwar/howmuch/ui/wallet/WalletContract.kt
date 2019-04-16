@@ -109,7 +109,7 @@ interface WalletContract {
                 getView()?.showBalanceError("Balance cannot be empty!")
             }
 
-            val newWallet = Wallet(curWallet.id, name, balance.toDouble())
+            val newWallet = Wallet(curWallet.id, name, balance.toDouble(), curWallet.active)
 
             getDataManager()
                     .updateWallet(newWallet)
@@ -151,7 +151,34 @@ interface WalletContract {
         }
 
         override fun onDeleteConfirmedClicked() {
-            // todo
+            getDataManager()
+                    .deleteWallet(curWallet)
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe {
+                        getView()?.showLoading("Deleting...")
+                    }
+                    .subscribe(
+                            {
+                                updated = true
+                                getView()?.run {
+                                    close(updated)
+                                    hideLoading()
+                                }
+                            },
+                            {
+                                it.printStackTrace()
+                                Log.e(tag, "onDeleteConfirmedClicked: deleteWallet", it)
+
+                                // todo handle specific error codes
+
+                                getView()?.run {
+                                    hideLoading()
+                                    showError(it.message ?: Constants.DEFAULT_ERROR_MESSAGE)
+                                }
+                            }
+                    )
+                    .addToCleanup()
         }
     }
 }

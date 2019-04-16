@@ -4,6 +4,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Note:
+ *      1. Sheet cell range format: sheet_title ! start_col start_row_num : end_col
+ *
+ * @author amanshuraikwar
+ */
 public interface Constants {
 
     String METADATA_SHEET_TITLE = "Metadata";
@@ -14,7 +20,7 @@ public interface Constants {
     int CATEGORIES_START_ROW_WITHOUT_HEADING = 4;
 
     String CATEGORIES_START_COL = "B";
-    String CATEGORIES_END_COL = "C";
+    String CATEGORIES_END_COL = "D";
 
     String CATEGORIES_CELL_RANGE_WITH_HEADING =
             CATEGORIES_START_COL + CATEGORIES_START_ROW_WITH_HEADING + ":" + CATEGORIES_END_COL;
@@ -22,23 +28,30 @@ public interface Constants {
     String CATEGORIES_CELL_RANGE_WITHOUT_HEADING =
             CATEGORIES_START_COL + CATEGORIES_START_ROW_WITHOUT_HEADING + ":" + CATEGORIES_END_COL;
 
+    String CATEGORIES_SPREAD_SHEET_RANGE_WITH_HEADING =
+            METADATA_SHEET_TITLE + "!" + CATEGORIES_CELL_RANGE_WITH_HEADING;
+
+    String CATEGORIES_SPREAD_SHEET_RANGE_WITHOUT_HEADING =
+            METADATA_SHEET_TITLE + "!" + CATEGORIES_CELL_RANGE_WITHOUT_HEADING;
+
     List<List<String>> DEFAULT_CATEGORIES_WITH_HEADING = Arrays.asList(
-            Collections.singletonList("Categories"),
-            Arrays.asList("Name", "Type"),
-            Arrays.asList("Food", "DEBIT"),
-            Arrays.asList("Health/Medical", "DEBIT"),
-            Arrays.asList("Home", "DEBIT"),
-            Arrays.asList("Transportation", "DEBIT"),
-            Arrays.asList("Personal", "DEBIT"),
-            Arrays.asList("Utilities", "DEBIT"),
-            Arrays.asList("Travel", "DEBIT"),
-            Arrays.asList("Debt", "DEBIT"),
-            Arrays.asList("Other", "DEBIT"),
-            Arrays.asList("Savings", "CREDIT"),
-            Arrays.asList("Paycheck", "CREDIT"),
-            Arrays.asList("Bonus", "CREDIT"),
-            Arrays.asList("Interest", "CREDIT"),
-            Arrays.asList("Other", "CREDIT")
+            Collections.singletonList("Categories"),// 2
+                          // B              // C        // D
+            Arrays.asList("Name",           "Type",     "Active"),// 3
+            Arrays.asList("Food",           "DEBIT",    "true"), // 4
+            Arrays.asList("Health/Medical", "DEBIT",    "true"),
+            Arrays.asList("Home",           "DEBIT",    "true"),
+            Arrays.asList("Transportation", "DEBIT",    "true"),
+            Arrays.asList("Personal",       "DEBIT",    "true"),
+            Arrays.asList("Utilities",      "DEBIT",    "true"),
+            Arrays.asList("Travel",         "DEBIT",    "true"),
+            Arrays.asList("Debt",           "DEBIT",    "true"),
+            Arrays.asList("Other",          "DEBIT",    "true"),
+            Arrays.asList("Savings",        "CREDIT",   "true"),
+            Arrays.asList("Paycheck",       "CREDIT",   "true"),
+            Arrays.asList("Bonus",          "CREDIT",   "true"),
+            Arrays.asList("Interest",       "CREDIT",   "true"),
+            Arrays.asList("Other",          "CREDIT",   "true")
     );
 
     //endregion
@@ -49,7 +62,7 @@ public interface Constants {
     int WALLETS_START_ROW_WITHOUT_HEADING = 4;
 
     String WALLETS_START_COL = "F";
-    String WALLETS_END_COL = "G";
+    String WALLETS_END_COL = "H";
 
     String WALLETS_CELL_RANGE_WITH_HEADING =
             WALLETS_START_COL + WALLETS_START_ROW_WITH_HEADING + ":" + WALLETS_END_COL;
@@ -57,11 +70,19 @@ public interface Constants {
     String WALLETS_CELL_RANGE_WITHOUT_HEADING =
             WALLETS_START_COL + WALLETS_START_ROW_WITHOUT_HEADING + ":" + WALLETS_END_COL;
 
+    String WALLETS_SPREAD_SHEET_RANGE_WITH_HEADING =
+            METADATA_SHEET_TITLE + "!" + WALLETS_CELL_RANGE_WITH_HEADING;
+
+    String WALLETS_SPREAD_SHEET_RANGE_WITHOUT_HEADING =
+            METADATA_SHEET_TITLE + "!" + WALLETS_CELL_RANGE_WITHOUT_HEADING;
+
     List<List<String>> DEFAULT_WALLETS_WITH_HEADING = Arrays.asList(
-            Collections.singletonList("Wallets"),
-            Arrays.asList("Name", "Balance"),
-            Arrays.asList("Corporate", "0.0"),
-            Arrays.asList("Personal", "0.0")
+            Collections.singletonList("Wallets"),// 2
+                            // F            // G        // H
+            Arrays.asList(  "Name",         "Balance",  "Active"),// 3
+            Arrays.asList(  "Corporate",    "0.0",      "true"),// 4
+            Arrays.asList(  "Personal",     "0.0",      "true"),// 5
+            Arrays.asList(  "Other",        "0.0",      "true")// 6
     );
 
     //endregion

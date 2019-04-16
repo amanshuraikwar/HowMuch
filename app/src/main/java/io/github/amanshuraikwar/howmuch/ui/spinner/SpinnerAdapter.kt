@@ -1,4 +1,4 @@
-package io.github.amanshuraikwar.howmuch.ui
+package io.github.amanshuraikwar.howmuch.ui.spinner
 
 import android.content.Context
 import android.view.LayoutInflater

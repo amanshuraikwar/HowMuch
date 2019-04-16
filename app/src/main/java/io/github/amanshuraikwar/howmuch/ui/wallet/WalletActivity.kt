@@ -42,12 +42,12 @@ class WalletActivity
     }
 
     override fun showLoading(message: String) {
-        loadingParentLl.visibility = View.VISIBLE
+        loadingParentLl.visibility = VISIBLE
         loadingTv.text = message
     }
 
     override fun hideLoading() {
-        loadingParentLl.visibility = View.GONE
+        loadingParentLl.visibility = GONE
         loadingTv.text = ""
     }
 
@@ -102,8 +102,7 @@ class WalletActivity
             presenter.onEditBtnClicked()
         }
 
-        // todo
-        deleteIb.visibility = GONE
+        deleteIb.visibility = VISIBLE
         deleteIb.setOnClickListener{
             presenter.onDeleteBtnClicked()
         }

@@ -3,7 +3,7 @@
     xmlns:aapt="http://schemas.android.com/aapt">
     <aapt:attr name="android:drawable">
         <vector
-            android:name="up_stats"
+            android:name="flat_stats"
             android:width="24dp"
             android:height="24dp"
             android:viewportWidth="24"
@@ -13,7 +13,7 @@
                 android:pathData="M 0 0 L 24 0 L 24 24 L 0 24 L 0 0 Z M 0 0 L 4 0 L 4 24 L 0 24 L 0 0 Z"/>
             <path
                 android:name="arrow_path"
-                android:pathData="M 16 6 L 18.29 8.29 L 13.41 13.17 L 9.41 9.17 L 2 16.59 L 3.41 18 L 9.41 12 L 13.41 16 L 19.71 9.71 L 22 12 L 22 6 Z"
+                android:pathData="M 22 12 L 18 8 L 18 11 L 3 11 L 3 13 L 18 13 L 18 16 Z"
                 android:fillColor="#ffffffff"
                 android:strokeWidth="1"/>
         </vector>

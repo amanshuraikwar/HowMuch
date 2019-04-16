@@ -84,7 +84,6 @@
             android:layout_margin="@dimen/margin_normal"
             android:src="@drawable/ic_delete_white_24dp"
             style="@style/Widget.HowMuch.ImageButton.Borderless"
-            android:visibility="gone"
             android:contentDescription="@string/delete" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

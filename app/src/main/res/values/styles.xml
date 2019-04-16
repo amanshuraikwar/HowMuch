@@ -58,6 +58,12 @@
     </style>
 
     <style
+        name="Widget.HowMuch.Button.Borderless">
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style
         name="Widget.HowMuch.Button.Onboarding">
         <item name="android:paddingStart">@dimen/padding_very_large</item>
         <item name="android:paddingEnd">@dimen/padding_very_large</item>
@@ -299,7 +305,7 @@
 
     <style
         name="TextAppearance.AmountSmall"
-        parent="@style/TextAppearance.Headline">
+        parent="@style/TextAppearance.Title">
 
         <item name="android:fontFamily">@font/roboto_mono_medium</item>
         <item name="android:textAllCaps">true</item>
@@ -330,6 +336,33 @@
         <item name="android:textColor">@color/primaryText</item>
         <item name="android:fontFamily">@font/rubik</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style
+        name="TextAppearance.TotalStatTitle"
+        parent="@style/TextAppearance.Title">
+
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:fontFamily">@font/rubik</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style
+        name="TextAppearance.TotalStatAmount"
+        parent="@style/TextAppearance.Title">
+
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style
+        name="TextAppearance.StatTrendAmount"
+        parent="@style/TextAppearance.Caption">
+
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/secondaryText</item>
     </style>
 
     <style

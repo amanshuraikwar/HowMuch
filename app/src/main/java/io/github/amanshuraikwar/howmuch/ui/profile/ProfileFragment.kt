@@ -1,6 +1,7 @@
 package io.github.amanshuraikwar.howmuch.ui.profile
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import dagger.Provides
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.base.di.ActivityContext
 import io.github.amanshuraikwar.howmuch.base.ui.base.BaseFragment
+import io.github.amanshuraikwar.howmuch.ui.history.activity.HistoryActivity
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
@@ -73,6 +75,10 @@ class ProfileFragment
                 .setPositiveButton("Cancel") { dialog, _ -> dialog.dismiss() }
                 .setCancelable(true)
                 .show()
+    }
+
+    override fun startHistoryActivity() {
+        startActivity(Intent(activity, HistoryActivity::class.java))
     }
 
     override fun showToast(message: String) {

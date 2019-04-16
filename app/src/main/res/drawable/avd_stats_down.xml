@@ -14,7 +14,7 @@
             <path
                 android:name="arrow_path"
                 android:pathData="M 16 18 L 18.29 15.71 L 13.41 10.83 L 9.41 14.83 L 2 7.41 L 3.41 6 L 9.41 12 L 13.41 8 L 19.71 14.29 L 22 12 L 22 18 Z"
-                android:fillColor="#ff000000"
+                android:fillColor="#ffffffff"
                 android:strokeWidth="1"/>
         </vector>
     </aapt:attr>

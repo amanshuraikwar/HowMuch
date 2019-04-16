@@ -64,6 +64,7 @@
     <string name="wallet_icon">Wallet icon</string>
     <string name="wallet_name_hint">Name</string>
     <string name="wallet_balance_hine">Balance</string>
+    <string name="credit_icon">credit icon</string>
 
     <array name="tab_names">
         <item>@string/app_name</item>

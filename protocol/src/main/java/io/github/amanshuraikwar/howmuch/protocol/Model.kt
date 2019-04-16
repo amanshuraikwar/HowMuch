@@ -33,12 +33,14 @@ data class Transaction(val id: String,
 @Parcelize
 data class Category(val id: String,
                     var name: String,
-                    var type: TransactionType) : Parcelable
+                    var type: TransactionType,
+                    var active: Boolean) : Parcelable
 
 @Parcelize
 data class Wallet(val id: String,
                   var name: String,
-                  var balance: Double) : Parcelable {
+                  var balance: Double,
+                  var active: Boolean) : Parcelable {
 
     init {
         balance = balance.money()

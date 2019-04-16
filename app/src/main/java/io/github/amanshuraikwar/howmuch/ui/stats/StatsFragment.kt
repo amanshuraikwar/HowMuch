@@ -14,7 +14,10 @@ import dagger.Binds
 import dagger.Module
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.base.ui.base.BaseFragment
+import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.protocol.Wallet
+import io.github.amanshuraikwar.howmuch.ui.expense.ExpenseActivity
+import io.github.amanshuraikwar.howmuch.ui.history.activity.HistoryActivity
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.howmuch.ui.wallet.WalletActivity
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
@@ -28,6 +31,7 @@ class StatsFragment
 
     companion object {
         private const val REQ_CODE_WALLET = 10070
+        private const val REQ_CODE_TRANSACTION = 10069
     }
 
     private var adapter: MultiItemListAdapter<*>? = null
@@ -99,6 +103,16 @@ class StatsFragment
         val intent = Intent(activity, WalletActivity::class.java)
         intent.putExtra(WalletActivity.KEY_WALLET, wallet)
         startActivityForResult(intent, REQ_CODE_WALLET)
+    }
+
+    override fun startTransactionActivity(transaction: Transaction) {
+        val intent = Intent(activity, ExpenseActivity::class.java)
+        intent.putExtra(ExpenseActivity.KEY_TRANSACTION, transaction)
+        startActivityForResult(intent, REQ_CODE_TRANSACTION)
+    }
+
+    override fun startHistoryActivity() {
+        startActivity(Intent(activity, HistoryActivity::class.java))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

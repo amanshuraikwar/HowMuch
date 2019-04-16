@@ -172,16 +172,13 @@ public class Util {
         return new SimpleDateFormat("dd-MM-yyyy", Locale.UK).format(date);
     }
 
-    public static String getDefaultCategoriesSpreadSheetRange() {
-        return "Metadata!B3:B";
-    }
+    public static long toTimeMillisec(String uglyDate, String uglyTime) throws ParseException {
 
-    public static String getDefaultTransactionsSheetTitle() {
-        return "Transactions";
-    }
+        Date date =
+                new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.UK)
+                        .parse(uglyDate + " " + uglyTime);
 
-    public static int getDefaultTransactionsSpreadSheetStartPosition() {
-        return 4;
+        return date.getTime();
     }
 
     public static String getCellRange(String sheetTitle,

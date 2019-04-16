@@ -98,9 +98,6 @@ class WalletItem(val wallet: Wallet) {
                 itemView.balanceTv.text = balanceStr
                 itemView.balanceTv.setTextColor(ContextCompat.getColor(host, R.color.green))
             }
-
-
-
         }
     }
 }
