@@ -16,6 +16,10 @@
         android:layout_marginEnd="@dimen/margin_small"
         android:layout_marginTop="@dimen/margin_normal"
         android:layout_marginBottom="@dimen/margin_normal"
+        android:clickable="true"
+        android:focusable="true"
+        android:stateListAnimator="@animator/expense_elevation"
+        android:foreground="?attr/selectableItemBackground"
         app:cardCornerRadius="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -93,6 +97,10 @@
         android:layout_marginEnd="@dimen/margin_normal"
         android:layout_marginTop="@dimen/margin_normal"
         android:layout_marginBottom="@dimen/margin_normal"
+        android:clickable="true"
+        android:focusable="true"
+        android:stateListAnimator="@animator/expense_elevation"
+        android:foreground="?attr/selectableItemBackground"
         app:cardCornerRadius="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout

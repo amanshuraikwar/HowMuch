@@ -32,7 +32,7 @@ interface StatsContract {
         fun clearSyncError()
         fun startWalletActivity(wallet: Wallet)
         fun startTransactionActivity(transaction: Transaction)
-        fun startHistoryActivity()
+        fun startHistoryActivity(filter: String? = null)
     }
 
     interface Presenter : BasePresenter<View> {
@@ -167,7 +167,13 @@ interface StatsContract {
                             totalMap[TransactionType.CREDIT]?.money() ?: 0.0,
                             recentTrendMap[TransactionType.CREDIT]?.toInt() ?: 0,
                             totalMap[TransactionType.DEBIT]?.money() ?: 0.0,
-                            recentTrendMap[TransactionType.DEBIT]?.toInt() ?: 0
+                            recentTrendMap[TransactionType.DEBIT]?.toInt() ?: 0,
+                            {
+                                getView()?.startHistoryActivity("transaction_type=CREDIT")
+                            },
+                            {
+                                getView()?.startHistoryActivity("transaction_type=DEBIT")
+                            }
                     )
             )
         }

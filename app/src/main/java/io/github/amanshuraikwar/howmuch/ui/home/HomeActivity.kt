@@ -67,11 +67,11 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
                     return@setOnNavigationItemSelectedListener true
                 }
 
-                R.id.navigation_history -> {
-                    loadFragment(HistoryFragment())
-                    showAddTransactionBtn()
-                    return@setOnNavigationItemSelectedListener true
-                }
+//                R.id.navigation_history -> {
+//                    loadFragment(HistoryFragment())
+//                    showAddTransactionBtn()
+//                    return@setOnNavigationItemSelectedListener true
+//                }
 
                 R.id.navigation_profile-> {
                     loadFragment(ProfileFragment())

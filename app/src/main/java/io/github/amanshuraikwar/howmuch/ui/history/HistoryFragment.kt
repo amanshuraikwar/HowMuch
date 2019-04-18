@@ -27,7 +27,12 @@ class HistoryFragment
 @Inject constructor(): BaseFragment<HistoryContract.View, HistoryContract.Presenter>(), HistoryContract.View {
 
     companion object {
+
         private const val REQ_CODE_TRANSACTION = 10069
+
+        // Filters for the transaction list to be shown
+        // Format: transaction_type=DEBIT|CREDIT|ALL&category_id=id1|id2|id3&wallet_id=id1|id2|id3
+        const val KEY_FILTERS = "filters"
     }
 
     private var adapter: MultiItemListAdapter<*>? = null
@@ -93,6 +98,10 @@ class HistoryFragment
     override fun clearSyncError() {
         toolbar.menu.getItem(0).icon =
                 ContextCompat.getDrawable(activity, R.drawable.ic_autorenew_black_24dp)
+    }
+
+    override fun getFilters(): String? {
+        return arguments?.getString(KEY_FILTERS)
     }
 
     override fun showToast(message: String) {

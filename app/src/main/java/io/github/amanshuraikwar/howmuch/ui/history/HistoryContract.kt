@@ -1,5 +1,6 @@
 package io.github.amanshuraikwar.howmuch.ui.history
 
+import android.util.Log
 import io.github.amanshuraikwar.howmuch.base.bus.AppBus
 import io.github.amanshuraikwar.howmuch.base.data.DataManager
 import io.github.amanshuraikwar.howmuch.protocol.Transaction
@@ -8,7 +9,8 @@ import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderListItem
 import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyListItem
 import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionListItem
 import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionOnClickListener
-import io.github.amanshuraikwar.howmuch.base.util.Util;
+import io.github.amanshuraikwar.howmuch.base.util.Util
+import io.github.amanshuraikwar.howmuch.protocol.TransactionType
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -21,6 +23,7 @@ interface HistoryContract {
         fun startTransactionActivity(transaction: Transaction)
         fun setSyncError()
         fun clearSyncError()
+        fun getFilters(): String?
     }
 
     interface Presenter : BasePresenter<View> {
@@ -30,7 +33,9 @@ interface HistoryContract {
 
     class HistoryPresenter @Inject constructor(appBus: AppBus,
                                                dataManager: DataManager)
-        : BasePresenterImpl<View>(appBus, dataManager), HistoryContract.Presenter {
+        : BasePresenterImpl<View>(appBus, dataManager), Presenter {
+
+        private val tag = Util.getTag(this)
 
         private val transactionOnClickListener=
                 object : TransactionOnClickListener {
@@ -64,7 +69,12 @@ interface HistoryContract {
 
             getDataManager()
                     .getAllTransactions()
-                    .map { it.toList().getListItems() }
+                    .map {
+                        it
+                                .toList()
+                                .filter(getView()?.getFilters())
+                                .getListItems()
+                    }
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe {
@@ -95,26 +105,101 @@ interface HistoryContract {
 
         }
 
+        private fun List<Transaction>.filter(filterStr: String?): List<Transaction> {
+
+            if (filterStr == null) {
+                return this
+            }
+
+            val filters = filterStr.split("&")
+            Log.i(tag, "filterStr: ${filters.size} filters found.")
+            Log.i(tag, "filterStr: Filters = $filters")
+
+            val transactionTypes = HashSet<TransactionType>()
+            val categoryIds = HashSet<String>()
+            val walletIds = HashSet<String>()
+
+            filters.forEach {
+
+                filter ->
+
+                val filterParts = filter.split("=")
+
+                if (filterParts.size == 2) {
+
+                    when {
+
+                        filterParts[0] == "transaction_type" -> {
+
+                            val filterValues = filterParts[1].split("|")
+
+                            filterValues.forEach {
+
+                                when (it) {
+                                    "DEBIT" -> transactionTypes.add(TransactionType.DEBIT)
+                                    "CREDIT" -> transactionTypes.add(TransactionType.CREDIT)
+                                    "ALL" -> {
+                                        transactionTypes.add(TransactionType.CREDIT)
+                                        transactionTypes.add(TransactionType.DEBIT)
+                                    }
+                                    else -> {
+                                        Log.w(tag, "filter: Invalid transaction type $it found for filter.")
+                                    }
+                                }
+                            }
+
+                        }
+
+                        filterParts[0] == "category_id" -> {
+
+                            val filterValues = filterParts[1].split("|")
+                            filterValues.forEach { categoryIds.add(it) }
+
+                        }
+
+                        filterParts[0] == "wallet_id" -> {
+
+                            val filterValues = filterParts[1].split("|")
+                            filterValues.forEach { walletIds.add(it) }
+
+                        }
+                    }
+
+                } else {
+                    Log.w(tag, "filterStr: Invalid filterStr $filter found.")
+                }
+            }
+
+            return this.filter {
+
+                var valid = true
+
+                if (transactionTypes.isNotEmpty()) {
+                    valid = valid && (it.type in transactionTypes)
+                }
+
+                if (categoryIds.isNotEmpty()) {
+                    valid = valid && (it.categoryId in categoryIds)
+                }
+
+                if (walletIds.isNotEmpty()) {
+                    valid = valid && (it.walletId in walletIds)
+                }
+
+                valid
+            }
+        }
+
         private fun List<Transaction>.getListItems(): List<ListItem<*, *>> {
+
 
             val inputSorted =
                     this
                             .sortedWith(
                                     Comparator {
                                         t1,t2 ->
-
-                                        if (t1.date == t2.date && t1.time == t2.time) {
-                                            return@Comparator 0
-                                        }
-
-                                        if(Util.compareDateTime(
-                                                        "${t1.date} ${t1.time}",
-                                                        "${t2.date} ${t2.time}"
-                                                )) {
-                                            return@Comparator -1
-                                        }
-
-                                        return@Comparator 1
+                                        (Util.toTimeMillisec(t1.date, t1.time)
+                                                - Util.toTimeMillisec(t2.date, t2.time)).toInt()
                                     }
                             )
                             .reversed()

@@ -7,12 +7,12 @@
         android:title="@string/title_stats" />
 
     <item
-        android:id="@+id/navigation_history"
-        android:icon="@drawable/history_drawable_selector"
-        android:title="@string/title_history" />
+        android:id="@+id/navigation_categories"
+        android:icon="@drawable/baseline_category_24"
+        android:title="@string/category" />
 
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/profile_drawable_selector"
+        android:icon="@drawable/person_squeeze_selector"
         android:title="@string/title_profile" />
 </menu>

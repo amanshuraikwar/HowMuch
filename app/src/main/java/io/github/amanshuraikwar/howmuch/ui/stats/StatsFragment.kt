@@ -111,8 +111,15 @@ class StatsFragment
         startActivityForResult(intent, REQ_CODE_TRANSACTION)
     }
 
-    override fun startHistoryActivity() {
-        startActivity(Intent(activity, HistoryActivity::class.java))
+    override fun startHistoryActivity(filter: String?) {
+        startActivity(
+                {
+                    val intent = Intent(activity, HistoryActivity::class.java)
+                    intent.putExtra(HistoryActivity.KEY_FILTERS, filter)
+                    intent
+                }.invoke()
+
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

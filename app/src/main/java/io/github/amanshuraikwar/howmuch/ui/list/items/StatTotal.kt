@@ -16,7 +16,9 @@ import kotlinx.android.synthetic.main.item_stat_total.view.*
 class StatTotal(val creditAmount: Double,
                 val creditTrend: Int,
                 val debitAmount: Double,
-                val debitTrend: Int) {
+                val debitTrend: Int,
+                val onCreditClicked: () -> Unit,
+                val onDebitClicked: () -> Unit) {
 
     class Item(val statTotal: StatTotal)
         : ListItem<SimpleListItemOnClickListener, ListItemTypeFactory>() {
@@ -94,6 +96,14 @@ class StatTotal(val creditAmount: Double,
                 itemView.debitTrendTv.text = "+${listItem.statTotal.debitTrend}%"
             } else {
                 itemView.debitTrendTv.text = "-${listItem.statTotal.debitTrend}%"
+            }
+
+            itemView.creditCv.setOnClickListener {
+                listItem.statTotal.onCreditClicked.invoke()
+            }
+
+            itemView.debitCv.setOnClickListener {
+                listItem.statTotal.onDebitClicked.invoke()
             }
         }
     }

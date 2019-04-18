@@ -12,14 +12,33 @@ import io.github.amanshuraikwar.howmuch.ui.history.HistoryFragment
 class HistoryActivity : BaseActivity<HistoryActivityContract.View, HistoryActivityContract.Presenter>()
         , HistoryActivityContract.View {
 
+    companion object {
+        // Filters for the transaction list to be shown
+        // Format: transaction_type=DEBIT|CREDIT|ALL&category_id=id1|id2|id3&wallet_id=id1|id2|id3
+        const val KEY_FILTERS = "filters"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fragment_container)
     }
 
     override fun loadFragment() {
+
         supportFragmentManager.beginTransaction()
-                .replace(R.id.containerFl, HistoryFragment())
+                .replace(
+                        R.id.containerFl,
+                        {
+                            val fragment = HistoryFragment()
+                            val bundle = Bundle()
+                            bundle.putString(
+                                    HistoryFragment.KEY_FILTERS,
+                                    intent.getStringExtra(KEY_FILTERS)
+                            )
+                            fragment.arguments = bundle
+                            fragment
+                        }.invoke()
+                )
                 .commit()
     }
 
