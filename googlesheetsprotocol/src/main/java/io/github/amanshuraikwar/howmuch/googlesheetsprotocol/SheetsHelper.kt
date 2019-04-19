@@ -359,7 +359,7 @@ class SheetsHelper @Inject constructor(private val sheetsDataSource: SheetsDataS
                         listOf(
                                 listOf(
                                         category.name,
-                                        category.type,
+                                        category.type.toString(),
                                         category.active
                                 )
                         ),

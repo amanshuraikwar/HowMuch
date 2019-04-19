@@ -4,6 +4,8 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import io.github.amanshuraikwar.howmuch.googlesheetsprotocol.di.GoogleSignInProvides
 import io.github.amanshuraikwar.howmuch.ui.addexpense.AddExpenseActivity
+import io.github.amanshuraikwar.howmuch.ui.categories.CategoriesFragment
+import io.github.amanshuraikwar.howmuch.ui.editcategories.EditCategoriesActivity
 import io.github.amanshuraikwar.howmuch.ui.expense.ExpenseActivity
 import io.github.amanshuraikwar.howmuch.ui.history.HistoryFragment
 import io.github.amanshuraikwar.howmuch.ui.history.activity.HistoryActivity
@@ -12,11 +14,13 @@ import io.github.amanshuraikwar.howmuch.ui.profile.ProfileFragment
 import io.github.amanshuraikwar.howmuch.ui.signin.SignInFragment
 import io.github.amanshuraikwar.howmuch.ui.stats.StatsFragment
 import io.github.amanshuraikwar.howmuch.ui.wallet.WalletActivity
+import io.github.amanshuraikwar.howmuch.ui.wallets.WalletsFragment
 
 /**
  * Created by Amanshu Raikwar on 07/03/18.
  */
 
+@Suppress("unused")
 @Module abstract class ActivityBindingModule {
 
     @ContributesAndroidInjector(
@@ -71,4 +75,19 @@ import io.github.amanshuraikwar.howmuch.ui.wallet.WalletActivity
             modules = [HistoryActivity.DiModule::class]
     )
     abstract fun i(): HistoryActivity
+
+    @ContributesAndroidInjector(
+            modules = [CategoriesFragment.DiModule::class]
+    )
+    abstract fun j(): CategoriesFragment
+
+    @ContributesAndroidInjector(
+            modules = [WalletsFragment.DiModule::class]
+    )
+    abstract fun k(): WalletsFragment
+
+    @ContributesAndroidInjector(
+            modules = [EditCategoriesActivity.DiModule::class]
+    )
+    abstract fun l(): EditCategoriesActivity
 }

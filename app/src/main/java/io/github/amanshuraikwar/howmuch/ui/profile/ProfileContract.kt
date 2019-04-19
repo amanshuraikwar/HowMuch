@@ -25,6 +25,8 @@ interface ProfileContract {
         fun initiateSignOut()
         fun showSignOutAlertDialog()
         fun startHistoryActivity()
+        fun startWalletsActivity()
+        fun startCategoriesActivity()
     }
 
     interface Presenter : BasePresenter<View> {
@@ -97,6 +99,28 @@ interface ProfileContract {
                     HeaderListItem(
                             "Settings"
                     )
+            )
+
+            list.add(
+                    Setting.Item(
+                            Setting(
+                                    "Wallets",
+                                    R.drawable.ic_account_balance_wallet_white_24dp
+                            )
+                    ).setOnClickListener {
+                        getView()?.startWalletsActivity()
+                    }
+            )
+
+            list.add(
+                    Setting.Item(
+                            Setting(
+                                    "Categories",
+                                    R.drawable.baseline_category_24
+                            )
+                    ).setOnClickListener {
+                        getView()?.startCategoriesActivity()
+                    }
             )
 
             list.add(

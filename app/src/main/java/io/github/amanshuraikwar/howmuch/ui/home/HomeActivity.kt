@@ -2,23 +2,22 @@ package io.github.amanshuraikwar.howmuch.ui.home
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import dagger.Binds
 import dagger.Module
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.base.di.ActivityContext
 import io.github.amanshuraikwar.howmuch.ui.addexpense.AddExpenseActivity
 import io.github.amanshuraikwar.howmuch.base.ui.base.BaseActivity
-import io.github.amanshuraikwar.howmuch.ui.history.HistoryFragment
+import io.github.amanshuraikwar.howmuch.ui.categories.CategoriesFragment
 import io.github.amanshuraikwar.howmuch.ui.profile.ProfileFragment
 import io.github.amanshuraikwar.howmuch.ui.signin.SignInFragment
 import io.github.amanshuraikwar.howmuch.ui.stats.StatsFragment
+import io.github.amanshuraikwar.howmuch.ui.wallets.WalletsFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), HomeContract.View {
@@ -58,20 +57,20 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
                 R.id.navigation_stats -> {
                     loadFragment(StatsFragment())
                     showAddTransactionBtn()
-
-//                    bnv.menu.getItem(0).icon  =
-//                            AnimatedVectorDrawableCompat.create(this, R.drawable.avd_pie_spin)
-//                    val anim = bnv.menu.getItem(0).icon as Animatable
-//                    anim.start()
-
                     return@setOnNavigationItemSelectedListener true
                 }
 
-//                R.id.navigation_history -> {
-//                    loadFragment(HistoryFragment())
-//                    showAddTransactionBtn()
-//                    return@setOnNavigationItemSelectedListener true
-//                }
+                R.id.navigation_categories -> {
+                    loadFragment(CategoriesFragment())
+                    showAddTransactionBtn()
+                    return@setOnNavigationItemSelectedListener true
+                }
+
+                R.id.navigation_wallets -> {
+                    loadFragment(WalletsFragment())
+                    showAddTransactionBtn()
+                    return@setOnNavigationItemSelectedListener true
+                }
 
                 R.id.navigation_profile-> {
                     loadFragment(ProfileFragment())

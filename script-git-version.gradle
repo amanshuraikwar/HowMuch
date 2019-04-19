@@ -31,7 +31,7 @@ ext {
     gitBranchName = gitBranch()
 }
 
-task printGitInfo() << {
+task printGitInfo() {
     println("Version Name: $gitVersionName")
     println("Version Code: $gitVersionCode")
     println("Version Code Time: $gitVersionCodeTime")

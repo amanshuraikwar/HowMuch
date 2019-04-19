@@ -59,7 +59,7 @@ dependencies {
 
     // Rx
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroidVersion"
-    implementation "io.reactivex:rxkotlin:$rxjavaVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rxjavaVersion"
 
     // Dagger
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"

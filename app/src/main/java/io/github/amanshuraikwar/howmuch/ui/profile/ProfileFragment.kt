@@ -17,6 +17,7 @@ import dagger.Provides
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.base.di.ActivityContext
 import io.github.amanshuraikwar.howmuch.base.ui.base.BaseFragment
+import io.github.amanshuraikwar.howmuch.ui.editcategories.EditCategoriesActivity
 import io.github.amanshuraikwar.howmuch.ui.history.activity.HistoryActivity
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
@@ -79,6 +80,14 @@ class ProfileFragment
 
     override fun startHistoryActivity() {
         startActivity(Intent(activity, HistoryActivity::class.java))
+    }
+
+    override fun startWalletsActivity() {
+        // todo
+    }
+
+    override fun startCategoriesActivity() {
+        startActivity(Intent(activity, EditCategoriesActivity::class.java))
     }
 
     override fun showToast(message: String) {

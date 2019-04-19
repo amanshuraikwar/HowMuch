@@ -3,10 +3,8 @@ package io.github.amanshuraikwar.howmuch.ui.stats
 import android.util.Log
 import io.github.amanshuraikwar.howmuch.base.bus.AppBus
 import io.github.amanshuraikwar.howmuch.base.data.DataManager
-import io.github.amanshuraikwar.howmuch.ui.list.stats.Stats
 import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.base.ui.base.*
-import io.github.amanshuraikwar.howmuch.ui.list.stats.StatsListItem
 import io.github.amanshuraikwar.howmuch.base.util.Util
 import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.protocol.TransactionType
@@ -47,7 +45,7 @@ interface StatsContract {
 
         private val tag = Util.getTag(this)
 
-        private val transactionOnClickListener=
+        private val transactionOnClickListener =
                 object : TransactionOnClickListener {
                     override fun onClick(transaction: Transaction) {
                         getView()?.startTransactionActivity(transaction)

@@ -8,15 +8,16 @@ import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderViewHolder;
 import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyListItem;
 import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyViewHolder;
 import io.github.amanshuraikwar.howmuch.ui.list.items.Button;
+import io.github.amanshuraikwar.howmuch.ui.list.items.CategoryItem;
 import io.github.amanshuraikwar.howmuch.ui.list.items.HorizontalList;
 import io.github.amanshuraikwar.howmuch.ui.list.items.Setting;
+import io.github.amanshuraikwar.howmuch.ui.list.items.StatCategory;
 import io.github.amanshuraikwar.howmuch.ui.list.items.StatTotal;
+import io.github.amanshuraikwar.howmuch.ui.list.items.StatWallet;
 import io.github.amanshuraikwar.howmuch.ui.list.items.UserInfo;
 import io.github.amanshuraikwar.howmuch.ui.list.items.WalletItem;
 import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionListItem;
 import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionViewHolder;
-import io.github.amanshuraikwar.howmuch.ui.list.stats.StatsListItem;
-import io.github.amanshuraikwar.howmuch.ui.list.stats.StatsViewHolder;
 import io.github.amanshuraikwar.multiitemlistadapter.BaseTypeFactory;
 import io.github.amanshuraikwar.multiitemlistadapter.ViewHolder;
 
@@ -38,7 +39,7 @@ public class ListItemTypeFactory extends BaseTypeFactory {
         return 1;
     }
 
-    public int type(StatsListItem item) {
+    public int type(StatCategory.Item item) {
         return 2;
     }
 
@@ -74,6 +75,14 @@ public class ListItemTypeFactory extends BaseTypeFactory {
         return 10;
     }
 
+    public int type(StatWallet.Item item) {
+        return 11;
+    }
+
+    public int type(CategoryItem.Item item) {
+        return 12;
+    }
+
     /**
      * To get layout file id (R.layout.*) for a corresponding list item/view type.
      *
@@ -85,7 +94,7 @@ public class ListItemTypeFactory extends BaseTypeFactory {
             case 1:
                 return TransactionViewHolder.Companion.getLAYOUT();
             case 2:
-                return StatsViewHolder.Companion.getLAYOUT();
+                return StatCategory.Holder.Companion.getLAYOUT();
             case 3:
                 return HeaderViewHolder.Companion.getLAYOUT();
             case 4:
@@ -102,6 +111,10 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 return StatTotal.Holder.Companion.getLAYOUT();
             case 10:
                 return Button.Holder.Companion.getLAYOUT();
+            case 11:
+                return StatWallet.Holder.Companion.getLAYOUT();
+            case 12:
+                return CategoryItem.Holder.Companion.getLAYOUT();
             default:
                 return super.getLayout(viewType);
         }
@@ -123,7 +136,7 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 viewHolder = new TransactionViewHolder(parent);
                 break;
             case 2:
-                viewHolder = new StatsViewHolder(parent);
+                viewHolder = new StatCategory.Holder(parent);
                 break;
             case 3:
                 viewHolder = new HeaderViewHolder(parent);
@@ -148,6 +161,12 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 break;
             case 10:
                 viewHolder = new Button.Holder(parent);
+                break;
+            case 11:
+                viewHolder = new StatWallet.Holder(parent);
+                break;
+            case 12:
+                viewHolder = new CategoryItem.Holder(parent);
                 break;
             default:
                 viewHolder = super.createViewHolder(parent, type);

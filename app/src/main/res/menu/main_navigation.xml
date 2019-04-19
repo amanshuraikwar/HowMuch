@@ -12,6 +12,11 @@
         android:title="@string/category" />
 
     <item
+        android:id="@+id/navigation_wallets"
+        android:icon="@drawable/ic_account_balance_wallet_white_24dp"
+        android:title="Wallet" />
+
+    <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/person_squeeze_selector"
         android:title="@string/title_profile" />

@@ -104,7 +104,7 @@ dependencies {
 
     // Rx
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroidVersion"
-    implementation "io.reactivex:rxkotlin:$rxjavaVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rxjavaVersion"
 
     // room
     implementation "androidx.room:room-runtime:$roomVersion"

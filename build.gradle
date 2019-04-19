@@ -7,7 +7,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath 'com.android.tools.build:gradle:3.4.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -48,7 +48,7 @@ ext{
     retrofitVersion = "2.3.0"
     gsonVersion = "2.8.2"
     rxandroidVersion = "2.0.2"
-    rxjavaVersion = "2.0.0-RC1"
+    rxjavaVersion = "2.2.2"
     pagingVersion = "1.0.1"
     glideVersion = "4.7.1"
 }
