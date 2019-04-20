@@ -13,7 +13,9 @@ import io.github.amanshuraikwar.howmuch.base.ui.base.BaseActivity
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
-import kotlinx.android.synthetic.main.activity_edit_wallets.*
+import kotlinx.android.synthetic.main.activity_edit_wallets.itemsRv
+import kotlinx.android.synthetic.main.activity_edit_wallets.pb
+import kotlinx.android.synthetic.main.activity_edit_wallets.toolbar
 import javax.inject.Inject
 
 
@@ -28,6 +30,11 @@ class EditWalletsActivity
         init()
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
     private fun init() {
 
         itemsRv.layoutManager = LinearLayoutManager(this)
@@ -37,6 +44,11 @@ class EditWalletsActivity
         }
 
         itemsRv.adapter = adapter
+
+        toolbar.setNavigationIcon(R.drawable.ic_keyboard_backspace_active_24dp)
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
 
         toolbar.inflateMenu(R.menu.refresh_navigation)
         toolbar.setOnMenuItemClickListener {

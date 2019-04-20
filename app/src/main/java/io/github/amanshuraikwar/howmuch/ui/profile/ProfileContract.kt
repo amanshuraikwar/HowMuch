@@ -96,16 +96,10 @@ interface ProfileContract {
             )
 
             list.add(
-                    HeaderListItem(
-                            "Settings"
-                    )
-            )
-
-            list.add(
                     Setting.Item(
                             Setting(
                                     "Wallets",
-                                    R.drawable.ic_account_balance_wallet_white_24dp
+                                    R.drawable.ic_credit_card_white_24dp
                             )
                     ).setOnClickListener {
                         getView()?.startWalletsActivity()
@@ -116,7 +110,7 @@ interface ProfileContract {
                     Setting.Item(
                             Setting(
                                     "Categories",
-                                    R.drawable.baseline_category_24
+                                    R.drawable.ic_bubble_chart_white_24dp
                             )
                     ).setOnClickListener {
                         getView()?.startCategoriesActivity()
@@ -137,18 +131,34 @@ interface ProfileContract {
             list.add(
                     Setting.Item(
                             Setting(
+                                    "Settings",
+                                    R.drawable.ic_settings_white_24dp
+                            )
+                    ).setOnClickListener {
+                        getView()?.showToast("Settings clicked.")
+                    }
+            )
+
+            list.add(
+                    Setting.Item(
+                            Setting(
+                                    "About",
+                                    R.drawable.ic_new_releases_white_24dp
+                            )
+                    ).setOnClickListener {
+                        getView()?.showToast("About clicked.")
+                    }
+            )
+
+            list.add(
+                    Setting.Item(
+                            Setting(
                                     "Sign Out",
                                     R.drawable.ic_exit_to_app_white_24dp
                             )
                     ).setOnClickListener {
                         getView()?.showSignOutAlertDialog()
                     }
-            )
-
-            list.add(
-                    HeaderListItem(
-                            BuildConfig.VERSION_NAME
-                    )
             )
 
             return list

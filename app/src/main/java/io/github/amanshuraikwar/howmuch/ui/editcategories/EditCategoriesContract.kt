@@ -6,7 +6,7 @@ import io.github.amanshuraikwar.howmuch.base.data.DataManager
 import io.github.amanshuraikwar.howmuch.base.ui.base.*
 import io.github.amanshuraikwar.howmuch.base.util.Util
 import io.github.amanshuraikwar.howmuch.protocol.Category
-import io.github.amanshuraikwar.howmuch.ui.list.items.CategoryItem
+import io.github.amanshuraikwar.howmuch.ui.list.items.EditCategory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -58,8 +58,8 @@ interface EditCategoriesContract {
 
                         it.map {
                             category ->
-                            CategoryItem.Item(
-                                    CategoryItem(
+                            EditCategory.Item(
+                                    EditCategory(
                                             category,
                                             onEditSave,
                                             onDelete

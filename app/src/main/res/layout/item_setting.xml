@@ -4,10 +4,7 @@
     android:id="@+id/parentFl"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:foreground="?attr/selectableItemBackground"
-    android:background="@color/white"
-    android:stateListAnimator="@animator/expense_elevation"
-    android:elevation="1dp">
+    android:background="?attr/selectableItemBackground">
 
     <ImageView
         android:id="@+id/iconIv"

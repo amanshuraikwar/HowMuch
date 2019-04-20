@@ -14,6 +14,8 @@ import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
 import kotlinx.android.synthetic.main.activity_edit_categories.*
+import kotlinx.android.synthetic.main.activity_edit_categories.toolbar
+import kotlinx.android.synthetic.main.activity_expense.*
 import javax.inject.Inject
 
 
@@ -28,6 +30,11 @@ class EditCategoriesActivity
         init()
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
     private fun init() {
 
         itemsRv.layoutManager = LinearLayoutManager(this)
@@ -38,11 +45,17 @@ class EditCategoriesActivity
 
         itemsRv.adapter = adapter
 
+        toolbar.setNavigationIcon(R.drawable.ic_keyboard_backspace_active_24dp)
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+
         toolbar.inflateMenu(R.menu.refresh_navigation)
         toolbar.setOnMenuItemClickListener {
             presenter.onRefreshClicked()
             return@setOnMenuItemClickListener true
         }
+
     }
 
     override fun submitList(list: List<ListItem<*, *>>) {

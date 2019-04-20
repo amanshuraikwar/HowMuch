@@ -8,7 +8,7 @@ import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderViewHolder;
 import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyListItem;
 import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyViewHolder;
 import io.github.amanshuraikwar.howmuch.ui.list.items.Button;
-import io.github.amanshuraikwar.howmuch.ui.list.items.CategoryItem;
+import io.github.amanshuraikwar.howmuch.ui.list.items.EditCategory;
 import io.github.amanshuraikwar.howmuch.ui.list.items.EditWallet;
 import io.github.amanshuraikwar.howmuch.ui.list.items.HorizontalList;
 import io.github.amanshuraikwar.howmuch.ui.list.items.Setting;
@@ -80,7 +80,7 @@ public class ListItemTypeFactory extends BaseTypeFactory {
         return 11;
     }
 
-    public int type(CategoryItem.Item item) {
+    public int type(EditCategory.Item item) {
         return 12;
     }
 
@@ -119,7 +119,7 @@ public class ListItemTypeFactory extends BaseTypeFactory {
             case 11:
                 return StatWallet.Holder.Companion.getLAYOUT();
             case 12:
-                return CategoryItem.Holder.Companion.getLAYOUT();
+                return EditCategory.Holder.Companion.getLAYOUT();
             case 13:
                 return EditWallet.Holder.Companion.getLAYOUT();
             default:
@@ -173,7 +173,7 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 viewHolder = new StatWallet.Holder(parent);
                 break;
             case 12:
-                viewHolder = new CategoryItem.Holder(parent);
+                viewHolder = new EditCategory.Holder(parent);
                 break;
             case 13:
                 viewHolder = new EditWallet.Holder(parent);

@@ -9,7 +9,7 @@
     <item android:id="@+id/state_off"
         android:drawable="@drawable/baseline_person_inactive_24"/>
     <transition
-        android:drawable="@drawable/avd_person_jump_squeeze"
+        android:drawable="@drawable/avd_person_move_fade"
         android:fromId="@id/state_off"
         android:toId="@id/state_on" />
 </animated-selector>

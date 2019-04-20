@@ -200,7 +200,7 @@
 
         <!--<item name="android:textAllCaps">true</item>-->
         <!--<item name="android:fontFeatureSettings">smcp</item>-->
-        <item name="android:letterSpacing">0.05</item>
+        <!--<item name="android:letterSpacing">0.05</item>-->
     </style>
 
     <style name="TextAppearance.ToolbarTitle.Bold">

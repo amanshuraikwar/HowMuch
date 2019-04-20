@@ -72,6 +72,11 @@ class HistoryFragment
             }
         }
 
+        toolbar.setNavigationIcon(R.drawable.ic_keyboard_backspace_active_24dp)
+        toolbar.setNavigationOnClickListener {
+            activity.onBackPressed()
+        }
+
         toolbar.inflateMenu(R.menu.refresh_navigation)
         toolbar.setOnMenuItemClickListener {
             presenter.onRefreshClicked()

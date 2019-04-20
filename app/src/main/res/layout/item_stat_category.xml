@@ -12,7 +12,7 @@
     android:elevation="1dp">
 
     <ImageView
-        android:id="@+id/categoryIb"
+        android:id="@+id/walletIb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,14 +21,14 @@
         android:layout_marginStart="@dimen/margin_normal"
         android:layout_marginTop="@dimen/margin_normal"
         android:layout_marginBottom="@dimen/margin_normal"
-        android:src="@drawable/baseline_category_24"
-        android:tint="@color/inactiveIcon" />
+        android:src="@drawable/ic_bubble_chart_white_24dp"
+        android:tint="@color/activeIcon" />
 
     <TextView
         android:id="@+id/titleTv"
         android:layout_width="0dp"
         android:layout_height="20dp"
-        app:layout_constraintStart_toEndOf="@id/categoryIb"
+        app:layout_constraintStart_toEndOf="@id/walletIb"
         app:layout_constraintEnd_toStartOf="@id/barrier1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

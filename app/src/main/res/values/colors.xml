@@ -7,9 +7,11 @@
     <color name="green">#1eb980</color>
     <color name="darkGreen">#045d56</color>
     <color name="yellow">#FFEB3B</color>
-    <color name="amber">#FFCA28</color>
+    <color name="amber">#FFC107</color>
     <color name="red">#e44949</color>
     <color name="lightRed">#E57373</color>
+
+    <color name="lightPink">#F06292</color>
 
     <color name="transparentWhite">#99ffffff</color>
     <color name="transparentGreen">#221eb980</color>
@@ -39,7 +41,7 @@
     <color name="activeIconLight">@color/white</color>
     <color name="inactiveIconLight">@color/disableHintTextLight</color>
 
-    <color name="activeIcon">#424242</color>
+    <color name="activeIcon">#8A000000</color>
     <color name="inactiveIcon">@color/disableHintText</color>
 
     <color name="divider">#1F000000</color>

@@ -83,6 +83,10 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
                 }
             }
         }
+
+        bnv.setOnNavigationItemReselectedListener {
+            // do nothing
+        }
     }
 
     override fun close() {

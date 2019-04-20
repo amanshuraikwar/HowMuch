@@ -9,25 +9,17 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/tall_toolbar_height">
-
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:contentScrim="@color/white"
-            app:expandedTitleGravity="bottom"
-            android:background="@color/white"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:expandedTitleTextAppearance="@style/TextAppearance.ToolbarTitleExpanded.SmallCaps"
-            app:collapsedTitleTextAppearance="@style/TextAppearance.ToolbarTitle.SmallCaps">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:title="Categories"
+                app:title="Edit categories"
                 app:layout_collapseMode="pin"
-                android:clickable="false"/>
+                android:clickable="false"
+                app:titleTextAppearance="@style/TextAppearance.ToolbarTitle.SmallCaps" />
 
             <me.zhanghai.android.materialprogressbar.MaterialProgressBar
                 android:id="@+id/pb"
@@ -39,7 +31,6 @@
                 app:mpb_useIntrinsicPadding="false"
                 android:visibility="gone"
                 style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView

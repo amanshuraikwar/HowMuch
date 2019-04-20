@@ -80,10 +80,7 @@ class EditWallet(val wallet: Wallet,
 
             itemView.doneIb.setOnClickListener {
                 listItem.editWallet.onEditSaveClicked.invoke(
-                        wallet.copy(
-                                name = itemView.walletNameEt.text.toString(),
-                                balance = itemView.walletBalanceEt.text.toString().toDouble()
-                        )
+                        wallet.copy(name = itemView.walletNameEt.text.toString())
                 )
             }
         }

@@ -9,37 +9,28 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/tall_toolbar_height">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:contentScrim="@color/white"
-            app:expandedTitleGravity="bottom"
-            android:background="@color/white"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:expandedTitleTextAppearance="@style/TextAppearance.ToolbarTitleExpanded.SmallCaps"
-            app:collapsedTitleTextAppearance="@style/TextAppearance.ToolbarTitle.SmallCaps">
+            android:layout_height="?attr/actionBarSize"
+            app:title="Edit wallets"
+            app:layout_collapseMode="pin"
+            android:clickable="false"
+            app:titleTextAppearance="@style/TextAppearance.ToolbarTitle.SmallCaps" />
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:title="Wallets"
-                app:layout_collapseMode="pin"
-                android:clickable="false"/>
-
-            <me.zhanghai.android.materialprogressbar.MaterialProgressBar
-                android:id="@+id/pb"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_gravity="bottom"
-                android:indeterminate="true"
-                app:mpb_progressStyle="horizontal"
-                app:mpb_useIntrinsicPadding="false"
-                android:visibility="gone"
-                style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
+        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+            android:id="@+id/pb"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="bottom"
+            android:indeterminate="true"
+            app:mpb_progressStyle="horizontal"
+            app:mpb_useIntrinsicPadding="false"
+            android:visibility="gone"
+            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView

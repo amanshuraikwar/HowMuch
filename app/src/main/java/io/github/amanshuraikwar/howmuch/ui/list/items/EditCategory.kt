@@ -1,10 +1,12 @@
 package io.github.amanshuraikwar.howmuch.ui.list.items
 
+import android.content.res.ColorStateList
 import android.util.TypedValue
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.annotation.LayoutRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.protocol.Category
@@ -17,16 +19,16 @@ import kotlinx.android.synthetic.main.item_edit_category.view.*
 import kotlinx.android.synthetic.main.item_edit_category.view.deleteIb
 import kotlinx.android.synthetic.main.item_edit_category.view.editIb
 
-class CategoryItem(val category: Category,
+class EditCategory(val category: Category,
                    val onEditSaveClicked: (Category) -> Unit,
                    val onDeleteClicked: (Category) -> Unit) {
 
-    class Item(val categoryItem: CategoryItem)
+    class Item(val editCategory: EditCategory)
         : ListItem<SimpleListItemOnClickListener, ListItemTypeFactory>() {
 
-        override fun id() = categoryItem.category.id
+        override fun id() = editCategory.category.id
 
-        override fun concreteClass() = categoryItem::class.toString()
+        override fun concreteClass() = editCategory::class.toString()
 
         override fun type(typeFactory: ListItemTypeFactory): Int {
             return typeFactory.type(this)
@@ -42,14 +44,20 @@ class CategoryItem(val category: Category,
 
         override fun bind(listItem: Item, host: FragmentActivity) {
 
-            val category = listItem.categoryItem.category
+            val category = listItem.editCategory.category
 
             itemView.categoryNameEt.setText(category.name)
 
             if (category.type == TransactionType.DEBIT) {
                 itemView.categoryTypeRg.check(R.id.debitRb)
+                itemView.categoryIconIv.imageTintList = ColorStateList.valueOf(
+                        ContextCompat.getColor(host, R.color.red)
+                )
             } else {
                 itemView.categoryTypeRg.check(R.id.creditRb)
+                itemView.categoryIconIv.imageTintList = ColorStateList.valueOf(
+                        ContextCompat.getColor(host, R.color.green)
+                )
             }
 
             itemView.deleteIb.visibility = GONE
@@ -80,11 +88,11 @@ class CategoryItem(val category: Category,
             }
 
             itemView.deleteIb.setOnClickListener {
-                listItem.categoryItem.onDeleteClicked.invoke(category)
+                listItem.editCategory.onDeleteClicked.invoke(category)
             }
 
             itemView.doneIb.setOnClickListener {
-                listItem.categoryItem.onEditSaveClicked.invoke(
+                listItem.editCategory.onEditSaveClicked.invoke(
                         category.copy(name = itemView.categoryNameEt.text.toString())
                 )
             }
