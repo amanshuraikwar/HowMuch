@@ -31,6 +31,7 @@
         <activity android:name=".ui.addexpense.AddExpenseActivity" />
         <activity android:name=".ui.history.activity.HistoryActivity" />
         <activity android:name=".ui.editcategories.EditCategoriesActivity" />
+        <activity android:name=".ui.editwallets.EditWalletsActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

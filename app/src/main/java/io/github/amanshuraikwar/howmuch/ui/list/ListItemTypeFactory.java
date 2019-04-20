@@ -9,6 +9,7 @@ import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyListItem;
 import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyViewHolder;
 import io.github.amanshuraikwar.howmuch.ui.list.items.Button;
 import io.github.amanshuraikwar.howmuch.ui.list.items.CategoryItem;
+import io.github.amanshuraikwar.howmuch.ui.list.items.EditWallet;
 import io.github.amanshuraikwar.howmuch.ui.list.items.HorizontalList;
 import io.github.amanshuraikwar.howmuch.ui.list.items.Setting;
 import io.github.amanshuraikwar.howmuch.ui.list.items.StatCategory;
@@ -83,6 +84,10 @@ public class ListItemTypeFactory extends BaseTypeFactory {
         return 12;
     }
 
+    public int type(EditWallet.Item item) {
+        return 13;
+    }
+
     /**
      * To get layout file id (R.layout.*) for a corresponding list item/view type.
      *
@@ -115,6 +120,8 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 return StatWallet.Holder.Companion.getLAYOUT();
             case 12:
                 return CategoryItem.Holder.Companion.getLAYOUT();
+            case 13:
+                return EditWallet.Holder.Companion.getLAYOUT();
             default:
                 return super.getLayout(viewType);
         }
@@ -167,6 +174,9 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 break;
             case 12:
                 viewHolder = new CategoryItem.Holder(parent);
+                break;
+            case 13:
+                viewHolder = new EditWallet.Holder(parent);
                 break;
             default:
                 viewHolder = super.createViewHolder(parent, type);

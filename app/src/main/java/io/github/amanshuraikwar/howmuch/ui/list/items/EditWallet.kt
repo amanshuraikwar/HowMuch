@@ -7,26 +7,23 @@ import android.view.View.VISIBLE
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.FragmentActivity
 import io.github.amanshuraikwar.howmuch.R
-import io.github.amanshuraikwar.howmuch.protocol.Category
-import io.github.amanshuraikwar.howmuch.protocol.TransactionType
+import io.github.amanshuraikwar.howmuch.protocol.Wallet
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.SimpleListItemOnClickListener
 import io.github.amanshuraikwar.multiitemlistadapter.ViewHolder
-import kotlinx.android.synthetic.main.item_edit_category.view.*
-import kotlinx.android.synthetic.main.item_edit_category.view.deleteIb
-import kotlinx.android.synthetic.main.item_edit_category.view.editIb
+import kotlinx.android.synthetic.main.item_edit_wallet.view.*
 
-class CategoryItem(val category: Category,
-                   val onEditSaveClicked: (Category) -> Unit,
-                   val onDeleteClicked: (Category) -> Unit) {
+class EditWallet(val wallet: Wallet,
+                 val onEditSaveClicked: (Wallet) -> Unit,
+                 val onDeleteClicked: (Wallet) -> Unit) {
 
-    class Item(val categoryItem: CategoryItem)
+    class Item(val editWallet: EditWallet)
         : ListItem<SimpleListItemOnClickListener, ListItemTypeFactory>() {
 
-        override fun id() = categoryItem.category.id
+        override fun id() = editWallet.wallet.id
 
-        override fun concreteClass() = categoryItem::class.toString()
+        override fun concreteClass() = editWallet::class.toString()
 
         override fun type(typeFactory: ListItemTypeFactory): Int {
             return typeFactory.type(this)
@@ -37,55 +34,56 @@ class CategoryItem(val category: Category,
 
         companion object {
             @LayoutRes
-            val LAYOUT = R.layout.item_edit_category
+            val LAYOUT = R.layout.item_edit_wallet
         }
 
         override fun bind(listItem: Item, host: FragmentActivity) {
 
-            val category = listItem.categoryItem.category
+            val wallet = listItem.editWallet.wallet
 
-            itemView.categoryNameEt.setText(category.name)
-
-            if (category.type == TransactionType.DEBIT) {
-                itemView.categoryTypeRg.check(R.id.debitRb)
-            } else {
-                itemView.categoryTypeRg.check(R.id.creditRb)
-            }
+            itemView.walletNameEt.setText(wallet.name)
+            itemView.walletBalanceEt.setText(wallet.balance.toString())
 
             itemView.deleteIb.visibility = GONE
-            itemView.categoryIconIv.visibility = VISIBLE
+            itemView.walletIconIv.visibility = VISIBLE
 
             itemView.doneIb.visibility = GONE
             itemView.editIb.visibility = VISIBLE
 
-            itemView.categoryNameEt.setOnFocusChangeListener {
+            val focusChangeListener: (View, Boolean) -> Unit = {
                 _, focus ->
                 if (focus) {
                     itemView.deleteIb.visibility = VISIBLE
-                    itemView.categoryIconIv.visibility = GONE
+                    itemView.walletIconIv.visibility = GONE
                     itemView.doneIb.visibility = VISIBLE
                     itemView.editIb.visibility = GONE
                     itemView.parentCl.elevation = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2f, host.resources.displayMetrics)
                 } else {
                     itemView.deleteIb.visibility = GONE
-                    itemView.categoryIconIv.visibility = VISIBLE
+                    itemView.walletIconIv.visibility = VISIBLE
                     itemView.doneIb.visibility = GONE
                     itemView.editIb.visibility = VISIBLE
                     itemView.parentCl.elevation = 0f
                 }
             }
 
+            itemView.walletNameEt.setOnFocusChangeListener(focusChangeListener)
+            itemView.walletBalanceEt.setOnFocusChangeListener(focusChangeListener)
+
             itemView.editIb.setOnClickListener {
-                itemView.categoryNameEt.requestFocus()
+                itemView.walletNameEt.requestFocus()
             }
 
             itemView.deleteIb.setOnClickListener {
-                listItem.categoryItem.onDeleteClicked.invoke(category)
+                listItem.editWallet.onDeleteClicked.invoke(wallet)
             }
 
             itemView.doneIb.setOnClickListener {
-                listItem.categoryItem.onEditSaveClicked.invoke(
-                        category.copy(name = itemView.categoryNameEt.text.toString())
+                listItem.editWallet.onEditSaveClicked.invoke(
+                        wallet.copy(
+                                name = itemView.walletNameEt.text.toString(),
+                                balance = itemView.walletBalanceEt.text.toString().toDouble()
+                        )
                 )
             }
         }
