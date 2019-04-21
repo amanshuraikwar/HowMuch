@@ -21,6 +21,7 @@ import io.github.amanshuraikwar.howmuch.ui.editcategories.EditCategoriesActivity
 import io.github.amanshuraikwar.howmuch.ui.editwallets.EditWalletsActivity
 import io.github.amanshuraikwar.howmuch.ui.history.activity.HistoryActivity
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
+import io.github.amanshuraikwar.howmuch.ui.settings.activity.SettingsActivity
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -89,6 +90,10 @@ class ProfileFragment
 
     override fun startCategoriesActivity() {
         startActivity(Intent(activity, EditCategoriesActivity::class.java))
+    }
+
+    override fun startSettingsActivity() {
+        startActivity(Intent(activity, SettingsActivity::class.java))
     }
 
     override fun showToast(message: String) {

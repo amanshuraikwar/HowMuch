@@ -11,6 +11,7 @@ import io.github.amanshuraikwar.howmuch.ui.list.items.Button;
 import io.github.amanshuraikwar.howmuch.ui.list.items.EditCategory;
 import io.github.amanshuraikwar.howmuch.ui.list.items.EditWallet;
 import io.github.amanshuraikwar.howmuch.ui.list.items.HorizontalList;
+import io.github.amanshuraikwar.howmuch.ui.list.items.ProfileBtn;
 import io.github.amanshuraikwar.howmuch.ui.list.items.Setting;
 import io.github.amanshuraikwar.howmuch.ui.list.items.StatCategory;
 import io.github.amanshuraikwar.howmuch.ui.list.items.StatTotal;
@@ -56,7 +57,7 @@ public class ListItemTypeFactory extends BaseTypeFactory {
         return 5;
     }
 
-    public int type(Setting.Item item) {
+    public int type(ProfileBtn.Item item) {
         return 6;
     }
 
@@ -88,6 +89,10 @@ public class ListItemTypeFactory extends BaseTypeFactory {
         return 13;
     }
 
+    public int type(Setting.Item item) {
+        return 14;
+    }
+
     /**
      * To get layout file id (R.layout.*) for a corresponding list item/view type.
      *
@@ -107,7 +112,7 @@ public class ListItemTypeFactory extends BaseTypeFactory {
             case 5:
                 return UserInfo.Holder.Companion.getLAYOUT();
             case 6:
-                return Setting.Holder.Companion.getLAYOUT();
+                return ProfileBtn.Holder.Companion.getLAYOUT();
             case 7:
                 return HorizontalList.Eager.Holder.Companion.getLAYOUT();
             case 8:
@@ -122,6 +127,8 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 return EditCategory.Holder.Companion.getLAYOUT();
             case 13:
                 return EditWallet.Holder.Companion.getLAYOUT();
+            case 14:
+                return Setting.Holder.Companion.getLAYOUT();
             default:
                 return super.getLayout(viewType);
         }
@@ -155,7 +162,7 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 viewHolder = new UserInfo.Holder(parent);
                 break;
             case 6:
-                viewHolder = new Setting.Holder(parent);
+                viewHolder = new ProfileBtn.Holder(parent);
                 break;
             case 7:
                 viewHolder = new HorizontalList.Eager.Holder(parent);
@@ -177,6 +184,9 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 break;
             case 13:
                 viewHolder = new EditWallet.Holder(parent);
+                break;
+            case 14:
+                viewHolder = new Setting.Holder(parent);
                 break;
             default:
                 viewHolder = super.createViewHolder(parent, type);

@@ -193,7 +193,8 @@
         parent="@android:style/TextAppearance.Material.Widget.ActionBar.Title">
 
         <item name="android:textColor">@color/primaryText</item>
-        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:fontFamily">@font/rubik</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextAppearance.ToolbarTitle.SmallCaps">
@@ -213,7 +214,7 @@
         parent="@style/TextAppearance.Design.CollapsingToolbar.Expanded">
 
         <item name="android:textColor">@color/primaryText</item>
-        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:fontFamily">@font/rubik</item>
     </style>
 
     <style name="TextAppearance.ToolbarTitleExpanded.SmallCaps">
@@ -280,11 +281,29 @@
     </style>
 
     <style
-        name="TextAppearance.Setting"
+        name="TextAppearance.ProfileBtn"
         parent="@style/TextAppearance.Body1">
 
         <item name="android:fontFamily">@font/rubik</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style
+        name="TextAppearance.Setting"
+        parent="@style/TextAppearance.Subhead">
+
+        <item name="android:fontFamily">@font/rubik</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style
+        name="TextAppearance.SettingSummary"
+        parent="@style/TextAppearance.Body1">
+
+        <item name="android:fontFamily">@font/rubik</item>
+        <item name="android:textColor">@color/secondaryText</item>
     </style>
 
     <style
@@ -453,7 +472,8 @@
         parent="@style/TextAppearance.Subhead">
 
         <item name="android:textColor">@color/primaryText</item>
-        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:fontFamily">@font/rubik</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style

@@ -8,18 +8,17 @@ import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.SimpleListItemOnClickListener
 import io.github.amanshuraikwar.multiitemlistadapter.ViewHolder
-import kotlinx.android.synthetic.main.item_setting.view.*
+import kotlinx.android.synthetic.main.item_profile_btn.view.*
 
-class Setting(val title: String,
-              val summary: String,
-              val iconResId: Int) {
+class ProfileBtn(val title: String,
+                 val iconResId: Int) {
 
-    class Item(val setting: Setting)
+    class Item(val profileBtn: ProfileBtn)
         : ListItem<SimpleListItemOnClickListener, ListItemTypeFactory>() {
 
-        override fun id() = setting.title
+        override fun id() = profileBtn.title
 
-        override fun concreteClass() = setting::class.toString()
+        override fun concreteClass() = profileBtn::class.toString()
 
         override fun type(typeFactory: ListItemTypeFactory): Int {
             return typeFactory.type(this)
@@ -30,16 +29,13 @@ class Setting(val title: String,
 
         companion object {
             @LayoutRes
-            val LAYOUT = R.layout.item_setting
+            val LAYOUT = R.layout.item_profile_btn
         }
 
         override fun bind(listItem: Item, host: FragmentActivity) {
-
-            itemView.iconIv.setImageResource(listItem.setting.iconResId)
-            itemView.titleTv.text = listItem.setting.title
-            itemView.summaryTv.text = listItem.setting.summary
-
-            itemView.parentCl.setOnClickListener {
+            itemView.iconIv.setImageResource(listItem.profileBtn.iconResId)
+            itemView.titleTv.text = listItem.profileBtn.title
+            itemView.parentFl.setOnClickListener {
                 listItem.onClickListener.onClick()
             }
         }

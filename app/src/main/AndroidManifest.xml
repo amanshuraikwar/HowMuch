@@ -32,6 +32,7 @@
         <activity android:name=".ui.history.activity.HistoryActivity" />
         <activity android:name=".ui.editcategories.EditCategoriesActivity" />
         <activity android:name=".ui.editwallets.EditWalletsActivity" />
+        <activity android:name=".ui.settings.activity.SettingsActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

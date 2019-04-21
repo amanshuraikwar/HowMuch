@@ -1,16 +1,14 @@
 package io.github.amanshuraikwar.howmuch.ui.profile
 
 import android.util.Log
-import io.github.amanshuraikwar.howmuch.BuildConfig
 import io.github.amanshuraikwar.howmuch.Constants
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.base.bus.AppBus
 import io.github.amanshuraikwar.howmuch.base.data.DataManager
 import io.github.amanshuraikwar.howmuch.base.ui.base.*
 import io.github.amanshuraikwar.howmuch.protocol.User
-import io.github.amanshuraikwar.howmuch.ui.list.items.Setting
+import io.github.amanshuraikwar.howmuch.ui.list.items.ProfileBtn
 import io.github.amanshuraikwar.howmuch.ui.list.items.UserInfo
-import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderListItem
 import io.github.amanshuraikwar.howmuch.base.util.Util;
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -27,6 +25,7 @@ interface ProfileContract {
         fun startHistoryActivity()
         fun startWalletsActivity()
         fun startCategoriesActivity()
+        fun startSettingsActivity()
     }
 
     interface Presenter : BasePresenter<View> {
@@ -96,8 +95,8 @@ interface ProfileContract {
             )
 
             list.add(
-                    Setting.Item(
-                            Setting(
+                    ProfileBtn.Item(
+                            ProfileBtn(
                                     "Wallets",
                                     R.drawable.ic_credit_card_white_24dp
                             )
@@ -107,8 +106,8 @@ interface ProfileContract {
             )
 
             list.add(
-                    Setting.Item(
-                            Setting(
+                    ProfileBtn.Item(
+                            ProfileBtn(
                                     "Categories",
                                     R.drawable.ic_bubble_chart_white_24dp
                             )
@@ -118,8 +117,8 @@ interface ProfileContract {
             )
 
             list.add(
-                    Setting.Item(
-                            Setting(
+                    ProfileBtn.Item(
+                            ProfileBtn(
                                     "History",
                                     R.drawable.ic_history_white_24dp
                             )
@@ -129,19 +128,19 @@ interface ProfileContract {
             )
 
             list.add(
-                    Setting.Item(
-                            Setting(
+                    ProfileBtn.Item(
+                            ProfileBtn(
                                     "Settings",
                                     R.drawable.ic_settings_white_24dp
                             )
                     ).setOnClickListener {
-                        getView()?.showToast("Settings clicked.")
+                        getView()?.startSettingsActivity()
                     }
             )
 
             list.add(
-                    Setting.Item(
-                            Setting(
+                    ProfileBtn.Item(
+                            ProfileBtn(
                                     "About",
                                     R.drawable.ic_new_releases_white_24dp
                             )
@@ -151,8 +150,8 @@ interface ProfileContract {
             )
 
             list.add(
-                    Setting.Item(
-                            Setting(
+                    ProfileBtn.Item(
+                            ProfileBtn(
                                     "Sign Out",
                                     R.drawable.ic_exit_to_app_white_24dp
                             )

@@ -41,7 +41,7 @@
     <color name="activeIconLight">@color/white</color>
     <color name="inactiveIconLight">@color/disableHintTextLight</color>
 
-    <color name="activeIcon">#8A000000</color>
+    <color name="activeIcon">#424242</color>
     <color name="inactiveIcon">@color/disableHintText</color>
 
     <color name="divider">#1F000000</color>

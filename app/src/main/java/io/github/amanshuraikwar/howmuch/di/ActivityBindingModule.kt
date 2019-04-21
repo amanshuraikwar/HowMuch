@@ -12,6 +12,8 @@ import io.github.amanshuraikwar.howmuch.ui.history.HistoryFragment
 import io.github.amanshuraikwar.howmuch.ui.history.activity.HistoryActivity
 import io.github.amanshuraikwar.howmuch.ui.home.HomeActivity
 import io.github.amanshuraikwar.howmuch.ui.profile.ProfileFragment
+import io.github.amanshuraikwar.howmuch.ui.settings.SettingsFragment
+import io.github.amanshuraikwar.howmuch.ui.settings.activity.SettingsActivity
 import io.github.amanshuraikwar.howmuch.ui.signin.SignInFragment
 import io.github.amanshuraikwar.howmuch.ui.stats.StatsFragment
 import io.github.amanshuraikwar.howmuch.ui.wallet.WalletActivity
@@ -96,4 +98,14 @@ import io.github.amanshuraikwar.howmuch.ui.wallets.WalletsFragment
             modules = [EditWalletsActivity.DiModule::class]
     )
     abstract fun m(): EditWalletsActivity
+
+    @ContributesAndroidInjector(
+            modules = [SettingsActivity.DiModule::class]
+    )
+    abstract fun n(): SettingsActivity
+
+    @ContributesAndroidInjector(
+            modules = [SettingsFragment.DiModule::class]
+    )
+    abstract fun o(): SettingsFragment
 }
