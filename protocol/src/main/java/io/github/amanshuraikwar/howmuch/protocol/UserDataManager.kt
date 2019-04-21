@@ -13,4 +13,7 @@ interface UserDataManager {
 
     fun getSignedInUser(): Observable<User>
 
+    fun getMonthlyExpenseLimit(): Observable<Double>
+
+    fun setMonthlyExpenseLimit(limit: Double): Completable
 }

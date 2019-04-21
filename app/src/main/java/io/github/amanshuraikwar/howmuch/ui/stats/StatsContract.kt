@@ -6,14 +6,10 @@ import io.github.amanshuraikwar.howmuch.base.data.DataManager
 import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.base.ui.base.*
 import io.github.amanshuraikwar.howmuch.base.util.Util
-import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.protocol.TransactionType
 import io.github.amanshuraikwar.howmuch.protocol.Wallet
 import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderListItem
-import io.github.amanshuraikwar.howmuch.ui.list.items.Button
-import io.github.amanshuraikwar.howmuch.ui.list.items.HorizontalList
-import io.github.amanshuraikwar.howmuch.ui.list.items.StatTotal
-import io.github.amanshuraikwar.howmuch.ui.list.items.WalletItem
+import io.github.amanshuraikwar.howmuch.ui.list.items.*
 import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionListItem
 import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionOnClickListener
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
@@ -72,10 +68,14 @@ interface StatsContract {
                                 .fromCallable {
                                     mutableListOf<ListItem<*, *>>()
                                 }
-                                .map {
+                                .flatMap {
                                     prevList ->
-                                    prevList.add(txnList.getTotalItem())
-                                    prevList
+                                    getDataManager()
+                                            .getMonthlyExpenseLimit()
+                                            .map {
+                                                prevList.addAll(txnList.getTotalItems(it))
+                                                prevList
+                                            }
                                 }
                                 .map {
                                     prevList ->
@@ -119,7 +119,7 @@ interface StatsContract {
 
         private fun Double.money(): Double = "%.2f".format(this).toDouble()
 
-        private fun List<Transaction>.getTotalItem(): ListItem<*, *> {
+        private fun List<Transaction>.getTotalItems(limit: Double): List<ListItem<*, *>> {
 
             val totalMap = this
                     .groupBy { it.type }
@@ -160,20 +160,35 @@ interface StatsContract {
                         }
                     }
 
-            return StatTotal.Item(
-                    StatTotal(
-                            totalMap[TransactionType.CREDIT]?.money() ?: 0.0,
-                            recentTrendMap[TransactionType.CREDIT]?.toInt() ?: 0,
-                            totalMap[TransactionType.DEBIT]?.money() ?: 0.0,
-                            recentTrendMap[TransactionType.DEBIT]?.toInt() ?: 0,
-                            {
-                                getView()?.startHistoryActivity("transaction_type=CREDIT")
-                            },
-                            {
-                                getView()?.startHistoryActivity("transaction_type=DEBIT")
-                            }
+            val list = mutableListOf<ListItem<*, *>>()
+
+            list.add(
+                    StatTotal.Item(
+                            StatTotal(
+                                    totalMap[TransactionType.CREDIT]?.money() ?: 0.0,
+                                    recentTrendMap[TransactionType.CREDIT]?.toInt() ?: 0,
+                                    totalMap[TransactionType.DEBIT]?.money() ?: 0.0,
+                                    recentTrendMap[TransactionType.DEBIT]?.toInt() ?: 0,
+                                    {
+                                        getView()?.startHistoryActivity("transaction_type=CREDIT")
+                                    },
+                                    {
+                                        getView()?.startHistoryActivity("transaction_type=DEBIT")
+                                    }
+                            )
                     )
             )
+
+            list.add(
+                    MonthlyExpenseLimit.Item(
+                            MonthlyExpenseLimit(
+                                    kotlin.math.max(0.0, (totalMap[TransactionType.DEBIT] ?: 0.0).minus(totalMap[TransactionType.CREDIT] ?: 0.0)),
+                                    limit
+                            )
+                    )
+            )
+
+            return list
         }
 
         private fun List<Transaction>.getListItems()

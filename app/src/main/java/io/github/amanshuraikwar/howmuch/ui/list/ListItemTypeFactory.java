@@ -11,6 +11,7 @@ import io.github.amanshuraikwar.howmuch.ui.list.items.Button;
 import io.github.amanshuraikwar.howmuch.ui.list.items.EditCategory;
 import io.github.amanshuraikwar.howmuch.ui.list.items.EditWallet;
 import io.github.amanshuraikwar.howmuch.ui.list.items.HorizontalList;
+import io.github.amanshuraikwar.howmuch.ui.list.items.MonthlyExpenseLimit;
 import io.github.amanshuraikwar.howmuch.ui.list.items.ProfileBtn;
 import io.github.amanshuraikwar.howmuch.ui.list.items.Setting;
 import io.github.amanshuraikwar.howmuch.ui.list.items.StatCategory;
@@ -93,6 +94,10 @@ public class ListItemTypeFactory extends BaseTypeFactory {
         return 14;
     }
 
+    public int type(MonthlyExpenseLimit.Item item) {
+        return 15;
+    }
+
     /**
      * To get layout file id (R.layout.*) for a corresponding list item/view type.
      *
@@ -129,6 +134,8 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 return EditWallet.Holder.Companion.getLAYOUT();
             case 14:
                 return Setting.Holder.Companion.getLAYOUT();
+            case 15:
+                return MonthlyExpenseLimit.Holder.Companion.getLAYOUT();
             default:
                 return super.getLayout(viewType);
         }
@@ -187,6 +194,9 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 break;
             case 14:
                 viewHolder = new Setting.Holder(parent);
+                break;
+            case 15:
+                viewHolder = new MonthlyExpenseLimit.Holder(parent);
                 break;
             default:
                 viewHolder = super.createViewHolder(parent, type);

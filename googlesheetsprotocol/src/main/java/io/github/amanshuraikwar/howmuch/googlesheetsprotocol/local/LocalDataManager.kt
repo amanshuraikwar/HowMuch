@@ -1,5 +1,6 @@
 package io.github.amanshuraikwar.howmuch.googlesheetsprotocol.local
 
+import io.reactivex.Completable
 import io.reactivex.Observable
 
 interface LocalDataManager {
@@ -19,4 +20,7 @@ interface LocalDataManager {
      */
     fun addSpreadsheetIdForEmail(spreadsheetId: String, email: String): Observable<String>
 
+    fun getMonthlyExpenseLimit(): Observable<Double>
+
+    fun setMonthlyExpenseLimit(limit: Double): Completable
 }

@@ -124,4 +124,12 @@ class GoogleSheetsUserDataManager
             }
         }
     }
+
+    override fun getMonthlyExpenseLimit(): Observable<Double> {
+        return localDataManager.getMonthlyExpenseLimit()
+    }
+
+    override fun setMonthlyExpenseLimit(limit: Double): Completable {
+        return localDataManager.setMonthlyExpenseLimit(limit)
+    }
 }

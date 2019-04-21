@@ -6,4 +6,17 @@ import javax.inject.Inject
 
 @SuppressLint("ApplySharedPref")
 class PrefsDataManager
-@Inject constructor(private val sharedPrefs: SharedPreferences)
+@Inject constructor(private val sharedPrefs: SharedPreferences) {
+
+    companion object {
+        private const val KEY_MONTHLY_EXPENSE_LIMIT = "monthly_expense_limit"
+    }
+
+    fun getMonthlyExpenseLimit(): Double {
+        return sharedPrefs.getFloat(KEY_MONTHLY_EXPENSE_LIMIT, 0.0F).toDouble()
+    }
+
+    fun setMonthlyExpenseLimit(limit: Double) {
+        sharedPrefs.edit().putFloat(KEY_MONTHLY_EXPENSE_LIMIT, limit.toFloat()).commit()
+    }
+}

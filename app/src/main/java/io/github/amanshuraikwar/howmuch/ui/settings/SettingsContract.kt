@@ -36,6 +36,40 @@ interface SettingsContract {
 
         private val tag = Util.getTag(this)
 
+        private val setMonthlyExpenseLimit = {
+            limit: Double ->
+            getDataManager()
+                    .setMonthlyExpenseLimit(limit)
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe {
+                        getView()?.run{
+                            showLoading("Saving expense limit...")
+                            clearSyncError()
+                        }
+                    }
+                    .subscribe(
+                            {
+                                fetchItems()
+                                getView()?.run {
+                                    hideLoading()
+                                }
+                            },
+                            {
+                                it.printStackTrace()
+
+                                Log.e(tag, "setMonthlyExpenseLimit: Error: ${it.message}")
+
+                                getView()?.run {
+                                    showError(it.message ?: "Please try again!")
+                                    hideLoading()
+                                    setSyncError()
+                                }
+                            }
+                    )
+                    .addToCleanup()
+        }
+
         override fun onAttach(wasViewRecreated: Boolean) {
             super.onAttach(wasViewRecreated)
             if (wasViewRecreated) {
@@ -48,41 +82,47 @@ interface SettingsContract {
 
             Observable
                     .fromCallable {
-
-                val list = mutableListOf<ListItem<*, *>>()
-
-                list.add(
-                        Setting.Item(
-                                Setting(
-                                        "Monthly expense limit",
-                                        "Maximum amount that you prefer spending in a month",
-                                        R.drawable.ic_local_atm_white_24dp
-                                )
-                        ).setOnClickListener {
-                            getView()?.startDecimalDialog(
-                                    "Monthly expense limit",
-                                    0.0,
-                                    {
-                                        getView()?.showToast("Edit complete!")
-                                    }
-                            )
-                        }
-                )
-
-                list.add(
-                        Setting.Item(
-                                Setting(
-                                        "Send feedback",
-                                        "Report technical issues or suggest new features",
-                                        R.drawable.ic_feedback_white_24dp
-                                )
-                        ).setOnClickListener {
-                            getView()?.initiateSendFeedback()
-                        }
-                )
-
-                list
-            }
+                        mutableListOf<ListItem<*, *>>()
+                    }
+                    .flatMap {
+                        prevList ->
+                        getDataManager()
+                                .getMonthlyExpenseLimit()
+                                .map {
+                                    limit ->
+                                    prevList.add(
+                                            Setting.Item(
+                                                    Setting(
+                                                            "Monthly expense limit",
+                                                            "Maximum amount that you prefer spending in a month",
+                                                            R.drawable.ic_local_atm_white_24dp
+                                                    )
+                                            ).setOnClickListener {
+                                                getView()?.startDecimalDialog(
+                                                        "Monthly expense limit",
+                                                        limit,
+                                                        setMonthlyExpenseLimit
+                                                )
+                                            }
+                                    )
+                                    prevList
+                                }
+                    }
+                    .map {
+                        prevList ->
+                        prevList.add(
+                                Setting.Item(
+                                        Setting(
+                                                "Send feedback",
+                                                "Report technical issues or suggest new features",
+                                                R.drawable.ic_feedback_white_24dp
+                                        )
+                                ).setOnClickListener {
+                                    getView()?.initiateSendFeedback()
+                                }
+                        )
+                        prevList
+                    }
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe {

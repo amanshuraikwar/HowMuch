@@ -106,7 +106,7 @@ class SettingsFragment
                 .setPositiveButton("Save") {
                     dialog, _ ->
                     onSuccess.invoke(
-                            if (view.text.isNotEmpty())
+                            if (view.text.isNotEmpty() && view.text.toString() != ".")
                                 view.text.toString().toDouble()
                             else
                                 0.0

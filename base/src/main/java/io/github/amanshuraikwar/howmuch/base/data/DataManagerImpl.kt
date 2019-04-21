@@ -57,6 +57,12 @@ class DataManagerImpl
     override fun getSignedInUser()
             = userDataManager.getSignedInUser()
 
+    override fun getMonthlyExpenseLimit()
+            = userDataManager.getMonthlyExpenseLimit()
+
+    override fun setMonthlyExpenseLimit(limit: Double)
+            = userDataManager.setMonthlyExpenseLimit(limit)
+
     override fun getAllWallets()
             = walletDataManager.getAllWallets()
 
