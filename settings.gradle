@@ -1,4 +1,1 @@
-include ':app', ':protocol', ':googlesheetsprotocol', ':base'
-
-include ':module-multi-item-list-adapter'
-project(':module-multi-item-list-adapter').projectDir = new File(settingsDir, '../multi-item-list-adapter/multiitemlistadapter')
+include ':app', ':protocol', ':googlesheetsprotocol', ':base', ':multiitemlistadapter'
