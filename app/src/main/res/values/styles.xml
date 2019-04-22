@@ -299,6 +299,15 @@
     </style>
 
     <style
+        name="TextAppearance.RubikBig"
+        parent="@style/TextAppearance.Title">
+
+        <item name="android:fontFamily">@font/rubik</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style
         name="TextAppearance.SettingSummary"
         parent="@style/TextAppearance.Body1">
 

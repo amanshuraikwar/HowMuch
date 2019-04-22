@@ -17,6 +17,7 @@ import dagger.Provides
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.base.di.ActivityContext
 import io.github.amanshuraikwar.howmuch.base.ui.base.BaseFragment
+import io.github.amanshuraikwar.howmuch.ui.about.AboutActivity
 import io.github.amanshuraikwar.howmuch.ui.editcategories.EditCategoriesActivity
 import io.github.amanshuraikwar.howmuch.ui.editwallets.EditWalletsActivity
 import io.github.amanshuraikwar.howmuch.ui.history.activity.HistoryActivity
@@ -94,6 +95,10 @@ class ProfileFragment
 
     override fun startSettingsActivity() {
         startActivity(Intent(activity, SettingsActivity::class.java))
+    }
+
+    override fun startAboutActivity() {
+        startActivity(Intent(activity, AboutActivity::class.java))
     }
 
     override fun showToast(message: String) {

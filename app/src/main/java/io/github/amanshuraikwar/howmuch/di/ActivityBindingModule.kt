@@ -3,6 +3,7 @@ package io.github.amanshuraikwar.howmuch.di
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import io.github.amanshuraikwar.howmuch.googlesheetsprotocol.di.GoogleSignInProvides
+import io.github.amanshuraikwar.howmuch.ui.about.AboutActivity
 import io.github.amanshuraikwar.howmuch.ui.addexpense.AddExpenseActivity
 import io.github.amanshuraikwar.howmuch.ui.categories.CategoriesFragment
 import io.github.amanshuraikwar.howmuch.ui.editcategories.EditCategoriesActivity
@@ -108,4 +109,9 @@ import io.github.amanshuraikwar.howmuch.ui.wallets.WalletsFragment
             modules = [SettingsFragment.DiModule::class]
     )
     abstract fun o(): SettingsFragment
+
+    @ContributesAndroidInjector(
+            modules = [AboutActivity.DiModule::class]
+    )
+    abstract fun p(): AboutActivity
 }

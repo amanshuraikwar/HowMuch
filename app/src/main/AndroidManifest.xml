@@ -33,6 +33,7 @@
         <activity android:name=".ui.editcategories.EditCategoriesActivity" />
         <activity android:name=".ui.editwallets.EditWalletsActivity" />
         <activity android:name=".ui.settings.activity.SettingsActivity" />
+        <activity android:name=".ui.about.AboutActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

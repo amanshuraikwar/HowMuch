@@ -26,6 +26,7 @@ interface ProfileContract {
         fun startWalletsActivity()
         fun startCategoriesActivity()
         fun startSettingsActivity()
+        fun startAboutActivity()
     }
 
     interface Presenter : BasePresenter<View> {
@@ -145,7 +146,7 @@ interface ProfileContract {
                                     R.drawable.ic_new_releases_white_24dp
                             )
                     ).setOnClickListener {
-                        getView()?.showToast("About clicked.")
+                        getView()?.startAboutActivity()
                     }
             )
 
