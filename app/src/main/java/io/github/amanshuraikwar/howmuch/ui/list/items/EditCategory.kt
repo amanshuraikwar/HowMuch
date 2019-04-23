@@ -73,13 +73,17 @@ class EditCategory(val category: Category,
                     itemView.categoryIconIv.visibility = GONE
                     itemView.doneIb.visibility = VISIBLE
                     itemView.editIb.visibility = GONE
-                    itemView.parentCl.elevation = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2f, host.resources.displayMetrics)
+                    itemView.parentFl.isRaised = true
+                    itemView.parentFl.refreshDrawableState()
+//                    itemView.parentCl.elevation = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2f, host.resources.displayMetrics)
                 } else {
                     itemView.deleteIb.visibility = GONE
                     itemView.categoryIconIv.visibility = VISIBLE
                     itemView.doneIb.visibility = GONE
                     itemView.editIb.visibility = VISIBLE
-                    itemView.parentCl.elevation = 0f
+                    itemView.parentFl.isRaised = false
+                    itemView.parentFl.refreshDrawableState()
+//                    itemView.parentCl.elevation = 0f
                 }
             }
 

@@ -199,7 +199,7 @@ interface StatsContract {
             }
 
             val list = mutableListOf<ListItem<*, *>>(
-                    HeaderListItem("Recent Transactions")
+                    StatHeader.Item(StatHeader("Recent Transactions"))
             )
 
             list.addAll(
@@ -208,15 +208,17 @@ interface StatsContract {
                             .subList(kotlin.math.max(0, (this.size - 1) - 3), this.size)
                             .reversed()
                             .map {
-                                TransactionListItem(it, true).setOnClickListener(
+                                StatTransaction.Item(
+                                        StatTransaction(it, true)
+                                ).setOnClickListener(
                                         transactionOnClickListener
                                 )
                             }
             )
 
             list.add(
-                    Button
-                            .Item(Button("See All"))
+                    StatButton
+                            .Item(StatButton("See All"))
                             .setOnClickListener {
                                 getView()?.startHistoryActivity()
                             }

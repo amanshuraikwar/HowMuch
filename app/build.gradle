@@ -27,7 +27,12 @@ android {
 
     buildTypes {
 
+        debug {
+            applicationIdSuffix ".debug"
+        }
+
         release {
+            applicationIdSuffix ".release"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             debuggable false
@@ -45,7 +50,7 @@ android {
     productFlavors {
 
         dev {
-            applicationIdSuffix ".debug"
+            applicationIdSuffix ".dev"
             versionCode gitVersionCodeTime
             versionName gitVersionName + "-DEV"
             manifestPlaceholders = [ applicationLabel : APP_NAME_DEV]

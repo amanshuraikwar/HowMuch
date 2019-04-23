@@ -15,8 +15,11 @@ import io.github.amanshuraikwar.howmuch.ui.list.items.HorizontalList;
 import io.github.amanshuraikwar.howmuch.ui.list.items.MonthlyExpenseLimit;
 import io.github.amanshuraikwar.howmuch.ui.list.items.ProfileBtn;
 import io.github.amanshuraikwar.howmuch.ui.list.items.Setting;
+import io.github.amanshuraikwar.howmuch.ui.list.items.StatButton;
 import io.github.amanshuraikwar.howmuch.ui.list.items.StatCategory;
+import io.github.amanshuraikwar.howmuch.ui.list.items.StatHeader;
 import io.github.amanshuraikwar.howmuch.ui.list.items.StatTotal;
+import io.github.amanshuraikwar.howmuch.ui.list.items.StatTransaction;
 import io.github.amanshuraikwar.howmuch.ui.list.items.StatWallet;
 import io.github.amanshuraikwar.howmuch.ui.list.items.UserInfo;
 import io.github.amanshuraikwar.howmuch.ui.list.items.WalletItem;
@@ -103,6 +106,18 @@ public class ListItemTypeFactory extends BaseTypeFactory {
         return 16;
     }
 
+    public int type(StatButton.Item item) {
+        return 17;
+    }
+
+    public int type(StatHeader.Item item) {
+        return 18;
+    }
+
+    public int type(StatTransaction.Item item) {
+        return 19;
+    }
+
     /**
      * To get layout file id (R.layout.*) for a corresponding list item/view type.
      *
@@ -143,6 +158,12 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 return MonthlyExpenseLimit.Holder.Companion.getLAYOUT();
             case 16:
                 return BigCard.Holder.Companion.getLAYOUT();
+            case 17:
+                return StatButton.Holder.Companion.getLAYOUT();
+            case 18:
+                return StatHeader.Holder.Companion.getLAYOUT();
+            case 19:
+                return StatTransaction.Holder.Companion.getLAYOUT();
             default:
                 return super.getLayout(viewType);
         }
@@ -207,6 +228,15 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 break;
             case 16:
                 viewHolder = new BigCard.Holder(parent);
+                break;
+            case 17:
+                viewHolder = new StatButton.Holder(parent);
+                break;
+            case 18:
+                viewHolder = new StatHeader.Holder(parent);
+                break;
+            case 19:
+                viewHolder = new StatTransaction.Holder(parent);
                 break;
             default:
                 viewHolder = super.createViewHolder(parent, type);
