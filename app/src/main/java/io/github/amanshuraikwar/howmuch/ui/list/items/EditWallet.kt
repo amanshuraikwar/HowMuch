@@ -1,6 +1,5 @@
 package io.github.amanshuraikwar.howmuch.ui.list.items
 
-import android.util.TypedValue
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -57,13 +56,15 @@ class EditWallet(val wallet: Wallet,
                     itemView.walletIconIv.visibility = GONE
                     itemView.doneIb.visibility = VISIBLE
                     itemView.editIb.visibility = GONE
-                    itemView.parentCl.elevation = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2f, host.resources.displayMetrics)
+                    itemView.parentFl.isRaised = true
+                    itemView.parentFl.refreshDrawableState()
                 } else {
                     itemView.deleteIb.visibility = GONE
                     itemView.walletIconIv.visibility = VISIBLE
                     itemView.doneIb.visibility = GONE
                     itemView.editIb.visibility = VISIBLE
-                    itemView.parentCl.elevation = 0f
+                    itemView.parentFl.isRaised = false
+                    itemView.parentFl.refreshDrawableState()
                 }
             }
 

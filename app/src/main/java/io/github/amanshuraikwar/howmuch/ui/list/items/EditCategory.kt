@@ -75,7 +75,6 @@ class EditCategory(val category: Category,
                     itemView.editIb.visibility = GONE
                     itemView.parentFl.isRaised = true
                     itemView.parentFl.refreshDrawableState()
-//                    itemView.parentCl.elevation = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2f, host.resources.displayMetrics)
                 } else {
                     itemView.deleteIb.visibility = GONE
                     itemView.categoryIconIv.visibility = VISIBLE
@@ -83,7 +82,6 @@ class EditCategory(val category: Category,
                     itemView.editIb.visibility = VISIBLE
                     itemView.parentFl.isRaised = false
                     itemView.parentFl.refreshDrawableState()
-//                    itemView.parentCl.elevation = 0f
                 }
             }
 

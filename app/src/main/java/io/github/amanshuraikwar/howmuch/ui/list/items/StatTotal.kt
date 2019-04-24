@@ -68,7 +68,7 @@ class StatTotal(val creditAmount: Double,
             if (listItem.statTotal.creditTrend >= 0) {
                 itemView.creditTrendTv.text = "+${listItem.statTotal.creditTrend}%"
             } else {
-                itemView.creditTrendTv.text = "-${listItem.statTotal.creditTrend}%"
+                itemView.creditTrendTv.text = "${listItem.statTotal.creditTrend}%"
             }
 
             statsDrawableResId =
@@ -95,7 +95,7 @@ class StatTotal(val creditAmount: Double,
             if (listItem.statTotal.debitTrend > 0) {
                 itemView.debitTrendTv.text = "+${listItem.statTotal.debitTrend}%"
             } else {
-                itemView.debitTrendTv.text = "-${listItem.statTotal.debitTrend}%"
+                itemView.debitTrendTv.text = "${listItem.statTotal.debitTrend}%"
             }
 
             itemView.creditCv.setOnClickListener {

@@ -182,7 +182,7 @@
 
                 <ImageView
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/baseline_category_24"
+                    android:src="@drawable/ic_bubble_chart_white_24dp"
                     android:contentDescription="@string/category_hint"
                     style="@style/InputImageView" />
             </FrameLayout>
@@ -212,7 +212,7 @@
 
                 <ImageView
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_account_balance_wallet_white_24dp"
+                    android:src="@drawable/ic_credit_card_white_24dp"
                     android:contentDescription="@string/wallet_icon"
                     style="@style/InputImageView" />
             </FrameLayout>

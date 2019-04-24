@@ -2,6 +2,7 @@ package io.github.amanshuraikwar.howmuch.base.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -190,5 +191,22 @@ public class Util {
 
     public static int getRowNumber(String cellRange) {
         return Integer.parseInt(cellRange.split("[a-zA-Z]+-[0-9][!][A-Z]+|[:][A-Z]+")[1]);
+    }
+
+    public static long getFirstDayOfMonth() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        return calendar.getTimeInMillis();
+    }
+
+    public static long getLastSeventhDay() {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -7);
+        return cal.getTimeInMillis();
+    }
+
+    public static long getCurTimeMillisec() {
+        Calendar cal = Calendar.getInstance();
+        return cal.getTimeInMillis();
     }
 }

@@ -15,11 +15,9 @@ import dagger.Module
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.base.ui.base.BaseFragment
 import io.github.amanshuraikwar.howmuch.protocol.Transaction
-import io.github.amanshuraikwar.howmuch.protocol.Wallet
 import io.github.amanshuraikwar.howmuch.ui.expense.ExpenseActivity
 import io.github.amanshuraikwar.howmuch.ui.history.activity.HistoryActivity
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
-import io.github.amanshuraikwar.howmuch.ui.wallet.WalletActivity
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
 import kotlinx.android.synthetic.main.fragment_stats.*
@@ -30,7 +28,6 @@ class StatsFragment
 @Inject constructor(): BaseFragment<StatsContract.View, StatsContract.Presenter>(), StatsContract.View {
 
     companion object {
-        private const val REQ_CODE_WALLET = 10070
         private const val REQ_CODE_TRANSACTION = 10069
     }
 
@@ -99,12 +96,6 @@ class StatsFragment
         showToast(message)
     }
 
-    override fun startWalletActivity(wallet: Wallet) {
-        val intent = Intent(activity, WalletActivity::class.java)
-        intent.putExtra(WalletActivity.KEY_WALLET, wallet)
-        startActivityForResult(intent, REQ_CODE_WALLET)
-    }
-
     override fun startTransactionActivity(transaction: Transaction) {
         val intent = Intent(activity, ExpenseActivity::class.java)
         intent.putExtra(ExpenseActivity.KEY_TRANSACTION, transaction)
@@ -124,9 +115,9 @@ class StatsFragment
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQ_CODE_WALLET) {
+        if (requestCode == REQ_CODE_TRANSACTION) {
             if (resultCode == Activity.RESULT_OK) {
-                presenter.onWalletEdited()
+                presenter.onTransactionEdited()
             }
         }
     }

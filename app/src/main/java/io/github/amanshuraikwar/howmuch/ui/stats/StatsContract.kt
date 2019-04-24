@@ -7,10 +7,7 @@ import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.base.ui.base.*
 import io.github.amanshuraikwar.howmuch.base.util.Util
 import io.github.amanshuraikwar.howmuch.protocol.TransactionType
-import io.github.amanshuraikwar.howmuch.protocol.Wallet
-import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderListItem
 import io.github.amanshuraikwar.howmuch.ui.list.items.*
-import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionListItem
 import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionOnClickListener
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.reactivex.Observable
@@ -24,7 +21,6 @@ interface StatsContract {
         fun submitList(list: List<ListItem<*, *>>)
         fun setSyncError()
         fun clearSyncError()
-        fun startWalletActivity(wallet: Wallet)
         fun startTransactionActivity(transaction: Transaction)
         fun startHistoryActivity(filter: String? = null)
     }
@@ -32,7 +28,7 @@ interface StatsContract {
     interface Presenter : BasePresenter<View> {
         fun onRetryClicked()
         fun onRefreshClicked()
-        fun onWalletEdited()
+        fun onTransactionEdited()
     }
 
     class StatsPresenter @Inject constructor(appBus: AppBus,
@@ -51,8 +47,22 @@ interface StatsContract {
         override fun onAttach(wasViewRecreated: Boolean) {
             super.onAttach(wasViewRecreated)
             if (wasViewRecreated) {
+                attachToAppBus()
                 fetchStats()
             }
+        }
+
+        private fun attachToAppBus() {
+
+            getAppBus()
+                    .onTransactionAdded
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe {
+                        fetchStats()
+                    }
+                    .addToCleanup()
+
         }
 
         private fun fetchStats() {
@@ -121,69 +131,121 @@ interface StatsContract {
 
         private fun List<Transaction>.getTotalItems(limit: Double): List<ListItem<*, *>> {
 
-            val totalMap = this
+            val firstDayOfMonth = Util.getFirstDayOfMonth()
+            val lastSeventhDay = Util.getLastSeventhDay()
+
+            val filteredTransactions = this.filter {
+                Util.toTimeMillisec(it.date, it.time) >= firstDayOfMonth
+            }
+
+            val thisMonthTotalMap = filteredTransactions
                     .groupBy { it.type }
                     .mapValues {
                         txns ->
-                        txns.value.sumByDouble { it.amount }
-                    }
-
-            val recentTrendMap = this
-                    .groupBy { it.type }
-                    .mapValues {
-
-                        txns ->
-
-                        if (txns.value.isNotEmpty()) {
-
-                            txns.value
-                                    .subList(
-                                            maxOf(0, (txns.value.size - 1) - 6),
-                                            txns.value.size
-                                    )
-                                    .sumByDouble { it.amount }
-
-                        } else {
-                            0.0
-                        }
-                    }
-                    .mapValues {
-
-                        txns ->
-
-                        val total = totalMap[txns.key] ?: 0.0
-
-                        if (total != 0.0) {
-                            (txns.value / total) * 100
-                        } else {
-                            0.0
+                        txns.value.sumByDouble {
+                            it.amount
                         }
                     }
 
             val list = mutableListOf<ListItem<*, *>>()
 
             list.add(
+                    MonthlyExpenseLimit.Item(
+                            MonthlyExpenseLimit(
+                                    thisMonthTotalMap[TransactionType.DEBIT] ?: 0.0,
+                                    limit
+                            )
+                    )
+            )
+
+            val creditAmount = thisMonthTotalMap[TransactionType.CREDIT] ?: 0.0
+            val debitAmount = thisMonthTotalMap[TransactionType.DEBIT] ?: 0.0
+
+            val creditTrend: Int
+            val debitTrend: Int
+
+            if (lastSeventhDay >= firstDayOfMonth) {
+
+                val lastWeekTotalMap = filteredTransactions
+                        .groupBy { it.type }
+                        .mapValues {
+                            txns ->
+                            txns.value.sumByDouble {
+                                if (Util.toTimeMillisec(it.date, it.time) > lastSeventhDay) {
+                                    it.amount
+                                } else {
+                                    0.0
+                                }
+                            }
+                        }
+
+                val lastWeekTotalCredit = lastWeekTotalMap[TransactionType.CREDIT] ?: 0.0
+                val lastWeekTotalDebit = lastWeekTotalMap[TransactionType.DEBIT] ?: 0.0
+
+                val curTime = Util.getCurTimeMillisec()
+
+                // alpha = t1 / t2
+                // where t1 = curTime - lastSeventhDay
+                // and t2 = curTime - monthStartDay
+
+                // beta = x(t1) / x(t2)
+                // where x(t1) is transaction amount in time t1
+                // and x(t2) is transaction amount in time t2
+
+                // for ideal (avg) case alpha = beta
+
+                // if alpha != beta
+                // then the transactions are up/down by (beta - alpha) * 100 percentage
+
+                // 'curTime - firstDayOfMonth' will never be zero
+                val alpha = (curTime - lastSeventhDay).toDouble() / (curTime - firstDayOfMonth).toDouble()
+
+                val creditBeta = {
+                    if (creditAmount != 0.0) {
+                        lastWeekTotalCredit / creditAmount
+                    } else {
+                        if (lastWeekTotalCredit != 0.0) {
+                            1.0
+                        } else {
+                            0.0
+                        }
+                    }
+                }.invoke()
+
+                val debitBeta = {
+                    if (debitAmount != 0.0) {
+                        lastWeekTotalDebit / debitAmount
+                    } else {
+                        if (lastWeekTotalDebit != 0.0) {
+                            1.0
+                        } else {
+                            0.0
+                        }
+                    }
+                }.invoke()
+
+                creditTrend = ((creditBeta - alpha) * 100).toInt()
+                debitTrend = ((debitBeta - alpha) * 100).toInt()
+
+            } else {
+                creditTrend = if (creditAmount != 0.0) 100 else 0
+                debitTrend = if (debitAmount != 0.0) 100 else 0
+            }
+
+
+            list.add(
                     StatTotal.Item(
                             StatTotal(
-                                    totalMap[TransactionType.CREDIT]?.money() ?: 0.0,
-                                    recentTrendMap[TransactionType.CREDIT]?.toInt() ?: 0,
-                                    totalMap[TransactionType.DEBIT]?.money() ?: 0.0,
-                                    recentTrendMap[TransactionType.DEBIT]?.toInt() ?: 0,
+                                    creditAmount.money(),
+                                    creditTrend,
+                                    debitAmount.money(),
+                                    debitTrend,
                                     {
                                         getView()?.startHistoryActivity("transaction_type=CREDIT")
                                     },
                                     {
                                         getView()?.startHistoryActivity("transaction_type=DEBIT")
                                     }
-                            )
-                    )
-            )
-
-            list.add(
-                    MonthlyExpenseLimit.Item(
-                            MonthlyExpenseLimit(
-                                    kotlin.math.max(0.0, (totalMap[TransactionType.DEBIT] ?: 0.0).minus(totalMap[TransactionType.CREDIT] ?: 0.0)),
-                                    limit
                             )
                     )
             )
@@ -235,7 +297,7 @@ interface StatsContract {
             fetchStats()
         }
 
-        override fun onWalletEdited() {
+        override fun onTransactionEdited() {
             fetchStats()
         }
     }
