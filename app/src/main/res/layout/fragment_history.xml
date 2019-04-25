@@ -11,14 +11,91 @@
         android:layout_height="wrap_content"
         android:background="@color/white">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:title="Transactions"
-            app:layout_collapseMode="pin"
-            android:clickable="false"
-            app:titleTextAppearance="@style/TextAppearance.ToolbarTitle.SmallCaps" />
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/barrier1"
+                app:title="Transactions"
+                app:titleTextAppearance="@style/TextAppearance.ToolbarTitle.SmallCaps" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="top"
+                app:constraint_referenced_ids="allTimeCtv"/>
+
+            <CheckedTextView
+                android:id="@+id/allTimeCtv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/thisMonthCtv"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:layout_marginBottom="@dimen/margin_normal"
+                android:padding="@dimen/padding_small"
+                android:textAlignment="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/selector_check_tv"
+                android:textColor="@color/color_selector_check_tv"
+                android:text="All Time"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"/>
+
+            <CheckedTextView
+                android:id="@+id/thisMonthCtv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/allTimeCtv"
+                app:layout_constraintEnd_toStartOf="@id/thisWeekCtv"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:layout_marginBottom="@dimen/margin_normal"
+                android:padding="@dimen/padding_small"
+                android:textAlignment="center"
+                android:checked="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/selector_check_tv"
+                android:textColor="@color/color_selector_check_tv"
+                android:text="This Month"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"/>
+
+            <CheckedTextView
+                android:id="@+id/thisWeekCtv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/thisMonthCtv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginEnd="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:layout_marginBottom="@dimen/margin_normal"
+                android:padding="@dimen/padding_small"
+                android:textAlignment="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/selector_check_tv"
+                android:textColor="@color/color_selector_check_tv"
+                android:text="This Week"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <me.zhanghai.android.materialprogressbar.MaterialProgressBar
             android:id="@+id/pb"

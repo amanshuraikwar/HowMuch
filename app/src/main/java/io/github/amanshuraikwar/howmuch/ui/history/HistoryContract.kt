@@ -29,6 +29,9 @@ interface HistoryContract {
     interface Presenter : BasePresenter<View> {
         fun onTransactionEdited()
         fun onRefreshClicked()
+        fun onAllTimeChecked()
+        fun onThisMonthChecked()
+        fun onThisWeekChecked()
     }
 
     class HistoryPresenter @Inject constructor(appBus: AppBus,
@@ -36,6 +39,12 @@ interface HistoryContract {
         : BasePresenterImpl<View>(appBus, dataManager), Presenter {
 
         private val tag = Util.getTag(this)
+
+        enum class TransactionTimeRange {
+            ALL_TIME, THIS_MONTH, THIS_WEEK
+        }
+
+        private var curTransactionTimeRange = TransactionTimeRange.THIS_MONTH
 
         private val transactionOnClickListener=
                 object : TransactionOnClickListener {
@@ -107,8 +116,28 @@ interface HistoryContract {
 
         private fun List<Transaction>.filter(filterStr: String?): List<Transaction> {
 
+            var list = this
+
+            if (curTransactionTimeRange == TransactionTimeRange.THIS_MONTH) {
+
+                val firstDayOfMonth = Util.getFirstDayOfMonth()
+
+                list = list.filter {
+                    Util.toTimeMillisec(it.date, it.time) > firstDayOfMonth
+                }
+
+            } else if (curTransactionTimeRange == TransactionTimeRange.THIS_WEEK) {
+
+                val lastSeventhDay = Util.getLastSeventhDay()
+
+                list = list.filter {
+                    Util.toTimeMillisec(it.date, it.time) > lastSeventhDay
+                }
+            }
+
+
             if (filterStr == null) {
-                return this
+                return list
             }
 
             val filters = filterStr.split("&")
@@ -170,7 +199,7 @@ interface HistoryContract {
                 }
             }
 
-            return this.filter {
+            return list.filter {
 
                 var valid = true
 
@@ -195,13 +224,7 @@ interface HistoryContract {
 
             val inputSorted =
                     this
-                            .sortedWith(
-                                    Comparator {
-                                        t1,t2 ->
-                                        (Util.toTimeMillisec(t1.date, t1.time)
-                                                - Util.toTimeMillisec(t2.date, t2.time)).toInt()
-                                    }
-                            )
+                            .sortedBy { Util.toTimeMillisec(it.date, it.time) }
                             .reversed()
 
             val list = mutableListOf<ListItem<*, *>>()
@@ -228,6 +251,21 @@ interface HistoryContract {
         }
 
         override fun onRefreshClicked() {
+            fetchTransactions()
+        }
+
+        override fun onAllTimeChecked() {
+            curTransactionTimeRange = TransactionTimeRange.ALL_TIME
+            fetchTransactions()
+        }
+
+        override fun onThisMonthChecked() {
+            curTransactionTimeRange = TransactionTimeRange.THIS_MONTH
+            fetchTransactions()
+        }
+
+        override fun onThisWeekChecked() {
+            curTransactionTimeRange = TransactionTimeRange.THIS_WEEK
             fetchTransactions()
         }
     }

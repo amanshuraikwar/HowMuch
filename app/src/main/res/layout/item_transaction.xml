@@ -7,10 +7,8 @@
     android:layout_height="wrap_content"
     android:foreground="?attr/selectableItemBackground"
     android:background="@color/white"
-    android:stateListAnimator="@animator/expense_elevation"
     android:clickable="true"
-    android:focusable="true"
-    android:elevation="1dp">
+    android:focusable="true">
 
     <ImageView
         android:id="@+id/transactionTypeIb"

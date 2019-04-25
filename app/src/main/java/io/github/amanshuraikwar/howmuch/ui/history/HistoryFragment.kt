@@ -95,6 +95,32 @@ class HistoryFragment
             return@setOnMenuItemClickListener true
         }
 
+        allTimeCtv.setOnClickListener {
+            if (!allTimeCtv.isChecked) {
+                allTimeCtv.isChecked = true
+                thisMonthCtv.isChecked = false
+                thisWeekCtv.isChecked = false
+                presenter.onAllTimeChecked()
+            }
+        }
+
+        thisMonthCtv.setOnClickListener {
+            if (!thisMonthCtv.isChecked) {
+                allTimeCtv.isChecked = false
+                thisMonthCtv.isChecked = true
+                thisWeekCtv.isChecked = false
+                presenter.onThisMonthChecked()
+            }
+        }
+
+        thisWeekCtv.setOnClickListener {
+            if (!thisWeekCtv.isChecked) {
+                allTimeCtv.isChecked = false
+                thisMonthCtv.isChecked = false
+                thisWeekCtv.isChecked = true
+                presenter.onThisWeekChecked()
+            }
+        }
     }
 
     override fun submitList(list: List<ListItem<*, *>>) {
