@@ -49,7 +49,7 @@ class SettingsFragment
 
         itemsRv.adapter = adapter
 
-        toolbar.setNavigationIcon(R.drawable.ic_keyboard_backspace_active_24dp)
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_active_24dp)
         toolbar.setNavigationOnClickListener {
             activity.onBackPressed()
         }

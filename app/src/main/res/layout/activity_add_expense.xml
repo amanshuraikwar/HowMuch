@@ -29,7 +29,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/toolbar"
                 android:layout_margin="@dimen/padding_normal"
-                android:src="@drawable/ic_keyboard_backspace_white_24dp"
+                android:src="@drawable/ic_arrow_back_white_24dp"
                 style="@style/Widget.HowMuch.ImageButton.Borderless"
                 android:contentDescription="@string/done" />
 

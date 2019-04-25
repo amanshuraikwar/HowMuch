@@ -13,6 +13,7 @@ import io.github.amanshuraikwar.howmuch.ui.history.HistoryFragment
 import io.github.amanshuraikwar.howmuch.ui.history.activity.HistoryActivity
 import io.github.amanshuraikwar.howmuch.ui.home.HomeActivity
 import io.github.amanshuraikwar.howmuch.ui.profile.ProfileFragment
+import io.github.amanshuraikwar.howmuch.ui.search.SearchActivity
 import io.github.amanshuraikwar.howmuch.ui.settings.SettingsFragment
 import io.github.amanshuraikwar.howmuch.ui.settings.activity.SettingsActivity
 import io.github.amanshuraikwar.howmuch.ui.signin.SignInFragment
@@ -114,4 +115,9 @@ import io.github.amanshuraikwar.howmuch.ui.wallets.WalletsFragment
             modules = [AboutActivity.DiModule::class]
     )
     abstract fun p(): AboutActivity
+
+    @ContributesAndroidInjector(
+            modules = [SearchActivity.DiModule::class]
+    )
+    abstract fun q(): SearchActivity
 }

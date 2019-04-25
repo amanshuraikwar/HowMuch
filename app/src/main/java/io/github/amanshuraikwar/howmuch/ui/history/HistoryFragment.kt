@@ -2,6 +2,7 @@ package io.github.amanshuraikwar.howmuch.ui.history
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -17,6 +18,7 @@ import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.base.ui.base.BaseFragment
 import io.github.amanshuraikwar.howmuch.ui.expense.ExpenseActivity
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
+import io.github.amanshuraikwar.howmuch.ui.search.SearchActivity
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
 import kotlinx.android.synthetic.main.fragment_history.*
@@ -72,14 +74,24 @@ class HistoryFragment
             }
         }
 
-        toolbar.setNavigationIcon(R.drawable.ic_keyboard_backspace_active_24dp)
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_active_24dp)
         toolbar.setNavigationOnClickListener {
             activity.onBackPressed()
         }
 
-        toolbar.inflateMenu(R.menu.refresh_navigation)
+        toolbar.inflateMenu(R.menu.search_refresh_navigation)
         toolbar.setOnMenuItemClickListener {
-            presenter.onRefreshClicked()
+            when(it.itemId) {
+                R.id.search -> {
+                    val searchMenuView = toolbar.findViewById(R.id.search) as View
+                    val options = ActivityOptions.makeSceneTransitionAnimation(activity, searchMenuView, getString(R.string.transition_search_back)).toBundle()
+                    startActivity(Intent(activity, SearchActivity::class.java), options)
+                }
+                R.id.refresh -> {
+                    presenter.onRefreshClicked()
+                }
+            }
+
             return@setOnMenuItemClickListener true
         }
 
@@ -96,12 +108,12 @@ class HistoryFragment
     }
 
     override fun setSyncError() {
-        toolbar.menu.getItem(0).icon =
+        toolbar.menu.getItem(1).icon =
                 ContextCompat.getDrawable(activity, R.drawable.ic_sync_problem_red_24dp)
     }
 
     override fun clearSyncError() {
-        toolbar.menu.getItem(0).icon =
+        toolbar.menu.getItem(1).icon =
                 ContextCompat.getDrawable(activity, R.drawable.ic_autorenew_black_24dp)
     }
 

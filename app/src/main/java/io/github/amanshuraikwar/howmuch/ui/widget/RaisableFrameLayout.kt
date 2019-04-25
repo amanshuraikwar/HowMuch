@@ -1,8 +1,7 @@
-package io.github.amanshuraikwar.howmuch.ui.editcategories
+package io.github.amanshuraikwar.howmuch.ui.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 import android.widget.FrameLayout
 import io.github.amanshuraikwar.howmuch.R
 

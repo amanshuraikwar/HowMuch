@@ -203,7 +203,7 @@ class ExpenseActivity
 
     override fun hideEditMode() {
 
-        backIb.setImageResource(R.drawable.ic_keyboard_backspace_white_24dp)
+        backIb.setImageResource(R.drawable.ic_arrow_back_white_24dp)
         backIb.setOnClickListener {
             presenter.onBackBtnClicked()
         }

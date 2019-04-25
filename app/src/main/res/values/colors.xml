@@ -36,6 +36,7 @@
 
     <!-- dark translucent-->
     <color name="scrim">#99323232</color>
+    <color name="whiteScrim">#99ffffff</color>
 
     <!-- icon colors -->
     <color name="activeIconLight">@color/white</color>

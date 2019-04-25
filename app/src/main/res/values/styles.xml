@@ -16,6 +16,14 @@
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
     </style>
 
+
+    <style name="HowMuch.Search">
+        <item name="android:windowEnterTransition">@transition/search_enter</item>
+        <item name="android:windowReturnTransition">@transition/search_return</item>
+        <item name="android:windowSharedElementEnterTransition">@transition/search_shared_enter</item>
+        <item name="android:windowSharedElementReturnTransition">@transition/search_shared_return</item>
+        <item name="android:windowSharedElementsUseOverlay">true</item>
+    </style>
     <!-- widget -->
     <style
         name="Widget.HowMuch.Toolbar"
@@ -126,6 +134,19 @@
         <item name="android:layout_height">@dimen/input_field_icon_size</item>
         <item name="android:layout_marginStart">@dimen/margin_normal</item>
         <item name="android:tint">@color/activeIcon</item>
+    </style>
+
+    <style name="SearchViewTheme">
+        <item name="colorControlActivated">?android:colorAccent</item>
+        <item name="android:searchViewStyle">@style/Widget.Plaid.SearchView</item>
+    </style>
+
+    <style name="Widget.Plaid.SearchView" parent="android:style/Widget.Material.SearchView">
+        <item name="android:searchIcon">@android:color/transparent</item>
+        <item name="android:searchHintIcon">@android:color/transparent</item>
+        <item name="android:queryBackground">@android:color/transparent</item>
+        <item name="android:submitBackground">@android:color/transparent</item>
+        <item name="android:textAppearance">@style/TextAppearance.Search</item>
     </style>
 
     <!-- text appearance -->
@@ -304,6 +325,14 @@
 
         <item name="android:fontFamily">@font/rubik</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style
+        name="TextAppearance.Search"
+        parent="@style/TextAppearance.Subhead">
+
+        <item name="android:fontFamily">@font/rubik</item>
         <item name="android:textColor">@color/primaryText</item>
     </style>
 

@@ -65,6 +65,9 @@
     <string name="wallet_name_hint">Name</string>
     <string name="wallet_balance_hine">Balance</string>
     <string name="credit_icon">credit icon</string>
+    <string name="transition_search_back" translatable="false">transition_search_back</string>
+    <string name="search_hint">Try transaction titles</string>
+    <string name="back_button_description">Back button</string>
 
     <array name="tab_names">
         <item>@string/app_name</item>
