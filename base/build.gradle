@@ -2,23 +2,20 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply from: "$project.rootDir/script-git-version.gradle"
 
 android {
-    compileSdkVersion 28
 
-
+    compileSdkVersion compileVersion
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-
+        minSdkVersion minVersion
+        targetSdkVersion targetVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -30,19 +27,26 @@ android {
         }
     }
 
+    // automatic version code and version name from git tag
     flavorDimensions "version"
+
     productFlavors {
 
         dev {
+            versionCode gitVersionCodeTime
+            versionName gitVersionName + "-DEV"
         }
 
-        usable {
+        beta {
+            versionCode gitVersionCodeTime
+            versionName gitVersionName + "-BETA"
         }
 
         prod {
+            versionCode gitVersionCode
+            versionName gitVersionName
         }
     }
-
 }
 
 dependencies {

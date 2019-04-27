@@ -224,8 +224,10 @@ interface StatsContract {
                     }
                 }.invoke()
 
-                creditTrend = ((creditBeta - alpha) * 100).toInt()
-                debitTrend = ((debitBeta - alpha) * 100).toInt()
+
+
+                creditTrend = if (creditAmount == 0.0) 0 else ((creditBeta - alpha) * 100).toInt()
+                debitTrend = if (debitAmount == 0.0) 0 else ((debitBeta - alpha) * 100).toInt()
 
             } else {
                 creditTrend = if (creditAmount != 0.0) 100 else 0

@@ -25,15 +25,16 @@
 
             <ImageView
                 android:id="@+id/iconIv"
-                android:layout_width="@dimen/onboarding_icon_size"
-                android:layout_height="@dimen/onboarding_icon_size"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/titleTv"
                 android:layout_marginTop="@dimen/margin_very_large"
                 android:layout_marginBottom="@dimen/margin_very_large"
-                android:src="@mipmap/ic_launcher"
+                android:src="@drawable/ic_bubble_chart_white_24dp"
+                android:tint="@color/green"
                 android:contentDescription="@string/app_icon"
                 app:layout_constraintVertical_chainStyle="packed"/>
 

@@ -2,7 +2,7 @@
 
     <string name="app_name_prod">HowMuch</string>
     <string name="app_name_dev">How[D]Much</string>
-    <string name="app_name_usable">How[U]Much</string>
+    <string name="app_name_beta">HowMuch</string>
 
     <string name="title_home">Home</string>
     <string name="title_add_expense">Add Expense</string>

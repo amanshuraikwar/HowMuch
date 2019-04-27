@@ -10,6 +10,7 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 interface SignInContract {
@@ -54,7 +55,7 @@ interface SignInContract {
         private fun init() {
 
             Observable
-                    .just(Any())
+                    .timer(1, TimeUnit.SECONDS)
                     .flatMap {
                         getDataManager().getSignedInUser()
                     }

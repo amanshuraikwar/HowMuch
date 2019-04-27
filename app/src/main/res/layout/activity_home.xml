@@ -9,6 +9,16 @@
     android:orientation="vertical"
     tools:context=".ui.home.HomeActivity">
 
+    <ImageView
+        android:id="@+id/introAnimIv"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:tint="@color/green" />
+
     <FrameLayout
         android:id="@+id/fragmentContainerFl"
         android:layout_width="0dp"

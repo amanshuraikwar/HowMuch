@@ -494,7 +494,7 @@
         parent="@style/TextAppearance.Headline">
 
         <item name="android:textColor">@color/primaryText</item>
-        <item name="android:fontFamily">@font/roboto_mono</item>
+        <item name="android:fontFamily">@font/rubik</item>
     </style>
 
     <style

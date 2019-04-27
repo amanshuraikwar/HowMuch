@@ -3,8 +3,10 @@ package io.github.amanshuraikwar.howmuch.ui.home
 import io.github.amanshuraikwar.howmuch.base.bus.AppBus
 import io.github.amanshuraikwar.howmuch.base.data.DataManager
 import io.github.amanshuraikwar.howmuch.base.ui.base.*
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 interface HomeContract {
@@ -20,6 +22,7 @@ interface HomeContract {
     }
 
     interface Presenter : BasePresenter<View> {
+        fun init()
         fun onTransactionAdded()
     }
 
@@ -34,14 +37,17 @@ interface HomeContract {
 
             if (wasViewRecreated) {
                 attachToAppBus()
-                init()
             }
         }
 
-        private fun init() {
+        override fun init() {
 
-            getDataManager()
-                    .isSignedIn()
+            Observable
+                    .timer(700, TimeUnit.MILLISECONDS)
+                    .flatMap {
+                        getDataManager()
+                                .isSignedIn()
+                    }
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe {

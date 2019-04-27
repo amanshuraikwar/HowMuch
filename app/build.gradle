@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-
 apply from: "$project.rootDir/script-git-version.gradle"
 
 androidExtensions {
@@ -10,11 +9,13 @@ androidExtensions {
 }
 
 android {
-    compileSdkVersion 28
+
+    compileSdkVersion compileVersion
+
     defaultConfig {
         applicationId "io.github.amanshuraikwar.howmuch"
-        minSdkVersion 21
-        targetSdkVersion 28
+        minSdkVersion minVersion
+        targetSdkVersion targetVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -22,7 +23,7 @@ android {
     ext{
         APP_NAME_DEV = "@string/app_name_dev"
         APP_NAME_PROD = "@string/app_name_prod"
-        APP_NAME_USABLE = "@string/app_name_usable"
+        APP_NAME_BETA = "@string/app_name_beta"
     }
 
     buildTypes {
@@ -56,15 +57,14 @@ android {
             manifestPlaceholders = [ applicationLabel : APP_NAME_DEV]
         }
 
-        usable {
-            applicationIdSuffix ".usable"
+        beta {
+            applicationIdSuffix ".beta"
             versionCode gitVersionCodeTime
-            versionName gitVersionName + "-USABLE"
-            manifestPlaceholders = [ applicationLabel : APP_NAME_USABLE]
+            versionName gitVersionName + "-BETA"
+            manifestPlaceholders = [ applicationLabel : APP_NAME_BETA]
         }
 
         prod {
-            applicationIdSuffix ".prod"
             versionCode gitVersionCode
             versionName gitVersionName
             manifestPlaceholders = [ applicationLabel : APP_NAME_PROD]

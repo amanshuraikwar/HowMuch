@@ -27,9 +27,12 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-ext{
+ext {
+    compileVersion = 28
+    minVersion = 21
+    targetVersion = 28
     appcompatVersion = "1.1.0-alpha04"
-    constraintLayoutVersion = "2.0.0-alpha4"
+    constraintLayoutVersion = "2.0.0-alpha5"
     junitVersion = "4.12"
     testRunnerVersion = "1.1.1"
     espressoVersion = "3.1.1"
@@ -51,5 +54,5 @@ ext{
     rxandroidVersion = "2.0.2"
     rxjavaVersion = "2.2.2"
     pagingVersion = "1.0.1"
-    glideVersion = "4.7.1"
+    glideVersion = "4.8.0"
 }
