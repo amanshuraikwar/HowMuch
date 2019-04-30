@@ -7,6 +7,8 @@ public class GraphAdapter extends SparkAdapter {
     private String[] xAxisLabels;
 
     public GraphAdapter(float[] yData, String[] xAxisLabels) {
+        this.yData = new float[yData.length];
+        this.xAxisLabels = new String[yData.length];
         this.yData = yData;
         this.xAxisLabels = xAxisLabels;
         notifyDataSetChanged();
