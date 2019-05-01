@@ -71,3 +71,4 @@ keystores
 
 # ds store
 .DS_STORE
+.gradle/buildOutputCleanup/cache.properties
