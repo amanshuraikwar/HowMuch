@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EditText
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/inputEt"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/padding_large"
+    android:paddingEnd="@dimen/padding_large"
+    android:inputType="numberDecimal"
+    android:lines="1"
+    android:textAppearance="@style/TextAppearance.AmountSmall"
+    style="@style/Widget.HowMuch.InputEditText"
+    tools:text="100.50" />

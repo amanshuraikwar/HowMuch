@@ -1,0 +1,77 @@
+<resources>
+
+    <string name="app_name_prod">HowMuch</string>
+    <string name="app_name_dev">How[D]Much</string>
+    <string name="app_name_beta">HowMuch</string>
+
+    <string name="title_home">Home</string>
+    <string name="title_add_expense">Add Expense</string>
+    <string name="title_history">History</string>
+    <string name="title_stats">Stats</string>
+
+    <string name="signed_in_fmt">Signed in as: %s</string>
+    <string name="signed_in">Signed in</string>
+    <string name="signing_in">Signing in…</string>
+    <string name="signed_out">Signed out</string>
+    <string name="sign_in">sign in</string>
+    <string name="sign_out">sign out</string>
+    <string name="done">done</string>
+    <string name="submit">submit</string>
+    <string name="person">Person</string>
+    <string name="app_icon">App Icon</string>
+    <string name="date_hint">Date</string>
+    <string name="loading_text">hang on...</string>
+    <string name="retry">retry</string>
+    <string name="amount_hint">Amount</string>
+    <string name="description">Description</string>
+    <string name="category">category</string>
+    <string name="save">save</string>
+    <string name="proceed">proceed</string>
+    <string name="sign_in_description">HowMuch uses a Google Spread Sheet to keep your data.
+        \n\nSign In to allow HowMuch to read and write a google spread sheet.</string>
+    <string name="sheet">sheet</string>
+    <string name="create_sheet_description">Create a new Google Sheet. This will serve as a database for your expenses.
+        \n\nOnly you have the permission to read and write you data.</string>
+    <string name="create_a_new_sheet">create a new sheet</string>
+    <string name="all_done_description">Locked and Loaded. You are ready to manage you expenses.</string>
+    <string name="manage_expenses">start managing expenses</string>
+    <string name="sign_in_cc">Sign In</string>
+    <string name="profile_pic">profile pic</string>
+    <string name="complete_setup">complete setup</string>
+    <string name="create_sheet">Create Sheet</string>
+    <string name="spreadsheet_id">Spreadsheet id</string>
+    <string name="have_a_spreadsheet"> Already have a spreadsheet?</string>
+    <string name="create_a_spreadsheet_instead">Create a spreadsheet instead.</string>
+    <string name="title_settings">Settings</string>
+    <string name="currency">Currency</string>
+    <string name="about">About</string>
+    <string name="log_out">Log Out</string>
+    <string name="google_sign_in_edit">Google sign in edit button.</string>
+    <string name="no_transactions_message">O_O</string>
+    <string name="time">Time</string>
+    <string name="title">Title</string>
+    <string name="time_hint">Time</string>
+    <string name="title_hint">Title</string>
+    <string name="description_hint">Description</string>
+    <string name="category_hint">Category</string>
+    <string name="edit_close_message">Are you sure you want to discard changes to this transaction?</string>
+    <string name="sign_out_message">Are you sure you want to sign out?</string>
+    <string name="delete">delete</string>
+    <string name="delete_confirm">Are you sure you want to delete this transaction?</string>
+    <string name="refresh_btn_cd">Refresh</string>
+    <string name="title_profile">Profile</string>
+    <string name="setting_icon">Setting icon</string>
+    <string name="wallet_icon">Wallet icon</string>
+    <string name="wallet_name_hint">Name</string>
+    <string name="wallet_balance_hine">Balance</string>
+    <string name="credit_icon">credit icon</string>
+    <string name="transition_search_back" translatable="false">transition_search_back</string>
+    <string name="search_hint">Try transaction titles</string>
+    <string name="back_button_description">Back button</string>
+
+    <array name="tab_names">
+        <item>@string/app_name</item>
+        <item>history</item>
+        <item>settings</item>
+    </array>
+</resources>

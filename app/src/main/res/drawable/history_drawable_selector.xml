@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-selector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/pressed"
+        android:drawable="@drawable/baseline_list_24"
+        android:state_pressed="true" />
+
+    <item
+        android:id="@+id/selected"
+        android:drawable="@drawable/baseline_view_list_24"
+        android:state_selected="true" />
+
+    <item
+        android:id="@+id/normal"
+        android:drawable="@drawable/baseline_list_24"
+        android:state_selected="false"
+        android:state_pressed="false"/>
+
+    <transition
+        android:drawable="@drawable/avd_list"
+        android:fromId="@id/pressed"
+        android:toId="@id/selected"
+        android:reversible="true"/>
+
+    <transition
+        android:drawable="@drawable/avd_list"
+        android:fromId="@id/normal"
+        android:toId="@id/selected"
+        android:reversible="true"/>
+</animated-selector>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/btn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/margin_normal"
+    android:layout_marginEnd="@dimen/margin_normal"
+    android:layout_marginBottom="@dimen/margin_normal"
+    android:gravity="center"
+    android:padding="12dp"
+    android:foreground="?attr/selectableItemBackground"
+    android:background="@drawable/bottom_cutout_card"
+    android:elevation="1dp"
+    android:textAppearance="@style/TextAppearance.Button"
+    tools:text="See All" />

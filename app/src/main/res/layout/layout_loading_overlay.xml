@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/loadingParentLl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true"
+    android:visibility="gone"
+    android:elevation="@dimen/elevation_very_large">
+
+    <ProgressBar
+        android:id="@+id/loadingPb"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:indeterminateTint="@color/green"/>
+
+    <TextView
+        android:id="@+id/loadingTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:text="@string/loading_text"
+        android:textAppearance="@style/TextAppearance.Loading"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/loadingRetryBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal"
+        app:backgroundTint="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:text="@string/retry"
+        android:visibility="gone"
+        style="@style/Widget.HowMuch.Button"/>
+</LinearLayout>

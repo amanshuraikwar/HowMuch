@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.github.amanshuraikwar.howmuch.ui.widget.RaisableFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parentFl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:stateListAnimator="@animator/raisable_elevation">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/parentCl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/categoryIconIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/categoryTypeRg"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:src="@drawable/ic_bubble_chart_white_24dp"
+            android:tint="@color/activeIcon" />
+
+        <ImageButton
+            android:id="@+id/deleteIb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/categoryTypeRg"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:src="@drawable/ic_delete_white_24dp"
+            style="@style/Widget.HowMuch.ImageButton.Borderless"
+            android:tint="@color/inactiveIcon"
+            android:visibility="gone"/>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="categoryIconIv,deleteIb"
+            app:barrierDirection="end" />
+
+        <EditText
+            android:id="@+id/categoryNameEt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/barrier1"
+            app:layout_constraintEnd_toStartOf="@id/barrier2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
+            style="@style/Widget.HowMuch.InputEditText"
+            tools:text="Food" />
+
+        <RadioGroup
+            android:id="@+id/categoryTypeRg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/barrier1"
+            app:layout_constraintEnd_toStartOf="@id/barrier2"
+            app:layout_constraintTop_toBottomOf="@id/categoryNameEt"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <RadioButton
+                android:id="@+id/creditRb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CREDIT"
+                android:enabled="false" />
+
+            <RadioButton
+                android:id="@+id/debitRb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:text="DEBIT"
+                android:enabled="false" />
+        </RadioGroup>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="editIb,doneIb"
+            app:barrierDirection="start" />
+
+        <ImageButton
+            android:id="@+id/editIb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/categoryTypeRg"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:src="@drawable/ic_edit_white_24dp"
+            style="@style/Widget.HowMuch.ImageButton.Borderless" />
+
+        <ImageButton
+            android:id="@+id/doneIb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/categoryTypeRg"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:src="@drawable/baseline_done_24"
+            android:tint="@color/green"
+            style="@style/Widget.HowMuch.ImageButton.Borderless"
+            android:visibility="gone"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</io.github.amanshuraikwar.howmuch.ui.widget.RaisableFrameLayout>
+

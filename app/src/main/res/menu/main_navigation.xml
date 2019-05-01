@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_stats"
+        android:icon="@drawable/home_roof_selector"
+        android:title="@string/title_stats" />
+
+    <item
+        android:id="@+id/navigation_categories"
+        android:icon="@drawable/bubbles_selector"
+        android:title="@string/category" />
+
+    <item
+        android:id="@+id/navigation_wallets"
+        android:icon="@drawable/card_swipe_selector"
+        android:title="Wallet" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/person_selector"
+        android:title="@string/title_profile" />
+</menu>

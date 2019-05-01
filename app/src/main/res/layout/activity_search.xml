@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <View
+        android:id="@+id/scrim"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"/>
+
+    <FrameLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:elevation="4dp"
+        android:outlineProvider="bounds"
+        android:transitionGroup="true"
+        android:background="@color/white">
+
+        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+            android:id="@+id/pb"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="bottom"
+            android:indeterminate="true"
+            app:mpb_progressStyle="horizontal"
+            app:mpb_useIntrinsicPadding="false"
+            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/searchQueryEt"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginStart="72dp"
+        android:layout_marginEnd="@dimen/padding_normal"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:hint="@string/search_hint"
+        android:background="@null"
+        android:elevation="4dp"
+        android:lines="1"
+        android:imeOptions="actionDone"
+        android:transitionGroup="true"
+        android:inputType="text"
+        android:textAppearance="@style/TextAppearance.InputField"
+        style="@style/Widget.HowMuch.InputEditText"
+        android:autofillHints="no"
+        tools:targetApi="o" />
+
+    <FrameLayout
+        android:id="@+id/backIbContainer"
+        android:layout_width="96dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/transparent"
+        android:paddingStart="4dp"
+        android:paddingEnd="0dp"
+        android:elevation="4dp">
+
+        <ImageButton
+            android:id="@+id/backIb"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back_padded"
+            android:tint="@color/activeIcon"
+            android:transitionName="@string/transition_search_back"
+            android:contentDescription="@string/back_button_description" />
+
+    </FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/itemsRv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="?attr/actionBarSize"
+        android:paddingBottom="?attr/actionBarSize"
+        android:clipToPadding="false"
+        android:transitionGroup="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+</FrameLayout>

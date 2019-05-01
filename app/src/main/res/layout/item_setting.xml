@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parentCl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/iconIv"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/titleTv"
+        app:layout_constraintBottom_toBottomOf="@id/titleTv"
+        app:layout_constraintHorizontal_bias="0"
+        android:layout_marginStart="44dp"
+        android:tint="@color/activeIcon"
+        android:contentDescription="@string/setting_icon"
+        tools:src="@drawable/ic_local_atm_white_24dp"/>
+
+    <TextView
+        android:id="@+id/titleTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/summaryTv"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:paddingStart="@dimen/padding_very_very_large"
+        android:paddingEnd="@dimen/padding_normal"
+        android:textAppearance="@style/TextAppearance.Setting"
+        tools:text="Monthly expense limit" />
+
+    <TextView
+        android:id="@+id/summaryTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleTv"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_normal"
+        android:paddingStart="@dimen/padding_very_very_large"
+        android:paddingEnd="@dimen/padding_normal"
+        android:textAppearance="@style/TextAppearance.SettingSummary"
+        tools:text="Maximum amount that you prefer spending in a month" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
