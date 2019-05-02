@@ -11,6 +11,7 @@ import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionListItem
 import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionOnClickListener
 import io.github.amanshuraikwar.howmuch.base.util.Util
 import io.github.amanshuraikwar.howmuch.protocol.TransactionType
+import io.github.amanshuraikwar.howmuch.ui.list.items.Graph
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -221,13 +222,38 @@ interface HistoryContract {
 
         private fun List<Transaction>.getListItems(): List<ListItem<*, *>> {
 
+            if(this.isEmpty()) {
+                return mutableListOf(EmptyListItem("O_O"))
+            }
+
+            val list = mutableListOf<ListItem<*, *>>()
+
+            val amountsPerDaySorted =
+                    this
+                            .filter { it.type == TransactionType.DEBIT }
+                            .sortedBy { Util.toTimeMillisec(it.date, it.time) }
+                            .groupBy { it.date }
+                            .map {
+                                entry ->
+                                entry.value.sumByDouble { it.amount }
+                            }
+
+            val labels = amountsPerDaySorted.map { "" }
+
+            list.add(
+                    Graph.Item(
+                            Graph(
+                                    "Debit",
+                                    amountsPerDaySorted.map { it.toFloat() },
+                                    labels
+                            )
+                    )
+            )
 
             val inputSorted =
                     this
                             .sortedBy { Util.toTimeMillisec(it.date, it.time) }
                             .reversed()
-
-            val list = mutableListOf<ListItem<*, *>>()
 
             var date = ""
             var i = 0
@@ -238,9 +264,6 @@ interface HistoryContract {
                 }
                 list.add(TransactionListItem(inputSorted[i]).setOnClickListener(transactionOnClickListener))
                 i += 1
-            }
-            if(list.size == 0) {
-                list.add(EmptyListItem("O_O"))
             }
 
             return list
