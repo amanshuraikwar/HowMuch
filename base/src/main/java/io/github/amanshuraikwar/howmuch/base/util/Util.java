@@ -199,6 +199,12 @@ public class Util {
         return calendar.getTimeInMillis();
     }
 
+    public static Date getFirstDateOfMonth() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        return calendar.getTime();
+    }
+
     public static long getLastSeventhDay() {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -7);
@@ -208,5 +214,25 @@ public class Util {
     public static long getCurTimeMillisec() {
         Calendar cal = Calendar.getInstance();
         return cal.getTimeInMillis();
+    }
+
+    public static String getDateStrMoved(int move) {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, move);
+        return new SimpleDateFormat("dd-MM-yyyy", Locale.UK).format(cal.getTime());
+    }
+
+    public static String getDateStrMoved(Date date, int move) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, move);
+        return new SimpleDateFormat("dd-MM-yyyy", Locale.UK).format(cal.getTime());
+    }
+
+    public static Date getDateMoved(Date date, int move) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, move);
+        return cal.getTime();
     }
 }

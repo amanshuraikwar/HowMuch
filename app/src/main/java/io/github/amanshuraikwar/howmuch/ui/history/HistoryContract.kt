@@ -46,6 +46,10 @@ interface HistoryContract {
         }
 
         private var curTransactionTimeRange = TransactionTimeRange.THIS_MONTH
+        private var filtersApplicable = true
+        private val transactionTypes = HashSet<TransactionType>()
+        private val categoryIds = HashSet<String>()
+        private val walletIds = HashSet<String>()
 
         private val transactionOnClickListener=
                 object : TransactionOnClickListener {
@@ -58,6 +62,7 @@ interface HistoryContract {
             super.onAttach(wasViewRecreated)
             if (wasViewRecreated) {
                 attachToAppBus()
+                setupFilters()
                 fetchTransactions()
             }
         }
@@ -75,15 +80,93 @@ interface HistoryContract {
 
         }
 
+        private fun setupFilters() {
+
+            val filterStr = getView()?.getFilters()
+
+            if (filterStr == null) {
+                filtersApplicable = false
+                return
+            } else {
+                filtersApplicable = true
+            }
+
+            val filters = filterStr.split("&")
+            Log.i(tag, "filterStr: ${filters.size} filters found.")
+            Log.i(tag, "filterStr: Filters = $filters")
+
+            filters.forEach {
+
+                filter ->
+
+                val filterParts = filter.split("=")
+
+                if (filterParts.size == 2) {
+
+                    when {
+
+                        filterParts[0] == "transaction_type" -> {
+
+                            val filterValues = filterParts[1].split("|")
+
+                            filterValues.forEach {
+
+                                when (it) {
+                                    "DEBIT" -> transactionTypes.add(TransactionType.DEBIT)
+                                    "CREDIT" -> transactionTypes.add(TransactionType.CREDIT)
+                                    "ALL" -> {
+                                        transactionTypes.add(TransactionType.CREDIT)
+                                        transactionTypes.add(TransactionType.DEBIT)
+                                    }
+                                    else -> {
+                                        Log.w(tag, "applyAttributeFilters: Invalid transaction type $it found for applyAttributeFilters.")
+                                    }
+                                }
+                            }
+
+                        }
+
+                        filterParts[0] == "category_id" -> {
+
+                            val filterValues = filterParts[1].split("|")
+                            filterValues.forEach { categoryIds.add(it) }
+
+                        }
+
+                        filterParts[0] == "wallet_id" -> {
+
+                            val filterValues = filterParts[1].split("|")
+                            filterValues.forEach { walletIds.add(it) }
+
+                        }
+                    }
+
+                } else {
+                    Log.w(tag, "filterStr: Invalid filterStr $filter found.")
+                }
+            }
+        }
+
         private fun fetchTransactions() {
 
             getDataManager()
                     .getAllTransactions()
                     .map {
-                        it
-                                .toList()
-                                .filter(getView()?.getFilters())
-                                .getListItems()
+                        it.toList().applyTimeFilter().applyAttributeFilters()
+                    }
+                    .map {
+
+                        val list = mutableListOf<ListItem<*, *>>()
+
+                        if (it.isNotEmpty()) {
+                            it.getGraphListItem()?.run{
+                                list.add(this)
+                            }
+                        }
+
+                        list.addAll(it.getListItems())
+
+                        list
                     }
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -111,11 +194,9 @@ interface HistoryContract {
                             }
                     )
                     .addToCleanup()
-
-
         }
 
-        private fun List<Transaction>.filter(filterStr: String?): List<Transaction> {
+        private fun List<Transaction>.applyTimeFilter(): List<Transaction> {
 
             var list = this
 
@@ -136,71 +217,16 @@ interface HistoryContract {
                 }
             }
 
+            return list
+        }
 
-            if (filterStr == null) {
-                return list
+        private fun List<Transaction>.applyAttributeFilters(): List<Transaction> {
+
+            if (!filtersApplicable) {
+                return this
             }
 
-            val filters = filterStr.split("&")
-            Log.i(tag, "filterStr: ${filters.size} filters found.")
-            Log.i(tag, "filterStr: Filters = $filters")
-
-            val transactionTypes = HashSet<TransactionType>()
-            val categoryIds = HashSet<String>()
-            val walletIds = HashSet<String>()
-
-            filters.forEach {
-
-                filter ->
-
-                val filterParts = filter.split("=")
-
-                if (filterParts.size == 2) {
-
-                    when {
-
-                        filterParts[0] == "transaction_type" -> {
-
-                            val filterValues = filterParts[1].split("|")
-
-                            filterValues.forEach {
-
-                                when (it) {
-                                    "DEBIT" -> transactionTypes.add(TransactionType.DEBIT)
-                                    "CREDIT" -> transactionTypes.add(TransactionType.CREDIT)
-                                    "ALL" -> {
-                                        transactionTypes.add(TransactionType.CREDIT)
-                                        transactionTypes.add(TransactionType.DEBIT)
-                                    }
-                                    else -> {
-                                        Log.w(tag, "filter: Invalid transaction type $it found for filter.")
-                                    }
-                                }
-                            }
-
-                        }
-
-                        filterParts[0] == "category_id" -> {
-
-                            val filterValues = filterParts[1].split("|")
-                            filterValues.forEach { categoryIds.add(it) }
-
-                        }
-
-                        filterParts[0] == "wallet_id" -> {
-
-                            val filterValues = filterParts[1].split("|")
-                            filterValues.forEach { walletIds.add(it) }
-
-                        }
-                    }
-
-                } else {
-                    Log.w(tag, "filterStr: Invalid filterStr $filter found.")
-                }
-            }
-
-            return list.filter {
+            return this.filter {
 
                 var valid = true
 
@@ -220,6 +246,86 @@ interface HistoryContract {
             }
         }
 
+        private fun List<Transaction>.getGraphListItem(): ListItem<*, *>? {
+
+            // if transactions are for all time, don't show graph
+            if (curTransactionTimeRange == TransactionTimeRange.ALL_TIME) {
+                return null
+            }
+
+            // if both debit and credit transactions are to be shown
+            // don't show the graph
+            if (transactionTypes.size == 2) {
+                return null
+            }
+
+            val txnsByType = this.groupBy { it.type }
+
+            val debitDayAmountMap = linkedMapOf<String, Double>()
+            val creditDayAmountMap = linkedMapOf<String, Double>()
+
+            // initiate debit and credit day amount map for each day of past 7 days
+            if (curTransactionTimeRange == TransactionTimeRange.THIS_WEEK) {
+
+                var i = 0
+                while (i >= -7) {
+                    debitDayAmountMap[Util.getDateStrMoved(--i)] = 0.0
+                    creditDayAmountMap[Util.getDateStrMoved(--i)] = 0.0
+                }
+            }
+
+            // initiate debit and credit day amount map for each day of month
+            if (curTransactionTimeRange == TransactionTimeRange.THIS_MONTH) {
+
+                val monthFirstDate = Util.getFirstDateOfMonth()
+                val curTimeMillisec = Util.getCurTimeMillisec()
+
+                var i = -1
+                while (Util.getDateMoved(monthFirstDate, ++i).time <= curTimeMillisec) {
+                    debitDayAmountMap[Util.getDateStrMoved(monthFirstDate, i)] = 0.0
+                    creditDayAmountMap[Util.getDateStrMoved(monthFirstDate, i)] = 0.0
+                }
+            }
+
+            // filling debit amount in day amount map
+            txnsByType[TransactionType.DEBIT]?.forEach {
+                if (debitDayAmountMap[it.date] != null) {
+                    debitDayAmountMap[it.date] = debitDayAmountMap[it.date]!!.plus(it.amount)
+                }
+            }
+
+            // filling credit amount in day amount map
+            txnsByType[TransactionType.CREDIT]?.forEach {
+                if (creditDayAmountMap[it.date] != null) {
+                    creditDayAmountMap[it.date] = creditDayAmountMap[it.date]!!.plus(it.amount)
+                }
+            }
+
+            if (transactionTypes.contains(TransactionType.DEBIT)) {
+
+                return Graph.Item(
+                        Graph(
+                                "",
+                                debitDayAmountMap.values.map { it.toFloat() },
+                                debitDayAmountMap.keys.map{ "" }
+                        )
+                )
+
+            } else if (transactionTypes.contains(TransactionType.CREDIT)) {
+
+                return Graph.Item(
+                        Graph(
+                                "",
+                                creditDayAmountMap.values.map { it.toFloat() },
+                                creditDayAmountMap.keys.map{ "" }
+                        )
+                )
+
+            }
+
+            return null
+        }
+
         private fun List<Transaction>.getListItems(): List<ListItem<*, *>> {
 
             if(this.isEmpty()) {
@@ -227,28 +333,6 @@ interface HistoryContract {
             }
 
             val list = mutableListOf<ListItem<*, *>>()
-
-            val amountsPerDaySorted =
-                    this
-                            .filter { it.type == TransactionType.DEBIT }
-                            .sortedBy { Util.toTimeMillisec(it.date, it.time) }
-                            .groupBy { it.date }
-                            .map {
-                                entry ->
-                                entry.value.sumByDouble { it.amount }
-                            }
-
-            val labels = amountsPerDaySorted.map { "" }
-
-            list.add(
-                    Graph.Item(
-                            Graph(
-                                    "Debit",
-                                    amountsPerDaySorted.map { it.toFloat() },
-                                    labels
-                            )
-                    )
-            )
 
             val inputSorted =
                     this
