@@ -11,6 +11,7 @@ import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.protocol.Wallet
 import io.github.amanshuraikwar.howmuch.ui.ExpenseDataInputView
 import io.github.amanshuraikwar.howmuch.base.util.Util
+import io.github.amanshuraikwar.howmuch.ui.HowMuchBasePresenterImpl
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.lang.Exception
@@ -71,7 +72,7 @@ interface ExpenseContract {
 
     class ExpensePresenter @Inject constructor(appBus: AppBus,
                                                dataManager: DataManager)
-        : BasePresenterImpl<View>(appBus, dataManager), Presenter {
+        : HowMuchBasePresenterImpl<View>(appBus, dataManager), Presenter {
 
         private val tag = Util.getTag(this)
 

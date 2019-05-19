@@ -3,6 +3,7 @@ package io.github.amanshuraikwar.howmuch.ui.settings.activity
 import io.github.amanshuraikwar.howmuch.base.bus.AppBus
 import io.github.amanshuraikwar.howmuch.base.data.DataManager
 import io.github.amanshuraikwar.howmuch.base.ui.base.*
+import io.github.amanshuraikwar.howmuch.ui.HowMuchBasePresenterImpl
 import javax.inject.Inject
 
 interface SettingsActivityContract {
@@ -15,7 +16,7 @@ interface SettingsActivityContract {
 
     class PresenterImpl @Inject constructor(appBus: AppBus,
                                             dataManager: DataManager)
-        : BasePresenterImpl<View>(appBus, dataManager), Presenter {
+        : HowMuchBasePresenterImpl<View>(appBus, dataManager), Presenter {
 
         override fun onAttach(wasViewRecreated: Boolean) {
             super.onAttach(wasViewRecreated)

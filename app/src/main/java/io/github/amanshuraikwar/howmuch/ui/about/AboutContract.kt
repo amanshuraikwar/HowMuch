@@ -9,6 +9,7 @@ import io.github.amanshuraikwar.howmuch.base.data.DataManager
 import io.github.amanshuraikwar.howmuch.base.ui.base.*
 import io.github.amanshuraikwar.howmuch.base.util.Util
 import io.github.amanshuraikwar.howmuch.protocol.Category
+import io.github.amanshuraikwar.howmuch.ui.HowMuchBasePresenterImpl
 import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderListItem
 import io.github.amanshuraikwar.howmuch.ui.list.items.BigCard
 import io.github.amanshuraikwar.howmuch.ui.list.items.EditCategory
@@ -35,7 +36,7 @@ interface AboutContract {
 
     class PresenterImpl @Inject constructor(appBus: AppBus,
                                             dataManager: DataManager)
-        : BasePresenterImpl<View>(appBus, dataManager), Presenter {
+        : HowMuchBasePresenterImpl<View>(appBus, dataManager), Presenter {
 
         private val tag = Util.getTag(this)
 

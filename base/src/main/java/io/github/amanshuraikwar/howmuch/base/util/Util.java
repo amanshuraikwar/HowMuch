@@ -153,6 +153,10 @@ public class Util {
         return new SimpleDateFormat("dd MMMM yyyy", Locale.UK).format(date);
     }
 
+    public static String beautifyDate(Date uglyDate) {
+        return new SimpleDateFormat("dd MMMM yyyy", Locale.UK).format(uglyDate);
+    }
+
     public static String beautifyTime(String uglyTime) throws ParseException {
         Date date = new SimpleDateFormat("HH:mm:ss", Locale.UK).parse(uglyTime);
         return new SimpleDateFormat("hh:mm aa", Locale.UK).format(date);

@@ -1,0 +1,53 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply from: "$project.rootDir/script-git-version.gradle"
+
+android {
+
+    compileSdkVersion compileVersion
+
+    defaultConfig {
+        minSdkVersion minVersion
+        targetSdkVersion targetVersion
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+    }
+
+}
+
+dependencies {
+
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test:runner:$testRunnerVersion"
+    androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion") {
+        exclude group: 'com.google.code.findbugs'
+    }
+
+    implementation "io.reactivex.rxjava2:rxjava:$rxjavaVersion"
+
+    implementation "com.google.android.gms:play-services-auth:$playServicesAuthVersion"
+
+    implementation("com.google.api-client:google-api-client-android:$googleApiClientVersion") {
+        exclude group: 'org.apache.httpcomponents'
+    }
+    
+    implementation("com.google.apis:google-api-services-sheets:$googleSheetsApiVersion") {
+        exclude group: 'org.apache.httpcomponents'
+    }
+}

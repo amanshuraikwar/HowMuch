@@ -10,6 +10,7 @@ import io.github.amanshuraikwar.howmuch.protocol.User
 import io.github.amanshuraikwar.howmuch.ui.list.items.ProfileBtn
 import io.github.amanshuraikwar.howmuch.ui.list.items.UserInfo
 import io.github.amanshuraikwar.howmuch.base.util.Util;
+import io.github.amanshuraikwar.howmuch.ui.HowMuchBasePresenterImpl
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -35,7 +36,7 @@ interface ProfileContract {
 
     class ProfilePresenter @Inject constructor(appBus: AppBus,
                                                dataManager: DataManager)
-        : BasePresenterImpl<View>(appBus, dataManager), Presenter {
+        : HowMuchBasePresenterImpl<View>(appBus, dataManager), Presenter {
 
         private val tag = Util.getTag(this)
 

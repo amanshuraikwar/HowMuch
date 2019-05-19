@@ -1,8 +1,5 @@
 package io.github.amanshuraikwar.howmuch.base.ui.base
 
-import io.github.amanshuraikwar.howmuch.base.bus.AppBus
-import io.github.amanshuraikwar.howmuch.base.data.DataManager
-import io.github.amanshuraikwar.howmuch.protocol.Wallet
 import io.reactivex.disposables.Disposable
 
 /**
@@ -11,9 +8,9 @@ import io.reactivex.disposables.Disposable
  * @author Amanshu Raikwar
  * Created by Amanshu Raikwar on 06/03/18.
  */
-abstract class BasePresenterImpl<View: BaseView>
-constructor(private val appBus: AppBus,
-            private val dataManager: DataManager)
+abstract class BasePresenterImpl<View: BaseView, B, D>
+constructor(private val appBus: B,
+            private val dataManager: D)
     : BasePresenter<View> {
 
     private var view: View? = null
@@ -59,14 +56,14 @@ constructor(private val appBus: AppBus,
      *
      * @return AppBus instance.
      */
-    protected fun getAppBus(): AppBus = appBus
+    protected fun getAppBus(): B = appBus
 
     /**
      * To get DataManager instance.
      *
      * @return DataManager instance.
      */
-    protected fun getDataManager(): DataManager = dataManager
+    protected fun getDataManager(): D = dataManager
 
     /**
      * Called when the view is attached to the presenter.

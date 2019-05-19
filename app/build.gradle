@@ -18,6 +18,7 @@ android {
             keyPassword 'lk4r0yke'
         }
     }
+
     compileSdkVersion compileVersion
 
     defaultConfig {
@@ -29,7 +30,7 @@ android {
         signingConfig signingConfigs.release
     }
 
-    ext{
+    ext {
         APP_NAME_DEV = "@string/app_name_dev"
         APP_NAME_PROD = "@string/app_name_prod"
         APP_NAME_BETA = "@string/app_name_beta"
@@ -147,6 +148,7 @@ dependencies {
     implementation("com.google.api-client:google-api-client-android:$googleApiClientVersion") {
         exclude group: 'org.apache.httpcomponents'
     }
+
     implementation("com.google.apis:google-api-services-sheets:$googleSheetsApiVersion") {
         exclude group: 'org.apache.httpcomponents'
     }

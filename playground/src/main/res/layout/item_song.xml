@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.github.amanshuraikwar.howmuch.base.ui.widget.RaisableFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parentFl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:foreground="?attr/selectableItemBackground"
+    android:stateListAnimator="@animator/raisable_elevation">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/margin_normal"
+        android:animateLayoutChanges="true">
+
+        <ImageView
+            android:id="@+id/artIv"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:background="@color/gray3" />
+
+        <ImageView
+            android:id="@+id/errorIconIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/round_error_24"
+            app:layout_constraintStart_toStartOf="@id/artIv"
+            app:layout_constraintEnd_toEndOf="@id/artIv"
+            app:layout_constraintTop_toTopOf="@id/artIv"
+            app:layout_constraintBottom_toBottomOf="@id/artIv"
+            android:tint="@color/white"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/nameTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/artIv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/artistTv"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintVertical_bias="0"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:fontFamily="@font/rubik"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
+
+        <ImageView
+            android:id="@+id/artistIv"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="@dimen/margin_normal"
+            app:layout_constraintStart_toEndOf="@id/artIv"
+            app:layout_constraintTop_toTopOf="@id/artistTv"
+            app:layout_constraintBottom_toBottomOf="@id/artistTv"
+            android:tint="@color/colorPrimary"
+            android:src="@drawable/ic_person_black_24dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/artistTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/artistIv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nameTv"
+            app:layout_constraintBottom_toTopOf="@id/albumTv"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:fontFamily="@font/rubik"/>
+
+        <ImageView
+            android:id="@+id/albumIv"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="@dimen/margin_normal"
+            app:layout_constraintStart_toEndOf="@id/artIv"
+            app:layout_constraintTop_toTopOf="@id/albumTv"
+            app:layout_constraintBottom_toBottomOf="@id/albumTv"
+            android:tint="@color/colorPrimary"
+            android:src="@drawable/ic_album_black_24dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/albumTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/albumIv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/artistTv"
+            app:layout_constraintBottom_toTopOf="@id/signOutBtn"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:fontFamily="@font/rubik"
+            android:visibility="gone"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/signOutBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/artIv"
+            app:layout_constraintTop_toBottomOf="@id/albumTv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_very_small"
+            android:layout_marginEnd="@dimen/margin_normal"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            android:textSize="12sp"
+            android:fontFamily="@font/rubik"
+            android:text="Play on Spotify"
+            app:icon="@drawable/spotify"
+            app:iconPadding="@dimen/margin_normal"
+            android:visibility="gone"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</io.github.amanshuraikwar.howmuch.base.ui.widget.RaisableFrameLayout>
