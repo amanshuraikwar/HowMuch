@@ -1,6 +1,7 @@
 package io.github.amanshuraikwar.playground.ui.main
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
@@ -26,6 +27,7 @@ import io.github.amanshuraikwar.howmuch.googlesheetsprotocol.api.AuthenticationM
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
 import io.github.amanshuraikwar.playground.R
+import io.github.amanshuraikwar.playground.data.Song
 import io.github.amanshuraikwar.playground.ui.ListItemTypeFactory
 import io.github.amanshuraikwar.playground.ui.widget.SettingsBottomSheetDialogFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -90,6 +92,10 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
         itemsRv.adapter = adapter
 
         actionBtn.setOnClickListener { presenter.onActionBtnClicked() }
+
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            songDetailCl.visibility = VISIBLE
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -160,6 +166,13 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
                         }
                 )
                 .show(supportFragmentManager, "settings-dialog")
+    }
+
+    override fun showSongDetails(song: Song) {
+        Glide.with(this).load(song.artUrl).into(songArtIv)
+        songNameTv.text = song.name
+        songArtistTv.text = song.artist
+        songAlbumTv.text = song.album
     }
 
     override fun showActionBtn(msg: String) {

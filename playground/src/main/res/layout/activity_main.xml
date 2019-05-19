@@ -68,11 +68,84 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/songDetailCl"
             app:layout_constraintTop_toBottomOf="@id/toolbarFl"
             app:layout_constraintBottom_toBottomOf="parent"
             android:paddingBottom="@dimen/padding_very_very_large"
             android:clipToPadding="false" />
+
+        <ScrollView
+            android:id="@+id/songDetailCl"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toEndOf="@id/itemsRv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbarFl"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:fillViewport="true"
+            android:background="@color/white"
+            android:elevation="@dimen/elevation_small"
+            android:visibility="gone">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/padding_large">
+
+                <ImageView
+                    android:id="@+id/songArtIv"
+                    android:layout_width="128dp"
+                    android:layout_height="128dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_marginEnd="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:background="@color/gray3" />
+
+                <TextView
+                    android:id="@+id/songNameTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/songArtIv"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_marginEnd="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:gravity="center"
+                    android:fontFamily="@font/rubik"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+                <TextView
+                    android:id="@+id/songArtistTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/songNameTv"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_marginEnd="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:gravity="center"
+                    android:fontFamily="@font/rubik"/>
+
+                <TextView
+                    android:id="@+id/songAlbumTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/songArtistTv"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_marginEnd="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:gravity="center"
+                    android:fontFamily="@font/rubik"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
         <ImageView
             android:id="@+id/iconIv"

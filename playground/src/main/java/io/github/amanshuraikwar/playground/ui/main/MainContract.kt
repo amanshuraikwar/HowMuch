@@ -27,6 +27,7 @@ interface MainContract {
         fun showSettings(name: String, photoUrl: String, email: String)
         fun showActionBtn(msg: String)
         fun hideActionBtn()
+        fun showSongDetails(song: Song)
     }
 
     interface Presenter: BasePresenter<View> {
@@ -128,6 +129,7 @@ interface MainContract {
                     .addToCleanup()
         }
 
+        @Suppress("MoveLambdaOutsideParentheses")
         private fun List<Song>.getListItems(): List<ListItem<*, *>> {
 
             val sorted = this.sortedByDescending { it.timeAdded }
@@ -143,7 +145,17 @@ interface MainContract {
                     lastDate = Util.beautifyDate(sorted[i].timeAdded)
                     list.add(HeaderListItem(lastDate))
                 }
-                list.add(SongItem.Item(SongItem(sorted[i])))
+                list.add(
+                        SongItem.Item(
+                                SongItem(
+                                        sorted[i],
+                                        {
+                                            song, _ ->
+                                            getView()?.showSongDetails(song)
+                                        }
+                                )
+                        )
+                )
                 i += 1
             }
 

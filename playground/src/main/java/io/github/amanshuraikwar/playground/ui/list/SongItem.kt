@@ -16,7 +16,8 @@ import io.github.amanshuraikwar.playground.data.Song
 import io.github.amanshuraikwar.playground.ui.ListItemTypeFactory
 import kotlinx.android.synthetic.main.item_song.view.*
 
-class SongItem(val song: Song) {
+class SongItem(val song: Song,
+               val onSongSelected: (Song, Boolean) -> Unit) {
 
     class Item(val songItem: SongItem)
         : ListItem<SimpleListItemOnClickListener, ListItemTypeFactory>() {
@@ -72,6 +73,7 @@ class SongItem(val song: Song) {
                     itemView.albumTv.visibility = GONE
                     itemView.albumIv.visibility = GONE
                     itemView.signOutBtn.visibility = GONE
+                    listItem.songItem.onSongSelected.invoke(listItem.songItem.song, false)
                 } else {
                     itemView.parentFl.isRaised = true
                     itemView.parentFl.refreshDrawableState()
@@ -80,6 +82,7 @@ class SongItem(val song: Song) {
                     itemView.albumTv.visibility = VISIBLE
                     itemView.albumIv.visibility = VISIBLE
                     itemView.signOutBtn.visibility = VISIBLE
+                    listItem.songItem.onSongSelected.invoke(listItem.songItem.song, true)
                 }
             }
         }
