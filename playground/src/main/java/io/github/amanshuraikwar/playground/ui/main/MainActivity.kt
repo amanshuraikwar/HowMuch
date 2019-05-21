@@ -92,9 +92,17 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
         itemsRv.adapter = adapter
 
         actionBtn.setOnClickListener { presenter.onActionBtnClicked() }
+    }
 
-        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+    override fun onConfigurationChanged(newConfig: Configuration) {
+
+        super.onConfigurationChanged(newConfig)
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE
+                && newConfig.isLayoutSizeAtLeast(Configuration.SCREENLAYOUT_SIZE_NORMAL)) {
             songDetailCl.visibility = VISIBLE
+        } else {
+            songDetailCl.visibility = GONE
         }
     }
 
