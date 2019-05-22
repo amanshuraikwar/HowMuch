@@ -8,6 +8,7 @@ import io.github.amanshuraikwar.howmuch.base.ui.base.*
 import io.github.amanshuraikwar.howmuch.base.util.Util
 import io.github.amanshuraikwar.howmuch.protocol.TransactionType
 import io.github.amanshuraikwar.howmuch.protocol.Wallet
+import io.github.amanshuraikwar.howmuch.protocol.money
 import io.github.amanshuraikwar.howmuch.ui.HowMuchBasePresenterImpl
 import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderListItem
 import io.github.amanshuraikwar.howmuch.ui.list.items.StatWallet
@@ -115,6 +116,8 @@ interface WalletsContract {
                     .addToCleanup()
         }
 
+        fun Double.money(): Double = "%.2f".format(this).toDouble()
+
         @Suppress("MoveLambdaOutsideParentheses")
         private fun List<Transaction>.getListItems(wallets: List<Wallet>)
                 : List<ListItem<*, *>> {
@@ -125,12 +128,12 @@ interface WalletsContract {
                                 .groupBy { it }
                                 .mapValues {
                                     entry ->
-                                    categoryIdTxnListMap[entry.key.id]?.sumByDouble {
+                                    (categoryIdTxnListMap[entry.key.id]?.sumByDouble {
                                         if (it.type == TransactionType.DEBIT)
                                             -it.amount
                                         else
                                             it.amount
-                                    } ?: 0.0
+                                    } ?: 0.0).money()
                                 }
                     }.invoke()
 

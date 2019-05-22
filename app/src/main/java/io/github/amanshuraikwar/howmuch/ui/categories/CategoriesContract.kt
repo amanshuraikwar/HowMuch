@@ -135,6 +135,8 @@ interface CategoriesContract {
                     .addToCleanup()
         }
 
+        fun Double.money(): Double = "%.2f".format(this).toDouble()
+
         @Suppress("MoveLambdaOutsideParentheses")
         private fun List<Transaction>.getListItems(transactionType: TransactionType,
                                                    categories: List<Category>)
@@ -147,7 +149,7 @@ interface CategoriesContract {
                                 .groupBy { it }
                                 .mapValues {
                                     entry ->
-                                    categoryIdTxnListMap[entry.key.id]?.sumByDouble { it.amount } ?: 0.0
+                                    (categoryIdTxnListMap[entry.key.id]?.sumByDouble { it.amount } ?: 0.0).money()
                                 }
                     }.invoke()
 

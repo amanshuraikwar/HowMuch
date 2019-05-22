@@ -13,13 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/HowMuch"
         android:fullBackupContent="@xml/backup_descriptor"
-        android:resizeableActivity="false"
         android:supportsPictureInPicture="false"
         tools:replace="android:label">
 
         <activity
             android:name=".ui.home.HomeActivity"
-            android:screenOrientation="portrait">
+            android:configChanges="orientation|screenSize|screenLayout">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -28,34 +27,34 @@
 
         <activity
             android:name=".ui.expense.ExpenseActivity"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation|screenSize|screenLayout"/>
 
         <activity
             android:name=".ui.wallet.WalletActivity"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation|screenSize|screenLayout"/>
 
         <activity
             android:name=".ui.addexpense.AddExpenseActivity"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation|screenSize|screenLayout"/>
         <activity
             android:name=".ui.history.activity.HistoryActivity"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation|screenSize|screenLayout"/>
         <activity
             android:name=".ui.editcategories.EditCategoriesActivity"
-            android:screenOrientation="portrait"/>
+            android:configChanges="orientation|screenSize|screenLayout"/>
         <activity
             android:name=".ui.editwallets.EditWalletsActivity"
-            android:screenOrientation="portrait"/>
+            android:configChanges="orientation|screenSize|screenLayout"/>
         <activity
             android:name=".ui.settings.activity.SettingsActivity"
-            android:screenOrientation="portrait"/>
+            android:configChanges="orientation|screenSize|screenLayout"/>
         <activity
             android:name=".ui.about.AboutActivity"
-            android:screenOrientation="portrait"/>
+            android:configChanges="orientation|screenSize|screenLayout"/>
         <activity
             android:name=".ui.search.SearchActivity"
             android:theme="@style/HowMuch.Search"
-            android:screenOrientation="portrait"/>
+            android:configChanges="orientation|screenSize|screenLayout"/>
 
         <meta-data
             android:name="preloaded_fonts"

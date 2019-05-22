@@ -35,6 +35,11 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
         init()
     }
 
+    override fun onResume() {
+        super.onResume()
+        supportFragmentManager.executePendingTransactions()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_CODE_TRANSACTION) {
@@ -124,7 +129,7 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
                         R.anim.abc_fade_out
                 )
                 .replace(R.id.fragmentContainerFl, fragment)
-                .commit()
+                .commitAllowingStateLoss()
     }
 
     override fun showAddTransactionBtn() {
