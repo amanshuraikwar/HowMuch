@@ -38,4 +38,5 @@
     <dimen name="input_field_offset">72dp</dimen>
     <dimen name="input_field_offset_spinner">64dp</dimen>
     <dimen name="tall_toolbar_height">108dp</dimen>
+    <dimen name="clickable_dialog_elevation">2dp</dimen>
 </resources>

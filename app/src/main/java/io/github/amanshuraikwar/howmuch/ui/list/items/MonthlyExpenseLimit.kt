@@ -14,7 +14,8 @@ import kotlin.math.max
 import kotlin.math.min
 
 class MonthlyExpenseLimit(val actual: Double,
-                          val limit: Double) {
+                          val limit: Double,
+                          val onClick: () -> Unit) {
 
     class Item(val monthlyExpenseLimit: MonthlyExpenseLimit)
         : ListItem<SimpleListItemOnClickListener, ListItemTypeFactory>() {
@@ -50,6 +51,8 @@ class MonthlyExpenseLimit(val actual: Double,
             itemView.pb.progress = (progress * 100).toInt()
 
             itemView.trendTv.text = "${(progress * 100).toInt()}% of the monthly budget used"
+
+            itemView.cv.setOnClickListener { listItem.monthlyExpenseLimit.onClick.invoke() }
         }
     }
 }

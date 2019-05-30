@@ -17,7 +17,7 @@ import java.lang.Exception
 import java.util.*
 import javax.inject.Inject
 
-class GoogleSheetsUserDataManager
+class  GoogleSheetsUserDataManager
 @Inject constructor(private val authenticationManager: AuthenticationManager,
                     private val sheetsHelper: SheetsHelper,
                     @ApplicationContext private val context: Context,

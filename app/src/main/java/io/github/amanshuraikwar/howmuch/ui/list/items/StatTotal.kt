@@ -41,7 +41,7 @@ class StatTotal(val creditAmount: Double,
 
         override fun bind(listItem: Item, host: FragmentActivity) {
 
-            itemView.creditAmountTv.text = "+${listItem.statTotal.creditAmount}"
+            itemView.amountTv.text = "+${listItem.statTotal.creditAmount}"
             itemView.debitAmountTv.text = "-${listItem.statTotal.debitAmount}"
 
             var statsDrawableResId =

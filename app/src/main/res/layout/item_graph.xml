@@ -8,8 +8,6 @@
     app:cardElevation="2dp"
     app:cardCornerRadius="8dp">
 
-
-
     <io.github.amanshuraikwar.howmuch.graph.SparkView
         android:id="@+id/sv"
         android:layout_width="match_parent"

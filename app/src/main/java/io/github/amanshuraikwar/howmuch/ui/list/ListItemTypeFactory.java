@@ -24,6 +24,7 @@ import io.github.amanshuraikwar.howmuch.ui.list.items.StatHeader;
 import io.github.amanshuraikwar.howmuch.ui.list.items.StatTotal;
 import io.github.amanshuraikwar.howmuch.ui.list.items.StatTransaction;
 import io.github.amanshuraikwar.howmuch.ui.list.items.StatWallet;
+import io.github.amanshuraikwar.howmuch.ui.list.items.Total;
 import io.github.amanshuraikwar.howmuch.ui.list.items.UserInfo;
 import io.github.amanshuraikwar.howmuch.ui.list.items.WalletItem;
 import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionListItem;
@@ -125,6 +126,10 @@ public class ListItemTypeFactory extends BaseTypeFactory {
         return 20;
     }
 
+    public int type(Total.Item item) {
+        return 21;
+    }
+
     /**
      * To get layout file id (R.layout.*) for a corresponding list item/view type.
      *
@@ -173,6 +178,8 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 return StatTransaction.Holder.Companion.getLAYOUT();
             case 20:
                 return Graph.Holder.Companion.getLAYOUT();
+            case 21:
+                return Total.Holder.Companion.getLAYOUT();
             default:
                 return super.getLayout(viewType);
         }
@@ -249,6 +256,9 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 break;
             case 20:
                 viewHolder = new Graph.Holder(parent);
+                break;
+            case 21:
+                viewHolder = new Total.Holder(parent);
                 break;
             default:
                 viewHolder = super.createViewHolder(parent, type);

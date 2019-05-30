@@ -414,6 +414,15 @@
     </style>
 
     <style
+        name="TextAppearance.TotalStatAmountLarge"
+        parent="@style/TextAppearance.Display2">
+
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style
         name="TextAppearance.StatTrendAmount"
         parent="@style/TextAppearance.Caption">
 

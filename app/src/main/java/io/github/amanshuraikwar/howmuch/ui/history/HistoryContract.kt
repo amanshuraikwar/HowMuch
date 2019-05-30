@@ -13,6 +13,7 @@ import io.github.amanshuraikwar.howmuch.base.util.Util
 import io.github.amanshuraikwar.howmuch.protocol.TransactionType
 import io.github.amanshuraikwar.howmuch.ui.HowMuchBasePresenterImpl
 import io.github.amanshuraikwar.howmuch.ui.list.items.Graph
+import io.github.amanshuraikwar.howmuch.ui.list.items.Total
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -85,6 +86,7 @@ interface HistoryContract {
 
             val filterStr = getView()?.getFilters()
 
+            // if filter string is itself null then return
             if (filterStr == null) {
                 filtersApplicable = false
                 return
@@ -92,6 +94,7 @@ interface HistoryContract {
                 filtersApplicable = true
             }
 
+            // split filter types
             val filters = filterStr.split("&")
             Log.i(tag, "filterStr: ${filters.size} filters found.")
             Log.i(tag, "filterStr: Filters = $filters")
@@ -161,6 +164,12 @@ interface HistoryContract {
 
                         if (it.isNotEmpty()) {
                             it.getGraphListItem()?.run{
+                                list.add(this)
+                            }
+                        }
+
+                        if (it.isNotEmpty()) {
+                            it.getTotalListItem()?.run{
                                 list.add(this)
                             }
                         }
@@ -302,7 +311,7 @@ interface HistoryContract {
                 }
             }
 
-            if (transactionTypes.contains(TransactionType.DEBIT)) {
+            if (debitDayAmountMap.isNotEmpty()) {
 
                 return Graph.Item(
                         Graph(
@@ -312,7 +321,7 @@ interface HistoryContract {
                         )
                 )
 
-            } else if (transactionTypes.contains(TransactionType.CREDIT)) {
+            } else if (creditDayAmountMap.isNotEmpty()) {
 
                 return Graph.Item(
                         Graph(
@@ -322,6 +331,45 @@ interface HistoryContract {
                         )
                 )
 
+            }
+
+            return null
+        }
+
+        private fun List<Transaction>.getTotalListItem(): ListItem<*, *>? {
+
+            // if transactions are for all time, don't show graph
+            if (curTransactionTimeRange == TransactionTimeRange.ALL_TIME) {
+                return null
+            }
+
+            // if both debit and credit transactions are to be shown
+            // don't show the graph
+            if (transactionTypes.size == 2) {
+                return null
+            }
+
+            val txnAmountByType =
+                    this
+                            .groupBy { it.type }
+                            .mapValues { pair -> pair.value.sumByDouble { it.amount } }
+
+            txnAmountByType[TransactionType.DEBIT]?.let {
+                return Total.Item(
+                        Total(
+                                "Total",
+                                it
+                        )
+                )
+            }
+
+            txnAmountByType[TransactionType.CREDIT]?.let {
+                return Total.Item(
+                        Total(
+                                "Total",
+                                it
+                        )
+                )
             }
 
             return null

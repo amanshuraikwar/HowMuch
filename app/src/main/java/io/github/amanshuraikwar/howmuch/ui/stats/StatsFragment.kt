@@ -18,6 +18,7 @@ import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.ui.expense.ExpenseActivity
 import io.github.amanshuraikwar.howmuch.ui.history.activity.HistoryActivity
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
+import io.github.amanshuraikwar.howmuch.ui.settings.activity.SettingsActivity
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
 import kotlinx.android.synthetic.main.fragment_stats.*
@@ -111,6 +112,10 @@ class StatsFragment
                 }.invoke()
 
         )
+    }
+
+    override fun startSettingsActivity() {
+        startActivity(Intent(activity, SettingsActivity::class.java))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

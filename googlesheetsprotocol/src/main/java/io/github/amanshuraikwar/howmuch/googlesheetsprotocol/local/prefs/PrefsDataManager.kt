@@ -13,7 +13,7 @@ class PrefsDataManager
     }
 
     fun getMonthlyExpenseLimit(): Double {
-        return sharedPrefs.getFloat(KEY_MONTHLY_EXPENSE_LIMIT, 0.0F).toDouble()
+        return sharedPrefs.getFloat(KEY_MONTHLY_EXPENSE_LIMIT, 10000.0F).toDouble()
     }
 
     fun setMonthlyExpenseLimit(limit: Double) {

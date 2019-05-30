@@ -21,7 +21,7 @@
         <objectAnimator
             android:duration="200"
             android:propertyName="elevation"
-            android:valueTo="@dimen/elevation_very_small"
+            android:valueTo="@dimen/clickable_dialog_elevation"
             android:valueType="floatType" />
     </item>
 

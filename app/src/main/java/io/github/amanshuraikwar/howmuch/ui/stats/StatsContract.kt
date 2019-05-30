@@ -24,6 +24,7 @@ interface StatsContract {
         fun clearSyncError()
         fun startTransactionActivity(transaction: Transaction)
         fun startHistoryActivity(filter: String? = null)
+        fun startSettingsActivity()
     }
 
     interface Presenter : BasePresenter<View> {
@@ -154,7 +155,8 @@ interface StatsContract {
                     MonthlyExpenseLimit.Item(
                             MonthlyExpenseLimit(
                                     thisMonthTotalMap[TransactionType.DEBIT] ?: 0.0,
-                                    limit
+                                    limit,
+                                    { getView()?.startSettingsActivity() }
                             )
                     )
             )
