@@ -35,4 +35,12 @@
         <attr name="pie_gap" format="dimension|reference" />
         <attr name="pie_lineBackground" format="color|reference" />
     </declare-styleable>
+
+    <attr name="VerticalProgressBarStyle" format="reference" />
+
+    <declare-styleable name="VerticalProgressBar">
+        <attr name="vpb_lineWidth" format="dimension|reference" />
+        <attr name="vpb_lineColor" format="color|reference" />
+        <attr name="vpb_lineBackground" format="color|reference" />
+    </declare-styleable>
 </resources>

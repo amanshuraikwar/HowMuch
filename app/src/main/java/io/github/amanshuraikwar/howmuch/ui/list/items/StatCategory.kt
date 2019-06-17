@@ -1,14 +1,11 @@
 package io.github.amanshuraikwar.howmuch.ui.list.items
 
-import android.graphics.ColorFilter
 import android.view.View
-import androidx.annotation.ColorInt
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.protocol.Category
-import io.github.amanshuraikwar.howmuch.protocol.TransactionType
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.SimpleListItemOnClickListener
@@ -54,6 +51,9 @@ class StatCategory(val category: Category,
             )
 
             itemView.iconIv.setImageResource(listItem.statCategory.icon)
+
+            itemView.pb.lineColor = ContextCompat.getColor(host, listItem.statCategory.color)
+            itemView.pb.invalidate()
         }
     }
 }

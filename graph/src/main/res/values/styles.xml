@@ -21,4 +21,9 @@
         <item name="pie_gap">2dp</item>
         <item name="pie_lineBackground">#e0e0e0</item>
     </style>
+
+    <style name="VerticalProgressBar">
+        <item name="vpb_lineWidth">4dp</item>
+        <item name="vpb_lineBackground">#e0e0e0</item>
+    </style>
 </resources>

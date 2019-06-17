@@ -361,6 +361,15 @@
     </style>
 
     <style
+        name="TextAppearance.AmountMedium"
+        parent="@style/TextAppearance.Headline">
+
+        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style
         name="TextAppearance.AmountSmall"
         parent="@style/TextAppearance.Title">
 

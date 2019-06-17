@@ -30,7 +30,8 @@
             android:layout_gravity="center_horizontal"
             android:text="Total"
             android:textAppearance="@style/TextAppearance.ToolbarTitle"
-            android:textColor="?colorPrimary"/>
+            android:fontFamily="@font/raleway_medium"
+            android:textColor="@color/secondaryText"/>
         <TextView
             android:id="@+id/totalTv"
             android:layout_width="match_parent"
@@ -41,6 +42,7 @@
             android:paddingBottom="8dp"
             android:text="50000.00"
             android:textAppearance="@style/TextAppearance.Amount"
-            android:fontFamily="@font/rubik"/>
+            android:fontFamily="@font/rubik"
+            android:textStyle="bold"/>
     </LinearLayout>
 </io.github.amanshuraikwar.howmuch.ui.widget.WidthFitFrameLayout>
