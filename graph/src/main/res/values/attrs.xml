@@ -33,5 +33,6 @@
     <declare-styleable name="PieView">
         <attr name="pie_lineWidth" format="dimension|reference" />
         <attr name="pie_gap" format="dimension|reference" />
+        <attr name="pie_lineBackground" format="color|reference" />
     </declare-styleable>
 </resources>

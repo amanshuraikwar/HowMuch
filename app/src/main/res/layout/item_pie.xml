@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<io.github.amanshuraikwar.howmuch.ui.widget.WidthFitFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<io.github.amanshuraikwar.howmuch.ui.widget.WidthFitFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -13,16 +14,33 @@
         android:layout_height="match_parent"
         android:padding="8dp"
         app:pie_lineWidth="4dp"
-        app:pie_gap="6dp" />
+        app:pie_gap="6dp"
+        app:pie_lineBackground="@color/gray3"/>
 
-    <TextView
-        android:id="@+id/totalTv"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_gravity="center"
-        android:gravity="center"
-        android:padding="8dp"
-        android:text="50000.00"
-        android:textAppearance="@style/TextAppearance.Amount"
-        android:fontFamily="@font/rubik"/>
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Total"
+            android:textAppearance="@style/TextAppearance.ToolbarTitle"
+            android:textColor="?colorPrimary"/>
+        <TextView
+            android:id="@+id/totalTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="50000.00"
+            android:textAppearance="@style/TextAppearance.Amount"
+            android:fontFamily="@font/rubik"/>
+    </LinearLayout>
 </io.github.amanshuraikwar.howmuch.ui.widget.WidthFitFrameLayout>

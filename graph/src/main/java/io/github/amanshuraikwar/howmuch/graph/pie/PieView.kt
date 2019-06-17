@@ -22,7 +22,10 @@ class PieView : View {
     // gap angle in degrees
     private var gapAngle = 0f
 
+    private var lineBackgroundColor = Color.LTGRAY
+
     private var sparkLinePaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private var lineBgPaint = Paint(Paint.ANTI_ALIAS_FLAG)
 
     var data: List<PieItem>? = null
 
@@ -67,10 +70,14 @@ class PieView : View {
 
             var startAngle = 0f
 
+            var nothingDrawn = true
+
             scaled.forEach {
 
                 // skip drawing if value is zero
-                if (it.value != 0f) {
+                if (it.value > 0f) {
+
+                    nothingDrawn = false
 
                     sparkPath.reset()
 
@@ -85,6 +92,12 @@ class PieView : View {
                     canvas.drawPath(sparkPath, sparkLinePaint)
                     startAngle += it.value
                 }
+            }
+
+            if (nothingDrawn) {
+                sparkPath.reset()
+                sparkPath.addArc(contentRect, 0f, 360f)
+                canvas.drawPath(sparkPath, lineBgPaint)
             }
         }
     }
@@ -102,15 +115,21 @@ class PieView : View {
                         defStyleRes
                 )
 
-        lineWidth = a.getDimension(R.styleable.PieView_pie_lineWidth, 0f)
-        gap = a.getDimension(R.styleable.PieView_pie_gap, 0f)
+        lineWidth = a.getDimension(R.styleable.PieView_pie_lineWidth, lineWidth)
+        gap = a.getDimension(R.styleable.PieView_pie_gap, gap)
+        lineBackgroundColor = a.getColor(R.styleable.PieView_pie_lineBackground, lineBackgroundColor)
 
         a.recycle()
 
         sparkLinePaint.style = Paint.Style.STROKE
         sparkLinePaint.color = Color.BLUE
         sparkLinePaint.strokeWidth = lineWidth
-        sparkLinePaint.strokeCap = Paint.Cap.SQUARE
+        sparkLinePaint.strokeCap = Paint.Cap.ROUND
+
+        lineBgPaint.style = Paint.Style.STROKE
+        lineBgPaint.color = lineBackgroundColor
+        lineBgPaint.strokeWidth = lineWidth
+        lineBgPaint.strokeCap = Paint.Cap.ROUND
     }
 
     /**
