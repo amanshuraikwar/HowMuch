@@ -1,15 +1,19 @@
 package io.github.amanshuraikwar.howmuch.ui.categories
 
+import android.graphics.Color
 import android.util.Log
+import androidx.annotation.ColorInt
+import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.base.bus.AppBus
 import io.github.amanshuraikwar.howmuch.base.data.DataManager
 import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.base.ui.base.*
 import io.github.amanshuraikwar.howmuch.base.util.Util
+import io.github.amanshuraikwar.howmuch.graph.pie.PieView
 import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.protocol.TransactionType
 import io.github.amanshuraikwar.howmuch.ui.HowMuchBasePresenterImpl
-import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderListItem
+import io.github.amanshuraikwar.howmuch.ui.list.items.Pie
 import io.github.amanshuraikwar.howmuch.ui.list.items.StatCategory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.reactivex.Observable
@@ -24,11 +28,15 @@ interface CategoriesContract {
         fun setSyncError()
         fun clearSyncError()
         fun startHistoryActivity(filter: String? = null)
+        fun updateMonth(previousMonth: Boolean, monthName: String, nextMonth: Boolean)
+        @ColorInt fun getCategoryColor(category: String): Int
     }
 
     interface Presenter : BasePresenter<View> {
         fun onRetryClicked()
         fun onRefreshClicked()
+        fun onPreviousMonthClicked()
+        fun onNextMonthClicked()
     }
 
     class PresenterImpl @Inject constructor(appBus: AppBus,
@@ -37,9 +45,19 @@ interface CategoriesContract {
 
         private val tag = Util.getTag(this)
 
+        private var curMonth = 0
+        private var curYear = 0
+
+        private var displayedMonth = 0
+        private var displayedYear = 0
+
         override fun onAttach(wasViewRecreated: Boolean) {
             super.onAttach(wasViewRecreated)
             if (wasViewRecreated) {
+                curMonth = Util.getCurMonthNumber()
+                curYear = Util.getCurYearNumber()
+                displayedMonth = curMonth
+                displayedYear = curYear
                 fetchItems()
             }
         }
@@ -50,6 +68,14 @@ interface CategoriesContract {
                     .getAllTransactions()
                     .map {
                         it.toList()
+                    }
+                    .map {
+                        it.filter {
+                            txn ->
+                            val dateParts = txn.date.split("-")
+                            dateParts[1].toInt() == displayedMonth
+                                    && dateParts[2].toInt() == displayedYear
+                        }
                     }
                     .flatMap {
                         txnList ->
@@ -68,30 +94,6 @@ interface CategoriesContract {
                                 }
                                 .map {
                                     prevList ->
-                                    prevList.add(
-                                            HeaderListItem("Credit Categories")
-                                    )
-                                    prevList
-                                }
-                                .map {
-                                    prevList ->
-                                    prevList.addAll(
-                                            pair.first.getListItems(
-                                                    TransactionType.CREDIT,
-                                                    pair.second
-                                            )
-                                    )
-                                    prevList
-                                }
-                                .map {
-                                    prevList ->
-                                    prevList.add(
-                                            HeaderListItem("Debit Categories")
-                                    )
-                                    prevList
-                                }
-                                .map {
-                                    prevList ->
                                     prevList.addAll(
                                             pair.first.getListItems(
                                                     TransactionType.DEBIT,
@@ -107,6 +109,11 @@ interface CategoriesContract {
                         getView()?.run{
                             showLoading("Fetching items...")
                             clearSyncError()
+                            updateMonth(
+                                    true,
+                                    "${Util.getMonthName(displayedMonth)} $displayedYear",
+                                    !(displayedMonth == curMonth && displayedYear == curYear)
+                            )
                         }
                     }
                     .subscribe(
@@ -135,7 +142,7 @@ interface CategoriesContract {
                     .addToCleanup()
         }
 
-        fun Double.money(): Double = "%.2f".format(this).toDouble()
+        private fun Double.money(): Double = "%.2f".format(this).toDouble()
 
         @Suppress("MoveLambdaOutsideParentheses")
         private fun List<Transaction>.getListItems(transactionType: TransactionType,
@@ -149,21 +156,69 @@ interface CategoriesContract {
                                 .groupBy { it }
                                 .mapValues {
                                     entry ->
-                                    (categoryIdTxnListMap[entry.key.id]?.sumByDouble { it.amount } ?: 0.0).money()
+                                    (categoryIdTxnListMap[entry.key.id]?.sumByDouble { it.amount }
+                                            ?: 0.0).money()
                                 }
                     }.invoke()
 
-            return categoryAmountMap.map {
+            val list = mutableListOf<ListItem<*, *>>()
+
+            val pieItems = categoryAmountMap.map {
                 entry ->
-                StatCategory.Item(
-                        StatCategory(
-                                entry.key,
-                                entry.value,
-                                {
-                                    getView()?.startHistoryActivity("category_id=${it.id}")
-                                }
-                        )
+                PieView.PieItem(
+                        entry.key.name,
+                        entry.value.toFloat(),
+                        getView()!!.getCategoryColor(entry.key.name)
                 )
+            }
+
+            val total = pieItems.sumByDouble { it.value.toDouble() }.money()
+
+            list.add(Pie.Item(Pie(pieItems, total)))
+
+            list.addAll(
+                    categoryAmountMap.map {
+                        entry ->
+                        StatCategory.Item(
+                                StatCategory(
+                                        entry.key,
+                                        getCategoryColor(entry.key.name),
+                                        getCategoryIcon(entry.key.name),
+                                        entry.value,
+                                        {
+                                            getView()?.startHistoryActivity("category_id=${it.id}")
+                                        }
+                                )
+                        )
+                    }
+            )
+
+            return list
+        }
+
+        private fun getCategoryColor(category: String): Int {
+            return when(category.toLowerCase()) {
+                "food" -> R.color.food
+                "health/medical" -> R.color.health
+                "home" -> R.color.home
+                "transportation" -> R.color.transportation
+                "personal" -> R.color.personal
+                "utilities" -> R.color.utilities
+                "travel" -> R.color.travel
+                else -> R.color.activeIcon
+            }
+        }
+
+        private fun getCategoryIcon(category: String): Int {
+            return when(category.toLowerCase()) {
+                "food" -> R.drawable.round_fastfood_24
+                "health/medical" -> R.drawable.round_healing_24
+                "home" -> R.drawable.round_home_24
+                "transportation" -> R.drawable.round_commute_24
+                "personal" -> R.drawable.round_person_24
+                "utilities" -> R.drawable.round_shopping_cart_24
+                "travel" -> R.drawable.round_flight_takeoff_24
+                else -> R.drawable.round_bubble_chart_24
             }
         }
 
@@ -172,6 +227,26 @@ interface CategoriesContract {
         }
 
         override fun onRetryClicked() {
+            fetchItems()
+        }
+
+        override fun onPreviousMonthClicked() {
+            if (displayedMonth == 1) {
+                displayedMonth = 12
+                displayedYear--
+            } else {
+                displayedMonth--
+            }
+            fetchItems()
+        }
+
+        override fun onNextMonthClicked() {
+            if (displayedMonth == 12) {
+                displayedMonth = 1
+                displayedYear++
+            } else {
+                displayedMonth++
+            }
             fetchItems()
         }
     }

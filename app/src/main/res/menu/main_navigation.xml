@@ -12,11 +12,6 @@
         android:title="@string/category" />
 
     <item
-        android:id="@+id/navigation_wallets"
-        android:icon="@drawable/card_swipe_selector"
-        android:title="Wallet" />
-
-    <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/person_selector"
         android:title="@string/title_profile" />

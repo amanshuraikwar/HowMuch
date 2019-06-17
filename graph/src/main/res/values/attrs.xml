@@ -27,4 +27,11 @@
 
         <attr name="spark_animateChanges" format="boolean|reference" />
     </declare-styleable>
+
+    <attr name="spark_PieViewStyle" format="reference" />
+
+    <declare-styleable name="PieView">
+        <attr name="pie_lineWidth" format="dimension|reference" />
+        <attr name="pie_gap" format="dimension|reference" />
+    </declare-styleable>
 </resources>

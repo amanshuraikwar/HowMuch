@@ -12,8 +12,9 @@
     android:layout_marginBottom="@dimen/margin_small"
     android:clickable="true"
     android:focusable="true"
-    android:stateListAnimator="@animator/expense_elevation"
+    app:cardElevation="0dp"
     android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/green"
     app:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,6 +32,7 @@
             android:layout_marginEnd="@dimen/margin_normal"
             android:layout_marginTop="@dimen/margin_normal"
             android:textAppearance="@style/TextAppearance.TotalStatTitle"
+            android:textColor="@color/white"
             android:text="Monthly budget" />
 
         <me.zhanghai.android.materialprogressbar.MaterialProgressBar
@@ -44,6 +46,8 @@
             android:layout_marginStart="@dimen/margin_normal"
             android:layout_marginEnd="@dimen/margin_normal"
             android:layout_marginTop="@dimen/margin_normal"
+            android:progressTint="@color/white"
+            android:background="@color/gray3"
             app:mpb_progressStyle="horizontal"
             app:mpb_useIntrinsicPadding="false"
             style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
@@ -62,6 +66,7 @@
             android:layout_marginTop="@dimen/margin_normal"
             android:layout_marginBottom="@dimen/margin_normal"
             android:textAppearance="@style/TextAppearance.StatTrendAmount"
+            android:textColor="@color/white"
             tools:text="10.68%"/>
 
         <androidx.appcompat.widget.AppCompatImageView

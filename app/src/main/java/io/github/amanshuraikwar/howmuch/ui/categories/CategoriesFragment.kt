@@ -7,12 +7,14 @@ import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
+import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.Binds
 import dagger.Module
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.base.ui.base.BaseFragment
+import io.github.amanshuraikwar.howmuch.graph.pie.PieView
 import io.github.amanshuraikwar.howmuch.ui.history.activity.HistoryActivity
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
@@ -52,6 +54,14 @@ class CategoriesFragment
         toolbar.setOnMenuItemClickListener {
             presenter.onRefreshClicked()
             return@setOnMenuItemClickListener true
+        }
+
+        previousMonthBtn.setOnClickListener {
+            presenter.onPreviousMonthClicked()
+        }
+
+        nextMonthBtn.setOnClickListener {
+            presenter.onNextMonthClicked()
         }
     }
 
@@ -97,6 +107,31 @@ class CategoriesFragment
                     intent
                 }.invoke()
 
+        )
+    }
+
+    override fun updateMonth(previousMonth: Boolean,
+                             monthName: String,
+                             nextMonth: Boolean) {
+        previousMonthBtn.isEnabled = previousMonth
+        curMonthTv.text = monthName
+        nextMonthBtn.isEnabled = nextMonth
+    }
+
+    @ColorInt
+    override fun getCategoryColor(category: String): Int {
+        return ContextCompat.getColor(
+                activity,
+                when(category.toLowerCase()) {
+                    "food" -> R.color.food
+                    "health/medical" -> R.color.health
+                    "home" -> R.color.home
+                    "transportation" -> R.color.transportation
+                    "personal" -> R.color.personal
+                    "utilities" -> R.color.utilities
+                    "travel" -> R.color.travel
+                    else -> R.color.activeIcon
+                }
         )
     }
 

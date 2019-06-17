@@ -74,12 +74,6 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
                     return@setOnNavigationItemSelectedListener true
                 }
 
-                R.id.navigation_wallets -> {
-                    loadFragment(WalletsFragment())
-                    showAddTransactionBtn()
-                    return@setOnNavigationItemSelectedListener true
-                }
-
                 R.id.navigation_profile-> {
                     loadFragment(ProfileFragment())
                     hideAddTransactionBtn()

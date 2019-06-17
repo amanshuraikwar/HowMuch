@@ -15,4 +15,9 @@
         <item name="spark_scrubEnabled">false</item>
         <item name="spark_animateChanges">true</item>
     </style>
+
+    <style name="spark_PieView">
+        <item name="pie_lineWidth">4dp</item>
+        <item name="pie_gap">2dp</item>
+    </style>
 </resources>

@@ -1,6 +1,8 @@
 package io.github.amanshuraikwar.howmuch.ui.list.items
 
+import android.graphics.ColorFilter
 import android.view.View
+import androidx.annotation.ColorInt
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
@@ -14,6 +16,8 @@ import io.github.amanshuraikwar.multiitemlistadapter.ViewHolder
 import kotlinx.android.synthetic.main.item_stat_category.view.*
 
 class StatCategory(val category: Category,
+                   val color: Int,
+                   val icon: Int,
                    val amount: Double,
                    val onClick: (Category) -> Unit) {
 
@@ -39,18 +43,17 @@ class StatCategory(val category: Category,
         override fun bind(listItem: Item, host: FragmentActivity) {
 
             itemView.titleTv.text = listItem.statCategory.category.name
-
-            if (listItem.statCategory.category.type == TransactionType.CREDIT) {
-                itemView.amountTv.text = "+${listItem.statCategory.amount}"
-                itemView.amountTv.setTextColor(ContextCompat.getColor(host, R.color.green))
-            } else {
-                itemView.amountTv.text = "-${listItem.statCategory.amount}"
-                itemView.amountTv.setTextColor(ContextCompat.getColor(host, R.color.red))
-            }
+            itemView.amountTv.text = "${listItem.statCategory.amount}"
 
             itemView.parentCl.setOnClickListener {
                 listItem.statCategory.onClick.invoke(listItem.statCategory.category)
             }
+
+            itemView.iconIv.setColorFilter(
+                    ContextCompat.getColor(host, listItem.statCategory.color)
+            )
+
+            itemView.iconIv.setImageResource(listItem.statCategory.icon)
         }
     }
 }

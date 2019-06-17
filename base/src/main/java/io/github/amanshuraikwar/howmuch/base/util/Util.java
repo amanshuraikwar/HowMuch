@@ -1,5 +1,7 @@
 package io.github.amanshuraikwar.howmuch.base.util;
 
+import java.text.DateFormat;
+import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -238,5 +240,9 @@ public class Util {
         cal.setTime(date);
         cal.add(Calendar.DATE, move);
         return cal.getTime();
+    }
+
+    public static String getMonthName(int month) {
+        return new DateFormatSymbols().getMonths()[month-1];
     }
 }

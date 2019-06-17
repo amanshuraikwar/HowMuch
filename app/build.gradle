@@ -117,6 +117,7 @@ dependencies {
 
     implementation "com.google.android.material:material:$materialVersion"
     implementation "androidx.cardview:cardview:$cardviewVersion"
+    implementation 'com.google.android.material:material:1.1.0-alpha07'
 
     // Dagger
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"

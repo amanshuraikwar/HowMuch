@@ -1,7 +1,7 @@
 <resources>
 
     <!-- activities and app -->
-    <style name="HowMuch" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="HowMuch" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -97,7 +97,7 @@
     <style
         name="Widget.HowMuch.ImageButton"
         parent="@style/Widget.AppCompat.ImageButton">
-        <item name="android:tint">@color/activeIcon</item>
+        <item name="android:tint">@color/color_selector_image_view</item>
         <item name="android:stateListAnimator">@animator/button_elevation</item>
     </style>
 
@@ -424,7 +424,7 @@
 
     <style
         name="TextAppearance.StatTrendAmount"
-        parent="@style/TextAppearance.Caption">
+        parent="@style/TextAppearance.Body1">
 
         <item name="android:fontFamily">@font/roboto_mono_medium</item>
         <item name="android:textAllCaps">true</item>
@@ -585,5 +585,15 @@
         <item name="android:fontFamily">@font/rubik</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/secondaryText</item>
+    </style>
+
+    <style
+        name="TextAppearance.DateTitle"
+        parent="@style/TextAppearance.Subhead">
+
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:fontFamily">@font/rubik</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 </resources>

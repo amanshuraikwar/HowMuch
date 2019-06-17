@@ -50,7 +50,7 @@ class MonthlyExpenseLimit(val actual: Double,
             itemView.pb.max = 100
             itemView.pb.progress = (progress * 100).toInt()
 
-            itemView.trendTv.text = "${(progress * 100).toInt()}% of the monthly budget used"
+            itemView.trendTv.text = "${(progress * 100).toInt()}% used"
 
             itemView.cv.setOnClickListener { listItem.monthlyExpenseLimit.onClick.invoke() }
         }
