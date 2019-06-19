@@ -45,7 +45,7 @@ interface SettingsContract {
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe {
                         getView()?.run{
-                            showLoading("Saving expense limit...")
+                            showLoading("Saving expense monthlyLimit...")
                             clearSyncError()
                         }
                     }
@@ -94,13 +94,13 @@ interface SettingsContract {
                                     prevList.add(
                                             Setting.Item(
                                                     Setting(
-                                                            "Monthly expense limit",
+                                                            "Monthly expense monthlyLimit",
                                                             "Maximum amount that you prefer spending in a month",
                                                             R.drawable.ic_local_atm_white_24dp
                                                     )
                                             ).setOnClickListener {
                                                 getView()?.startDecimalDialog(
-                                                        "Monthly expense limit",
+                                                        "Monthly expense monthlyLimit",
                                                         limit,
                                                         setMonthlyExpenseLimit
                                                 )

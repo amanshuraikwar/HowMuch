@@ -4,10 +4,7 @@ import android.util.Log
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import io.github.amanshuraikwar.howmuch.base.util.Util
 import io.github.amanshuraikwar.howmuch.googlesheetsprotocol.api.*
-import io.github.amanshuraikwar.howmuch.protocol.Category
-import io.github.amanshuraikwar.howmuch.protocol.Transaction
-import io.github.amanshuraikwar.howmuch.protocol.TransactionType
-import io.github.amanshuraikwar.howmuch.protocol.Wallet
+import io.github.amanshuraikwar.howmuch.protocol.*
 import io.reactivex.Completable
 import io.reactivex.Observable
 import javax.inject.Inject
@@ -316,7 +313,8 @@ class SheetsHelper @Inject constructor(private val sheetsDataSource: SheetsDataS
                         id = "${Constants.METADATA_SHEET_TITLE}!${Constants.CATEGORIES_START_COL}${Constants.CATEGORIES_START_ROW_WITHOUT_HEADING + index}:${Constants.CATEGORIES_END_COL}",
                         name = list[0].toString(),
                         type = TransactionType.valueOf(list[1].toString()),
-                        active = list[2].toString().toBoolean()
+                        active = list[2].toString().toBoolean(),
+                        monthlyLimit = list[3].toString().toDouble().money()
                 )
             }
         } catch (e: IndexOutOfBoundsException) {

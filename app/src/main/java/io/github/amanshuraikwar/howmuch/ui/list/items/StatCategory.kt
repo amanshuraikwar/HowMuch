@@ -1,6 +1,8 @@
 package io.github.amanshuraikwar.howmuch.ui.list.items
 
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
@@ -52,7 +54,21 @@ class StatCategory(val category: Category,
 
             itemView.iconIv.setImageResource(listItem.statCategory.icon)
 
+            itemView.limitTv.text = " / ${listItem.statCategory.category.monthlyLimit}"
+
+            if (listItem.statCategory.amount > listItem.statCategory.category.monthlyLimit) {
+                itemView.warningIv.visibility = VISIBLE
+                itemView.warningTv.visibility = VISIBLE
+                itemView.warningTv.text = "You have exceeded your monthly limit by ${listItem.statCategory.amount - listItem.statCategory.category.monthlyLimit}"
+            } else {
+                itemView.warningIv.visibility = GONE
+                itemView.warningTv.visibility = GONE
+            }
+
+
             itemView.pb.lineColor = ContextCompat.getColor(host, listItem.statCategory.color)
+            itemView.pb.max = listItem.statCategory.category.monthlyLimit.toInt()
+            itemView.pb.progress = listItem.statCategory.amount.toInt()
             itemView.pb.invalidate()
         }
     }

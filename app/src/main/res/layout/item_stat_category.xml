@@ -38,7 +38,7 @@
             android:layout_width="0dp"
             android:layout_height="20dp"
             app:layout_constraintStart_toEndOf="@id/iconIv"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/pb"
             app:layout_constraintTop_toTopOf="@id/iconIv"
             app:layout_constraintBottom_toBottomOf="@id/iconIv"
             app:layout_constraintVertical_chainStyle="packed"
@@ -56,17 +56,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/iconIv"
+            app:layout_constraintEnd_toStartOf="@id/limitTv"
             app:layout_constraintTop_toBottomOf="@id/iconIv"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/warningTv"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintHorizontal_bias="0"
             android:layout_marginStart="24dp"
-            android:layout_marginEnd="@dimen/margin_normal"
             android:layout_marginTop="@dimen/margin_normal"
             android:layout_marginBottom="@dimen/margin_normal"
             android:fontFamily="@font/rubik"
-            android:textAppearance="@style/TextAppearance.Amount"
+            android:textAppearance="@style/TextAppearance.AmountMedium"
             android:textColor="@color/primaryText"
             android:textStyle="bold"
             tools:text="544.50" />
+
+        <TextView
+            android:id="@+id/limitTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/amountTv"
+            app:layout_constraintBottom_toBottomOf="@id/amountTv"
+            app:layout_constraintEnd_toStartOf="@id/pb"
+            android:fontFamily="@font/rubik"
+            android:textAppearance="@style/TextAppearance.AmountSmall"
+            android:textColor="@color/secondaryText"/>
 
         <io.github.amanshuraikwar.howmuch.graph.pie.VerticalProgressBar
             android:id="@+id/pb"
@@ -81,6 +94,35 @@
             app:vpb_lineWidth="4dp"
             app:vpb_lineBackground="@color/gray3"
             android:background="@color/white"/>
+
+        <ImageView
+            android:id="@+id/warningIv"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            app:layout_constraintStart_toEndOf="@id/iconIv"
+            app:layout_constraintTop_toBottomOf="@id/amountTv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:src="@drawable/round_warning_24"
+            android:tint="@color/amber"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/warningTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/warningIv"
+            app:layout_constraintEnd_toStartOf="@id/pb"
+            app:layout_constraintTop_toBottomOf="@id/amountTv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:textAppearance="@style/TextAppearance.Caption"
+            android:fontFamily="@font/rubik"
+            android:textColor="@color/amber"
+            android:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -9,6 +9,7 @@ import android.view.View
 import androidx.annotation.ColorInt
 import io.github.amanshuraikwar.howmuch.graph.R
 import io.github.amanshuraikwar.howmuch.graph.SparkAdapter
+import kotlin.math.min
 
 class VerticalProgressBar : View {
 
@@ -62,7 +63,7 @@ class VerticalProgressBar : View {
         sparkPath.reset()
         sparkPath.moveTo(contentRect.centerX(), contentRect.bottom)
 
-        val scaledProgress = progress * contentRect.height() / max
+        val scaledProgress = min(progress, max) * contentRect.height() / max
 
         sparkPath.lineTo(contentRect.centerX(), contentRect.bottom - scaledProgress)
 

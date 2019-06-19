@@ -20,7 +20,7 @@ public interface Constants {
     int CATEGORIES_START_ROW_WITHOUT_HEADING = 4;
 
     String CATEGORIES_START_COL = "B";
-    String CATEGORIES_END_COL = "D";
+    String CATEGORIES_END_COL = "E";
 
     String CATEGORIES_CELL_RANGE_WITH_HEADING =
             CATEGORIES_START_COL + CATEGORIES_START_ROW_WITH_HEADING + ":" + CATEGORIES_END_COL;
@@ -36,22 +36,22 @@ public interface Constants {
 
     List<List<String>> DEFAULT_CATEGORIES_WITH_HEADING = Arrays.asList(
             Collections.singletonList("Categories"),// 2
-                          // B              // C        // D
-            Arrays.asList("Name",           "Type",     "Active"),// 3
-            Arrays.asList("Food",           "DEBIT",    "true"), // 4
-            Arrays.asList("Health/Medical", "DEBIT",    "true"),
-            Arrays.asList("Home",           "DEBIT",    "true"),
-            Arrays.asList("Transportation", "DEBIT",    "true"),
-            Arrays.asList("Personal",       "DEBIT",    "true"),
-            Arrays.asList("Utilities",      "DEBIT",    "true"),
-            Arrays.asList("Travel",         "DEBIT",    "true"),
-            Arrays.asList("Debt",           "DEBIT",    "true"),
-            Arrays.asList("Other",          "DEBIT",    "true"),
-            Arrays.asList("Savings",        "CREDIT",   "true"),
-            Arrays.asList("Paycheck",       "CREDIT",   "true"),
-            Arrays.asList("Bonus",          "CREDIT",   "true"),
-            Arrays.asList("Interest",       "CREDIT",   "true"),
-            Arrays.asList("Other",          "CREDIT",   "true")
+                          // B              // C        // D        // E
+            Arrays.asList("Name",           "Type",     "Active",   "MonthlyLimit"),// 3
+            Arrays.asList("Food",           "DEBIT",    "true",     "1000.00"), // 4
+            Arrays.asList("Health/Medical", "DEBIT",    "true",     "1000.00"),
+            Arrays.asList("Home",           "DEBIT",    "true",     "1000.00"),
+            Arrays.asList("Transportation", "DEBIT",    "true",     "1000.00"),
+            Arrays.asList("Personal",       "DEBIT",    "true",     "1000.00"),
+            Arrays.asList("Utilities",      "DEBIT",    "true",     "1000.00"),
+            Arrays.asList("Travel",         "DEBIT",    "true",     "1000.00"),
+            Arrays.asList("Debt",           "DEBIT",    "true",     "1000.00"),
+            Arrays.asList("Other",          "DEBIT",    "true",     "1000.00"),
+            Arrays.asList("Savings",        "CREDIT",   "true",     "1000.00"),
+            Arrays.asList("Paycheck",       "CREDIT",   "true",     "1000.00"),
+            Arrays.asList("Bonus",          "CREDIT",   "true",     "1000.00"),
+            Arrays.asList("Interest",       "CREDIT",   "true",     "1000.00"),
+            Arrays.asList("Other",          "CREDIT",   "true",     "1000.00")
     );
 
     //endregion
