@@ -26,4 +26,13 @@
         <item name="vpb_lineWidth">4dp</item>
         <item name="vpb_lineBackground">#e0e0e0</item>
     </style>
+
+    <style name="BarView">
+        <item name="bv_lineWidth">4dp</item>
+        <item name="bv_lineBackground">#e0e0e0</item>
+        <item name="bv_lineColor">#abcdef</item>
+        <item name="bv_labelTextSize">14sp</item>
+        <item name="bv_labelPadding">8dp</item>
+    </style>
+
 </resources>

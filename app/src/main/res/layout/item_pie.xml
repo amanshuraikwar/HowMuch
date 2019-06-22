@@ -9,7 +9,7 @@
     android:layout_marginTop="@dimen/margin_normal">
 
     <io.github.amanshuraikwar.howmuch.graph.pie.PieView
-        android:id="@+id/pie"
+        android:id="@+id/pieView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp"

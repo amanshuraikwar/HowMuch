@@ -6,6 +6,7 @@ import io.github.amanshuraikwar.howmuch.base.data.DataManager
 import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.base.ui.base.*
 import io.github.amanshuraikwar.howmuch.base.util.Util
+import io.github.amanshuraikwar.howmuch.graph.pie.BarView
 import io.github.amanshuraikwar.howmuch.protocol.TransactionType
 import io.github.amanshuraikwar.howmuch.ui.HowMuchBasePresenterImpl
 import io.github.amanshuraikwar.howmuch.ui.list.items.*
@@ -79,6 +80,24 @@ interface StatsContract {
                         Observable
                                 .fromCallable {
                                     mutableListOf<ListItem<*, *>>()
+                                }
+                                .map {
+                                    it.add(
+                                            Bars.Item(
+                                                    Bars(
+                                                            listOf(
+                                                                    BarView.BarItem("MON", 100f),
+                                                                    BarView.BarItem("TUE", 200f),
+                                                                    BarView.BarItem("WED", 50f),
+                                                                    BarView.BarItem("THU", 20f),
+                                                                    BarView.BarItem("FRI", 10f),
+                                                                    BarView.BarItem("SAT", 0f),
+                                                                    BarView.BarItem("SUN", 150f)
+                                                            )
+                                                    )
+                                            )
+                                    )
+                                    it
                                 }
                                 .flatMap {
                                     prevList ->

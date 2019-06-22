@@ -9,6 +9,7 @@ import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderListItem;
 import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderViewHolder;
 import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyListItem;
 import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyViewHolder;
+import io.github.amanshuraikwar.howmuch.ui.list.items.Bars;
 import io.github.amanshuraikwar.howmuch.ui.list.items.BigCard;
 import io.github.amanshuraikwar.howmuch.ui.list.items.Button;
 import io.github.amanshuraikwar.howmuch.ui.list.items.EditCategory;
@@ -135,6 +136,10 @@ public class ListItemTypeFactory extends BaseTypeFactory {
         return 22;
     }
 
+    public int type(Bars.Item item) {
+        return 23;
+    }
+
     /**
      * To get layout file id (R.layout.*) for a corresponding list item/view type.
      *
@@ -187,6 +192,8 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 return Total.Holder.Companion.getLAYOUT();
             case 22:
                 return Pie.Holder.Companion.getLAYOUT();
+            case 23:
+                return Bars.Holder.Companion.getLAYOUT();
             default:
                 return super.getLayout(viewType);
         }
@@ -269,6 +276,9 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 break;
             case 22:
                 viewHolder = new Pie.Holder(parent);
+                break;
+            case 23:
+                viewHolder = new Bars.Holder(parent);
                 break;
             default:
                 viewHolder = super.createViewHolder(parent, type);

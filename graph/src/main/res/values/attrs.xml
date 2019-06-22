@@ -43,4 +43,19 @@
         <attr name="vpb_lineColor" format="color|reference" />
         <attr name="vpb_lineBackground" format="color|reference" />
     </declare-styleable>
+
+    <attr name="BarViewStyle" format="reference" />
+
+    <declare-styleable name="BarView">
+        <attr name="bv_lineWidth" format="dimension|reference" />
+        <attr name="bv_lineColor" format="color|reference" />
+        <attr name="bv_lineBackground" format="color|reference" />
+        <attr name="bv_labelTextSize" format="dimension|reference" />
+        <attr name="bv_labelPadding" format="dimension|reference" />
+        <attr name="bv_labelTextColor" format="color|reference" />
+        <attr name="bv_labelFontFamily" format="reference" />
+        <attr name="bv_labelTextStyle" format="enum">
+            <enum name="BOLD" value="0"/>
+        </attr>
+    </declare-styleable>
 </resources>
