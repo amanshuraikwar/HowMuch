@@ -245,4 +245,10 @@ public class Util {
     public static String getMonthName(int month) {
         return new DateFormatSymbols().getMonths()[month-1];
     }
+
+    public static String getWeekDay(String date) throws ParseException {
+        Date now = new SimpleDateFormat("dd-MM-yyyy", Locale.UK).parse(date);
+        SimpleDateFormat simpleDateformat = new SimpleDateFormat("E", Locale.UK);
+        return simpleDateformat.format(now);
+    }
 }

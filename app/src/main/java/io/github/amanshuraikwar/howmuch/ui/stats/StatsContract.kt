@@ -81,24 +81,6 @@ interface StatsContract {
                                 .fromCallable {
                                     mutableListOf<ListItem<*, *>>()
                                 }
-                                .map {
-                                    it.add(
-                                            Bars.Item(
-                                                    Bars(
-                                                            listOf(
-                                                                    BarView.BarItem("MON", 100f),
-                                                                    BarView.BarItem("TUE", 200f),
-                                                                    BarView.BarItem("WED", 50f),
-                                                                    BarView.BarItem("THU", 20f),
-                                                                    BarView.BarItem("FRI", 10f),
-                                                                    BarView.BarItem("SAT", 0f),
-                                                                    BarView.BarItem("SUN", 150f)
-                                                            )
-                                                    )
-                                            )
-                                    )
-                                    it
-                                }
                                 .flatMap {
                                     prevList ->
                                     getDataManager()
@@ -107,6 +89,11 @@ interface StatsContract {
                                                 prevList.addAll(txnList.getTotalItems(it))
                                                 prevList
                                             }
+                                }
+                                .map {
+                                    prevList ->
+                                    prevList.add(txnList.getBarViewListItem())
+                                    prevList
                                 }
                                 .map {
                                     prevList ->
@@ -146,6 +133,44 @@ interface StatsContract {
                             }
                     )
                     .addToCleanup()
+        }
+
+        private fun List<Transaction>.getBarViewListItem(): ListItem<*, *> {
+
+            var list = this
+
+            val lastSeventhDay = Util.getLastSeventhDay()
+
+            list = list.filter {
+                Util.toTimeMillisec(it.date, it.time) > lastSeventhDay
+            }
+
+            val txnsByType = list.groupBy { it.type }
+
+            val debitDayAmountMap = linkedMapOf<String, Double>()
+
+            var i = 1
+            while (i > -6) {
+                debitDayAmountMap[Util.getDateStrMoved(--i)] = 0.0
+            }
+
+            txnsByType[TransactionType.DEBIT]?.forEach {
+                if (debitDayAmountMap[it.date] != null) {
+                    debitDayAmountMap[it.date] = debitDayAmountMap[it.date]!!.plus(it.amount)
+                }
+            }
+
+            return Bars.Item(
+                    Bars(
+                          debitDayAmountMap.map {
+                              entry ->
+                              BarView.BarItem(
+                                      Util.getWeekDay(entry.key).toUpperCase(),
+                                      entry.value.toFloat()
+                              )
+                          }.reversed()
+                    )
+            )
         }
 
         private fun Double.money(): Double = "%.2f".format(this).toDouble()
