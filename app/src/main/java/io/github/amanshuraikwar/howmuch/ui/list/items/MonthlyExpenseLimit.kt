@@ -38,6 +38,9 @@ class MonthlyExpenseLimit(val actual: Double,
 
         override fun bind(listItem: Item, host: FragmentActivity) {
 
+            itemView.spentTv.text = "${listItem.monthlyExpenseLimit.actual}"
+            itemView.limitTv.text = " / ${listItem.monthlyExpenseLimit.limit.toInt()}"
+
             var progress = 1.0
 
             if (listItem.monthlyExpenseLimit.limit != 0.0) {
@@ -49,9 +52,6 @@ class MonthlyExpenseLimit(val actual: Double,
 
             itemView.pb.max = 100
             itemView.pb.progress = (progress * 100).toInt()
-
-            itemView.trendTv.text = "${(progress * 100).toInt()}% used"
-
             itemView.cv.setOnClickListener { listItem.monthlyExpenseLimit.onClick.invoke() }
         }
     }

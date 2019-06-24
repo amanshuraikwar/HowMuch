@@ -1,7 +1,6 @@
 package io.github.amanshuraikwar.howmuch.ui.list.items
 
 import android.content.res.ColorStateList
-import android.graphics.drawable.Animatable
 import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.annotation.LayoutRes
@@ -48,7 +47,7 @@ class WalletItem(val wallet: Wallet) {
 
             itemView.nameTv.text = listItem.walletItem.wallet.name
             itemView.balanceTv.text = listItem.walletItem.wallet.balance.toString()
-            itemView.parentLl.setOnClickListener {
+            itemView.parentCl.setOnClickListener {
                 listItem.onClickListener.onClick(listItem.walletItem.wallet)
             }
 

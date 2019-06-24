@@ -1,9 +1,8 @@
 package io.github.amanshuraikwar.howmuch.ui.categories
 
-import android.graphics.Color
 import android.util.Log
 import androidx.annotation.ColorInt
-import io.github.amanshuraikwar.howmuch.R
+import io.github.amanshuraikwar.howmuch.ViewUtil
 import io.github.amanshuraikwar.howmuch.base.bus.AppBus
 import io.github.amanshuraikwar.howmuch.base.data.DataManager
 import io.github.amanshuraikwar.howmuch.protocol.Transaction
@@ -182,8 +181,8 @@ interface CategoriesContract {
                         StatCategory.Item(
                                 StatCategory(
                                         entry.key,
-                                        getCategoryColor(entry.key.name),
-                                        getCategoryIcon(entry.key.name),
+                                        ViewUtil.getCategoryColor(entry.key.name),
+                                        ViewUtil.getCategoryIcon(entry.key.name),
                                         entry.value,
                                         {
                                             getView()?.startHistoryActivity("category_id=${it.id}")
@@ -194,32 +193,6 @@ interface CategoriesContract {
             )
 
             return list
-        }
-
-        private fun getCategoryColor(category: String): Int {
-            return when(category.toLowerCase()) {
-                "food" -> R.color.food
-                "health/medical" -> R.color.health
-                "home" -> R.color.home
-                "transportation" -> R.color.transportation
-                "personal" -> R.color.personal
-                "utilities" -> R.color.utilities
-                "travel" -> R.color.travel
-                else -> R.color.activeIcon
-            }
-        }
-
-        private fun getCategoryIcon(category: String): Int {
-            return when(category.toLowerCase()) {
-                "food" -> R.drawable.round_fastfood_24
-                "health/medical" -> R.drawable.round_healing_24
-                "home" -> R.drawable.round_home_24
-                "transportation" -> R.drawable.round_commute_24
-                "personal" -> R.drawable.round_person_24
-                "utilities" -> R.drawable.round_shopping_cart_24
-                "travel" -> R.drawable.round_flight_takeoff_24
-                else -> R.drawable.round_bubble_chart_24
-            }
         }
 
         override fun onRefreshClicked() {

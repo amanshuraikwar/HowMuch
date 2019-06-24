@@ -7,6 +7,7 @@ import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.base.ui.base.*
 import io.github.amanshuraikwar.howmuch.base.util.Util
 import io.github.amanshuraikwar.howmuch.graph.pie.BarView
+import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.protocol.TransactionType
 import io.github.amanshuraikwar.howmuch.ui.HowMuchBasePresenterImpl
 import io.github.amanshuraikwar.howmuch.ui.list.items.*
@@ -81,24 +82,34 @@ interface StatsContract {
                                 .fromCallable {
                                     mutableListOf<ListItem<*, *>>()
                                 }
-                                .flatMap {
+                                .map {
                                     prevList ->
-                                    getDataManager()
-                                            .getMonthlyExpenseLimit()
-                                            .map {
-                                                prevList.addAll(txnList.getTotalItems(it))
-                                                prevList
-                                            }
+                                    prevList.addAll(txnList.getPastSeverDayItems())
+                                    prevList
                                 }
                                 .map {
                                     prevList ->
                                     prevList.add(txnList.getBarViewListItem())
                                     prevList
                                 }
-                                .map {
+                                .flatMap {
                                     prevList ->
-                                    prevList.addAll(txnList.getListItems())
-                                    prevList
+                                    getDataManager()
+                                            .getMonthlyExpenseLimit()
+                                            .map {
+                                                prevList.addAll(txnList.getThisMonthDayItems(it))
+                                                prevList
+                                            }
+                                }
+                                .flatMap {
+                                    prevList ->
+                                    getDataManager()
+                                            .getAllCategories()
+                                            .map { it.groupBy { it.id }.mapValues { it.value[0] } }
+                                            .map {
+                                                prevList.addAll(txnList.getListItems(it))
+                                                prevList
+                                            }
                                 }
                     }
                     .subscribeOn(Schedulers.newThread())
@@ -175,13 +186,12 @@ interface StatsContract {
 
         private fun Double.money(): Double = "%.2f".format(this).toDouble()
 
-        private fun List<Transaction>.getTotalItems(limit: Double): List<ListItem<*, *>> {
+        private fun List<Transaction>.getPastSeverDayItems(): List<ListItem<*, *>> {
 
-            val firstDayOfMonth = Util.getFirstDayOfMonth()
             val lastSeventhDay = Util.getLastSeventhDay()
 
             val filteredTransactions = this.filter {
-                Util.toTimeMillisec(it.date, it.time) >= firstDayOfMonth
+                Util.toTimeMillisec(it.date, it.time) >= lastSeventhDay
             }
 
             val thisMonthTotalMap = filteredTransactions
@@ -193,27 +203,36 @@ interface StatsContract {
                         }
                     }
 
+            val debitAmount = thisMonthTotalMap[TransactionType.DEBIT] ?: 0.0
+
             val list = mutableListOf<ListItem<*, *>>()
 
+            val trend = getTrend(debitAmount, filteredTransactions)
+
             list.add(
-                    MonthlyExpenseLimit.Item(
-                            MonthlyExpenseLimit(
+                    StatTotal.Item(
+                            StatTotal(
+                                    "Last 7 days",
                                     thisMonthTotalMap[TransactionType.DEBIT] ?: 0.0,
-                                    limit,
-                                    { getView()?.startSettingsActivity() }
+                                    trend
                             )
                     )
             )
 
-            val creditAmount = thisMonthTotalMap[TransactionType.CREDIT] ?: 0.0
-            val debitAmount = thisMonthTotalMap[TransactionType.DEBIT] ?: 0.0
+            return list
+        }
 
-            val creditTrend: Int
-            val debitTrend: Int
+        private fun getTrend(amount: Double,
+                             transactions: List<Transaction>): Int {
+
+            val trend: Int
+
+            val firstDayOfMonth = Util.getFirstDayOfMonth()
+            val lastSeventhDay = Util.getLastSeventhDay()
 
             if (lastSeventhDay >= firstDayOfMonth) {
 
-                val lastWeekTotalMap = filteredTransactions
+                val lastWeekTotalMap = transactions
                         .groupBy { it.type }
                         .mapValues {
                             txns ->
@@ -226,7 +245,6 @@ interface StatsContract {
                             }
                         }
 
-                val lastWeekTotalCredit = lastWeekTotalMap[TransactionType.CREDIT] ?: 0.0
                 val lastWeekTotalDebit = lastWeekTotalMap[TransactionType.DEBIT] ?: 0.0
 
                 val curTime = Util.getCurTimeMillisec()
@@ -247,21 +265,9 @@ interface StatsContract {
                 // 'curTime - firstDayOfMonth' will never be zero
                 val alpha = (curTime - lastSeventhDay).toDouble() / (curTime - firstDayOfMonth).toDouble()
 
-                val creditBeta = {
-                    if (creditAmount != 0.0) {
-                        lastWeekTotalCredit / creditAmount
-                    } else {
-                        if (lastWeekTotalCredit != 0.0) {
-                            1.0
-                        } else {
-                            0.0
-                        }
-                    }
-                }.invoke()
-
                 val debitBeta = {
-                    if (debitAmount != 0.0) {
-                        lastWeekTotalDebit / debitAmount
+                    if (amount != 0.0) {
+                        lastWeekTotalDebit / amount
                     } else {
                         if (lastWeekTotalDebit != 0.0) {
                             1.0
@@ -271,30 +277,42 @@ interface StatsContract {
                     }
                 }.invoke()
 
-
-
-                creditTrend = if (creditAmount == 0.0) 0 else ((creditBeta - alpha) * 100).toInt()
-                debitTrend = if (debitAmount == 0.0) 0 else ((debitBeta - alpha) * 100).toInt()
+                trend = if (amount == 0.0) 0 else ((debitBeta - alpha) * 100).toInt()
 
             } else {
-                creditTrend = if (creditAmount != 0.0) 100 else 0
-                debitTrend = if (debitAmount != 0.0) 100 else 0
+                trend = if (amount != 0.0) 100 else 0
             }
 
+            return trend
+        }
+
+        private fun List<Transaction>.getThisMonthDayItems(limit: Double): List<ListItem<*, *>> {
+
+            val firstDayOfMonth = Util.getFirstDayOfMonth()
+
+            val filteredTransactions = this.filter {
+                Util.toTimeMillisec(it.date, it.time) >= firstDayOfMonth
+            }
+
+            val thisMonthTotalMap = filteredTransactions
+                    .groupBy { it.type }
+                    .mapValues {
+                        txns ->
+                        txns.value.sumByDouble {
+                            it.amount
+                        }
+                    }
+
+            val debitAmount = thisMonthTotalMap[TransactionType.DEBIT] ?: 0.0
+
+            val list = mutableListOf<ListItem<*, *>>()
 
             list.add(
-                    StatTotal.Item(
-                            StatTotal(
-                                    creditAmount.money(),
-                                    creditTrend,
-                                    debitAmount.money(),
-                                    debitTrend,
-                                    {
-                                        getView()?.startHistoryActivity("transaction_type=CREDIT")
-                                    },
-                                    {
-                                        getView()?.startHistoryActivity("transaction_type=DEBIT")
-                                    }
+                    MonthlyExpenseLimit.Item(
+                            MonthlyExpenseLimit(
+                                    debitAmount,
+                                    limit,
+                                    { getView()?.startSettingsActivity() }
                             )
                     )
             )
@@ -302,7 +320,7 @@ interface StatsContract {
             return list
         }
 
-        private fun List<Transaction>.getListItems()
+        private fun List<Transaction>.getListItems(categoriesMap: Map<String, Category>)
                 : List<ListItem<*, *>> {
 
             if (this.isEmpty()) {
@@ -320,7 +338,7 @@ interface StatsContract {
                             .reversed()
                             .map {
                                 StatTransaction.Item(
-                                        StatTransaction(it, true)
+                                        StatTransaction(it, categoriesMap[it.categoryId]!!)
                                 ).setOnClickListener(
                                         transactionOnClickListener
                                 )

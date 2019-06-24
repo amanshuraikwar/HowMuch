@@ -14,8 +14,32 @@
         <item name="android:windowSharedElementsUseOverlay">true</item>
         <item name="android:windowAllowEnterTransitionOverlap">true</item>
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
+
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.MyApp.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.MyApp.MediumComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.MyApp.LargeComponent</item>
     </style>
 
+    <style
+        name="ShapeAppearance.MyApp.SmallComponent"
+        parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">4dp</item>
+    </style>
+
+    <style
+        name="ShapeAppearance.MyApp.MediumComponent"
+        parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style
+        name="ShapeAppearance.MyApp.LargeComponent"
+        parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">4dp</item>
+    </style>
 
     <style name="HowMuch.Search">
         <item name="android:windowEnterTransition">@transition/search_enter</item>
@@ -213,16 +237,15 @@
     <style name="TextAppearance.ToolbarTitle"
         parent="@android:style/TextAppearance.Material.Widget.ActionBar.Title">
 
-        <item name="android:textColor">@color/primaryText</item>
-        <item name="android:fontFamily">@font/rubik</item>
+        <item name="android:fontFamily">@font/cabin</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextAppearance.ToolbarTitle.SmallCaps">
 
         <!--<item name="android:textAllCaps">true</item>-->
-        <!--<item name="android:fontFeatureSettings">smcp</item>-->
-        <!--<item name="android:letterSpacing">0.05</item>-->
+        <item name="android:fontFeatureSettings">smcp</item>
+        <item name="android:letterSpacing">0.05</item>
     </style>
 
     <style name="TextAppearance.ToolbarTitle.Bold">
@@ -267,10 +290,9 @@
         name="TextAppearance.Button"
         parent="@android:style/TextAppearance.Material.Widget.Button">
 
-        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:fontFamily">@font/cabin</item>
         <item name="android:textStyle">bold</item>
         <item name="android:letterSpacing">0.1</item>
-        <item name="android:textColor">@color/primaryText</item>
     </style>
 
     <style
@@ -355,27 +377,30 @@
         name="TextAppearance.Amount"
         parent="@style/TextAppearance.Display1">
 
-        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:fontFamily">@font/rubik</item>
         <item name="android:textColor">@color/primaryText</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style
         name="TextAppearance.AmountMedium"
         parent="@style/TextAppearance.Headline">
 
-        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:fontFamily">@font/rubik</item>
         <item name="android:textColor">@color/primaryText</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style
         name="TextAppearance.AmountSmall"
         parent="@style/TextAppearance.Title">
 
-        <item name="android:fontFamily">@font/roboto_mono_medium</item>
+        <item name="android:fontFamily">@font/rubik</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/primaryText</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style
@@ -400,17 +425,18 @@
         parent="@style/TextAppearance.Subhead">
 
         <item name="android:textColor">@color/primaryText</item>
-        <item name="android:fontFamily">@font/rubik</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/cabin</item>
     </style>
 
     <style
         name="TextAppearance.TotalStatTitle"
-        parent="@style/TextAppearance.Title">
+        parent="@style/TextAppearance.Caption">
 
-        <item name="android:textColor">@color/primaryText</item>
-        <item name="android:fontFamily">@font/rubik</item>
+        <item name="android:textColor">@color/secondaryText</item>
+        <item name="android:fontFamily">@font/cabin</item>
+        <item name="android:textAllCaps">true</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.05</item>
     </style>
 
     <style

@@ -11,7 +11,7 @@
     android:layout_marginEnd="@dimen/margin_normal"
     app:cardElevation="0dp"
     app:cardCornerRadius="8dp"
-    android:background="@color/white">
+    app:cardBackgroundColor="#E8F5E9">
 
     <io.github.amanshuraikwar.howmuch.graph.pie.BarView
         android:id="@+id/barView"
@@ -22,11 +22,11 @@
         android:paddingStart="32dp"
         android:paddingEnd="32dp"
         app:bv_lineWidth="8dp"
-        app:bv_lineBackground="@color/gray3"
+        app:bv_lineBackground="#C8E6C9"
         app:bv_lineColor="@color/green"
         app:bv_labelTextSize="12sp"
         app:bv_labelPadding="16dp"
-        app:bv_labelFontFamily="@font/rubik"
+        app:bv_labelFontFamily="@font/cabin"
         app:bv_labelTextColor="@color/secondaryText"
         app:bv_labelTextStyle="BOLD" />
 </com.google.android.material.card.MaterialCardView>

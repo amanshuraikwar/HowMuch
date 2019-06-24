@@ -60,7 +60,7 @@ class TransactionViewHolder(itemView: View) : ViewHolder<TransactionListItem>(it
             itemView.timeTv.text = Util.beautifyTime(transaction.time)
         }
 
-        itemView.parentLl.setOnClickListener {
+        itemView.parentCl.setOnClickListener {
             listItem.onClickListener.onClick(transaction)
         }
     }
