@@ -59,10 +59,10 @@
             android:textColor="@color/secondaryText"
             tools:text=" / 25546.00" />
 
-        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+        <io.github.amanshuraikwar.howmuch.graph.pie.VerticalProgressBar
             android:id="@+id/pb"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/spentTv"
@@ -71,12 +71,12 @@
             android:layout_marginEnd="@dimen/margin_normal"
             android:layout_marginTop="@dimen/margin_normal"
             android:layout_marginBottom="@dimen/margin_normal"
-            android:progressTint="#FFA726"
-            android:secondaryProgressTint="#FFF3E0"
-            android:secondaryProgress="100"
-            app:mpb_progressStyle="horizontal"
-            app:mpb_useIntrinsicPadding="false"
-            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            app:vpb_lineWidth="2dp"
+            app:vpb_lineBackground="#FFCC80"
+            app:vpb_lineColor="#FFA726"
+            app:vpb_orientation="horizontal" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

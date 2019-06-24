@@ -52,6 +52,8 @@ class MonthlyExpenseLimit(val actual: Double,
 
             itemView.pb.max = 100
             itemView.pb.progress = (progress * 100).toInt()
+            itemView.pb.invalidate()
+
             itemView.cv.setOnClickListener { listItem.monthlyExpenseLimit.onClick.invoke() }
         }
     }

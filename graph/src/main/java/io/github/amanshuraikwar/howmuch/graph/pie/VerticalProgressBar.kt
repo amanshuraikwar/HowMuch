@@ -72,6 +72,19 @@ class VerticalProgressBar : View {
 
             sparkPath.lineTo(contentRect.centerX(), contentRect.bottom - scaledProgress)
 
+        } else {
+
+            sparkPath.moveTo(contentRect.left, contentRect.centerY())
+            sparkPath.lineTo(contentRect.right, contentRect.centerY())
+            canvas.drawPath(sparkPath, lineBgPaint)
+
+            sparkPath.reset()
+            sparkPath.moveTo(contentRect.left, contentRect.centerY())
+
+            val scaledProgress = min(progress, max) * contentRect.width() / max
+
+            sparkPath.lineTo(scaledProgress, contentRect.centerY())
+
         }
 
         sparkLinePaint.color = lineColor
