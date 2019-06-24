@@ -26,6 +26,8 @@ class VerticalProgressBar : View {
     var progress: Int = 50
     var max: Int = 100
 
+    var orientation = 1
+
     constructor(context: Context): super(context) {
         init(context, null, R.attr.VerticalProgressBarStyle, R.style.VerticalProgressBar)
     }
@@ -56,19 +58,23 @@ class VerticalProgressBar : View {
         super.onDraw(canvas)
 
         sparkPath.reset()
-        sparkPath.moveTo(contentRect.centerX(), contentRect.top)
-        sparkPath.lineTo(contentRect.centerX(), contentRect.bottom)
-        canvas.drawPath(sparkPath, lineBgPaint)
 
-        sparkPath.reset()
-        sparkPath.moveTo(contentRect.centerX(), contentRect.bottom)
+        if (orientation == 1) {
 
-        val scaledProgress = min(progress, max) * contentRect.height() / max
+            sparkPath.moveTo(contentRect.centerX(), contentRect.top)
+            sparkPath.lineTo(contentRect.centerX(), contentRect.bottom)
+            canvas.drawPath(sparkPath, lineBgPaint)
 
-        sparkPath.lineTo(contentRect.centerX(), contentRect.bottom - scaledProgress)
+            sparkPath.reset()
+            sparkPath.moveTo(contentRect.centerX(), contentRect.bottom)
+
+            val scaledProgress = min(progress, max) * contentRect.height() / max
+
+            sparkPath.lineTo(contentRect.centerX(), contentRect.bottom - scaledProgress)
+
+        }
 
         sparkLinePaint.color = lineColor
-
         canvas.drawPath(sparkPath, sparkLinePaint)
 
     }
@@ -89,6 +95,7 @@ class VerticalProgressBar : View {
         lineWidth = a.getDimension(R.styleable.VerticalProgressBar_vpb_lineWidth, lineWidth)
         lineColor = a.getColor(R.styleable.VerticalProgressBar_vpb_lineColor, lineColor)
         lineBackgroundColor = a.getColor(R.styleable.VerticalProgressBar_vpb_lineBackground, lineBackgroundColor)
+        orientation = a.getInt(R.styleable.VerticalProgressBar_vpb_orientation, 1)
 
         a.recycle()
 

@@ -7,8 +7,8 @@
     android:layout_height="wrap_content"
     style="@style/Widget.MaterialComponents.CardView"
     android:layout_marginTop="@dimen/margin_normal"
-    android:layout_marginStart="@dimen/margin_normal"
-    android:layout_marginEnd="@dimen/margin_normal"
+    android:layout_marginStart="@dimen/margin_small"
+    android:layout_marginEnd="@dimen/margin_small"
     app:cardElevation="0dp"
     app:cardCornerRadius="8dp"
     app:cardBackgroundColor="#E8F5E9">
