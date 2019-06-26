@@ -35,7 +35,7 @@
     <dimen name="padding_very_small">4dp</dimen>
     <dimen name="category_icon_padding">54dp</dimen>
     <dimen name="input_field_icon_size">20dp</dimen>
-    <dimen name="input_field_offset">56dp</dimen>
+    <dimen name="input_field_offset">48dp</dimen>
     <dimen name="input_field_offset_spinner">64dp</dimen>
     <dimen name="tall_toolbar_height">108dp</dimen>
     <dimen name="clickable_dialog_elevation">2dp</dimen>
