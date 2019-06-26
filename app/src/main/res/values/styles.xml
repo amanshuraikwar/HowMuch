@@ -311,7 +311,7 @@
         name="TextAppearance.InputField"
         parent="@style/TextAppearance.Subhead">
 
-        <item name="android:fontFamily">@font/rubik</item>
+        <item name="android:fontFamily">@font/cabin</item>
         <item name="android:textColor">@color/primaryText</item>
     </style>
 

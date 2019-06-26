@@ -3,8 +3,6 @@ package io.github.amanshuraikwar.howmuch.ui.list;
 import androidx.annotation.NonNull;
 import android.view.View;
 
-import org.jetbrains.annotations.NotNull;
-
 import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderListItem;
 import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderViewHolder;
 import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyListItem;
@@ -12,6 +10,7 @@ import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyViewHolder;
 import io.github.amanshuraikwar.howmuch.ui.list.items.Bars;
 import io.github.amanshuraikwar.howmuch.ui.list.items.BigCard;
 import io.github.amanshuraikwar.howmuch.ui.list.items.Button;
+import io.github.amanshuraikwar.howmuch.ui.list.items.CategoryItem;
 import io.github.amanshuraikwar.howmuch.ui.list.items.EditCategory;
 import io.github.amanshuraikwar.howmuch.ui.list.items.EditWallet;
 import io.github.amanshuraikwar.howmuch.ui.list.items.Graph;
@@ -140,6 +139,10 @@ public class ListItemTypeFactory extends BaseTypeFactory {
         return 23;
     }
 
+    public int type(CategoryItem.Item item) {
+        return 24;
+    }
+
     /**
      * To get layout file id (R.layout.*) for a corresponding list item/view type.
      *
@@ -194,6 +197,8 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 return Pie.Holder.Companion.getLAYOUT();
             case 23:
                 return Bars.Holder.Companion.getLAYOUT();
+            case 24:
+                return CategoryItem.Holder.Companion.getLAYOUT();
             default:
                 return super.getLayout(viewType);
         }
@@ -279,6 +284,9 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 break;
             case 23:
                 viewHolder = new Bars.Holder(parent);
+                break;
+            case 24:
+                viewHolder = new CategoryItem.Holder(parent);
                 break;
             default:
                 viewHolder = super.createViewHolder(parent, type);

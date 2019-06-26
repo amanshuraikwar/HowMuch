@@ -54,7 +54,7 @@ interface EditCategoriesContract {
                         }
 
                         val onDelete: (Category) -> Unit = {
-                            getView()?.showToast("Deletion of a category is not supported yet.")
+                            getView()?.showToast("Deletion of a color is not supported yet.")
                         }
 
                         it.map {

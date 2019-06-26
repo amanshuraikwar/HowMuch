@@ -159,8 +159,8 @@ class ExpenseActivity
         deleteIb.visibility = GONE
         deleteIb.setOnClickListener(null)
 
-        doneBtn.visibility = VISIBLE
-        doneBtn.setOnClickListener {
+        saveBtn.visibility = VISIBLE
+        saveBtn.setOnClickListener {
             presenter.onEditSaveClicked(
                     date = dateTv.text.toString(),
                     time = timeTv.text.toString(),
@@ -218,8 +218,8 @@ class ExpenseActivity
             presenter.onDeleteBtnClicked()
         }
 
-        doneBtn.visibility = GONE
-        doneBtn.setOnClickListener(null)
+        saveBtn.visibility = GONE
+        saveBtn.setOnClickListener(null)
 
         transactionTypeIb.isClickable = false
         transactionTypeIb.setOnClickListener(null)

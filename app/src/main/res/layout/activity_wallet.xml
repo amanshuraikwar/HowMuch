@@ -43,11 +43,11 @@
             android:id="@+id/barrier1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="doneBtn,editIb"
+            app:constraint_referenced_ids="saveBtn,editIb"
             app:barrierDirection="start" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/doneBtn"
+            android:id="@+id/saveBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/barrier1"

@@ -15,6 +15,19 @@ public class ViewUtil {
         }
     }
 
+    public static int getCategoryColor2(String categoryTitle) {
+        switch (categoryTitle.toLowerCase()) {
+            case "food": return R.color.food2;
+            case "health/medical": return R.color.health2;
+            case "home": return R.color.home2;
+            case "transportation": return R.color.transportation2;
+            case "personal": return R.color.personal2;
+            case "utilities": return R.color.utilities2;
+            case "travel": return R.color.travel2;
+            default: return R.color.gray3;
+        }
+    }
+
     public static int getCategoryIcon(String categoryTitle) {
         switch (categoryTitle.toLowerCase()) {
             case "food": return R.drawable.round_fastfood_24;

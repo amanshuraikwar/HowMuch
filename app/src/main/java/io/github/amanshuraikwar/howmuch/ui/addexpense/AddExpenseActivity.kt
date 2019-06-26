@@ -22,9 +22,16 @@ import io.github.amanshuraikwar.howmuch.ui.spinner.CategoryAdapter
 import io.github.amanshuraikwar.howmuch.ui.spinner.WalletAdapter
 import kotlinx.android.synthetic.main.activity_add_expense.*
 import kotlinx.android.synthetic.main.layout_loading_overlay.*
+import com.yarolegovich.discretescrollview.transform.ScaleTransformer
+import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
+import io.github.amanshuraikwar.howmuch.ui.list.items.CategoryItem
+import io.github.amanshuraikwar.multiitemlistadapter.ListItem
+import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
 
 class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContract.Presenter>()
         , AddExpenseContract.View {
+
+    private lateinit var adapter: MultiItemListAdapter<*>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,13 +57,13 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
             _, hasFocus ->
             if (hasFocus) {
                 // show time animation
-                (titleIv.drawable as Animatable).start()
+//                (titleIv.drawable as Animatable).start()
             }
         }
 
         titleEt.setOnClickListener {
             // show time animation
-            (titleIv.drawable as Animatable).start()
+//            (titleIv.drawable as Animatable).start()
         }
 
         dateTv.setOnClickListener {
@@ -71,7 +78,7 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
             presenter.onTimeTvClicked(timeTv.text.toString())
         }
 
-        doneBtn.setOnClickListener {
+        saveBtn.setOnClickListener {
             presenter.onSaveClicked(
                     date = dateTv.text.toString(),
                     time = timeTv.text.toString(),
@@ -86,6 +93,24 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
         backIb.setOnClickListener {
             presenter.onBackIbPressed()
         }
+
+        adapter = MultiItemListAdapter(this, ListItemTypeFactory())
+        cityPicker.adapter = adapter
+        cityPicker.setSlideOnFling(true)
+
+        cityPicker.addOnItemChangedListener {
+            _, position ->
+            presenter.onCategoryChanged(position)
+        }
+
+        // cityPicker.addScrollStateChangeListener()
+        cityPicker.setItemTransitionTimeMillis(300)
+        cityPicker.setItemTransformer(
+                ScaleTransformer
+                        .Builder()
+                        .setMinScale(0.8f)
+                        .build()
+        )
     }
 
     override fun showToast(message: String) {
@@ -105,8 +130,8 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
         loadingTv.text = ""
     }
 
-    override fun showCategories(categories: List<Category>) {
-        categorySp.adapter = CategoryAdapter(this, R.layout.textview_spinner, categories)
+    override fun showCategories(categories: List<ListItem<*, *>>) {
+        adapter.submitList(categories)
     }
 
     override fun showWallets(wallets: List<Wallet>) {
@@ -192,6 +217,13 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
         )
         amountEt.setTextColor(ContextCompat.getColor(this, R.color.red))
 //        transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp)
+    }
+
+    override fun categorySelected(name: String,
+                                  color: Int,
+                                  color2: Int) {
+        categoryNameTv.text = name
+        categoryNameTv.setTextColor(ContextCompat.getColor(this, color))
     }
 
     @Module

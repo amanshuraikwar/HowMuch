@@ -2,6 +2,7 @@ package io.github.amanshuraikwar.howmuch.ui.addexpense
 
 import android.util.Log
 import io.github.amanshuraikwar.howmuch.Constants
+import io.github.amanshuraikwar.howmuch.ViewUtil
 import io.github.amanshuraikwar.howmuch.base.bus.AppBus
 import io.github.amanshuraikwar.howmuch.base.ui.base.*
 import io.github.amanshuraikwar.howmuch.base.data.DataManager
@@ -12,6 +13,8 @@ import io.github.amanshuraikwar.howmuch.protocol.Wallet
 import io.github.amanshuraikwar.howmuch.ui.ExpenseDataInputView
 import io.github.amanshuraikwar.howmuch.base.util.Util
 import io.github.amanshuraikwar.howmuch.ui.HowMuchBasePresenterImpl
+import io.github.amanshuraikwar.howmuch.ui.list.items.CategoryItem
+import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -19,7 +22,7 @@ import javax.inject.Inject
 interface AddExpenseContract {
 
     interface View : BaseView, UiMessageView, LoadingView, ExpenseDataInputView {
-        fun showCategories(categories: List<Category>)
+        fun showCategories(categories: List<ListItem<*, *>>)
         fun showWallets(wallets: List<Wallet>)
         fun close(success: Boolean)
         fun showDatePicker(day: Int, month: Int, year: Int)
@@ -28,6 +31,9 @@ interface AddExpenseContract {
         fun showTimePicker(minute: Int, hourOfDay: Int)
         fun switchToCredit()
         fun switchToDebit()
+        fun categorySelected(name: String,
+                             color: Int,
+                             color2: Int)
     }
 
     interface Presenter: BasePresenter<View> {
@@ -44,6 +50,7 @@ interface AddExpenseContract {
         fun onTimeSelected(minute: Int, hourOfDay: Int)
         fun onBackIbPressed()
         fun onTransactionTypeBtnClicked()
+        fun onCategoryChanged(position: Int)
     }
 
     class AddExpensePresenter @Inject constructor(appBus: AppBus,
@@ -84,9 +91,19 @@ interface AddExpenseContract {
                         categories ->
                         this.categories = categories.toList()
                         getView()?.showCategories(
-                                categories.filter {
-                                    it.type == TransactionType.DEBIT
-                                }
+                                categories
+                                        .filter {
+                                            it.type == TransactionType.DEBIT
+                                        }
+                                        .map {
+                                            CategoryItem.Item(
+                                                    CategoryItem(
+                                                            ViewUtil.getCategoryIcon(it.name),
+                                                            ViewUtil.getCategoryColor(it.name),
+                                                            ViewUtil.getCategoryColor2(it.name)
+                                                    )
+                                            )
+                                        }
                         )
                     }
                     .observeOn(Schedulers.newThread())
@@ -210,13 +227,21 @@ interface AddExpenseContract {
                 if (curTransactionType == TransactionType.DEBIT) {
                     curTransactionType = TransactionType.CREDIT
                     getView()?.switchToCredit()
-                    getView()?.showCategories(categories.filter { it.type == TransactionType.CREDIT })
+                    // getView()?.showCategories(categories.filter { it.type == TransactionType.CREDIT })
                 } else {
                     curTransactionType = TransactionType.DEBIT
                     getView()?.switchToDebit()
-                    getView()?.showCategories(categories.filter { it.type == TransactionType.DEBIT })
+                    // getView()?.showCategories(categories.filter { it.type == TransactionType.DEBIT })
                 }
             }
+        }
+
+        override fun onCategoryChanged(position: Int) {
+            getView()?.categorySelected(
+                    categories[position].name,
+                    ViewUtil.getCategoryColor(categories[position].name),
+                    ViewUtil.getCategoryColor2(categories[position].name)
+            )
         }
     }
 }

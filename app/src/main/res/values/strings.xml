@@ -22,7 +22,7 @@
     <string name="date_hint">Date</string>
     <string name="loading_text">hang on...</string>
     <string name="retry">retry</string>
-    <string name="amount_hint">Amount</string>
+    <string name="amount_hint">0</string>
     <string name="description">Description</string>
     <string name="category">category</string>
     <string name="save">save</string>

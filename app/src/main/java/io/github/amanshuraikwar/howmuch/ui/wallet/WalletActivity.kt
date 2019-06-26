@@ -3,7 +3,6 @@ package io.github.amanshuraikwar.howmuch.ui.wallet
 import android.app.Activity
 import android.os.Bundle
 import android.text.InputType
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
@@ -77,8 +76,8 @@ class WalletActivity
         deleteIb.visibility = GONE
         deleteIb.setOnClickListener(null)
 
-        doneBtn.visibility = VISIBLE
-        doneBtn.setOnClickListener {
+        saveBtn.visibility = VISIBLE
+        saveBtn.setOnClickListener {
             presenter.onEditSaveClicked(
                     nameEt.text.toString(),
                     balanceEt.text.toString()
@@ -107,8 +106,8 @@ class WalletActivity
             presenter.onDeleteBtnClicked()
         }
 
-        doneBtn.visibility = GONE
-        doneBtn.setOnClickListener(null)
+        saveBtn.visibility = GONE
+        saveBtn.setOnClickListener(null)
 
         nameEt.inputType = InputType.TYPE_NULL
         nameEt.clearFocus()
