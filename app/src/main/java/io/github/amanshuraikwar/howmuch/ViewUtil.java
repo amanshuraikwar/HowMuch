@@ -1,5 +1,9 @@
 package io.github.amanshuraikwar.howmuch;
 
+import androidx.annotation.NonNull;
+
+import io.github.amanshuraikwar.howmuch.protocol.Category;
+
 public class ViewUtil {
 
     public static int getCategoryColor(String categoryTitle) {
@@ -39,5 +43,10 @@ public class ViewUtil {
             case "travel": return R.drawable.round_flight_takeoff_24;
             default: return R.drawable.round_bubble_chart_24;
         }
+    }
+
+    @NonNull
+    public static String getDefaultTransactionTitle(Category category) {
+        return category.getName();
     }
 }

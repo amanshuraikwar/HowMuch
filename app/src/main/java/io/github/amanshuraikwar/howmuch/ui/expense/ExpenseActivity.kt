@@ -49,7 +49,7 @@ class ExpenseActivity
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             contentSv.setOnScrollChangeListener {
                 _, _, _, _, _ ->
-                toolbarCl.isSelected = contentSv.canScrollVertically(-1)
+                toolbarFl.isSelected = contentSv.canScrollVertically(-1)
             }
         }
     }

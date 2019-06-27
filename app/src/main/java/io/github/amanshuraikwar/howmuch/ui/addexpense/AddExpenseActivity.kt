@@ -18,13 +18,11 @@ import io.github.amanshuraikwar.howmuch.base.di.ActivityContext
 import io.github.amanshuraikwar.howmuch.base.ui.base.BaseActivity
 import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.protocol.Wallet
-import io.github.amanshuraikwar.howmuch.ui.spinner.CategoryAdapter
 import io.github.amanshuraikwar.howmuch.ui.spinner.WalletAdapter
 import kotlinx.android.synthetic.main.activity_add_expense.*
 import kotlinx.android.synthetic.main.layout_loading_overlay.*
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
-import io.github.amanshuraikwar.howmuch.ui.list.items.CategoryItem
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
 
@@ -44,14 +42,14 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             contentSv.setOnScrollChangeListener {
                 _, _, _, _, _ ->
-                toolbarCl.isSelected = contentSv.canScrollVertically(-1)
+                toolbarFl.isSelected = contentSv.canScrollVertically(-1)
             }
         }
 
 
-        transactionTypeIb.setOnClickListener {
-            presenter.onTransactionTypeBtnClicked()
-        }
+//        transactionTypeIb.setOnClickListener {
+//            presenter.onTransactionTypeBtnClicked()
+//        }
 
         titleEt.setOnFocusChangeListener {
             _, hasFocus ->
@@ -83,10 +81,7 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
                     date = dateTv.text.toString(),
                     time = timeTv.text.toString(),
                     amount = amountEt.text.toString(),
-                    title = titleEt.text.toString(),
-                    description = descriptionEt.text.toString(),
-                    category = categorySp.selectedItem as Category,
-                    wallet = walletSp.selectedItem as Wallet
+                    title = titleEt.text.toString()
             )
         }
 
@@ -95,17 +90,17 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
         }
 
         adapter = MultiItemListAdapter(this, ListItemTypeFactory())
-        cityPicker.adapter = adapter
-        cityPicker.setSlideOnFling(true)
+        categoryPicker.adapter = adapter
+        categoryPicker.setSlideOnFling(true)
 
-        cityPicker.addOnItemChangedListener {
+        categoryPicker.addOnItemChangedListener {
             _, position ->
             presenter.onCategoryChanged(position)
         }
 
         // cityPicker.addScrollStateChangeListener()
-        cityPicker.setItemTransitionTimeMillis(300)
-        cityPicker.setItemTransformer(
+        categoryPicker.setItemTransitionTimeMillis(300)
+        categoryPicker.setItemTransformer(
                 ScaleTransformer
                         .Builder()
                         .setMinScale(0.8f)
@@ -132,10 +127,6 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
 
     override fun showCategories(categories: List<ListItem<*, *>>) {
         adapter.submitList(categories)
-    }
-
-    override fun showWallets(wallets: List<Wallet>) {
-        walletSp.adapter = WalletAdapter(this, R.layout.textview_spinner, wallets)
     }
 
     override fun close(success: Boolean) {
@@ -193,30 +184,6 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
     override fun showTitleError(message: String) {
         titleEt.error = message
         titleEt.requestFocus()
-    }
-
-    override fun switchToCredit() {
-
-        val stateSet = intArrayOf(android.R.attr.state_checked * 1)
-        transactionTypeIb.setImageState(stateSet, true)
-
-        transactionTypeIb.imageTintList = ColorStateList.valueOf(
-                ContextCompat.getColor(this, R.color.green)
-        )
-        amountEt.setTextColor(ContextCompat.getColor(this, R.color.green))
-//        transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp)
-    }
-
-    override fun switchToDebit() {
-
-        val stateSet = intArrayOf(android.R.attr.state_checked * -1)
-        transactionTypeIb.setImageState(stateSet, true)
-
-        transactionTypeIb.imageTintList = ColorStateList.valueOf(
-                ContextCompat.getColor(this, R.color.red)
-        )
-        amountEt.setTextColor(ContextCompat.getColor(this, R.color.red))
-//        transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp)
     }
 
     override fun categorySelected(name: String,

@@ -23,14 +23,11 @@ interface AddExpenseContract {
 
     interface View : BaseView, UiMessageView, LoadingView, ExpenseDataInputView {
         fun showCategories(categories: List<ListItem<*, *>>)
-        fun showWallets(wallets: List<Wallet>)
         fun close(success: Boolean)
         fun showDatePicker(day: Int, month: Int, year: Int)
         fun showDate(date: String)
         fun showTime(time: String)
         fun showTimePicker(minute: Int, hourOfDay: Int)
-        fun switchToCredit()
-        fun switchToDebit()
         fun categorySelected(name: String,
                              color: Int,
                              color2: Int)
@@ -40,16 +37,12 @@ interface AddExpenseContract {
         fun onSaveClicked(date: String,
                           time: String,
                           amount: String,
-                          title: String,
-                          description: String,
-                          category: Category,
-                          wallet: Wallet)
+                          title: String)
         fun onDateTvClicked(date: String)
         fun onTimeTvClicked(time: String)
         fun onDateSelected(dayOfMonth: Int, monthOfYear: Int, yearNo: Int)
         fun onTimeSelected(minute: Int, hourOfDay: Int)
         fun onBackIbPressed()
-        fun onTransactionTypeBtnClicked()
         fun onCategoryChanged(position: Int)
     }
 
@@ -62,7 +55,7 @@ interface AddExpenseContract {
         private lateinit var categories: List<Category>
         private lateinit var wallets: List<Wallet>
 
-        private var curTransactionType = TransactionType.DEBIT
+        private lateinit var selectedCategory: Category
 
         override fun onAttach(wasViewRecreated: Boolean) {
             super.onAttach(wasViewRecreated)
@@ -120,7 +113,6 @@ interface AddExpenseContract {
                                 wallets ->
                                 this.wallets = wallets.toList()
                                 getView()?.run {
-                                    showWallets(this@AddExpensePresenter.wallets)
                                     hideLoading()
                                 }
                             },
@@ -143,20 +135,20 @@ interface AddExpenseContract {
         override fun onSaveClicked(date: String,
                                    time: String,
                                    amount: String,
-                                   title: String,
-                                   description: String,
-                                   category: Category,
-                                   wallet: Wallet) {
+                                   title: String) {
 
             if (amount.isEmpty()) {
                 getView()?.showAmountError("Amount cannot be empty!")
                 return
             }
 
-            if (title.isEmpty()) {
-                getView()?.showTitleError("Title cannot be empty!")
-                return
-            }
+            // if title is empty, get default transaction title
+            val titleToSave =
+                    if (title.isEmpty()) {
+                        ViewUtil.getDefaultTransactionTitle(selectedCategory)
+                    } else {
+                        title
+                    }
 
             getDataManager()
                     .addTransaction(
@@ -165,11 +157,11 @@ interface AddExpenseContract {
                                     date = Util.unBeautifyDate(date),
                                     time = Util.unBeautifyTime(time),
                                     amount = amount.toDouble(),
-                                    title = title,
-                                    description = description,
-                                    categoryId = category.id,
-                                    type = curTransactionType,
-                                    walletId = wallet.id
+                                    title = titleToSave,
+                                    description = "",
+                                    categoryId = selectedCategory.id,
+                                    type = selectedCategory.type,
+                                    walletId = wallets[0].id
                             )
                     )
                     .subscribeOn(Schedulers.newThread())
@@ -222,25 +214,12 @@ interface AddExpenseContract {
             getView()?.close(false)
         }
 
-        override fun onTransactionTypeBtnClicked() {
-            synchronized(curTransactionType) {
-                if (curTransactionType == TransactionType.DEBIT) {
-                    curTransactionType = TransactionType.CREDIT
-                    getView()?.switchToCredit()
-                    // getView()?.showCategories(categories.filter { it.type == TransactionType.CREDIT })
-                } else {
-                    curTransactionType = TransactionType.DEBIT
-                    getView()?.switchToDebit()
-                    // getView()?.showCategories(categories.filter { it.type == TransactionType.DEBIT })
-                }
-            }
-        }
-
         override fun onCategoryChanged(position: Int) {
+            selectedCategory = categories[position]
             getView()?.categorySelected(
-                    categories[position].name,
-                    ViewUtil.getCategoryColor(categories[position].name),
-                    ViewUtil.getCategoryColor2(categories[position].name)
+                    selectedCategory.name,
+                    ViewUtil.getCategoryColor(selectedCategory.name),
+                    ViewUtil.getCategoryColor2(selectedCategory.name)
             )
         }
     }

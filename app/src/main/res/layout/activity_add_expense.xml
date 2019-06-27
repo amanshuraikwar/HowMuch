@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/contentFl"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/toolbarCl"
+    <FrameLayout
+        android:id="@+id/toolbarFl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,9 +21,6 @@
             android:id="@+id/backIb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/toolbar"
             android:layout_margin="@dimen/padding_normal"
             android:src="@drawable/ic_arrow_back_white_24dp"
             style="@style/Widget.HowMuch.ImageButton.Borderless"
@@ -30,28 +28,12 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/backIb"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="56dp"
             app:title="Add Transaction"
             style="@style/Widget.HowMuch.Toolbar.SmallCapsTitle" />
-
-        <ImageButton
-            android:id="@+id/transactionTypeIb"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:padding="@dimen/padding_normal"
-            app:srcCompat="@drawable/asl_pathmorph_plusminus"
-            android:tint="@color/red"
-            style="@style/Widget.HowMuch.ImageButton.Border"
-            android:contentDescription="@string/amount_hint"
-            android:visibility="gone" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 
     <ScrollView
         android:id="@+id/contentSv"
@@ -59,43 +41,47 @@
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbarCl"
+        app:layout_constraintTop_toBottomOf="@id/toolbarFl"
         app:layout_constraintBottom_toTopOf="@id/saveBtn"
         android:layout_marginBottom="@dimen/margin_normal"
         android:fillViewport="true">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/amountEt"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="@dimen/padding_normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginStart="@dimen/margin_large"
                 android:layout_marginEnd="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_large"
+                android:gravity="center"
+                android:padding="@dimen/padding_normal"
                 android:background="@null"
                 android:inputType="numberDecimal"
                 android:lines="1"
                 android:hint="@string/amount_hint"
-                android:textAppearance="@style/TextAppearance.Amount"
-                android:importantForAutofill="no"
-                tools:targetApi="o" />
+                android:textAppearance="@style/TextAppearance.Amount" />
 
             <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
+                android:id="@+id/titleCv"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/amountEt"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin_large"
                 style="@style/Widget.MaterialComponents.CardView"
                 app:cardElevation="0dp"
                 app:cardCornerRadius="4dp"
-                app:cardBackgroundColor="@color/gray1"
-                android:layout_marginStart="@dimen/margin_large"
-                android:layout_marginEnd="@dimen/margin_large"
-                android:layout_marginTop="@dimen/margin_large">
+                app:cardBackgroundColor="@color/gray1">
 
                 <EditText
                     android:id="@+id/titleEt"
@@ -107,192 +93,126 @@
                     android:textAppearance="@style/TextAppearance.InputField"
                     android:padding="12dp"
                     android:background="@null"
-                    android:gravity="center"
-                    android:importantForAutofill="no"
-                    tools:targetApi="o" />
+                    android:gravity="center" />
             </com.google.android.material.card.MaterialCardView>
 
-            <FrameLayout
-                android:layout_width="match_parent"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/dateCv"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:visibility="gone">
-
-                <Spinner
-                    android:id="@+id/categorySp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/input_field_offset_spinner"
-                    android:paddingEnd="0dp"/>
-
-                <ImageView
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_bubble_chart_white_24dp"
-                    android:contentDescription="@string/category_hint"
-                    style="@style/InputImageView" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:visibility="gone">
-
-                <Spinner
-                    android:id="@+id/walletSp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/input_field_offset_spinner"
-                    android:paddingEnd="0dp"/>
-
-                <ImageView
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_credit_card_white_24dp"
-                    android:contentDescription="@string/wallet_icon"
-                    style="@style/InputImageView" />
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/timeCv"
+                app:layout_constraintTop_toBottomOf="@id/titleCv"
+                app:layout_constraintBottom_toTopOf="@id/categoryPicker"
+                app:layout_constraintVertical_chainStyle="spread_inside"
                 android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginEnd="@dimen/margin_very_small"
+                android:layout_marginTop="@dimen/margin_normal"
+                style="@style/Widget.MaterialComponents.CardView"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="4dp"
+                app:cardBackgroundColor="@color/gray1">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/dateTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lines="1"
+                        android:hint="@string/date_hint"
+                        android:textAppearance="@style/TextAppearance.InputField"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="center_vertical"
+                        style="@style/Widget.HowMuch.InputTextView" />
+
+                    <ImageView
+                        android:id="@+id/dateIv"
+                        android:layout_gravity="center_vertical"
+                        app:srcCompat="@drawable/avd_today"
+                        android:contentDescription="@string/date_hint"
+                        style="@style/InputImageView" />
+                </FrameLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/timeCv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/dateCv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleCv"
+                android:layout_marginStart="@dimen/margin_very_small"
                 android:layout_marginEnd="@dimen/margin_large"
-                android:layout_marginTop="@dimen/margin_large">
+                android:layout_marginTop="@dimen/margin_normal"
+                style="@style/Widget.MaterialComponents.CardView"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="4dp"
+                app:cardBackgroundColor="@color/gray1">
 
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="2dp"
-                    style="@style/Widget.MaterialComponents.CardView"
-                    app:cardElevation="0dp"
-                    app:cardCornerRadius="4dp"
-                    app:cardBackgroundColor="@color/gray1">
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                    <FrameLayout
+                    <TextView
+                        android:id="@+id/timeTv"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:lines="1"
+                        android:hint="@string/time_hint"
+                        android:gravity="center_vertical"
+                        android:textAppearance="@style/TextAppearance.InputField"
+                        android:background="?attr/selectableItemBackground"
+                        style="@style/Widget.HowMuch.InputTextView" />
 
-                        <TextView
-                            android:id="@+id/dateTv"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:lines="1"
-                            android:hint="@string/date_hint"
-                            android:textAppearance="@style/TextAppearance.InputField"
-                            android:background="?attr/selectableItemBackground"
-                            android:gravity="center_vertical"
-                            style="@style/Widget.HowMuch.InputTextView" />
+                    <ImageView
+                        android:id="@+id/timeIv"
+                        android:layout_gravity="center_vertical"
+                        app:srcCompat="@drawable/avd_clock_clock"
+                        android:contentDescription="@string/time_hint"
+                        style="@style/InputImageView" />
+                </FrameLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-                        <ImageView
-                            android:id="@+id/dateIv"
-                            android:layout_gravity="center_vertical"
-                            app:srcCompat="@drawable/avd_today"
-                            android:contentDescription="@string/date_hint"
-                            style="@style/InputImageView" />
-                    </FrameLayout>
-                </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/categoryPicker"
+                app:layout_constraintBottom_toBottomOf="@id/categoryPicker"
+                style="@style/Widget.MaterialComponents.CardView"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="36dp"
+                app:cardBackgroundColor="@color/gray1" />
 
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="2dp"
-                    style="@style/Widget.MaterialComponents.CardView"
-                    app:cardElevation="0dp"
-                    app:cardCornerRadius="4dp"
-                    app:cardBackgroundColor="@color/gray1">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/timeTv"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:lines="1"
-                            android:hint="@string/time_hint"
-                            android:gravity="center_vertical"
-                            android:textAppearance="@style/TextAppearance.InputField"
-                            android:background="?attr/selectableItemBackground"
-                            style="@style/Widget.HowMuch.InputTextView" />
-
-                        <ImageView
-                            android:id="@+id/timeIv"
-                            android:layout_gravity="center_vertical"
-                            app:srcCompat="@drawable/avd_clock_clock"
-                            android:contentDescription="@string/time_hint"
-                            style="@style/InputImageView" />
-                    </FrameLayout>
-                </com.google.android.material.card.MaterialCardView>
-            </LinearLayout>
-
-
-            <FrameLayout
+            <com.yarolegovich.discretescrollview.DiscreteScrollView
+                android:id="@+id/categoryPicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone">
-
-                <EditText
-                    android:id="@+id/descriptionEt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:lines="1"
-                    android:inputType="text"
-                    android:hint="@string/description_hint"
-                    android:textAppearance="@style/TextAppearance.InputField"
-                    style="@style/Widget.HowMuch.InputEditText"
-                    android:importantForAutofill="no"
-                    tools:targetApi="o" />
-
-                <ImageView
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/baseline_receipt_24"
-                    android:contentDescription="@string/description_hint"
-                    style="@style/InputImageView" />
-            </FrameLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_very_large">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/cityPicker"
-                    app:layout_constraintBottom_toBottomOf="@id/cityPicker"
-                    style="@style/Widget.MaterialComponents.CardView"
-                    app:cardElevation="0dp"
-                    app:cardCornerRadius="36dp"
-                    app:cardBackgroundColor="@color/gray1" />
-
-                <com.yarolegovich.discretescrollview.DiscreteScrollView
-                    android:id="@+id/cityPicker"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginTop="@dimen/margin_normal"
-                    android:layout_marginBottom="@dimen/margin_normal" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintTop_toBottomOf="@id/dateCv"
+                app:layout_constraintBottom_toTopOf="@id/categoryNameTv"
+                android:layout_marginTop="@dimen/margin_large"
+                android:layout_marginBottom="@dimen/margin_normal" />
 
             <TextView
                 android:id="@+id/categoryNameTv"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginBottom="@dimen/margin_large"
-                android:textAppearance="@style/TextAppearance.InputField"
+                android:gravity="center_horizontal"
                 android:padding="@dimen/padding_very_small"
+                android:textAppearance="@style/TextAppearance.InputField"
                 android:textStyle="bold"
                 android:textAllCaps="true"
-                tools:text="Food"/>
-        </LinearLayout>
+                tools:text="Food" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
     <View
