@@ -62,4 +62,9 @@
             <enum name="BOLD" value="0"/>
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="LimitLineView">
+    </declare-styleable>
+
+    <attr name="LimitLineViewStyle" format="reference" />
 </resources>

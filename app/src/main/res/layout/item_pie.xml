@@ -30,7 +30,7 @@
             android:layout_gravity="center_horizontal"
             android:text="Total"
             android:textAppearance="@style/TextAppearance.ToolbarTitle"
-            android:fontFamily="@font/raleway_medium"
+            android:fontFamily="@font/cabin"
             android:textColor="@color/secondaryText"/>
         <TextView
             android:id="@+id/totalTv"

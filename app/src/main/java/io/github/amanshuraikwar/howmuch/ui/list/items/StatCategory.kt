@@ -7,6 +7,7 @@ import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import io.github.amanshuraikwar.howmuch.R
+import io.github.amanshuraikwar.howmuch.ViewUtil
 import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
@@ -52,6 +53,13 @@ class StatCategory(val category: Category,
                     ContextCompat.getColor(host, listItem.statCategory.color)
             )
 
+            itemView.parentCv.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                            host,
+                            ViewUtil.getCategoryColor2(listItem.statCategory.category.name)
+                    )
+            )
+
             itemView.iconIv.setImageResource(listItem.statCategory.icon)
 
             itemView.limitTv.text = " / ${listItem.statCategory.category.monthlyLimit}"
@@ -69,6 +77,17 @@ class StatCategory(val category: Category,
             itemView.pb.lineColor = ContextCompat.getColor(host, listItem.statCategory.color)
             itemView.pb.max = listItem.statCategory.category.monthlyLimit.toInt()
             itemView.pb.progress = listItem.statCategory.amount.toInt()
+            itemView.pb.lineBackgroundColor =
+                    ContextCompat.getColor(
+                            host,
+                            ViewUtil.getCategoryColor3(listItem.statCategory.category.name)
+                    )
+            itemView.pb.setBackgroundColor(
+                    ContextCompat.getColor(
+                            host,
+                            ViewUtil.getCategoryColor2(listItem.statCategory.category.name)
+                    )
+            )
             itemView.pb.invalidate()
         }
     }

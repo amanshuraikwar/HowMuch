@@ -35,4 +35,7 @@
         <item name="bv_labelPadding">8dp</item>
     </style>
 
+    <style name="LimitLineView">
+    </style>
+
 </resources>

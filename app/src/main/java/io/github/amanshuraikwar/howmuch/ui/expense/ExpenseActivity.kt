@@ -62,12 +62,12 @@ class ExpenseActivity
     }
 
     override fun showLoading(message: String) {
-        loadingParentLl.visibility = View.VISIBLE
+        loadingParentLl.visibility = VISIBLE
         loadingTv.text = message
     }
 
     override fun hideLoading() {
-        loadingParentLl.visibility = View.GONE
+        loadingParentLl.visibility = GONE
         loadingTv.text = ""
     }
 

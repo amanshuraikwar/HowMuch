@@ -18,7 +18,7 @@ class VerticalProgressBar : View {
     private var lineWidth = 0f
 
     var lineColor = Color.BLACK
-    private var lineBackgroundColor = Color.LTGRAY
+    var lineBackgroundColor = Color.LTGRAY
 
     private var sparkLinePaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var lineBgPaint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -56,6 +56,8 @@ class VerticalProgressBar : View {
     override fun onDraw(canvas: Canvas) {
 
         super.onDraw(canvas)
+
+        lineBgPaint.color = lineBackgroundColor
 
         sparkPath.reset()
 

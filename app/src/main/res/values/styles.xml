@@ -627,7 +627,7 @@
         parent="@style/TextAppearance.Subhead">
 
         <item name="android:textColor">@color/primaryText</item>
-        <item name="android:fontFamily">@font/rubik</item>
+        <item name="android:fontFamily">@font/cabin</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
     </style>

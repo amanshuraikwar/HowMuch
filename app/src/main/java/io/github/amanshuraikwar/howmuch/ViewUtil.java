@@ -28,6 +28,19 @@ public class ViewUtil {
             case "personal": return R.color.personal2;
             case "utilities": return R.color.utilities2;
             case "travel": return R.color.travel2;
+            default: return R.color.gray2;
+        }
+    }
+
+    public static int getCategoryColor3(String categoryTitle) {
+        switch (categoryTitle.toLowerCase()) {
+            case "food": return R.color.food3;
+            case "health/medical": return R.color.health3;
+            case "home": return R.color.home3;
+            case "transportation": return R.color.transportation3;
+            case "personal": return R.color.personal3;
+            case "utilities": return R.color.utilities3;
+            case "travel": return R.color.travel3;
             default: return R.color.gray3;
         }
     }

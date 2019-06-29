@@ -27,6 +27,7 @@ interface StatsContract {
         fun startTransactionActivity(transaction: Transaction)
         fun startHistoryActivity(filter: String? = null)
         fun startSettingsActivity()
+        fun startMonthlyBudgetActivity()
     }
 
     interface Presenter : BasePresenter<View> {
@@ -312,7 +313,7 @@ interface StatsContract {
                             MonthlyExpenseLimit(
                                     debitAmount,
                                     limit,
-                                    { getView()?.startSettingsActivity() }
+                                    { getView()?.startMonthlyBudgetActivity() }
                             )
                     )
             )

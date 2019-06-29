@@ -69,4 +69,12 @@
     <color name="personal2">#F3E5F5</color>
     <color name="utilities2">#E8EAF6</color>
     <color name="travel2">#E0F2F1</color>
+
+    <color name="food3">#FFCCBC</color>
+    <color name="health3">#F8BBD0</color>
+    <color name="home3">#DCEDC8</color>
+    <color name="transportation3">#B3E5FC</color>
+    <color name="personal3">#E1BEE7</color>
+    <color name="utilities3">#C5CAE9</color>
+    <color name="travel3">#B2DFDB</color>
 </resources>

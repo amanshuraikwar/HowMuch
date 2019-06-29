@@ -12,6 +12,7 @@ import io.github.amanshuraikwar.howmuch.ui.expense.ExpenseActivity
 import io.github.amanshuraikwar.howmuch.ui.history.HistoryFragment
 import io.github.amanshuraikwar.howmuch.ui.history.activity.HistoryActivity
 import io.github.amanshuraikwar.howmuch.ui.home.HomeActivity
+import io.github.amanshuraikwar.howmuch.ui.monthlybudget.MonthlyBudgetActivity
 import io.github.amanshuraikwar.howmuch.ui.profile.ProfileFragment
 import io.github.amanshuraikwar.howmuch.ui.search.SearchActivity
 import io.github.amanshuraikwar.howmuch.ui.settings.SettingsFragment
@@ -120,4 +121,9 @@ import io.github.amanshuraikwar.howmuch.ui.wallets.WalletsFragment
             modules = [SearchActivity.DiModule::class]
     )
     abstract fun q(): SearchActivity
+
+    @ContributesAndroidInjector(
+            modules = [MonthlyBudgetActivity.DiModule::class]
+    )
+    abstract fun r(): MonthlyBudgetActivity
 }
