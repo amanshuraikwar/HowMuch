@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
 import io.github.amanshuraikwar.howmuch.graph.R
 
 class LimitLineView : View {
@@ -18,33 +19,22 @@ class LimitLineView : View {
 
     private var baselineWidth = 6f
     private var baselineColor = Color.LTGRAY
-    private val baselinePath = Path()
     private var baselinePaint = Paint(Paint.ANTI_ALIAS_FLAG)
 
-    private var yLimitLineWidth = 6f
-    private var yLimitLineColor = Color.LTGRAY
-    private val yLimitLinePath = Path()
     private var yLimitLinePaint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private var dashedLineGap = 12f
+    private var lineDashGap = 12f
 
-    private var yLimitTextSize = 40f
-    private var yLimitTextColor = Color.DKGRAY
-    private var yLimitTextPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private var yLimitTextPadding = 20f
+    private var valueTextSize = 40f
+    private var valueTextPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private var valueTextPadding = 20f
 
-    private var curXTextSize = 40f
-    private var curXTextColor = Color.DKGRAY
-    private var curXTextPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private var curXTextPadding = 20f
+    private var labelTextSize = 40f
+    private var labelTextPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private var labelTextPadding = 20f
 
-    private var projectionLineWidth = 6f
-    private var projectionLineColor = Color.LTGRAY
-    private val projectionLinePath = Path()
     private var projectionLinePaint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private var projectionLineGap = 12f
 
     private var intersectionPointRadius = 12f
-    private var intersectionPointColor = Color.RED
     private var intersectionPointPaint = Paint(Paint.ANTI_ALIAS_FLAG)
 
     var data: List<Item>? =
@@ -91,9 +81,9 @@ class LimitLineView : View {
 
         graphRect.set(
                 contentRect.left,
-                contentRect.top + yLimitTextSize + yLimitTextPadding,
+                contentRect.top + valueTextSize + valueTextPadding,
                 contentRect.right,
-                contentRect.bottom - curXTextSize - curXTextPadding
+                contentRect.bottom - labelTextSize - labelTextPadding
         )
 
         yRawMax = Math.max(
@@ -123,15 +113,15 @@ class LimitLineView : View {
         canvas.drawText(
                 yRawLimit.toString(),
                 0f.canvasX(),
-                (yRawLimit.scaleY() + yLimitTextPadding).canvasY(),
-                yLimitTextPaint
+                (yRawLimit.scaleY() + valueTextPadding).canvasY(),
+                valueTextPaint
         )
 
         // draw provided data
 
         linePath.reset()
         // don't move to exact (0,0), it looks bad
-        linePath.moveTo(0f.canvasX(), dashedLineGap.canvasY())
+        linePath.moveTo(0f.canvasX(), this.lineDashGap.canvasY())
 
         var lastDrawnX = 0f
         var lastDrawnY = 0f
@@ -152,10 +142,10 @@ class LimitLineView : View {
         // draw cur x text
 
         canvas.drawText(
-                xRawCur.toString(),
+                "TODAY",
                 xRawCur.scaleX().canvasX(),
-                (0f - curXTextPadding - curXTextSize).canvasY(),
-                curXTextPaint
+                (0f - labelTextPadding - labelTextSize).canvasY(),
+                labelTextPaint
         )
 
         // only draw projections if the current raw max is less that raw limit
@@ -190,7 +180,7 @@ class LimitLineView : View {
             )
             linePath.lineTo(
                     lastDrawnX.scaleX().canvasX(),
-                    (0f.scaleY() + projectionLineGap).canvasY()
+                    (0f.scaleY() + this.lineDashGap).canvasY()
             )
 
             canvas.drawPath(linePath, projectionLinePaint)
@@ -236,7 +226,7 @@ class LimitLineView : View {
 
             val projectedYLimitIntersectionX = yRawLimit.scaleY() / m
 
-            if (projectedYLimitIntersectionX < xMax - projectionLineGap) {
+            if (projectedYLimitIntersectionX < xMax - this.lineDashGap) {
 
                 linePath.reset()
                 linePath.addCircle(
@@ -285,7 +275,7 @@ class LimitLineView : View {
             val projectedIntersectionY = xRawCur.scaleX() * m
 
             // only draw if it falls in the graph rect area
-            if (projectedIntersectionY <= (yMax - projectionLineGap)) {
+            if (projectedIntersectionY <= (yMax - this.lineDashGap)) {
 
                 // draw line to x axis
 
@@ -296,7 +286,7 @@ class LimitLineView : View {
                 )
                 linePath.lineTo(
                         xRawCur.scaleX().canvasX(),
-                        (0f.scaleY() + projectionLineGap).canvasY()
+                        (0f.scaleY() + this.lineDashGap).canvasY()
                 )
 
                 canvas.drawPath(linePath, projectionLinePaint)
@@ -319,7 +309,7 @@ class LimitLineView : View {
 
             val projectedYLimitIntersectionX = yRawLimit.scaleY() / m
 
-            if (projectedYLimitIntersectionX < xMax - projectionLineGap) {
+            if (projectedYLimitIntersectionX < xMax - this.lineDashGap) {
 
                 linePath.reset()
                 linePath.addCircle(
@@ -365,6 +355,30 @@ class LimitLineView : View {
                         defStyleRes
                 )
 
+        lineWidth = a.getDimension(R.styleable.LimitLineView_llv_lineWidth, 0f)
+        lineColor = a.getColor(R.styleable.LimitLineView_llv_lineColor, 0)
+
+        baselineWidth = a.getDimension(R.styleable.LimitLineView_llv_baselineWidth, 0f)
+        baselineColor = a.getColor(R.styleable.LimitLineView_llv_baselineColor, 0)
+
+        lineDashGap = a.getDimension(R.styleable.LimitLineView_llv_lineDashGap, 0f)
+
+        intersectionPointRadius = a.getDimension(R.styleable.LimitLineView_llv_intersectionPointRadius, 0f)
+        val intersectionPointColor = a.getColor(R.styleable.LimitLineView_llv_intersectionPointColor, 0)
+
+        valueTextSize = a.getDimension(R.styleable.LimitLineView_llv_valueTextSize, 0f)
+        valueTextPadding = a.getDimension(R.styleable.LimitLineView_llv_valuePadding, 0f)
+
+        val valueTextColor = a.getColor(R.styleable.LimitLineView_llv_valueTextColor, 0)
+        val valueFontFamilyResId = a.getResourceId(R.styleable.LimitLineView_llv_valueFontFamily, 0)
+        val valueTextStyle = a.getInt(R.styleable.LimitLineView_llv_valueTextStyle, -1)
+
+        labelTextSize = a.getDimension(R.styleable.LimitLineView_llv_labelTextSize, 0f)
+        labelTextPadding = a.getDimension(R.styleable.LimitLineView_llv_labelPadding, 0f)
+
+        val labelTextColor = a.getColor(R.styleable.LimitLineView_llv_labelTextColor, 0)
+        val labelFontFamilyResId = a.getResourceId(R.styleable.LimitLineView_llv_labelFontFamily, 0)
+        val labelTextStyle = a.getInt(R.styleable.LimitLineView_llv_labelTextStyle, -1)
 
         a.recycle()
 
@@ -376,29 +390,57 @@ class LimitLineView : View {
         baselinePaint.style = Paint.Style.STROKE
         baselinePaint.color = baselineColor
         baselinePaint.strokeWidth = baselineWidth
-        baselinePaint.strokeCap = Paint.Cap.SQUARE
+        baselinePaint.strokeCap = Paint.Cap.ROUND
+        baselinePaint.pathEffect =
+                DashPathEffect(floatArrayOf(lineDashGap, lineDashGap), 0f)
 
         yLimitLinePaint.style = Paint.Style.STROKE
-        yLimitLinePaint.color = yLimitLineColor
-        yLimitLinePaint.strokeWidth = yLimitLineWidth
+        yLimitLinePaint.color = baselineColor
+        yLimitLinePaint.strokeWidth = baselineWidth
         yLimitLinePaint.pathEffect =
-                DashPathEffect(floatArrayOf(dashedLineGap, dashedLineGap), 0f)
+                DashPathEffect(floatArrayOf(lineDashGap, lineDashGap), 0f)
 
         projectionLinePaint.style = Paint.Style.STROKE
-        projectionLinePaint.color = projectionLineColor
-        projectionLinePaint.strokeWidth = projectionLineWidth
+        projectionLinePaint.color = baselineColor
+        projectionLinePaint.strokeWidth = baselineWidth
         projectionLinePaint.pathEffect =
-                DashPathEffect(floatArrayOf(projectionLineGap, projectionLineGap), 0f)
+                DashPathEffect(floatArrayOf(lineDashGap, lineDashGap), 0f)
 
-        yLimitTextPaint.style = Paint.Style.FILL
-        yLimitTextPaint.color = yLimitTextColor
-        yLimitTextPaint.textSize = yLimitTextSize
-        yLimitTextPaint.textAlign =  Paint.Align.LEFT
+        valueTextPaint.style = Paint.Style.FILL
+        valueTextPaint.color = valueTextColor
+        valueTextPaint.textSize = valueTextSize
+        valueTextPaint.textAlign =  Paint.Align.LEFT
 
-        curXTextPaint.style = Paint.Style.FILL
-        curXTextPaint.color = curXTextColor
-        curXTextPaint.textSize = curXTextSize
-        curXTextPaint.textAlign =  Paint.Align.CENTER
+        var valueNormalTypeface =
+                if (valueFontFamilyResId != 0) {
+                    ResourcesCompat.getFont(context, valueFontFamilyResId)
+                } else {
+                    Typeface.DEFAULT
+                }
+
+        if (valueTextStyle == 0) {
+            valueNormalTypeface = Typeface.create(valueNormalTypeface, Typeface.BOLD)
+        }
+
+        valueTextPaint.typeface = valueNormalTypeface
+
+        labelTextPaint.style = Paint.Style.FILL
+        labelTextPaint.color = labelTextColor
+        labelTextPaint.textSize = labelTextSize
+        labelTextPaint.textAlign =  Paint.Align.CENTER
+
+        var labelNormalTypeface =
+                if (labelFontFamilyResId != 0) {
+                    ResourcesCompat.getFont(context, labelFontFamilyResId)
+                } else {
+                    Typeface.DEFAULT
+                }
+
+        if (labelTextStyle == 0) {
+            labelNormalTypeface = Typeface.create(labelNormalTypeface, Typeface.BOLD)
+        }
+
+        labelTextPaint.typeface = labelNormalTypeface
 
         intersectionPointPaint.style = Paint.Style.FILL
         intersectionPointPaint.color = intersectionPointColor

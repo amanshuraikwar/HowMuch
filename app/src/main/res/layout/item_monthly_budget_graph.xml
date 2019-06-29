@@ -8,13 +8,31 @@
     android:layout_height="wrap_content"
     style="@style/Widget.MaterialComponents.CardView"
     android:layout_marginTop="@dimen/margin_normal"
-    android:layout_marginStart="@dimen/margin_normal"
-    android:layout_marginEnd="@dimen/margin_normal"
+    android:layout_marginStart="@dimen/margin_small"
+    android:layout_marginEnd="@dimen/margin_small"
+    app:cardBackgroundColor="#FFF3E0"
     app:cardElevation="0dp"
     app:cardCornerRadius="8dp">
 
     <io.github.amanshuraikwar.howmuch.graph.pie.LimitLineView
         android:layout_width="match_parent"
         android:layout_height="248dp"
-        android:padding="16dp"/>
+        android:padding="@dimen/padding_normal"
+        app:llv_lineWidth="2dp"
+        app:llv_lineColor="#FFA726"
+        app:llv_baselineWidth="1dp"
+        app:llv_baselineColor="#FFCC80"
+        app:llv_lineDashGap="4dp"
+        app:llv_intersectionPointRadius="4dp"
+        app:llv_intersectionPointColor="#FFA726"
+        app:llv_valueTextSize="14dp"
+        app:llv_valuePadding="8dp"
+        app:llv_valueTextColor="@color/secondaryText"
+        app:llv_valueFontFamily="@font/rubik"
+        app:llv_valueTextStyle="BOLD"
+        app:llv_labelTextSize="14dp"
+        app:llv_labelPadding="8dp"
+        app:llv_labelTextColor="@color/secondaryText"
+        app:llv_labelFontFamily="@font/cabin"
+        app:llv_labelTextStyle="BOLD" />
 </com.google.android.material.card.MaterialCardView>

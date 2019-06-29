@@ -64,6 +64,31 @@
     </declare-styleable>
 
     <declare-styleable name="LimitLineView">
+
+        <attr name="llv_lineWidth" format="dimension|reference" />
+        <attr name="llv_lineColor" format="color|reference" />
+        <attr name="llv_baselineWidth" format="dimension|reference" />
+        <attr name="llv_baselineColor" format="color|reference" />
+        <attr name="llv_lineDashGap" format="dimension|reference" />
+        <attr name="llv_intersectionPointRadius" format="dimension|reference" />
+        <attr name="llv_intersectionPointColor" format="color|reference" />
+
+        <attr name="llv_valueTextSize" format="dimension|reference" />
+        <attr name="llv_valuePadding" format="dimension|reference" />
+        <attr name="llv_valueTextColor" format="color|reference" />
+        <attr name="llv_valueFontFamily" format="reference" />
+        <attr name="llv_valueTextStyle" format="enum">
+            <enum name="BOLD" value="0"/>
+        </attr>
+
+        <attr name="llv_labelTextSize" format="dimension|reference" />
+        <attr name="llv_labelPadding" format="dimension|reference" />
+        <attr name="llv_labelTextColor" format="color|reference" />
+        <attr name="llv_labelFontFamily" format="reference" />
+        <attr name="llv_labelTextStyle" format="enum">
+            <enum name="BOLD" value="0"/>
+        </attr>
+
     </declare-styleable>
 
     <attr name="LimitLineViewStyle" format="reference" />
