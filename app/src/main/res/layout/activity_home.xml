@@ -30,16 +30,16 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addTransactionFab"
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bnv"
         android:layout_marginEnd="@dimen/margin_normal"
         android:layout_marginBottom="@dimen/margin_normal"
-        app:backgroundTint="@color/white"
-        android:src="@drawable/ic_add_white_24dp"
-        android:tint="?colorPrimary"
-        android:visibility="gone" />
+        app:srcCompat="@drawable/round_add_24"
+        app:tint="@color/white"
+        app:backgroundTint="?colorPrimary" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bnv"

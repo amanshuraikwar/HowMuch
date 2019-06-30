@@ -6,12 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     style="@style/Widget.MaterialComponents.CardView"
-    android:layout_marginTop="@dimen/margin_normal"
+    android:layout_marginTop="@dimen/margin_small"
+    android:layout_marginBottom="@dimen/margin_small"
     android:layout_marginStart="@dimen/margin_small"
     android:layout_marginEnd="@dimen/margin_small"
     app:cardElevation="0dp"
     app:cardCornerRadius="8dp"
-    app:cardBackgroundColor="#E8F5E9">
+    app:cardBackgroundColor="@color/white">
 
     <io.github.amanshuraikwar.howmuch.graph.pie.BarView
         android:id="@+id/barView"
@@ -22,7 +23,7 @@
         android:paddingStart="32dp"
         android:paddingEnd="32dp"
         app:bv_lineWidth="8dp"
-        app:bv_lineBackground="#C8E6C9"
+        app:bv_lineBackground="#E8F5E9"
         app:bv_lineColor="@color/green"
         app:bv_labelTextSize="12sp"
         app:bv_labelPadding="16dp"

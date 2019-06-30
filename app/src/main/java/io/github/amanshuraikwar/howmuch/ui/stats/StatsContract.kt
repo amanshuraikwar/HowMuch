@@ -70,6 +70,46 @@ interface StatsContract {
 
         }
 
+        private fun buildListItems(txnList: List<Transaction>)
+                : Observable<List<ListItem<*, *>>> {
+
+            return Observable
+                    .fromCallable {
+                        mutableListOf<ListItem<*, *>>()
+                    }
+                    .map {
+                        prevList ->
+                        prevList.add(txnList.getPastSevenDayItem())
+                        prevList.add(Divider.Item())
+                        prevList
+                    }
+                    .map {
+                        prevList ->
+                        prevList.add(txnList.getBarViewListItem())
+                        prevList.add(Divider.Item())
+                        prevList
+                    }
+                    .flatMap {
+                        prevList ->
+                        getDataManager()
+                                .getMonthlyExpenseLimit()
+                                .map {
+                                    prevList.addAll(txnList.getThisMonthDayItems(it))
+                                    prevList
+                                }
+                    }
+                    .flatMap {
+                        prevList ->
+                        getDataManager()
+                                .getAllCategories()
+                                .map { it.groupBy { it.id }.mapValues { it.value[0] } }
+                                .map {
+                                    prevList.addAll(txnList.getListItems(it))
+                                    prevList
+                                }
+                    }
+        }
+
         private fun fetchStats() {
 
             getDataManager()
@@ -78,40 +118,7 @@ interface StatsContract {
                         it.toList()
                     }
                     .flatMap {
-                        txnList ->
-                        Observable
-                                .fromCallable {
-                                    mutableListOf<ListItem<*, *>>()
-                                }
-                                .map {
-                                    prevList ->
-                                    prevList.addAll(txnList.getPastSeverDayItems())
-                                    prevList
-                                }
-                                .map {
-                                    prevList ->
-                                    prevList.add(txnList.getBarViewListItem())
-                                    prevList
-                                }
-                                .flatMap {
-                                    prevList ->
-                                    getDataManager()
-                                            .getMonthlyExpenseLimit()
-                                            .map {
-                                                prevList.addAll(txnList.getThisMonthDayItems(it))
-                                                prevList
-                                            }
-                                }
-                                .flatMap {
-                                    prevList ->
-                                    getDataManager()
-                                            .getAllCategories()
-                                            .map { it.groupBy { it.id }.mapValues { it.value[0] } }
-                                            .map {
-                                                prevList.addAll(txnList.getListItems(it))
-                                                prevList
-                                            }
-                                }
+                        buildListItems(it)
                     }
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -187,7 +194,7 @@ interface StatsContract {
 
         private fun Double.money(): Double = "%.2f".format(this).toDouble()
 
-        private fun List<Transaction>.getPastSeverDayItems(): List<ListItem<*, *>> {
+        private fun List<Transaction>.getPastSevenDayItem(): ListItem<*, *> {
 
             val lastSeventhDay = Util.getLastSeventhDay()
 
@@ -206,21 +213,15 @@ interface StatsContract {
 
             val debitAmount = thisMonthTotalMap[TransactionType.DEBIT] ?: 0.0
 
-            val list = mutableListOf<ListItem<*, *>>()
-
             val trend = getTrend(debitAmount, filteredTransactions)
 
-            list.add(
-                    StatTotal.Item(
+            return StatTotal.Item(
                             StatTotal(
                                     "Last 7 days",
                                     thisMonthTotalMap[TransactionType.DEBIT] ?: 0.0,
                                     trend
                             )
                     )
-            )
-
-            return list
         }
 
         private fun getTrend(amount: Double,
@@ -329,26 +330,33 @@ interface StatsContract {
             }
 
             val list = mutableListOf<ListItem<*, *>>(
+                    Divider.Item(),
                     StatHeader.Item(StatHeader("Recent Transactions"))
             )
 
-            list.addAll(
-                    this
-                            .sortedBy { Util.toTimeMillisec(it.date, it.time) }
-                            .subList(kotlin.math.max(0, (this.size - 1) - 3), this.size)
-                            .reversed()
-                            .map {
+            this
+                    .sortedBy { Util.toTimeMillisec(it.date, it.time) }
+                    .subList(kotlin.math.max(0, (this.size - 1) - 3), this.size)
+                    .reversed()
+                    .forEachIndexed {
+                        index, txn ->
+
+                        list.add(
                                 StatTransaction.Item(
-                                        StatTransaction(it, categoriesMap[it.categoryId]!!)
+                                        StatTransaction(txn, categoriesMap[txn.categoryId]!!)
                                 ).setOnClickListener(
                                         transactionOnClickListener
                                 )
-                            }
-            )
+                        )
+
+                        if (index != this@getListItems.size - 1) {
+                            list.add(DividerPadded.Item())
+                        }
+                    }
 
             list.add(
                     StatButton
-                            .Item(StatButton("See All"))
+                            .Item(StatButton("See More"))
                             .setOnClickListener {
                                 getView()?.startHistoryActivity()
                             }

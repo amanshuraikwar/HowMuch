@@ -3,6 +3,7 @@ package io.github.amanshuraikwar.howmuch.ui.stats
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.view.View.GONE
@@ -62,6 +63,13 @@ class StatsFragment
             presenter.onRefreshClicked()
             return@setOnMenuItemClickListener true
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            itemsRv.setOnScrollChangeListener {
+                _, _, _, _, _ ->
+                toolbar.isSelected = itemsRv.canScrollVertically(-1)
+            }
+        }
     }
 
     override fun submitList(list: List<ListItem<*, *>>) {
@@ -70,12 +78,12 @@ class StatsFragment
 
     override fun setSyncError() {
         toolbar.menu.getItem(0).icon =
-                ContextCompat.getDrawable(activity, R.drawable.ic_sync_problem_red_24dp)
+                ContextCompat.getDrawable(activity, R.drawable.round_sync_problem_24)
     }
 
     override fun clearSyncError() {
         toolbar.menu.getItem(0).icon =
-                ContextCompat.getDrawable(activity, R.drawable.ic_autorenew_black_24dp)
+                ContextCompat.getDrawable(activity, R.drawable.round_sync_24)
     }
 
     override fun showToast(message: String) {

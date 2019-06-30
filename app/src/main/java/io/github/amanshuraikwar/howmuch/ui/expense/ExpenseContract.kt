@@ -152,7 +152,7 @@ interface ExpenseContract {
                     this.title,
                     categories.find { it.id == this.categoryId }
                             ?: throw InvalidCategoryException(
-                                    "Invalid color with id ${this.categoryId} " +
+                                    "Invalid color1 with id ${this.categoryId} " +
                                             "for transaction with id ${this.id}!"
                             ),
                     wallets.find { it.id == this.walletId }

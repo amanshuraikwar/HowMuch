@@ -8,12 +8,10 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/margin_small"
     android:layout_marginEnd="@dimen/margin_small"
-    android:layout_marginTop="@dimen/margin_normal"
-    android:clickable="true"
-    android:focusable="true"
+    android:layout_marginTop="@dimen/margin_small"
+    android:layout_marginBottom="@dimen/margin_small"
     app:cardElevation="0dp"
-    android:foreground="?attr/selectableItemBackground"
-    app:cardBackgroundColor="#FFF3E0"
+    app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +32,7 @@
             android:text="Monthly budget" />
 
         <TextView
-            android:id="@+id/spentTv"
+            android:id="@+id/actualTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,8 +50,8 @@
             android:id="@+id/limitTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/spentTv"
-            app:layout_constraintBottom_toBottomOf="@id/spentTv"
+            app:layout_constraintStart_toEndOf="@id/actualTv"
+            app:layout_constraintBottom_toBottomOf="@id/actualTv"
             app:layout_constraintEnd_toEndOf="parent"
             android:textAppearance="@style/TextAppearance.AmountMedium"
             android:textColor="@color/secondaryText"
@@ -65,18 +63,35 @@
             android:layout_height="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/spentTv"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/actualTv"
+            app:layout_constraintBottom_toTopOf="@id/seeMoreBtn"
             android:layout_marginStart="@dimen/margin_normal"
             android:layout_marginEnd="@dimen/margin_normal"
             android:layout_marginTop="@dimen/margin_normal"
-            android:layout_marginBottom="@dimen/margin_normal"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            app:vpb_lineWidth="2dp"
+            app:vpb_lineWidth="4dp"
             app:vpb_lineBackground="#FFCC80"
-            app:vpb_lineColor="#FFA726"
+                app:vpb_lineColor="#FFA726"
             app:vpb_orientation="horizontal" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/seeMoreBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.HowMuch.Button.TextButton.Icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pb"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/margin_very_small"
+            app:iconTint="@color/activeIcon"
+            android:textColor="@color/primaryText"
+            app:rippleColor="#FFA726"
+            android:text="see more"
+            app:iconGravity="end"
+            app:icon="@drawable/round_chevron_right_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

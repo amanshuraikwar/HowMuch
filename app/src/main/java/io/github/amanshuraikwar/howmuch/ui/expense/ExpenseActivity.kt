@@ -7,7 +7,6 @@ import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
@@ -96,17 +95,17 @@ class ExpenseActivity
         amountEt.setText(amount)
 
         if (transactionType == TransactionType.DEBIT) {
-            transactionTypeIb.imageTintList = ColorStateList.valueOf(
+            iconIv.imageTintList = ColorStateList.valueOf(
                     ContextCompat.getColor(this, R.color.red)
             )
             amountEt.setTextColor(ContextCompat.getColor(this, R.color.red))
-            transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp)
+            iconIv.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp)
         } else {
-            transactionTypeIb.imageTintList = ColorStateList.valueOf(
+            iconIv.imageTintList = ColorStateList.valueOf(
                     ContextCompat.getColor(this, R.color.green)
             )
             amountEt.setTextColor(ContextCompat.getColor(this, R.color.green))
-            transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp)
+            iconIv.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp)
         }
 
         titleEt.setText(title)
@@ -172,9 +171,9 @@ class ExpenseActivity
             )
         }
 
-        transactionTypeIb.isClickable = true
+        iconIv.isClickable = true
 
-        transactionTypeIb.setOnClickListener {
+        iconIv.setOnClickListener {
             presenter.onTransactionTypeBtnClicked()
         }
 
@@ -221,8 +220,8 @@ class ExpenseActivity
         saveBtn.visibility = GONE
         saveBtn.setOnClickListener(null)
 
-        transactionTypeIb.isClickable = false
-        transactionTypeIb.setOnClickListener(null)
+        iconIv.isClickable = false
+        iconIv.setOnClickListener(null)
 
         amountEt.inputType = InputType.TYPE_NULL
         amountEt.clearFocus()
@@ -321,19 +320,19 @@ class ExpenseActivity
     }
 
     override fun switchToCredit() {
-        transactionTypeIb.imageTintList = ColorStateList.valueOf(
+        iconIv.imageTintList = ColorStateList.valueOf(
                 ContextCompat.getColor(this, R.color.green)
         )
         amountEt.setTextColor(ContextCompat.getColor(this, R.color.green))
-        transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp)
+        iconIv.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp)
     }
 
     override fun switchToDebit() {
-        transactionTypeIb.imageTintList = ColorStateList.valueOf(
+        iconIv.imageTintList = ColorStateList.valueOf(
                 ContextCompat.getColor(this, R.color.red)
         )
         amountEt.setTextColor(ContextCompat.getColor(this, R.color.red))
-        transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp)
+        iconIv.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp)
     }
 
     override fun showCategories(categories: List<Category>) {

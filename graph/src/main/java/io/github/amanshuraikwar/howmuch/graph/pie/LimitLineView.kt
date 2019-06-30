@@ -37,18 +37,12 @@ class LimitLineView : View {
     private var intersectionPointRadius = 12f
     private var intersectionPointPaint = Paint(Paint.ANTI_ALIAS_FLAG)
 
-    var data: List<Item>? =
-            mutableListOf(
-                    Item(2f, 100f),
-                    Item(5f, 300f),
-                    Item(10f, 60f),
-                    Item(21f, 400f)
-            )
+    var data: List<Item>? = null
 
-    var xRawMax: Float = 31f
-    var yRawMax: Float = 31f
-    var xRawCur: Float = 21f
-    var yRawLimit: Float = 1000f
+    var xRawMax: Float = 0f
+    var yRawMax: Float = 0f
+    var xRawCur: Float = 0f
+    var yRawLimit: Float = 0f
 
     constructor(context: Context): super(context) {
         init(context, null, R.attr.LimitLineViewStyle, R.style.LimitLineView)
@@ -78,6 +72,10 @@ class LimitLineView : View {
     override fun onDraw(canvas: Canvas) {
 
         super.onDraw(canvas)
+
+        if (data == null) {
+            return
+        }
 
         graphRect.set(
                 contentRect.left,

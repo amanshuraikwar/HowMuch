@@ -87,7 +87,7 @@
             android:contentDescription="@string/delete" />
 
         <ImageButton
-            android:id="@+id/transactionTypeIb"
+            android:id="@+id/iconIv"
             android:layout_width="@dimen/input_field_icon_size"
             android:layout_height="@dimen/input_field_icon_size"
             app:layout_constraintStart_toStartOf="parent"

@@ -34,11 +34,11 @@ class TransactionViewHolder(itemView: View) : ViewHolder<TransactionListItem>(it
             itemView.amountTv.setTextColor(ContextCompat.getColor(host, R.color.red))
             itemView.amountTv.text = "-${transaction.amount}"
 
-            itemView.transactionTypeIb.imageTintList = ColorStateList.valueOf(
+            itemView.iconIv.imageTintList = ColorStateList.valueOf(
                     ContextCompat.getColor(host, R.color.red)
             )
 
-            itemView.transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp)
+            itemView.iconIv.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp)
 
         } else {
 
@@ -47,11 +47,11 @@ class TransactionViewHolder(itemView: View) : ViewHolder<TransactionListItem>(it
             itemView.amountTv.setTextColor(ContextCompat.getColor(host, R.color.green))
             itemView.amountTv.text = "+${transaction.amount}"
 
-            itemView.transactionTypeIb.imageTintList = ColorStateList.valueOf(
+            itemView.iconIv.imageTintList = ColorStateList.valueOf(
                     ContextCompat.getColor(host, R.color.green)
             )
 
-            itemView.transactionTypeIb.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp)
+            itemView.iconIv.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp)
         }
 
         if (listItem.showDate) {

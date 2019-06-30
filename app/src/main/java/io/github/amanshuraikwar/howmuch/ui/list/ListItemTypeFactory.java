@@ -11,17 +11,24 @@ import io.github.amanshuraikwar.howmuch.ui.list.items.Bars;
 import io.github.amanshuraikwar.howmuch.ui.list.items.BigCard;
 import io.github.amanshuraikwar.howmuch.ui.list.items.Button;
 import io.github.amanshuraikwar.howmuch.ui.list.items.CategoryItem;
+import io.github.amanshuraikwar.howmuch.ui.list.items.Divider;
+import io.github.amanshuraikwar.howmuch.ui.list.items.DividerFrontPadded;
+import io.github.amanshuraikwar.howmuch.ui.list.items.DividerPadded;
 import io.github.amanshuraikwar.howmuch.ui.list.items.EditCategory;
 import io.github.amanshuraikwar.howmuch.ui.list.items.EditWallet;
 import io.github.amanshuraikwar.howmuch.ui.list.items.Graph;
 import io.github.amanshuraikwar.howmuch.ui.list.items.HorizontalList;
+import io.github.amanshuraikwar.howmuch.ui.list.items.IconTitle;
+import io.github.amanshuraikwar.howmuch.ui.list.items.Limit;
 import io.github.amanshuraikwar.howmuch.ui.list.items.MonthlyBudgetGraph;
 import io.github.amanshuraikwar.howmuch.ui.list.items.MonthlyExpenseLimit;
+import io.github.amanshuraikwar.howmuch.ui.list.items.PaddedHeader;
 import io.github.amanshuraikwar.howmuch.ui.list.items.Pie;
 import io.github.amanshuraikwar.howmuch.ui.list.items.ProfileBtn;
 import io.github.amanshuraikwar.howmuch.ui.list.items.Setting;
 import io.github.amanshuraikwar.howmuch.ui.list.items.StatButton;
 import io.github.amanshuraikwar.howmuch.ui.list.items.StatCategory;
+import io.github.amanshuraikwar.howmuch.ui.list.items.StatCategoryPadded;
 import io.github.amanshuraikwar.howmuch.ui.list.items.StatHeader;
 import io.github.amanshuraikwar.howmuch.ui.list.items.StatTotal;
 import io.github.amanshuraikwar.howmuch.ui.list.items.StatTransaction;
@@ -148,6 +155,34 @@ public class ListItemTypeFactory extends BaseTypeFactory {
         return 25;
     }
 
+    public int type(Divider.Item item) {
+        return 26;
+    }
+
+    public int type(DividerPadded.Item item) {
+        return 27;
+    }
+
+    public int type(Limit.Item item) {
+        return 28;
+    }
+
+    public int type(IconTitle.Item item) {
+        return 29;
+    }
+
+    public int type(PaddedHeader.Item item) {
+        return 30;
+    }
+
+    public int type(StatCategoryPadded.Item item) {
+        return 31;
+    }
+
+    public int type(DividerFrontPadded.Item item) {
+        return 32;
+    }
+
     /**
      * To get layout file id (R.layout.*) for a corresponding list item/view type.
      *
@@ -206,6 +241,20 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 return CategoryItem.Holder.Companion.getLAYOUT();
             case 25:
                 return MonthlyBudgetGraph.Holder.Companion.getLAYOUT();
+            case 26:
+                return Divider.Holder.Companion.getLAYOUT();
+            case 27:
+                return DividerPadded.Holder.Companion.getLAYOUT();
+            case 28:
+                return Limit.Holder.Companion.getLAYOUT();
+            case 29:
+                return IconTitle.Holder.Companion.getLAYOUT();
+            case 30:
+                return PaddedHeader.Holder.Companion.getLAYOUT();
+            case 31:
+                return StatCategoryPadded.Holder.Companion.getLAYOUT();
+            case 32:
+                return DividerFrontPadded.Holder.Companion.getLAYOUT();
             default:
                 return super.getLayout(viewType);
         }
@@ -297,6 +346,27 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 break;
             case 25:
                 viewHolder = new MonthlyBudgetGraph.Holder(parent);
+                break;
+            case 26:
+                viewHolder = new Divider.Holder(parent);
+                break;
+            case 27:
+                viewHolder = new DividerPadded.Holder(parent);
+                break;
+            case 28:
+                viewHolder = new Limit.Holder(parent);
+                break;
+            case 29:
+                viewHolder = new IconTitle.Holder(parent);
+                break;
+            case 30:
+                viewHolder = new PaddedHeader.Holder(parent);
+                break;
+            case 31:
+                viewHolder = new StatCategoryPadded.Holder(parent);
+                break;
+            case 32:
+                viewHolder = new DividerFrontPadded.Holder(parent);
                 break;
             default:
                 viewHolder = super.createViewHolder(parent, type);

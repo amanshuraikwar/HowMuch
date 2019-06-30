@@ -15,7 +15,12 @@ import io.github.amanshuraikwar.howmuch.ui.history.activity.HistoryActivity
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
-import kotlinx.android.synthetic.main.activity_monthly_budget.*
+import kotlinx.android.synthetic.main.activity_monthly_budget.curMonthTv
+import kotlinx.android.synthetic.main.activity_monthly_budget.itemsRv
+import kotlinx.android.synthetic.main.activity_monthly_budget.nextMonthBtn
+import kotlinx.android.synthetic.main.activity_monthly_budget.pb
+import kotlinx.android.synthetic.main.activity_monthly_budget.previousMonthBtn
+import kotlinx.android.synthetic.main.activity_monthly_budget.toolbar
 import javax.inject.Inject
 
 
@@ -47,6 +52,11 @@ class MonthlyBudgetActivity
             presenter.onRefreshClicked()
             return@setOnMenuItemClickListener true
         }
+
+        toolbar.setNavigationIcon(R.drawable.round_arrow_back_24)
+        toolbar.setNavigationOnClickListener {
+            this.finish()
+        }
     }
 
     override fun submitList(list: List<ListItem<*, *>>) {
@@ -55,12 +65,12 @@ class MonthlyBudgetActivity
 
     override fun setSyncError() {
         toolbar.menu.getItem(0).icon =
-                ContextCompat.getDrawable(this, R.drawable.ic_sync_problem_red_24dp)
+                ContextCompat.getDrawable(this, R.drawable.round_sync_problem_24)
     }
 
     override fun clearSyncError() {
         toolbar.menu.getItem(0).icon =
-                ContextCompat.getDrawable(this, R.drawable.ic_autorenew_black_24dp)
+                ContextCompat.getDrawable(this, R.drawable.round_sync_24)
     }
 
     override fun showToast(message: String) {
@@ -94,7 +104,12 @@ class MonthlyBudgetActivity
         )
     }
 
-    override fun updateMonth(previousMonth: Boolean, monthName: String, nextMonth: Boolean) {
+    override fun updateMonth(previousMonth: Boolean,
+                             monthName: String,
+                             nextMonth: Boolean) {
+        previousMonthBtn.isEnabled = previousMonth
+        curMonthTv.text = monthName
+        nextMonthBtn.isEnabled = nextMonth
     }
 
     @Module

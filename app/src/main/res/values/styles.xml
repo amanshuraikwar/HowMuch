@@ -81,6 +81,12 @@
     </style>
 
     <style
+        name="Widget.HowMuch.Button.TextButton.Icon"
+        parent="@style/Widget.MaterialComponents.Button.TextButton.Icon">
+        <item name="android:textAppearance">@style/TextAppearance.Button</item>
+    </style>
+
+    <style
         name="Widget.HowMuch.Button"
         parent="@android:style/Widget.Material.Button">
         <item name="android:textAppearance">@style/TextAppearance.Button</item>

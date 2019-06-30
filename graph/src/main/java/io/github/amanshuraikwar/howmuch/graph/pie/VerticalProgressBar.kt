@@ -85,7 +85,7 @@ class VerticalProgressBar : View {
 
             val scaledProgress = min(progress, max) * contentRect.width() / max
 
-            sparkPath.lineTo(scaledProgress, contentRect.centerY())
+            sparkPath.lineTo(contentRect.left + scaledProgress, contentRect.centerY())
 
         }
 
