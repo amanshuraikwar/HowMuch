@@ -39,7 +39,9 @@ class StatCategoryPadded(val category: Category,
         override fun bind(listItem: Item, host: FragmentActivity) {
 
             itemView.titleTv.text = listItem.obj.category.name
-            itemView.amountTv.text = "${listItem.obj.amount}"
+
+            val percentage = ((listItem.obj.amount/listItem.obj.category.monthlyLimit) * 100).toInt()
+            itemView.percentTv.text = " \u2022 $percentage%"
 
             itemView.parentCl.setOnClickListener {
                 listItem.obj.onClick.invoke(listItem.obj.category)
@@ -62,8 +64,6 @@ class StatCategoryPadded(val category: Category,
                             ViewUtil.getCategoryColor2(listItem.obj.category.name)
                     )
             )
-
-            itemView.limitTv.text = " / ${listItem.obj.category.monthlyLimit}"
 
             itemView.pb.lineColor = ContextCompat.getColor(
                     host,

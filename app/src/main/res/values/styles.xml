@@ -400,6 +400,15 @@
     </style>
 
     <style
+        name="TextAppearance.Percentage"
+        parent="@style/TextAppearance.Subhead">
+
+        <item name="android:fontFamily">@font/rubik</item>
+        <item name="android:textColor">@color/secondaryText</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style
         name="TextAppearance.AmountSmall"
         parent="@style/TextAppearance.Title">
 
@@ -432,6 +441,18 @@
 
         <item name="android:textColor">@color/primaryText</item>
         <item name="android:fontFamily">@font/cabin</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+
+    <style
+        name="TextAppearance.CategoryName"
+        parent="@style/TextAppearance.Subhead">
+
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:fontFamily">@font/cabin</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.05</item>
     </style>
 
     <style

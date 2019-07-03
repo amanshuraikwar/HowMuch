@@ -119,10 +119,11 @@ interface MonthlyBudgetContract {
         private fun List<Transaction>.getCategoryItems(categories: List<Category>)
                 : List<ListItem<*, *>> {
 
+            val debitCategories = categories.filter { it.type == TransactionType.DEBIT }
+
             val categoryAmountMap = {
                 val categoryIdTxnListMap = this.groupBy { it.categoryId }
-                categories
-                        .filter { it.type == TransactionType.DEBIT }
+                debitCategories
                         .groupBy { it }
                         .mapValues {
                             entry ->
@@ -149,7 +150,7 @@ interface MonthlyBudgetContract {
                     .forEachIndexed {
                         index, item ->
                         list.add(item)
-                        if (index != categories.size - 1) {
+                        if (index != debitCategories.size - 1) {
                             list.add(DividerFrontPadded.Item())
                         }
                     }
@@ -209,8 +210,8 @@ interface MonthlyBudgetContract {
                                 }
                                 .map {
                                     it.add(
-                                            PaddedHeader.Item(
-                                                    PaddedHeader("Categories")
+                                            StatHeader.Item(
+                                                    StatHeader("Categories")
                                             )
                                     )
                                     it
@@ -267,15 +268,31 @@ interface MonthlyBudgetContract {
         }
 
         override fun onRetryClicked() {
+            fetchItems()
         }
 
         override fun onRefreshClicked() {
+            fetchItems()
         }
 
         override fun onPreviousMonthClicked() {
+            if (displayedMonth == 1) {
+                displayedMonth = 12
+                displayedYear--
+            } else {
+                displayedMonth--
+            }
+            fetchItems()
         }
 
         override fun onNextMonthClicked() {
+            if (displayedMonth == 12) {
+                displayedMonth = 1
+                displayedYear++
+            } else {
+                displayedMonth++
+            }
+            fetchItems()
         }
 
     }

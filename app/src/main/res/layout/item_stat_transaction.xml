@@ -6,8 +6,6 @@
     android:id="@+id/parentCl"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="@dimen/padding_normal"
-    android:paddingEnd="24dp"
     android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true">
@@ -16,10 +14,10 @@
         android:id="@+id/iconBgCv"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        app:layout_constraintStart_toStartOf="@id/iconIv"
-        app:layout_constraintEnd_toEndOf="@id/iconIv"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="@dimen/margin_normal"
         android:layout_marginTop="@dimen/margin_normal"
         android:layout_marginBottom="@dimen/margin_normal"
         app:cardElevation="0dp"
@@ -29,24 +27,24 @@
         android:id="@+id/iconIv"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginStart="@dimen/margin_small" />
+        app:layout_constraintStart_toStartOf="@id/iconBgCv"
+        app:layout_constraintEnd_toEndOf="@id/iconBgCv"
+        app:layout_constraintTop_toTopOf="@id/iconBgCv"
+        app:layout_constraintBottom_toBottomOf="@id/iconBgCv"/>
 
     <TextView
         android:id="@+id/titleTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:ellipsize="end"
-        android:lines="1"
-        android:textAppearance="@style/TextAppearance.TransactionTitle"
-        app:layout_constraintStart_toEndOf="@id/iconIv"
         app:layout_constraintEnd_toStartOf="@id/amountTv"
+        app:layout_constraintStart_toEndOf="@id/iconBgCv"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
+        android:layout_marginStart="@dimen/margin_normal"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textAppearance="@style/TextAppearance.TransactionTitle"
         tools:text="Flat Rent" />
 
     <TextView
@@ -58,6 +56,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginStart="@dimen/margin_normal"
+        android:layout_marginEnd="@dimen/margin_normal"
         android:layout_marginTop="@dimen/margin_normal"
         android:layout_marginBottom="@dimen/margin_normal"
         android:textAppearance="@style/TextAppearance.AmountSmall"

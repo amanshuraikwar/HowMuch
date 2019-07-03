@@ -350,7 +350,7 @@ interface StatsContract {
                         )
 
                         if (index != this@getListItems.size - 1) {
-                            list.add(DividerPadded.Item())
+                            list.add(DividerFrontPadded.Item())
                         }
                     }
 

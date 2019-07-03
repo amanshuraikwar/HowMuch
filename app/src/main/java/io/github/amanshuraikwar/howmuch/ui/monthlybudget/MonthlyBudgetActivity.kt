@@ -57,6 +57,14 @@ class MonthlyBudgetActivity
         toolbar.setNavigationOnClickListener {
             this.finish()
         }
+
+        previousMonthBtn.setOnClickListener {
+            presenter.onPreviousMonthClicked()
+        }
+
+        nextMonthBtn.setOnClickListener {
+            presenter.onNextMonthClicked()
+        }
     }
 
     override fun submitList(list: List<ListItem<*, *>>) {
