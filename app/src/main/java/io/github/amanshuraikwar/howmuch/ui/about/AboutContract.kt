@@ -8,11 +8,8 @@ import io.github.amanshuraikwar.howmuch.base.bus.AppBus
 import io.github.amanshuraikwar.howmuch.base.data.DataManager
 import io.github.amanshuraikwar.howmuch.base.ui.base.*
 import io.github.amanshuraikwar.howmuch.base.util.Util
-import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.ui.HowMuchBasePresenterImpl
-import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderListItem
 import io.github.amanshuraikwar.howmuch.ui.list.items.BigCard
-import io.github.amanshuraikwar.howmuch.ui.list.items.EditCategory
 import io.github.amanshuraikwar.howmuch.ui.list.items.ProfileBtn
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.reactivex.Observable
@@ -24,8 +21,6 @@ interface AboutContract {
 
     interface View : BaseView, UiMessageView, LoadingView {
         fun submitList(list: List<ListItem<*, *>>)
-        fun setSyncError()
-        fun clearSyncError()
         fun goToLink(link: String)
     }
 

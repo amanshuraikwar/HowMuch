@@ -5,8 +5,10 @@ import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
@@ -251,4 +253,10 @@ public class Util {
         SimpleDateFormat simpleDateformat = new SimpleDateFormat("E", Locale.UK);
         return simpleDateformat.format(now);
     }
+
+    public static int daysInMonth(int month, int year) {
+        Calendar myCal = new GregorianCalendar(year, month, 1);
+        return myCal.getActualMaximum(Calendar.DAY_OF_MONTH);
+    }
+
 }

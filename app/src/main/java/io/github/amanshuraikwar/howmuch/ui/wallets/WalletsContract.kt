@@ -8,9 +8,8 @@ import io.github.amanshuraikwar.howmuch.base.ui.base.*
 import io.github.amanshuraikwar.howmuch.base.util.Util
 import io.github.amanshuraikwar.howmuch.protocol.TransactionType
 import io.github.amanshuraikwar.howmuch.protocol.Wallet
-import io.github.amanshuraikwar.howmuch.protocol.money
 import io.github.amanshuraikwar.howmuch.ui.HowMuchBasePresenterImpl
-import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderListItem
+import io.github.amanshuraikwar.howmuch.ui.list.date.DateHeaderListItem
 import io.github.amanshuraikwar.howmuch.ui.list.items.StatWallet
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.reactivex.Observable
@@ -22,8 +21,6 @@ interface WalletsContract {
 
     interface View : BaseView, UiMessageView, LoadingView {
         fun submitList(list: List<ListItem<*, *>>)
-        fun setSyncError()
-        fun clearSyncError()
         fun startHistoryActivity(filter: String? = null)
     }
 
@@ -70,7 +67,7 @@ interface WalletsContract {
                                 .map {
                                     prevList ->
                                     prevList.add(
-                                            HeaderListItem("Wallets")
+                                            DateHeaderListItem("Wallets")
                                     )
                                     prevList
                                 }

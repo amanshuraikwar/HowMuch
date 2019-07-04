@@ -16,8 +16,8 @@ class BarView : View {
     private val sparkPath = Path()
     private var lineWidth = 0f
 
-    private var lineColor = Color.BLACK
-    private var lineBackgroundColor = Color.LTGRAY
+    var lineColor = Color.BLACK
+    var lineBackgroundColor = Color.LTGRAY
 
     private var sparkLinePaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var lineBgPaint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -56,6 +56,9 @@ class BarView : View {
     override fun onDraw(canvas: Canvas) {
 
         super.onDraw(canvas)
+
+        sparkLinePaint.color = lineColor
+        lineBgPaint.color = lineBackgroundColor
 
         data?.let {
 

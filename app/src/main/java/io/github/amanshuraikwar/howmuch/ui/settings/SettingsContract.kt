@@ -18,8 +18,6 @@ interface SettingsContract {
 
     interface View : BaseView, UiMessageView, LoadingView {
         fun submitList(list: List<ListItem<*, *>>)
-        fun setSyncError()
-        fun clearSyncError()
         fun initiateSendFeedback()
         fun startDecimalDialog(title: String,
                                initVal: Double,

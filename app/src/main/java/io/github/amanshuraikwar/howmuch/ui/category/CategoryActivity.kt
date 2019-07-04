@@ -1,6 +1,6 @@
-package io.github.amanshuraikwar.howmuch.ui.monthlybudget
+package io.github.amanshuraikwar.howmuch.ui.category
 
-import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -12,8 +12,6 @@ import dagger.Module
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.base.ui.base.BaseActivity
 import io.github.amanshuraikwar.howmuch.protocol.Category
-import io.github.amanshuraikwar.howmuch.ui.category.CategoryActivity
-import io.github.amanshuraikwar.howmuch.ui.history.activity.HistoryActivity
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
@@ -26,10 +24,10 @@ import kotlinx.android.synthetic.main.activity_monthly_budget.toolbar
 import javax.inject.Inject
 
 
-class MonthlyBudgetActivity
-@Inject constructor() : BaseActivity<MonthlyBudgetContract.View,
-        MonthlyBudgetContract.Presenter>(),
-        MonthlyBudgetContract.View {
+class CategoryActivity
+@Inject constructor() : BaseActivity<CategoryContract.View,
+        CategoryContract.Presenter>(),
+        CategoryContract.View {
 
     private var adapter: MultiItemListAdapter<*>? = null
 
@@ -103,15 +101,8 @@ class MonthlyBudgetActivity
         showToast(message)
     }
 
-    override fun startHistoryActivity(category: Category) {
-        startActivity(
-                {
-                    val intent = Intent(this, CategoryActivity::class.java)
-                    intent.putExtra("category", category)
-                    intent
-                }.invoke()
-
-        )
+    override fun getCategory(): Category? {
+        return intent?.extras?.getParcelable("category")
     }
 
     override fun updateMonth(previousMonth: Boolean,
@@ -122,11 +113,17 @@ class MonthlyBudgetActivity
         nextMonthBtn.isEnabled = nextMonth
     }
 
+    override fun initUi(title: String, color1: Int, color2: Int) {
+        toolbar.title = title
+        pb.indeterminateTintList =
+                ColorStateList.valueOf(ContextCompat.getColor(this, color1))
+    }
+
     @Module
     abstract class DiModule {
 
         @Binds
-        abstract fun a(a: MonthlyBudgetContract.PresenterImpl)
-                : MonthlyBudgetContract.Presenter
+        abstract fun a(a: CategoryContract.PresenterImpl)
+                : CategoryContract.Presenter
     }
 }

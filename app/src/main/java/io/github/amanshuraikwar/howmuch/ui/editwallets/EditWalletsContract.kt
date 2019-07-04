@@ -18,8 +18,6 @@ interface EditWalletsContract {
 
     interface View : BaseView, UiMessageView, LoadingView {
         fun submitList(list: List<ListItem<*, *>>)
-        fun setSyncError()
-        fun clearSyncError()
     }
 
     interface Presenter : BasePresenter<View> {

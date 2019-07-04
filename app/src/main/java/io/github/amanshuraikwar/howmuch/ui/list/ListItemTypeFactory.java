@@ -3,8 +3,8 @@ package io.github.amanshuraikwar.howmuch.ui.list;
 import androidx.annotation.NonNull;
 import android.view.View;
 
-import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderListItem;
-import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderViewHolder;
+import io.github.amanshuraikwar.howmuch.ui.list.date.DateHeaderListItem;
+import io.github.amanshuraikwar.howmuch.ui.list.date.DateHeaderViewHolder;
 import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyListItem;
 import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyViewHolder;
 import io.github.amanshuraikwar.howmuch.ui.list.items.Bars;
@@ -20,6 +20,7 @@ import io.github.amanshuraikwar.howmuch.ui.list.items.Graph;
 import io.github.amanshuraikwar.howmuch.ui.list.items.HorizontalList;
 import io.github.amanshuraikwar.howmuch.ui.list.items.IconTitle;
 import io.github.amanshuraikwar.howmuch.ui.list.items.Limit;
+import io.github.amanshuraikwar.howmuch.ui.list.items.MonthBarGraph;
 import io.github.amanshuraikwar.howmuch.ui.list.items.MonthlyBudgetGraph;
 import io.github.amanshuraikwar.howmuch.ui.list.items.MonthlyExpenseLimit;
 import io.github.amanshuraikwar.howmuch.ui.list.items.PaddedHeader;
@@ -63,7 +64,7 @@ public class ListItemTypeFactory extends BaseTypeFactory {
         return 2;
     }
 
-    public int type(HeaderListItem item) {
+    public int type(DateHeaderListItem item) {
         return 3;
     }
 
@@ -183,6 +184,10 @@ public class ListItemTypeFactory extends BaseTypeFactory {
         return 32;
     }
 
+    public int type(MonthBarGraph.Item item) {
+        return 33;
+    }
+
     /**
      * To get layout file id (R.layout.*) for a corresponding list item/view type.
      *
@@ -196,7 +201,7 @@ public class ListItemTypeFactory extends BaseTypeFactory {
             case 2:
                 return StatCategory.Holder.Companion.getLAYOUT();
             case 3:
-                return HeaderViewHolder.Companion.getLAYOUT();
+                return DateHeaderViewHolder.Companion.getLAYOUT();
             case 4:
                 return EmptyViewHolder.Companion.getLAYOUT();
             case 5:
@@ -255,6 +260,8 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 return StatCategoryPadded.Holder.Companion.getLAYOUT();
             case 32:
                 return DividerFrontPadded.Holder.Companion.getLAYOUT();
+            case 33:
+                return MonthBarGraph.Holder.Companion.getLAYOUT();
             default:
                 return super.getLayout(viewType);
         }
@@ -279,7 +286,7 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 viewHolder = new StatCategory.Holder(parent);
                 break;
             case 3:
-                viewHolder = new HeaderViewHolder(parent);
+                viewHolder = new DateHeaderViewHolder(parent);
                 break;
             case 4:
                 viewHolder = new EmptyViewHolder(parent);
@@ -367,6 +374,9 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 break;
             case 32:
                 viewHolder = new DividerFrontPadded.Holder(parent);
+                break;
+            case 33:
+                viewHolder = new MonthBarGraph.Holder(parent);
                 break;
             default:
                 viewHolder = super.createViewHolder(parent, type);

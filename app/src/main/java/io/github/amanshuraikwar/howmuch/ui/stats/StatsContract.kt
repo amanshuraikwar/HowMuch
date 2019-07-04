@@ -22,8 +22,6 @@ interface StatsContract {
 
     interface View : BaseView, UiMessageView, LoadingView {
         fun submitList(list: List<ListItem<*, *>>)
-        fun setSyncError()
-        fun clearSyncError()
         fun startTransactionActivity(transaction: Transaction)
         fun startHistoryActivity(filter: String? = null)
         fun startSettingsActivity()

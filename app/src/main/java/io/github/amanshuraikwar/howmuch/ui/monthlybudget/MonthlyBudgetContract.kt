@@ -2,7 +2,6 @@ package io.github.amanshuraikwar.howmuch.ui.monthlybudget
 
 import android.util.Log
 import io.github.amanshuraikwar.howmuch.R
-import io.github.amanshuraikwar.howmuch.ViewUtil
 import io.github.amanshuraikwar.howmuch.base.bus.AppBus
 import io.github.amanshuraikwar.howmuch.base.data.DataManager
 import io.github.amanshuraikwar.howmuch.base.ui.base.BasePresenter
@@ -11,7 +10,6 @@ import io.github.amanshuraikwar.howmuch.base.ui.base.LoadingView
 import io.github.amanshuraikwar.howmuch.base.ui.base.UiMessageView
 import io.github.amanshuraikwar.howmuch.base.util.Util
 import io.github.amanshuraikwar.howmuch.graph.pie.LimitLineView
-import io.github.amanshuraikwar.howmuch.graph.pie.PieView
 import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.protocol.TransactionType
@@ -27,9 +25,7 @@ interface MonthlyBudgetContract {
 
     interface View : BaseView, UiMessageView, LoadingView {
         fun submitList(list: List<ListItem<*, *>>)
-        fun setSyncError()
-        fun clearSyncError()
-        fun startHistoryActivity(filter: String? = null)
+        fun startHistoryActivity(category: Category)
         fun updateMonth(previousMonth: Boolean, monthName: String, nextMonth: Boolean)
     }
 
@@ -142,7 +138,7 @@ interface MonthlyBudgetContract {
                                         entry.key,
                                         entry.value,
                                         {
-                                            getView()?.startHistoryActivity("category_id=${it.id}")
+                                            getView()?.startHistoryActivity(it)
                                         }
                                 )
                         )

@@ -24,8 +24,6 @@ interface CategoriesContract {
 
     interface View : BaseView, UiMessageView, LoadingView {
         fun submitList(list: List<ListItem<*, *>>)
-        fun setSyncError()
-        fun clearSyncError()
         fun startHistoryActivity(filter: String? = null)
         fun updateMonth(previousMonth: Boolean, monthName: String, nextMonth: Boolean)
         @ColorInt fun getCategoryColor(category: String): Int

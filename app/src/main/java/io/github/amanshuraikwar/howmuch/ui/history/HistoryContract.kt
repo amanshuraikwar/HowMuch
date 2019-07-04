@@ -5,7 +5,7 @@ import io.github.amanshuraikwar.howmuch.base.bus.AppBus
 import io.github.amanshuraikwar.howmuch.base.data.DataManager
 import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.base.ui.base.*
-import io.github.amanshuraikwar.howmuch.ui.list.date.HeaderListItem
+import io.github.amanshuraikwar.howmuch.ui.list.date.DateHeaderListItem
 import io.github.amanshuraikwar.howmuch.ui.list.empty.EmptyListItem
 import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionListItem
 import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionOnClickListener
@@ -24,8 +24,6 @@ interface HistoryContract {
     interface View : BaseView, UiMessageView, LoadingView {
         fun submitList(list: List<ListItem<*, *>>)
         fun startTransactionActivity(transaction: Transaction)
-        fun setSyncError()
-        fun clearSyncError()
         fun getFilters(): String?
     }
 
@@ -393,7 +391,7 @@ interface HistoryContract {
             while (i < inputSorted.size) {
                 if (date != inputSorted[i].date) {
                     date = inputSorted[i].date
-                    list.add(HeaderListItem(Util.beautifyDate(date).toUpperCase()))
+                    list.add(DateHeaderListItem(Util.beautifyDate(date).toUpperCase()))
                 }
                 list.add(TransactionListItem(inputSorted[i]).setOnClickListener(transactionOnClickListener))
                 i += 1

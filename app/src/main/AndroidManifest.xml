@@ -56,6 +56,7 @@
             android:theme="@style/HowMuch.Search"
             android:configChanges="orientation|screenSize|screenLayout"/>
         <activity android:name=".ui.monthlybudget.MonthlyBudgetActivity" />
+        <activity android:name=".ui.category.CategoryActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
