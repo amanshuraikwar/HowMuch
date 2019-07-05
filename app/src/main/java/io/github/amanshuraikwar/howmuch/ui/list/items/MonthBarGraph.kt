@@ -5,6 +5,7 @@ import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import io.github.amanshuraikwar.howmuch.R
+import io.github.amanshuraikwar.howmuch.base.util.Util
 import io.github.amanshuraikwar.howmuch.graph.pie.BarView
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
@@ -39,6 +40,10 @@ class MonthBarGraph(val items: List<BarView.BarItem>,
             itemView.barView.data = listItem.bars.items
             itemView.barView.lineColor = ContextCompat.getColor(host, listItem.bars.color1)
             itemView.barView.lineBackgroundColor = ContextCompat.getColor(host, listItem.bars.color2)
+            itemView.barView.labelTextColor = ContextCompat.getColor(host, R.color.white)
+            itemView.barView.labelMarker = true
+            itemView.barView.markerX = "TODAY"
+            itemView.barView.labelMarkerColor = ContextCompat.getColor(host, listItem.bars.color1)
             itemView.barView.invalidate()
         }
     }

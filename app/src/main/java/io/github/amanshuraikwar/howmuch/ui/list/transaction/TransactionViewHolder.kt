@@ -21,43 +21,19 @@ class TransactionViewHolder(itemView: View) : ViewHolder<TransactionListItem>(it
     }
 
     override fun bind(listItem: TransactionListItem, host: FragmentActivity) {
-
         val transaction = listItem.transaction
-
         itemView.titleTv.text = transaction.title
         itemView.amountTv.text = transaction.amount.toString()
+        itemView.timeTv.text = Util.beautifyTime(transaction.time)
 
-        if (transaction.type == TransactionType.DEBIT) {
+        itemView.circleCv.setCardBackgroundColor(ContextCompat.getColor(host, listItem.color1))
+        itemView.topLine.setBackgroundColor(ContextCompat.getColor(host, listItem.color2))
+        itemView.bottomLine.setBackgroundColor(ContextCompat.getColor(host, listItem.color2))
 
-            itemView.currencyTv.text = ""
-            itemView.currencyTv.setTextColor(ContextCompat.getColor(host, R.color.red))
-            itemView.amountTv.setTextColor(ContextCompat.getColor(host, R.color.red))
-            itemView.amountTv.text = "-${transaction.amount}"
-
-            itemView.iconIv.imageTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(host, R.color.red)
-            )
-
-            itemView.iconIv.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp)
-
+        if (listItem.last) {
+            itemView.bottomLine.visibility = View.GONE
         } else {
-
-            itemView.currencyTv.text = ""
-            itemView.currencyTv.setTextColor(ContextCompat.getColor(host, R.color.green))
-            itemView.amountTv.setTextColor(ContextCompat.getColor(host, R.color.green))
-            itemView.amountTv.text = "+${transaction.amount}"
-
-            itemView.iconIv.imageTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(host, R.color.green)
-            )
-
-            itemView.iconIv.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp)
-        }
-
-        if (listItem.showDate) {
-            itemView.timeTv.text = Util.beautifyDate(transaction.date) + "  " + Util.beautifyTime(transaction.time)
-        } else {
-            itemView.timeTv.text = Util.beautifyTime(transaction.time)
+            itemView.bottomLine.visibility = View.VISIBLE
         }
 
         itemView.parentCl.setOnClickListener {

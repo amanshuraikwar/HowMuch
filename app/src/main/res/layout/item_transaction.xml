@@ -5,34 +5,58 @@
     android:id="@+id/parentCl"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:foreground="?attr/selectableItemBackground"
-    android:background="@color/white"
+    android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true">
 
-    <ImageView
-        android:id="@+id/iconIv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <View
+        android:id="@+id/topLine"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/circleCv"
+        android:layout_marginStart="35dp"
+        android:paddingBottom="4dp"
+        android:background="@color/gray3" />
+
+    <View
+        android:id="@+id/bottomLine"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@id/circleCv"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginStart="@dimen/margin_normal"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="35dp"
+        android:paddingTop="4dp"
+        android:background="@color/gray3" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/circleCv"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/titleTv"
+        app:layout_constraintBottom_toBottomOf="@id/titleTv"
         android:layout_marginTop="@dimen/margin_normal"
         android:layout_marginBottom="@dimen/margin_normal"
-        android:src="@drawable/ic_arrow_drop_down_white_24dp"
-        android:tint="@color/red" />
+        android:layout_gravity="center_vertical"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="#555"/>
 
     <TextView
         android:id="@+id/titleTv"
         android:layout_width="0dp"
-        android:layout_height="20dp"
-        app:layout_constraintStart_toEndOf="@id/iconIv"
-        app:layout_constraintEnd_toStartOf="@id/barrier1"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/amountTv"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/timeTv"
         app:layout_constraintVertical_chainStyle="packed"
-        android:layout_marginStart="@dimen/margin_normal"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="@dimen/margin_normal"
         android:ellipsize="end"
         android:lines="1"
         android:textAppearance="@style/TextAppearance.TransactionTitle"
@@ -42,40 +66,20 @@
         android:id="@+id/timeTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/iconIv"
-        app:layout_constraintEnd_toStartOf="@id/barrier1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/amountTv"
         app:layout_constraintTop_toBottomOf="@id/titleTv"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginStart="@dimen/margin_normal"
+        android:layout_marginStart="72dp"
         android:layout_marginTop="@dimen/margin_very_small"
+        android:layout_marginBottom="@dimen/margin_normal"
         android:textAppearance="@style/TextAppearance.TransactionTimeSmall"
         tools:text="12:34" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="end"
-        app:constraint_referenced_ids="titleTv,timeTv"/>
-
-    <TextView
-        android:id="@+id/currencyTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/barrier1"
-        app:layout_constraintEnd_toStartOf="@id/amountTv"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginStart="@dimen/margin_normal"
-        android:layout_marginTop="@dimen/margin_normal"
-        android:layout_marginBottom="@dimen/margin_normal"
-        android:textAppearance="@style/TextAppearance.CurrencySmall" />
 
     <TextView
         android:id="@+id/amountTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/currencyTv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -86,14 +90,4 @@
         android:textAppearance="@style/TextAppearance.AmountSmall"
         android:textColor="@color/primaryText"
         tools:text="544.50" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginStart="@dimen/margin_normal"
-        android:layout_marginEnd="@dimen/margin_normal"
-        android:background="@color/gray2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

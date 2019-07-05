@@ -467,6 +467,17 @@
     </style>
 
     <style
+        name="TextAppearance.DateTitleCategory"
+        parent="@style/TextAppearance.Caption">
+
+        <item name="android:textColor">@color/secondaryText</item>
+        <item name="android:fontFamily">@font/cabin</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+
+    <style
         name="TextAppearance.TotalStatAmount"
         parent="@style/TextAppearance.Title">
 

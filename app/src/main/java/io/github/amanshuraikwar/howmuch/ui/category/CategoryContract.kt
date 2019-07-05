@@ -8,10 +8,7 @@ import io.github.amanshuraikwar.howmuch.graph.pie.BarView
 import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.ui.list.date.DateHeaderListItem
-import io.github.amanshuraikwar.howmuch.ui.list.items.Divider
-import io.github.amanshuraikwar.howmuch.ui.list.items.IconTitle
-import io.github.amanshuraikwar.howmuch.ui.list.items.Limit
-import io.github.amanshuraikwar.howmuch.ui.list.items.MonthBarGraph
+import io.github.amanshuraikwar.howmuch.ui.list.items.*
 import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionListItem
 import io.github.amanshuraikwar.howmuch.ui.month.MonthPresenter
 import io.github.amanshuraikwar.howmuch.ui.month.MonthPresenterImpl
@@ -135,6 +132,8 @@ interface CategoryContract {
 
             val list = mutableListOf<ListItem<*, *>>()
 
+            list.add(StatHeader.Item(StatHeader("TRANSACTIONS")))
+
             val inputSorted =
                     this
                             .sortedBy { Util.toTimeMillisec(it.date, it.time) }
@@ -143,6 +142,9 @@ interface CategoryContract {
             var date = ""
             var i = 0
 
+            val color1 = ViewUtil.getCategoryColor(category.name)
+            val color2 = ViewUtil.getCategoryColor3(category.name)
+
             while (i < inputSorted.size) {
 
                 if (date != inputSorted[i].date) {
@@ -150,6 +152,8 @@ interface CategoryContract {
                     list.add(
                             DateHeaderListItem(
                                     Util.beautifyDate(inputSorted[i].date).toUpperCase(),
+                                    color1,
+                                    color2,
                                     date == ""
                             )
                     )
@@ -157,7 +161,15 @@ interface CategoryContract {
                     date = inputSorted[i].date
                 }
 
-                list.add(TransactionListItem(inputSorted[i]))
+                list.add(
+                        TransactionListItem(
+                                transaction = inputSorted[i],
+                                color1 = color1,
+                                color2 = color2,
+                                last = i == inputSorted.size - 1
+                        )
+                )
+
                 i += 1
 
             }

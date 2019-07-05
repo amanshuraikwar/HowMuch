@@ -18,15 +18,21 @@ class BarView : View {
 
     var lineColor = Color.BLACK
     var lineBackgroundColor = Color.LTGRAY
+    var labelTextColor = Color.BLACK
 
     private var sparkLinePaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var lineBgPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var labelPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private var labelMarkerPaint = Paint(Paint.ANTI_ALIAS_FLAG)
 
     private var labelTextSize = 40f
     private var labelPadding = 20f
 
     var data: List<BarItem>? = null
+
+    var labelMarker = false
+    var labelMarkerColor = Color.LTGRAY
+    var markerX = ""
 
     constructor(context: Context): super(context) {
         init(context, null, R.attr.BarViewStyle, R.style.BarView)
@@ -59,6 +65,8 @@ class BarView : View {
 
         sparkLinePaint.color = lineColor
         lineBgPaint.color = lineBackgroundColor
+        labelPaint.color = labelTextColor
+        labelMarkerPaint.color = labelMarkerColor
 
         data?.let {
 
@@ -89,6 +97,30 @@ class BarView : View {
                 sparkPath.lineTo(x, contentRect.bottom - labelTextSize - labelPadding - y)
                 canvas.drawPath(sparkPath, sparkLinePaint)
 
+                // todo make this device independent
+                if (labelMarker && markerX != "" && it.label == markerX) {
+
+                    // draw label marker
+                    canvas.drawRoundRect(
+                            x - labelPaint.measureText(it.label)/ 2 - 10,
+                            contentRect.bottom - labelPaint.textSize - 10,
+                            x + labelPaint.measureText(it.label) / 2 + 10,
+                            contentRect.bottom + 16,
+                            8f,
+                            8f,
+                            labelMarkerPaint
+                    )
+
+                    sparkPath.reset()
+                    sparkPath.moveTo(x - 8, contentRect.bottom - labelPaint.textSize - 8)
+                    sparkPath.lineTo(x, contentRect.bottom - labelPaint.textSize - 18)
+                    sparkPath.lineTo(x + 8, contentRect.bottom - labelPaint.textSize - 8)
+                    sparkPath.close()
+                    canvas.drawPath(sparkPath, labelMarkerPaint)
+
+                }
+
+
                 canvas.drawText(it.label, x, contentRect.bottom, labelPaint)
 
                 i++
@@ -115,7 +147,7 @@ class BarView : View {
         labelTextSize = a.getDimension(R.styleable.BarView_bv_labelTextSize, labelTextSize)
         labelPadding = a.getDimension(R.styleable.BarView_bv_labelPadding, labelPadding)
         val fontFamilyResId = a.getResourceId(R.styleable.BarView_bv_labelFontFamily, 0)
-        val labelTextColor = a.getColor(R.styleable.BarView_bv_labelTextColor, Color.BLACK)
+        labelTextColor = a.getColor(R.styleable.BarView_bv_labelTextColor, Color.BLACK)
         val labelTextStyle = a.getInt(R.styleable.BarView_bv_labelTextStyle, -1)
         a.recycle()
 
@@ -146,6 +178,9 @@ class BarView : View {
         }
 
         labelPaint.typeface = normalTypeface
+
+        labelMarkerPaint.style = Paint.Style.FILL
+        labelMarkerPaint.color = labelMarkerColor
     }
 
     /**

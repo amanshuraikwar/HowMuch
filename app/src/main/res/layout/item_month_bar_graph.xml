@@ -26,7 +26,7 @@
         app:bv_lineBackground="#E8F5E9"
         app:bv_lineColor="@color/green"
         app:bv_labelTextSize="12sp"
-        app:bv_labelPadding="8dp"
+        app:bv_labelPadding="12dp"
         app:bv_labelFontFamily="@font/cabin"
         app:bv_labelTextColor="@color/secondaryText"
         app:bv_labelTextStyle="BOLD" />
