@@ -47,10 +47,21 @@ class CategoryActivity
 
         itemsRv.adapter = adapter
 
-        toolbar.inflateMenu(R.menu.refresh_navigation)
+        toolbar.inflateMenu(R.menu.category_navigation)
         toolbar.setOnMenuItemClickListener {
-            presenter.onRefreshClicked()
-            return@setOnMenuItemClickListener true
+
+            if (it.itemId == R.id.refresh) {
+                presenter.onRefreshClicked()
+                return@setOnMenuItemClickListener true
+            }
+
+            if (it.itemId == R.id.edit) {
+                // todo implement
+                showToast("Edit not supported yet.")
+                return@setOnMenuItemClickListener true
+            }
+
+            return@setOnMenuItemClickListener false
         }
 
         toolbar.setNavigationIcon(R.drawable.round_arrow_back_24)
@@ -72,12 +83,12 @@ class CategoryActivity
     }
 
     override fun setSyncError() {
-        toolbar.menu.getItem(0).icon =
+        toolbar.menu.getItem(1).icon =
                 ContextCompat.getDrawable(this, R.drawable.round_sync_problem_24)
     }
 
     override fun clearSyncError() {
-        toolbar.menu.getItem(0).icon =
+        toolbar.menu.getItem(1).icon =
                 ContextCompat.getDrawable(this, R.drawable.round_sync_24)
     }
 

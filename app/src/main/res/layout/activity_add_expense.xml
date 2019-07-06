@@ -5,35 +5,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/contentFl"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
 
-    <FrameLayout
-        android:id="@+id/toolbarFl"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:stateListAnimator="@animator/toolbar_elevation"
         android:background="@color/white"
-        android:stateListAnimator="@animator/toolbar_elevation" >
+        app:titleTextAppearance="@style/TextAppearance.ToolbarTitle.SmallCaps"
+        app:titleTextColor="@color/primaryText"
+        app:title="Add transaction" />
 
-        <ImageButton
-            android:id="@+id/backIb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/padding_normal"
-            android:src="@drawable/ic_arrow_back_white_24dp"
-            style="@style/Widget.HowMuch.ImageButton.Borderless"
-            android:contentDescription="@string/done" />
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="56dp"
-            app:title="Add Transaction"
-            style="@style/Widget.HowMuch.Toolbar.SmallCapsTitle" />
-    </FrameLayout>
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+        android:id="@+id/pb"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:indeterminate="true"
+        app:mpb_progressStyle="horizontal"
+        app:mpb_useIntrinsicPadding="false"
+        android:elevation="4dp"
+        android:visibility="gone"
+        style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
 
     <ScrollView
         android:id="@+id/contentSv"
@@ -41,7 +37,7 @@
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbarFl"
+        app:layout_constraintTop_toBottomOf="@id/pb"
         app:layout_constraintBottom_toTopOf="@id/saveBtn"
         android:layout_marginBottom="@dimen/margin_normal"
         android:fillViewport="true">
@@ -50,51 +46,54 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/amountEt"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/amountTil"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginStart="@dimen/margin_large"
-                android:layout_marginEnd="@dimen/margin_large"
-                android:layout_marginTop="@dimen/margin_large"
-                android:gravity="center"
-                android:padding="@dimen/padding_normal"
-                android:background="@null"
-                android:inputType="numberDecimal"
-                android:lines="1"
-                android:hint="@string/amount_hint"
-                android:textAppearance="@style/TextAppearance.Amount" />
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginEnd="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_normal"
+                app:startIconDrawable="@drawable/round_attach_money_24"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Amount">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/titleCv"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/amountEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:lines="1"
+                    android:textAppearance="@style/TextAppearance.Amount"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/titleTil"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/amountEt"
-                android:layout_marginStart="@dimen/margin_large"
-                android:layout_marginEnd="@dimen/margin_large"
-                android:layout_marginTop="@dimen/margin_large"
-                style="@style/Widget.MaterialComponents.CardView"
-                app:cardElevation="0dp"
-                app:cardCornerRadius="4dp"
-                app:cardBackgroundColor="@color/gray1">
+                app:layout_constraintTop_toBottomOf="@id/amountTil"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginEnd="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_normal"
 
-                <EditText
+                app:startIconDrawable="@drawable/round_title_24"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Title">
+
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/titleEt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lines="1"
-                    android:inputType="text"
-                    android:hint="@string/title_hint"
-                    android:textAppearance="@style/TextAppearance.InputField"
-                    android:padding="12dp"
-                    android:background="@null"
-                    android:gravity="center" />
-            </com.google.android.material.card.MaterialCardView>
+                    android:inputType="textAutoCorrect|textCapWords"
+                    android:textAppearance="@style/TextAppearance.InputField"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/dateCv"
@@ -102,12 +101,12 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/timeCv"
-                app:layout_constraintTop_toBottomOf="@id/titleCv"
+                app:layout_constraintTop_toBottomOf="@id/titleTil"
                 app:layout_constraintBottom_toTopOf="@id/categoryPicker"
                 app:layout_constraintVertical_chainStyle="spread_inside"
-                android:layout_marginStart="@dimen/margin_large"
-                android:layout_marginEnd="@dimen/margin_very_small"
-                android:layout_marginTop="@dimen/margin_normal"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:layout_marginTop="24dp"
                 style="@style/Widget.MaterialComponents.CardView"
                 app:cardElevation="0dp"
                 app:cardCornerRadius="4dp"
@@ -126,6 +125,7 @@
                         android:textAppearance="@style/TextAppearance.InputField"
                         android:background="?attr/selectableItemBackground"
                         android:gravity="center_vertical"
+                        android:textAllCaps="true"
                         style="@style/Widget.HowMuch.InputTextView" />
 
                     <ImageView
@@ -144,10 +144,10 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/dateCv"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/titleCv"
-                android:layout_marginStart="@dimen/margin_very_small"
-                android:layout_marginEnd="@dimen/margin_large"
-                android:layout_marginTop="@dimen/margin_normal"
+                app:layout_constraintTop_toBottomOf="@id/titleTil"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginEnd="@dimen/margin_normal"
+                android:layout_marginTop="24dp"
                 style="@style/Widget.MaterialComponents.CardView"
                 app:cardElevation="0dp"
                 app:cardCornerRadius="4dp"
@@ -166,6 +166,7 @@
                         android:gravity="center_vertical"
                         android:textAppearance="@style/TextAppearance.InputField"
                         android:background="?attr/selectableItemBackground"
+                        android:textAllCaps="true"
                         style="@style/Widget.HowMuch.InputTextView" />
 
                     <ImageView
@@ -216,6 +217,19 @@
     </ScrollView>
 
     <View
+        android:id="@+id/scrimV"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pb"
+        app:layout_constraintBottom_toTopOf="@id/saveBtn"
+        android:layout_marginBottom="@dimen/margin_normal"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@color/whiteScrim"/>
+
+    <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/contentSv"
@@ -232,15 +246,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginStart="@dimen/margin_large"
-        android:layout_marginEnd="@dimen/margin_large"
+        android:layout_marginStart="@dimen/margin_normal"
+        android:layout_marginEnd="@dimen/margin_normal"
         android:layout_marginTop="@dimen/margin_normal"
         android:layout_marginBottom="@dimen/margin_normal"
         style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
         android:textAppearance="@style/TextAppearance.Button"
         android:elevation="@dimen/elevation_large"
+        android:enabled="false"
         android:text="save"/>
-
-    <include layout="@layout/layout_loading_overlay" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

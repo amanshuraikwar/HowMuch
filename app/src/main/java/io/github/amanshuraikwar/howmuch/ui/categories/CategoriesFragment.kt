@@ -15,6 +15,8 @@ import dagger.Module
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.base.ui.base.BaseFragment
 import io.github.amanshuraikwar.howmuch.graph.pie.PieView
+import io.github.amanshuraikwar.howmuch.protocol.Category
+import io.github.amanshuraikwar.howmuch.ui.category.CategoryActivity
 import io.github.amanshuraikwar.howmuch.ui.history.activity.HistoryActivity
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
@@ -99,11 +101,11 @@ class CategoriesFragment
         showToast(message)
     }
 
-    override fun startHistoryActivity(filter: String?) {
+    override fun startHistoryActivity(category: Category) {
         startActivity(
                 {
-                    val intent = Intent(activity, HistoryActivity::class.java)
-                    intent.putExtra(HistoryActivity.KEY_FILTERS, filter)
+                    val intent = Intent(activity, CategoryActivity::class.java)
+                    intent.putExtra("category", category)
                     intent
                 }.invoke()
 

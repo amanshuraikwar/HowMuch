@@ -12,8 +12,7 @@ import io.github.amanshuraikwar.howmuch.graph.pie.PieView
 import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.protocol.TransactionType
 import io.github.amanshuraikwar.howmuch.ui.HowMuchBasePresenterImpl
-import io.github.amanshuraikwar.howmuch.ui.list.items.Pie
-import io.github.amanshuraikwar.howmuch.ui.list.items.StatCategory
+import io.github.amanshuraikwar.howmuch.ui.list.items.*
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -24,7 +23,7 @@ interface CategoriesContract {
 
     interface View : BaseView, UiMessageView, LoadingView {
         fun submitList(list: List<ListItem<*, *>>)
-        fun startHistoryActivity(filter: String? = null)
+        fun startHistoryActivity(category: Category)
         fun updateMonth(previousMonth: Boolean, monthName: String, nextMonth: Boolean)
         @ColorInt fun getCategoryColor(category: String): Int
     }
@@ -146,10 +145,11 @@ interface CategoriesContract {
                                                    categories: List<Category>)
                 : List<ListItem<*, *>> {
 
+            val filteredCategories = categories.filter { it.type == transactionType }
+
             val categoryAmountMap = {
                         val categoryIdTxnListMap = this.groupBy { it.categoryId }
-                        categories
-                                .filter { it.type == transactionType }
+                        filteredCategories
                                 .groupBy { it }
                                 .mapValues {
                                     entry ->
@@ -173,22 +173,30 @@ interface CategoriesContract {
 
             list.add(Pie.Item(Pie(pieItems, total)))
 
-            list.addAll(
-                    categoryAmountMap.map {
-                        entry ->
+            list.add(Divider.Item())
+
+            list.add(StatHeader.Item(StatHeader("CATEGORIES")))
+
+            categoryAmountMap.keys.forEachIndexed {
+
+                index, category ->
+
+                list.add(
                         StatCategory.Item(
                                 StatCategory(
-                                        entry.key,
-                                        ViewUtil.getCategoryColor(entry.key.name),
-                                        ViewUtil.getCategoryIcon(entry.key.name),
-                                        entry.value,
+                                        category,
+                                        categoryAmountMap[category] ?: 0.0,
                                         {
-                                            getView()?.startHistoryActivity("category_id=${it.id}")
+                                            getView()?.startHistoryActivity(it)
                                         }
                                 )
                         )
-                    }
-            )
+                )
+
+                if (index != filteredCategories.size - 1) {
+                    list.add(DividerFrontPadded.Item())
+                }
+            }
 
             return list
         }

@@ -39,10 +39,15 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
 
     private fun init() {
 
+        toolbar.setNavigationIcon(R.drawable.round_close_24)
+        toolbar.setNavigationOnClickListener {
+            this.finish()
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             contentSv.setOnScrollChangeListener {
                 _, _, _, _, _ ->
-                toolbarFl.isSelected = contentSv.canScrollVertically(-1)
+                toolbar.isSelected = contentSv.canScrollVertically(-1)
             }
         }
 
@@ -85,10 +90,6 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
             )
         }
 
-        backIb.setOnClickListener {
-            presenter.onBackIbPressed()
-        }
-
         adapter = MultiItemListAdapter(this, ListItemTypeFactory())
         categoryPicker.adapter = adapter
         categoryPicker.setSlideOnFling(true)
@@ -116,13 +117,17 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
     }
 
     override fun showLoading(message: String) {
-        loadingParentLl.visibility = View.VISIBLE
-        loadingTv.text = message
+        pb.visibility = View.VISIBLE
+        scrimV.visibility = View.VISIBLE
+        saveBtn.isEnabled = false
+        saveBtn.text = message
     }
 
     override fun hideLoading() {
-        loadingParentLl.visibility = View.GONE
-        loadingTv.text = ""
+        pb.visibility = View.GONE
+        scrimV.visibility = View.GONE
+        saveBtn.isEnabled = true
+        saveBtn.text = "save"
     }
 
     override fun showCategories(categories: List<ListItem<*, *>>) {
@@ -177,12 +182,12 @@ class AddExpenseActivity : BaseActivity<AddExpenseContract.View, AddExpenseContr
     }
 
     override fun showAmountError(message: String) {
-        amountEt.error = message
+        amountTil.error = message
         amountEt.requestFocus()
     }
 
     override fun showTitleError(message: String) {
-        titleEt.error = message
+        amountTil.error = message
         titleEt.requestFocus()
     }
 

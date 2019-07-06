@@ -57,8 +57,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginStart="@dimen/margin_small"
             android:layout_marginEnd="@dimen/margin_small"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:layout_marginBottom="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/margin_small"
             android:padding="8dp"
             android:src="@drawable/round_keyboard_arrow_left_24"/>
 
@@ -83,8 +83,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginStart="@dimen/margin_small"
             android:layout_marginEnd="@dimen/margin_small"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:layout_marginBottom="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/margin_small"
             android:padding="8dp"
             android:src="@drawable/round_chevron_right_24"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
