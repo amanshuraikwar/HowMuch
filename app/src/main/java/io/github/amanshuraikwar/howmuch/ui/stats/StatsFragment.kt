@@ -15,8 +15,10 @@ import dagger.Binds
 import dagger.Module
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.base.ui.base.BaseFragment
+import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.ui.expense.ExpenseActivity
+import io.github.amanshuraikwar.howmuch.ui.expense.TransactionDialog
 import io.github.amanshuraikwar.howmuch.ui.history.activity.HistoryActivity
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.howmuch.ui.monthlybudget.MonthlyBudgetActivity
@@ -106,10 +108,9 @@ class StatsFragment
         showToast(message)
     }
 
-    override fun startTransactionActivity(transaction: Transaction) {
-        val intent = Intent(activity, ExpenseActivity::class.java)
-        intent.putExtra(ExpenseActivity.KEY_TRANSACTION, transaction)
-        startActivityForResult(intent, REQ_CODE_TRANSACTION)
+    override fun startTransactionActivity(transaction: Transaction,
+                                          category: Category) {
+        TransactionDialog(activity).start(transaction, category)
     }
 
     override fun startHistoryActivity(filter: String?) {

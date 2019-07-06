@@ -15,16 +15,16 @@
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/circleCv"
+        app:layout_constraintBottom_toBottomOf="@id/amountCv"
         android:layout_marginStart="35dp"
         android:paddingBottom="4dp"
         android:background="@color/gray3" />
 
     <View
-        android:id="@+id/bottomLine"
+        android:id="@+id/lineV"
         android:layout_width="2dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="@id/circleCv"
+        app:layout_constraintTop_toTopOf="@id/amountCv"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="35dp"
@@ -32,13 +32,13 @@
         android:background="@color/gray3" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/circleCv"
+        android:id="@+id/amountCv"
         android:layout_width="8dp"
         android:layout_height="8dp"
         android:layout_marginStart="32dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/titleTv"
-        app:layout_constraintBottom_toBottomOf="@id/titleTv"
+        app:layout_constraintTop_toTopOf="@id/amountTv"
+        app:layout_constraintBottom_toBottomOf="@id/amountTv"
         android:layout_marginTop="@dimen/margin_normal"
         android:layout_marginBottom="@dimen/margin_normal"
         android:layout_gravity="center_vertical"

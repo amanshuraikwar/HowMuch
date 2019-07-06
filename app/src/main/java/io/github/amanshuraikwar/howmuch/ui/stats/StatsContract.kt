@@ -22,7 +22,7 @@ interface StatsContract {
 
     interface View : BaseView, UiMessageView, LoadingView {
         fun submitList(list: List<ListItem<*, *>>)
-        fun startTransactionActivity(transaction: Transaction)
+        fun startTransactionActivity(transaction: Transaction, category: Category)
         fun startHistoryActivity(filter: String? = null)
         fun startSettingsActivity()
         fun startMonthlyBudgetActivity()
@@ -39,11 +39,14 @@ interface StatsContract {
         : HowMuchBasePresenterImpl<View>(appBus, dataManager), Presenter {
 
         private val tag = Util.getTag(this)
+        private lateinit var categoriesMap: Map<String, Category>
 
         private val transactionOnClickListener =
                 object : TransactionOnClickListener {
                     override fun onClick(transaction: Transaction) {
-                        getView()?.startTransactionActivity(transaction)
+                        getView()?.startTransactionActivity(
+                                transaction, categoriesMap[transaction.categoryId]!!
+                        )
                     }
                 }
 
@@ -111,7 +114,17 @@ interface StatsContract {
         private fun fetchStats() {
 
             getDataManager()
-                    .getAllTransactions()
+                    .getAllCategories()
+                    .map {
+                        categoriesMap =
+                                it
+                                        .filter { it.type == TransactionType.DEBIT }
+                                        .groupBy { it.id }
+                                        .mapValues { it.value[0] }
+                    }
+                    .flatMap {
+                        getDataManager().getAllTransactions()
+                    }
                     .map {
                         it.toList()
                     }

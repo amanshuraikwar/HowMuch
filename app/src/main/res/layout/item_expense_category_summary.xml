@@ -25,7 +25,7 @@
         android:tint="@color/inactiveIcon" />
 
     <TextView
-        android:id="@+id/titleTv"
+        android:id="@+id/amountTv"
         android:layout_width="0dp"
         android:layout_height="20dp"
         app:layout_constraintStart_toEndOf="@id/iconIv"
@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="end"
-        app:constraint_referenced_ids="titleTv,timeTv"/>
+        app:constraint_referenced_ids="amountTv,timeTv" />
 
     <TextView
         android:id="@+id/currencyTv"

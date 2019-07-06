@@ -1,11 +1,8 @@
 package io.github.amanshuraikwar.howmuch.ui.list.items
 
-import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.FragmentActivity
-import androidx.vectordrawable.graphics.drawable.Animatable2Compat
-import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
@@ -36,7 +33,7 @@ class Total(val title: String,
         }
 
         override fun bind(listItem: Item, host: FragmentActivity) {
-            itemView.titleTv.text = listItem.total.title
+            itemView.amountTv.text = listItem.total.title
             itemView.amountTv.text = "${listItem.total.amount}"
         }
     }

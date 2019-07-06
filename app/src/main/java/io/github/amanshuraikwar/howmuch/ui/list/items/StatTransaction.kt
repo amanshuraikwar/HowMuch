@@ -13,7 +13,6 @@ import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionOnClickListener
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.ViewHolder
-import kotlinx.android.synthetic.main.item_stat_header.view.titleTv
 import kotlinx.android.synthetic.main.item_stat_transaction.view.*
 
 class StatTransaction(val transaction: Transaction,

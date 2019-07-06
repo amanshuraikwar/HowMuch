@@ -14,7 +14,7 @@
         android:background="@color/gray3" />
 
     <View
-        android:id="@+id/bottomLine"
+        android:id="@+id/lineV"
         android:layout_width="2dp"
         android:layout_height="28dp"
         android:layout_marginStart="35dp"
@@ -22,7 +22,7 @@
         android:background="@color/gray3" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/circleCv"
+        android:id="@+id/titleCv"
         android:layout_width="12dp"
         android:layout_height="12dp"
         android:layout_marginStart="30dp"

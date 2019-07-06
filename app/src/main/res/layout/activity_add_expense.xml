@@ -80,7 +80,6 @@
                 android:layout_marginStart="@dimen/margin_normal"
                 android:layout_marginEnd="@dimen/margin_normal"
                 android:layout_marginTop="@dimen/margin_normal"
-
                 app:startIconDrawable="@drawable/round_title_24"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:hint="Title">
@@ -206,7 +205,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="@dimen/margin_large"
+                android:layout_marginBottom="@dimen/margin_normal"
                 android:gravity="center_horizontal"
                 android:padding="@dimen/padding_very_small"
                 android:textAppearance="@style/TextAppearance.InputField"

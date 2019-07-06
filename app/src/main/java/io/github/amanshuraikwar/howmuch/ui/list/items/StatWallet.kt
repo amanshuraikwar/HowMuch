@@ -37,7 +37,7 @@ class StatWallet(val wallet: Wallet,
 
         override fun bind(listItem: Item, host: FragmentActivity) {
 
-            itemView.titleTv.text = listItem.statWallet.wallet.name
+            itemView.amountTv.text = listItem.statWallet.wallet.name
 
             if (listItem.statWallet.amount >= 0) {
                 itemView.amountTv.text = "+${listItem.statWallet.amount}"

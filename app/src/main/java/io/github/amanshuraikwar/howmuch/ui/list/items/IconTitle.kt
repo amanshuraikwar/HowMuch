@@ -6,7 +6,6 @@ import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import io.github.amanshuraikwar.howmuch.R
-import io.github.amanshuraikwar.howmuch.ViewUtil
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionOnClickListener
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
