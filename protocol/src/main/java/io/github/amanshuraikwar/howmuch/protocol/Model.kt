@@ -35,7 +35,7 @@ data class Category(val id: String,
                     var name: String,
                     var type: TransactionType,
                     var active: Boolean,
-                    val monthlyLimit: Double = 100.00) : Parcelable
+                    val monthlyLimit: Double) : Parcelable
 
 @Parcelize
 data class Wallet(val id: String,

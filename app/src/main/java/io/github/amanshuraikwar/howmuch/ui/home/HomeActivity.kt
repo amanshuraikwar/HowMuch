@@ -51,6 +51,8 @@ class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), 
 
     private fun init() {
 
+        hideAddTransactionBtn()
+
         addTransactionFab.setOnClickListener {
             startActivityForResult(
                     Intent(this, AddExpenseActivity::class.java),

@@ -177,7 +177,6 @@ interface AddExpenseContract {
                                 }
                             },
                             {
-                                it.printStackTrace()
                                 Log.e(tag, "onSaveClicked: addTransaction", it)
 
                                 // todo handle specific errors

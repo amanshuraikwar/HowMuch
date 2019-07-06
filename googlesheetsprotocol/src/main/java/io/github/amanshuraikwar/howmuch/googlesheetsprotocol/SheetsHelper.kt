@@ -358,7 +358,8 @@ class SheetsHelper @Inject constructor(private val sheetsDataSource: SheetsDataS
                                 listOf(
                                         category.name,
                                         category.type.toString(),
-                                        category.active
+                                        category.active,
+                                        category.monthlyLimit.toString()
                                 )
                         ),
                         googleAccountCredential = googleAccountCredential

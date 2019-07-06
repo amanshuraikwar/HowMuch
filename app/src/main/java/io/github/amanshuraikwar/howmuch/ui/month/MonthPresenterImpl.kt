@@ -39,7 +39,7 @@ abstract class MonthPresenterImpl<V : MonthView> constructor(appBus: AppBus,
     protected abstract fun getListItems(txnList: List<Transaction>)
             : Observable<List<ListItem<*,*>>>
 
-    private fun fetchItems() {
+    protected fun fetchItems() {
 
         getDataManager()
                 .getAllTransactions()

@@ -1,5 +1,7 @@
 package io.github.amanshuraikwar.howmuch.ui.category
 
+import android.util.Log
+import io.github.amanshuraikwar.howmuch.Constants
 import io.github.amanshuraikwar.howmuch.ViewUtil
 import io.github.amanshuraikwar.howmuch.base.bus.AppBus
 import io.github.amanshuraikwar.howmuch.base.data.DataManager
@@ -15,6 +17,8 @@ import io.github.amanshuraikwar.howmuch.ui.month.MonthPresenterImpl
 import io.github.amanshuraikwar.howmuch.ui.month.MonthView
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 interface CategoryContract {
@@ -22,9 +26,17 @@ interface CategoryContract {
     interface View : MonthView {
         fun getCategory(): Category?
         fun initUi(title: String, color1: Int, color2: Int)
+        fun showEditDialog(category: Category)
+        fun hideEditDialog()
+        fun showEditDialogError(msg: String)
+        fun showEditDialogLoading(msg: String)
+        fun hideEditDialogLoading()
     }
 
-    interface Presenter : MonthPresenter<View>
+    interface Presenter : MonthPresenter<View> {
+        fun onEditClicked()
+        fun onEditSaveClicked(text: String)
+    }
 
     class PresenterImpl @Inject constructor(appBus: AppBus,
                                             dataManager: DataManager)
@@ -175,6 +187,49 @@ interface CategoryContract {
             }
 
             return list
+        }
+
+        override fun onEditClicked() {
+            getView()?.showEditDialog(category)
+        }
+
+        override fun onEditSaveClicked(text: String) {
+
+            if (text.isEmpty()) {
+                getView()?.showEditDialogError("Monthly limit cannot be empty!")
+                return
+            }
+
+            val newCategory = category.copy(monthlyLimit = text.toDouble())
+
+            getDataManager()
+                    .updateCategory(
+                            newCategory
+                    )
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe {
+                        getView()?.showEditDialogLoading("Saving...")
+                    }
+                    .subscribe(
+                            {
+                                getView()?.run {
+                                    hideEditDialogLoading()
+                                    hideEditDialog()
+                                }
+                                category = newCategory
+                                fetchItems()
+                            },
+                            {
+                                Log.e(tag, "onEditSaveClicked: updateCategory", it)
+                                // todo handle specific errors
+                                getView()?.run {
+                                    hideEditDialogLoading()
+                                    showError(it.message ?: Constants.DEFAULT_ERROR_MESSAGE)
+                                }
+                            }
+                    )
+                    .addToCleanup()
         }
     }
 }

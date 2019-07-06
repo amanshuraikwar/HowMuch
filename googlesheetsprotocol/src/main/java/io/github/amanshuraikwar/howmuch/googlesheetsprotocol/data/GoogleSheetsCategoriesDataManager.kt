@@ -52,7 +52,7 @@ class GoogleSheetsCategoriesDataManager
 
     override fun getCategoryById(id: String): Observable<Category> {
         // todo
-        return Observable.fromCallable { Category("", "", TransactionType.DEBIT, false) }
+        return Observable.fromCallable { Category("", "", TransactionType.DEBIT, false, 0.0) }
     }
 
     override fun addCategory(category: Category): Observable<Category> {
