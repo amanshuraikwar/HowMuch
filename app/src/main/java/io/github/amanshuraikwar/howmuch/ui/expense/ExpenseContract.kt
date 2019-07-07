@@ -21,17 +21,13 @@ interface ExpenseContract {
 
     interface View : BaseView, UiMessageView, LoadingView, ExpenseDataInputView {
         fun getTransaction(): Transaction
+        fun getCategory(): Category
         fun setTransaction(transaction: Transaction)
-        fun showWallets(wallets: List<Wallet>)
         fun showTransaction(amount: String,
-                            transactionType: TransactionType,
                             title: String,
                             category: Category,
-                            wallet: Wallet,
                             date: String,
-                            time: String,
-                            description: String?,
-                            categories: List<Category>)
+                            time: String)
         fun showEditMode()
         fun hideEditMode()
         fun close(success: Boolean)
@@ -77,6 +73,7 @@ interface ExpenseContract {
         private val tag = Util.getTag(this)
 
         private lateinit var curTransaction: Transaction
+        private lateinit var curCategory: Category
         private lateinit var categories: List<Category>
         private lateinit var wallets: List<Wallet>
 
@@ -92,78 +89,35 @@ interface ExpenseContract {
         }
 
         private fun init() {
-
-            getDataManager()
-                    .getAllCategories()
-                    .doOnNext {
-                        this.categories = it.toList()
-                    }
-                    .flatMap {
-                        getDataManager().getAllWallets()
-                    }
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSubscribe {
-                        getView()?.showLoading("Fetching categories...")
-                    }
-                    .subscribe(
-                            {
-                                wallets ->
-                                this.wallets = wallets.toList()
-                                getView()?.run {
-                                    hideLoading()
-                                    showWallets(this@ExpensePresenter.wallets)
-                                }
-                                initTransaction()
-                            },
-                            {
-                                it.printStackTrace()
-                                Log.e(tag, "refreshCategories: getAllCategories", it)
-
-                                // todo handle specific errors
-
-                                getView()?.run {
-                                    hideLoading()
-                                    showError(it.message ?: Constants.DEFAULT_ERROR_MESSAGE)
-                                    close(false)
-                                }
-                            }
-                    )
-                    .addToCleanup()
+            initTransaction()
         }
 
-        @Throws(TransactionNotFoundException::class)
         private fun initTransaction() {
-            curTransaction =
-                    getView()?.getTransaction()
-                            ?: throw TransactionNotFoundException(
-                                    "Transaction was not returned from the view!"
-                            )
-            curTransactionType = curTransaction.type
-            curTransaction.show()
-            getView()?.hideEditMode()
+
+            curTransaction = getView()?.getTransaction()!!
+            curCategory = getView()?.getCategory()!!
+
+            getView()?.showTransaction(
+                    curTransaction.amount.toString(),
+                    curTransaction.title,
+                    curCategory,
+                    Util.beautifyDate(curTransaction.date),
+                    Util.beautifyTime(curTransaction.time)
+            )
         }
 
         @Throws(InvalidCategoryException::class)
         private fun Transaction.show() {
             getView()?.showTransaction(
                     this.amount.toString(),
-                    this.type,
                     this.title,
                     categories.find { it.id == this.categoryId }
                             ?: throw InvalidCategoryException(
                                     "Invalid color1 with id ${this.categoryId} " +
                                             "for transaction with id ${this.id}!"
                             ),
-                    wallets.find { it.id == this.walletId }
-                            ?: throw InvalidCategoryException(
-                                    "Invalid wallet with id ${this.walletId} " +
-                                            "for transaction with id ${this.id}!"
-                            ),
                     Util.beautifyDate(this.date),
-                    Util.beautifyTime(this.time),
-                    this.description,
-                    categories.filter { it.type == this.type }
+                    Util.beautifyTime(this.time)
             )
         }
 

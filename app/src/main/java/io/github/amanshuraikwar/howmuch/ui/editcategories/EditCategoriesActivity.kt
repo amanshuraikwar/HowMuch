@@ -15,7 +15,6 @@ import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
 import kotlinx.android.synthetic.main.activity_edit_categories.*
 import kotlinx.android.synthetic.main.activity_edit_categories.toolbar
-import kotlinx.android.synthetic.main.activity_expense.*
 import javax.inject.Inject
 
 

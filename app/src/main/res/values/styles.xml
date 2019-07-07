@@ -275,6 +275,17 @@
     </style>
 
     <style
+        name="TextAppearance.ConfirmMessage"
+        parent="TextAppearance.MaterialComponents.Headline4">
+
+        <item name="fontFamily">@font/cabin</item>
+        <item name="android:fontFamily">@font/cabin</item>
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.1</item>
+    </style>
+
+    <style
         name="TextAppearance.BnvItem.Active"
         parent="@style/TextAppearance.AppCompat.Caption">
 

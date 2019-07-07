@@ -4,11 +4,8 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.res.ColorStateList
-import android.os.Build
 import android.os.Bundle
-import android.text.InputType
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.View.*
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -16,22 +13,19 @@ import androidx.core.content.ContextCompat
 import dagger.Binds
 import dagger.Module
 import io.github.amanshuraikwar.howmuch.R
+import io.github.amanshuraikwar.howmuch.ViewUtil
 import io.github.amanshuraikwar.howmuch.base.di.ActivityContext
 import io.github.amanshuraikwar.howmuch.protocol.Transaction
-import io.github.amanshuraikwar.howmuch.protocol.TransactionType
 import io.github.amanshuraikwar.howmuch.base.ui.base.BaseActivity
 import io.github.amanshuraikwar.howmuch.protocol.Category
-import io.github.amanshuraikwar.howmuch.protocol.Wallet
-import io.github.amanshuraikwar.howmuch.ui.spinner.CategoryAdapter
-import io.github.amanshuraikwar.howmuch.ui.spinner.WalletAdapter
 import kotlinx.android.synthetic.main.activity_expense.*
-import kotlinx.android.synthetic.main.layout_loading_overlay.*
 
 class ExpenseActivity
     : BaseActivity<ExpenseContract.View, ExpenseContract.Presenter>(), ExpenseContract.View {
 
     companion object {
         const val KEY_TRANSACTION = "transaction"
+        const val KEY_CATEGORY = "category"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,15 +35,29 @@ class ExpenseActivity
     }
 
     override fun onBackPressed() {
-        presenter.onBackBtnClicked()
+        if (confirmTv.visibility == VISIBLE) {
+            confirmTv.performClick()
+        } else {
+            presenter.onBackBtnClicked()
+        }
     }
 
     private fun init() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            contentSv.setOnScrollChangeListener {
-                _, _, _, _, _ ->
-                toolbarFl.isSelected = contentSv.canScrollVertically(-1)
+        toolbar.setNavigationIcon(R.drawable.round_close_24)
+        toolbar.setNavigationOnClickListener {
+            this.finish()
+        }
+        deleteBtn.setOnClickListener {
+            if (confirmTv.visibility == VISIBLE) {
+                presenter.onDeleteConfirmedClicked()
+            } else {
+                confirmTv.visibility = VISIBLE
+                editBtn.visibility = GONE
             }
+        }
+        confirmTv.setOnClickListener {
+            confirmTv.visibility = GONE
+            editBtn.visibility = VISIBLE
         }
     }
 
@@ -61,187 +69,67 @@ class ExpenseActivity
     }
 
     override fun showLoading(message: String) {
-        loadingParentLl.visibility = VISIBLE
-        loadingTv.text = message
+        pb.visibility = VISIBLE
+        scrimV.visibility = VISIBLE
+        editBtn.isEnabled = false
+        deleteBtn.isEnabled = false
     }
 
     override fun hideLoading() {
-        loadingParentLl.visibility = GONE
-        loadingTv.text = ""
+        pb.visibility = GONE
+        scrimV.visibility = INVISIBLE
+        editBtn.isEnabled = true
+        deleteBtn.isEnabled = true
     }
 
     override fun getTransaction(): Transaction {
         return intent.getParcelableExtra(KEY_TRANSACTION)
     }
 
+    override fun getCategory(): Category {
+        return intent.getParcelableExtra(KEY_CATEGORY)
+    }
+
     override fun setTransaction(transaction: Transaction) {
         intent.putExtra(KEY_TRANSACTION,  transaction)
     }
 
-    override fun showWallets(wallets: List<Wallet>) {
-        walletSp.adapter = WalletAdapter(this, R.layout.textview_spinner, wallets)
-    }
-
     override fun showTransaction(amount: String,
-                                 transactionType: TransactionType,
                                  title: String,
                                  category: Category,
-                                 wallet: Wallet,
                                  date: String,
-                                 time: String,
-                                 description: String?,
-                                 categories: List<Category>) {
+                                 time: String) {
 
-        amountEt.setText(amount)
-
-        if (transactionType == TransactionType.DEBIT) {
-            iconIv.imageTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(this, R.color.red)
-            )
-            amountEt.setTextColor(ContextCompat.getColor(this, R.color.red))
-            iconIv.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp)
-        } else {
-            iconIv.imageTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(this, R.color.green)
-            )
-            amountEt.setTextColor(ContextCompat.getColor(this, R.color.green))
-            iconIv.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp)
-        }
-
-        titleEt.setText(title)
-
-        categorySp.adapter = CategoryAdapter(this, R.layout.textview_spinner, categories)
-        categorySp.setSelection(getCategoryIndex(category))
+        amountTv.text = amount
+        titleTv.text = title
+        categoryIv.setImageResource(ViewUtil.getCategoryIcon(category.name))
         categoryTv.text = category.name
-
-        walletSp.setSelection(getWalletIndex(wallet))
-        walletTv.text = wallet.name
-
         dateTv.text = date
         timeTv.text = time
 
-        descriptionEt.setText(description)
-    }
-
-    private fun getCategoryIndex(category: Category): Int {
-        var i = 0
-        while (i < categorySp.count) {
-            if (categorySp.adapter.getItem(i) == category) {
-                return i
-            }
-            i++
+        ContextCompat.getColor(this, ViewUtil.getCategoryColor3(category.name)).let {
+            lineV.setBackgroundColor(it)
+            editBtn.rippleColor = ColorStateList.valueOf(it)
         }
-        return 0
-    }
+        lineV.setBackgroundColor(
+                ContextCompat.getColor(this, ViewUtil.getCategoryColor2(category.name)))
 
-    private fun getWalletIndex(wallet: Wallet): Int {
-        var i = 0
-        while (i < walletSp.count) {
-            if (walletSp.adapter.getItem(i) == wallet) {
-                return i
-            }
-            i++
+        ContextCompat.getColor(this, ViewUtil.getCategoryColor(category.name)).let {
+            amountCv.setCardBackgroundColor(it)
+            titleCv.setCardBackgroundColor(it)
+            categoryCv.setCardBackgroundColor(it)
+            dateCv.setCardBackgroundColor(it)
+            timeCv.setCardBackgroundColor(it)
+            editBtn.setBackgroundColor(it)
         }
-        return 0
     }
 
     override fun showEditMode() {
 
-        backIb.setImageResource(R.drawable.ic_close_white_24dp)
-        backIb.setOnClickListener {
-            presenter.onEditCloseClicked()
-        }
-
-        editIb.visibility = GONE
-        editIb.setOnClickListener(null)
-
-        deleteIb.visibility = GONE
-        deleteIb.setOnClickListener(null)
-
-        saveBtn.visibility = VISIBLE
-        saveBtn.setOnClickListener {
-            presenter.onEditSaveClicked(
-                    date = dateTv.text.toString(),
-                    time = timeTv.text.toString(),
-                    amount = amountEt.text.toString(),
-                    title = titleEt.text.toString(),
-                    description = descriptionEt.text.toString(),
-                    category = categorySp.selectedItem as Category,
-                    wallet = walletSp.selectedItem as Wallet
-            )
-        }
-
-        iconIv.isClickable = true
-
-        iconIv.setOnClickListener {
-            presenter.onTransactionTypeBtnClicked()
-        }
-
-        amountEt.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
-        titleEt.inputType = InputType.TYPE_CLASS_TEXT
-
-        categoryTv.visibility = GONE
-        categorySp.visibility = VISIBLE
-
-        walletTv.visibility = GONE
-        walletSp.visibility = VISIBLE
-
-        dateTv.isClickable = true
-        dateTv.setOnClickListener {
-            presenter.onDateClicked(dateTv.text.toString())
-        }
-
-        timeTv.isClickable = true
-        timeTv.setOnClickListener {
-            presenter.onTimeClicked(timeTv.text.toString())
-        }
-
-        descriptionEt.inputType = InputType.TYPE_CLASS_TEXT
-        descriptionEt.clearFocus()
     }
 
     override fun hideEditMode() {
 
-        backIb.setImageResource(R.drawable.ic_arrow_back_white_24dp)
-        backIb.setOnClickListener {
-            presenter.onBackBtnClicked()
-        }
-
-        editIb.visibility = VISIBLE
-        editIb.setOnClickListener {
-            presenter.onEditBtnClicked()
-        }
-
-        deleteIb.visibility = VISIBLE
-        deleteIb.setOnClickListener{
-            presenter.onDeleteBtnClicked()
-        }
-
-        saveBtn.visibility = GONE
-        saveBtn.setOnClickListener(null)
-
-        iconIv.isClickable = false
-        iconIv.setOnClickListener(null)
-
-        amountEt.inputType = InputType.TYPE_NULL
-        amountEt.clearFocus()
-        titleEt.inputType = InputType.TYPE_NULL
-        titleEt.clearFocus()
-
-        categoryTv.visibility = VISIBLE
-        categorySp.visibility = GONE
-
-        walletTv.visibility = VISIBLE
-        walletSp.visibility = GONE
-
-        dateTv.isClickable = false
-        dateTv.setOnClickListener(null)
-
-        timeTv.isClickable = false
-        timeTv.setOnClickListener(null)
-
-        descriptionEt.inputType = InputType.TYPE_NULL
-        descriptionEt.clearFocus()
     }
 
     override fun close(success: Boolean) {
@@ -298,11 +186,9 @@ class ExpenseActivity
     }
 
     override fun showAmountError(message: String) {
-        amountEt.error = message
     }
 
     override fun showTitleError(message: String) {
-        titleEt.error = message
     }
 
     override fun showDeleteDialog() {
@@ -320,23 +206,15 @@ class ExpenseActivity
     }
 
     override fun switchToCredit() {
-        iconIv.imageTintList = ColorStateList.valueOf(
-                ContextCompat.getColor(this, R.color.green)
-        )
-        amountEt.setTextColor(ContextCompat.getColor(this, R.color.green))
-        iconIv.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp)
+
     }
 
     override fun switchToDebit() {
-        iconIv.imageTintList = ColorStateList.valueOf(
-                ContextCompat.getColor(this, R.color.red)
-        )
-        amountEt.setTextColor(ContextCompat.getColor(this, R.color.red))
-        iconIv.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp)
+
     }
 
     override fun showCategories(categories: List<Category>) {
-        categorySp.adapter = CategoryAdapter(this, R.layout.textview_spinner, categories)
+
     }
 
     @Module

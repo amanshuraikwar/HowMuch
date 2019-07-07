@@ -18,7 +18,6 @@ import io.github.amanshuraikwar.howmuch.base.ui.base.BaseFragment
 import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.ui.expense.ExpenseActivity
-import io.github.amanshuraikwar.howmuch.ui.expense.TransactionDialog
 import io.github.amanshuraikwar.howmuch.ui.history.activity.HistoryActivity
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.howmuch.ui.monthlybudget.MonthlyBudgetActivity
@@ -110,7 +109,14 @@ class StatsFragment
 
     override fun startTransactionActivity(transaction: Transaction,
                                           category: Category) {
-        TransactionDialog(activity).start(transaction, category)
+        startActivity(
+                {
+                    val intent = Intent(activity, ExpenseActivity::class.java)
+                    intent.putExtra(ExpenseActivity.KEY_TRANSACTION, transaction)
+                    intent.putExtra(ExpenseActivity.KEY_CATEGORY, category)
+                    intent
+                }.invoke()
+        )
     }
 
     override fun startHistoryActivity(filter: String?) {
@@ -120,7 +126,6 @@ class StatsFragment
                     intent.putExtra(HistoryActivity.KEY_FILTERS, filter)
                     intent
                 }.invoke()
-
         )
     }
 

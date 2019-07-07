@@ -1,290 +1,302 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/contentFl"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parentCl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:animateLayoutChanges="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/toolbarFl"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:stateListAnimator="@animator/toolbar_elevation"
+        android:background="@color/white"
+        app:titleTextAppearance="@style/TextAppearance.ToolbarTitle.SmallCaps"
+        app:titleTextColor="@color/primaryText"
+        app:title="Transaction" />
+
+    <View
+        android:id="@+id/lineV"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@id/amountCv"
+        app:layout_constraintBottom_toBottomOf="@id/timeCv"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="35dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:background="@color/gray3" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/amountCv"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/amountTv"
+        app:layout_constraintBottom_toBottomOf="@id/amountTv"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:layout_marginBottom="@dimen/margin_normal"
+        android:layout_gravity="center_vertical"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="#555"/>
+
+    <TextView
+        android:id="@+id/amountTv"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/white"
-        android:stateListAnimator="@animator/toolbar_elevation" >
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:layout_marginStart="72dp"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_large"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textAppearance="@style/TextAppearance.Amount"
+        tools:text="2350" />
 
-        <ImageButton
-            android:id="@+id/backIb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/toolbar"
-            android:layout_margin="@dimen/padding_normal"
-            android:src="@drawable/ic_arrow_back_white_24dp"
-            style="@style/Widget.HowMuch.ImageButton.Borderless"
-            android:contentDescription="@string/done" />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/titleCv"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/titleTv"
+        app:layout_constraintBottom_toBottomOf="@id/titleTv"
+        android:layout_gravity="center_vertical"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="#555">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/backIb"
-            app:layout_constraintEnd_toStartOf="@id/barrier1"
-            app:layout_constraintTop_toTopOf="parent"
-            app:title=""
-            style="@style/Widget.HowMuch.Toolbar.SmallCapsTitle" />
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:constraint_referenced_ids="saveBtn,editIb"
-            app:barrierDirection="start" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/saveBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/barrier1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/toolbar"
-            app:layout_constraintBottom_toBottomOf="@id/toolbar"
-            android:layout_marginStart="@dimen/margin_normal"
-            android:layout_marginEnd="@dimen/margin_normal"
-            android:text="@string/save"
-            style="@style/Widget.HowMuch.Button.Small"
-            android:visibility="gone" />
-
-        <ImageButton
-            android:id="@+id/editIb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/barrier1"
-            app:layout_constraintEnd_toStartOf="@id/deleteIb"
-            app:layout_constraintTop_toTopOf="@id/toolbar"
-            app:layout_constraintBottom_toBottomOf="@id/toolbar"
-            android:layout_margin="@dimen/margin_normal"
-            android:src="@drawable/ic_edit_white_24dp"
-            style="@style/Widget.HowMuch.ImageButton.Borderless"
-            android:contentDescription="@string/done" />
-
-        <ImageButton
-            android:id="@+id/deleteIb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/editIb"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/toolbar"
-            app:layout_constraintBottom_toBottomOf="@id/toolbar"
-            android:layout_margin="@dimen/margin_normal"
-            android:src="@drawable/ic_delete_white_24dp"
-            style="@style/Widget.HowMuch.ImageButton.Borderless"
-            android:contentDescription="@string/delete" />
-
-        <ImageButton
-            android:id="@+id/iconIv"
-            android:layout_width="@dimen/input_field_icon_size"
-            android:layout_height="@dimen/input_field_icon_size"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_margin="@dimen/padding_normal"
-            android:src="@drawable/ic_arrow_drop_down_white_24dp"
-            android:tint="@color/red"
-            style="@style/Widget.HowMuch.ImageButton.Borderless"
-            android:contentDescription="@string/amount_hint" />
-
-        <EditText
-            android:id="@+id/amountEt"
+        <ImageView
+            android:id="@+id/titleIv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="@dimen/input_field_offset"
-            android:paddingStart="0dp"
-            android:paddingEnd="@dimen/padding_normal"
-            android:inputType="none"
-            android:lines="1"
-            android:hint="@string/amount_hint"
-            android:textAppearance="@style/TextAppearance.Amount"
-            android:textColor="@color/red"
-            style="@style/Widget.HowMuch.InputEditText"
-            android:importantForAutofill="no"
-            tools:targetApi="o"
-            tools:text="169.48"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="match_parent"
+            android:src="@drawable/round_title_24"
+            android:tint="@color/activeIconLight"
+            android:padding="@dimen/padding_very_small"/>
+    </androidx.cardview.widget.CardView>
 
-    <ScrollView
-        android:id="@+id/contentSv"
+    <TextView
+        android:id="@+id/titleTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/amountTv"
+        android:layout_marginStart="72dp"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_large"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textAppearance="@style/TextAppearance.InputField"
+        tools:text="Title" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/categoryCv"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/categoryTv"
+        app:layout_constraintBottom_toBottomOf="@id/categoryTv"
+        android:layout_gravity="center_vertical"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="#555">
+
+        <ImageView
+            android:id="@+id/categoryIv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:src="@drawable/round_fastfood_24"
+            android:tint="@color/activeIconLight"
+            android:padding="@dimen/padding_very_small"/>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/categoryTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleTv"
+        android:layout_marginStart="72dp"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_large"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textAppearance="@style/TextAppearance.InputField"
+        tools:text="Category" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/dateCv"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/dateTv"
+        app:layout_constraintBottom_toBottomOf="@id/dateTv"
+        android:layout_gravity="center_vertical"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="#555">
+
+        <ImageView
+            android:id="@+id/dateIv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/round_today_24"
+            android:tint="@color/activeIconLight"
+            android:padding="@dimen/padding_very_small"/>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/dateTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/categoryTv"
+        android:layout_marginStart="72dp"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_large"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textAppearance="@style/TextAppearance.InputField"
+        tools:text="Date" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/timeCv"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/timeTv"
+        app:layout_constraintBottom_toBottomOf="@id/timeTv"
+        android:layout_gravity="center_vertical"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="#555">
+
+        <ImageView
+            android:id="@+id/timeIv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/round_access_time_24"
+            android:tint="@color/activeIconLight"
+            android:padding="@dimen/padding_very_small"/>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/timeTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dateTv"
+        android:layout_marginStart="72dp"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_large"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textAppearance="@style/TextAppearance.InputField"
+        tools:text="Time" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="timeCv,timeTv"
+        app:barrierDirection="bottom"/>
+
+    <TextView
+        android:id="@+id/confirmTv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/deleteBtn"
+        android:layout_marginBottom="@dimen/margin_normal"
+        android:gravity="center"
+        android:background="@color/white"
+        android:textAppearance="@style/TextAppearance.ConfirmMessage"
+        android:text="Are you sure?"
+        android:visibility="gone"/>
+
+    <View
+        android:id="@+id/scrimV"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbarFl"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toTopOf="@id/deleteBtn"
+        android:layout_marginBottom="@dimen/margin_normal"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@color/whiteScrim"
+        android:visibility="invisible"/>
+
+    <View
+        android:id="@+id/btnBgV"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/scrimV"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:fillViewport="true">
+        android:paddingTop="@dimen/padding_normal"
+        android:paddingBottom="@dimen/padding_normal"
+        android:background="@color/white"
+        android:elevation="@dimen/elevation_large" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical">
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+        android:id="@+id/pb"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        app:layout_constraintTop_toTopOf="@id/btnBgV"
+        android:indeterminate="true"
+        app:mpb_progressStyle="horizontal"
+        app:mpb_useIntrinsicPadding="false"
+        android:elevation="@dimen/elevation_large"
+        android:visibility="gone"
+        style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/editBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/deleteBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:layout_marginBottom="@dimen/margin_normal"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:textAppearance="@style/TextAppearance.Button"
+        android:elevation="@dimen/elevation_large"
+        android:text="edit"/>
 
-                <EditText
-                    android:id="@+id/titleEt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:lines="1"
-                    android:inputType="none"
-                    android:hint="@string/title_hint"
-                    android:textAppearance="@style/TextAppearance.InputField"
-                    style="@style/Widget.HowMuch.InputEditText"
-                    android:importantForAutofill="no"
-                    tools:targetApi="o" />
-
-                <ImageView
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_title_white_24dp"
-                    android:contentDescription="@string/title_hint"
-                    style="@style/InputImageView" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white">
-
-                <Spinner
-                    android:id="@+id/categorySp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/input_field_offset_spinner"
-                    android:paddingEnd="0dp"
-                    android:visibility="gone"/>
-
-                <TextView
-                    android:id="@+id/categoryTv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:lines="1"
-                    android:hint="@string/category_hint"
-                    android:textAppearance="@style/TextAppearance.InputField"
-                    android:background="?attr/selectableItemBackground"
-                    style="@style/Widget.HowMuch.InputTextView" />
-
-                <ImageView
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_bubble_chart_white_24dp"
-                    android:contentDescription="@string/category_hint"
-                    style="@style/InputImageView" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white">
-
-                <Spinner
-                    android:id="@+id/walletSp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/input_field_offset_spinner"
-                    android:paddingEnd="0dp"
-                    android:visibility="gone"/>
-
-                <TextView
-                    android:id="@+id/walletTv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:lines="1"
-                    android:hint="@string/category_hint"
-                    android:textAppearance="@style/TextAppearance.InputField"
-                    android:background="?attr/selectableItemBackground"
-                    style="@style/Widget.HowMuch.InputTextView" />
-
-                <ImageView
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_credit_card_white_24dp"
-                    android:contentDescription="@string/wallet_icon"
-                    style="@style/InputImageView" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/dateTv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:lines="1"
-                    android:hint="@string/date_hint"
-                    android:textAppearance="@style/TextAppearance.InputField"
-                    android:background="?attr/selectableItemBackground"
-                    style="@style/Widget.HowMuch.InputTextView" />
-
-                <ImageView
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/avd_today"
-                    android:contentDescription="@string/date_hint"
-                    style="@style/InputImageView" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/timeTv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:lines="1"
-                    android:hint="@string/time_hint"
-                    android:textAppearance="@style/TextAppearance.InputField"
-                    android:background="?attr/selectableItemBackground"
-                    style="@style/Widget.HowMuch.InputTextView" />
-
-                <ImageView
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_access_time_white_24dp"
-                    android:contentDescription="@string/time_hint"
-                    style="@style/InputImageView" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/descriptionEt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:lines="1"
-                    android:inputType="none"
-                    android:hint="@string/description_hint"
-                    android:textAppearance="@style/TextAppearance.InputField"
-                    style="@style/Widget.HowMuch.InputEditText"
-                    android:importantForAutofill="no"
-                    tools:targetApi="o" />
-
-                <ImageView
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/baseline_receipt_24"
-                    android:contentDescription="@string/description_hint"
-                    style="@style/InputImageView" />
-            </FrameLayout>
-
-        </LinearLayout>
-    </ScrollView>
-
-    <include layout="@layout/layout_loading_overlay" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/deleteBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/editBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="@dimen/margin_normal"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:layout_marginBottom="@dimen/margin_normal"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:textAppearance="@style/TextAppearance.Button"
+        app:rippleColor="@color/lightRed"
+        app:backgroundTint="@color/red"
+        android:elevation="@dimen/elevation_large"
+        android:text="delete"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
