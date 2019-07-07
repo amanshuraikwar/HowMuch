@@ -2,6 +2,7 @@ package io.github.amanshuraikwar.howmuch.base.ui.base
 
 import android.content.Context
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -26,10 +27,10 @@ abstract class BaseFragment<View: BaseView, Presenter: BasePresenter<View>>
      */
     private var wasViewRecreated: Boolean = true
 
-    protected lateinit var activity: BaseActivity<*, *>
+    protected lateinit var activity: AppCompatActivity
 
     override fun onAttach(context: Context) {
-        activity = getActivity() as BaseActivity<*, *>
+        activity = getActivity() as AppCompatActivity
         super.onAttach(context)
     }
 

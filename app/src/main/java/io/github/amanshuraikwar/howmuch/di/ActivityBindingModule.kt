@@ -5,6 +5,7 @@ import dagger.android.ContributesAndroidInjector
 import io.github.amanshuraikwar.howmuch.googlesheetsprotocol.di.GoogleSignInProvides
 import io.github.amanshuraikwar.howmuch.ui.about.AboutActivity
 import io.github.amanshuraikwar.howmuch.ui.addexpense.AddExpenseActivity
+import io.github.amanshuraikwar.howmuch.ui.addexpense.AddExpenseFragment
 import io.github.amanshuraikwar.howmuch.ui.categories.CategoriesFragment
 import io.github.amanshuraikwar.howmuch.ui.category.CategoryActivity
 import io.github.amanshuraikwar.howmuch.ui.editcategories.EditCategoriesActivity
@@ -36,9 +37,9 @@ import io.github.amanshuraikwar.howmuch.ui.wallets.WalletsFragment
     abstract fun a(): HomeActivity
 
     @ContributesAndroidInjector(
-            modules = [AddExpenseActivity.AddTransactionModule::class]
+            modules = [AddExpenseFragment.DiModule::class]
     )
-    abstract fun b(): AddExpenseActivity
+    abstract fun b(): AddExpenseFragment
 
     @ContributesAndroidInjector(
             modules = [ExpenseActivity.ExpenseModule::class]
@@ -132,4 +133,9 @@ import io.github.amanshuraikwar.howmuch.ui.wallets.WalletsFragment
             modules = [CategoryActivity.DiModule::class]
     )
     abstract fun s(): CategoryActivity
+
+    @ContributesAndroidInjector(
+            modules = [AddExpenseActivity.DiModule::class]
+    )
+    abstract fun t(): AddExpenseActivity
 }

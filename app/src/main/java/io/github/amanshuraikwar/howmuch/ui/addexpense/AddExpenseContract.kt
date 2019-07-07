@@ -23,7 +23,6 @@ interface AddExpenseContract {
 
     interface View : BaseView, UiMessageView, LoadingView, ExpenseDataInputView {
         fun showCategories(categories: List<ListItem<*, *>>)
-        fun close(success: Boolean)
         fun showDatePicker(day: Int, month: Int, year: Int)
         fun showDate(date: String)
         fun showTime(time: String)
@@ -31,6 +30,11 @@ interface AddExpenseContract {
         fun categorySelected(name: String,
                              color: Int,
                              color2: Int)
+        fun getMode(): AddExpenseFragment.Mode
+        fun getTransaction(): Transaction?
+        fun showAmount(amount: String)
+        fun showTitle(title: String)
+        fun showCategory(categoryIndex: Int)
     }
 
     interface Presenter: BasePresenter<View> {
@@ -42,7 +46,6 @@ interface AddExpenseContract {
         fun onTimeTvClicked(time: String)
         fun onDateSelected(dayOfMonth: Int, monthOfYear: Int, yearNo: Int)
         fun onTimeSelected(minute: Int, hourOfDay: Int)
-        fun onBackIbPressed()
         fun onCategoryChanged(position: Int)
     }
 
@@ -52,10 +55,12 @@ interface AddExpenseContract {
 
         private val tag = Util.getTag(this)
 
-        private lateinit var categories: List<Category>
+        private lateinit var categories: MutableList<Category>
         private lateinit var wallets: List<Wallet>
 
         private lateinit var selectedCategory: Category
+        private lateinit var transaction: Transaction
+        private lateinit var mode: AddExpenseFragment.Mode
 
         override fun onAttach(wasViewRecreated: Boolean) {
             super.onAttach(wasViewRecreated)
@@ -65,53 +70,31 @@ interface AddExpenseContract {
         }
 
         private fun init() {
-
-            // show cur date and cur time
-            getView()?.run {
-                showDate(Util.beautifyDate(Util.getCurDate()))
-                showTime(Util.beautifyTime(Util.getCurTime()))
-            }
-
             refreshCategories()
         }
 
         private fun refreshCategories() {
 
             getDataManager()
-                    .getAllCategories()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnNext {
-                        categories ->
-                        this.categories = categories.toList()
-                        getView()?.showCategories(
-                                categories
-                                        .filter {
-                                            it.type == TransactionType.DEBIT
-                                        }
-                                        .map {
-                                            CategoryItem.Item(
-                                                    CategoryItem(
-                                                            ViewUtil.getCategoryIcon(it.name),
-                                                            ViewUtil.getCategoryColor(it.name),
-                                                            ViewUtil.getCategoryColor2(it.name)
-                                                    )
-                                            )
-                                        }
-                        )
+                    .getAllWallets()
+                    .doOnNext{
+                        this.wallets = it.toList()
                     }
-                    .observeOn(Schedulers.newThread())
                     .flatMap {
-                        getDataManager().getAllWallets()
+                        getDataManager().getAllCategories().map {
+                            it.filter { it.type == TransactionType.DEBIT }
+                        }
                     }
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe {
-                        getView()?.showLoading("Initialising...")
+                        getView()?.showLoading("Fetching categories...")
                     }
                     .subscribe(
                             {
-                                wallets ->
-                                this.wallets = wallets.toList()
+                                categories ->
+                                this.categories = categories.toMutableList()
+                                initUi()
                                 getView()?.run {
                                     hideLoading()
                                 }
@@ -125,11 +108,50 @@ interface AddExpenseContract {
                                 getView()?.run {
                                     hideLoading()
                                     showError(it.message ?: Constants.DEFAULT_ERROR_MESSAGE)
-                                    close(false)
+                                    getAppBus().onAddExpenseInitFailed.onNext(Any())
                                 }
                             }
                     )
                     .addToCleanup()
+        }
+
+        private fun initUi() {
+
+            getView()?.let {
+
+                mode = it.getMode()
+
+                if (mode == AddExpenseFragment.Mode.ADD) {
+                    // show cur date and cur time
+                    it.showDate(Util.beautifyDate(Util.getCurDate()))
+                    it.showTime(Util.beautifyTime(Util.getCurTime()))
+                } else {
+                    transaction = it.getTransaction()!!
+                    it.showAmount(transaction.amount.toString())
+                    it.showTitle(transaction.title)
+                    it.showDate(Util.beautifyDate(transaction.date))
+                    it.showTime(Util.beautifyTime(transaction.time))
+
+                    // adding selected category at top
+                    val index = categories.indexOfFirst { it.id ==  transaction.categoryId}
+                    val transactionCategory = categories[index]
+                    categories.removeAt(index)
+                    categories.add(0, transactionCategory)
+                }
+
+                it.showCategories(
+                        categories
+                                .map {
+                                    CategoryItem.Item(
+                                            CategoryItem(
+                                                    ViewUtil.getCategoryIcon(it.name),
+                                                    ViewUtil.getCategoryColor(it.name),
+                                                    ViewUtil.getCategoryColor2(it.name)
+                                            )
+                                    )
+                                }
+                )
+            }
         }
 
         override fun onSaveClicked(date: String,
@@ -150,20 +172,41 @@ interface AddExpenseContract {
                         title
                     }
 
-            getDataManager()
-                    .addTransaction(
-                            Transaction(
-                                    id = "",
-                                    date = Util.unBeautifyDate(date),
-                                    time = Util.unBeautifyTime(time),
-                                    amount = amount.toDouble(),
-                                    title = titleToSave,
-                                    description = "",
-                                    categoryId = selectedCategory.id,
-                                    type = selectedCategory.type,
-                                    walletId = wallets[0].id
+            val obs = {
+                if (mode == AddExpenseFragment.Mode.ADD) {
+                    getDataManager()
+                            .addTransaction(
+                                    Transaction(
+                                            id = "",
+                                            date = Util.unBeautifyDate(date),
+                                            time = Util.unBeautifyTime(time),
+                                            amount = amount.toDouble(),
+                                            title = titleToSave,
+                                            description = "",
+                                            categoryId = selectedCategory.id,
+                                            type = selectedCategory.type,
+                                            walletId = wallets[0].id
+                                    )
                             )
-                    )
+                } else {
+                    getDataManager()
+                            .updateTransaction(
+                                    Transaction(
+                                            id = transaction.id,
+                                            date = Util.unBeautifyDate(date),
+                                            time = Util.unBeautifyTime(time),
+                                            amount = amount.toDouble(),
+                                            title = titleToSave,
+                                            description = transaction.description,
+                                            categoryId = selectedCategory.id,
+                                            type = transaction.type,
+                                            walletId = transaction.walletId
+                                    )
+                            )
+                }
+            }.invoke()
+
+            obs
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe {
@@ -173,7 +216,7 @@ interface AddExpenseContract {
                             {
                                 getView()?.run {
                                     hideLoading()
-                                    close(true)
+                                    getAppBus().onAddExpenseProcessCompleted.onNext(Any())
                                 }
                             },
                             {
@@ -188,7 +231,6 @@ interface AddExpenseContract {
                             }
                     )
                     .addToCleanup()
-
         }
 
         override fun onDateTvClicked(date: String) {
@@ -207,10 +249,6 @@ interface AddExpenseContract {
 
         override fun onTimeSelected(minute: Int, hourOfDay: Int) {
             getView()?.showTime(Util.beautifyTime(Util.getTime(minute, hourOfDay)))
-        }
-
-        override fun onBackIbPressed() {
-            getView()?.close(false)
         }
 
         override fun onCategoryChanged(position: Int) {

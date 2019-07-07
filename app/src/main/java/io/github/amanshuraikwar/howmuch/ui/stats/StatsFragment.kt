@@ -109,13 +109,14 @@ class StatsFragment
 
     override fun startTransactionActivity(transaction: Transaction,
                                           category: Category) {
-        startActivity(
+        startActivityForResult(
                 {
                     val intent = Intent(activity, ExpenseActivity::class.java)
                     intent.putExtra(ExpenseActivity.KEY_TRANSACTION, transaction)
                     intent.putExtra(ExpenseActivity.KEY_CATEGORY, category)
                     intent
-                }.invoke()
+                }.invoke(),
+                REQ_CODE_TRANSACTION
         )
     }
 

@@ -28,7 +28,7 @@ interface ExpenseContract {
                             category: Category,
                             date: String,
                             time: String)
-        fun showEditMode()
+        fun showEditMode(transaction: Transaction)
         fun hideEditMode()
         fun close(success: Boolean)
         fun showDatePicker(day: Int, month: Int, year: Int)
@@ -40,6 +40,7 @@ interface ExpenseContract {
         fun switchToCredit()
         fun switchToDebit()
         fun showCategories(categories: List<Category>)
+        fun isInEditMode(): Boolean
     }
 
     interface Presenter : BasePresenter<View> {
@@ -89,7 +90,15 @@ interface ExpenseContract {
         }
 
         private fun init() {
+
             initTransaction()
+
+            getAppBus()
+                    .onAddExpenseProcessCompleted
+                    .subscribe {
+                        getView()?.close(true)
+                    }
+                    .addToCleanup()
         }
 
         private fun initTransaction() {
@@ -131,7 +140,13 @@ interface ExpenseContract {
         }
 
         override fun onBackBtnClicked() {
-            getView()?.close(updated)
+            getView()?.let {
+                if (it.isInEditMode()) {
+                    it.hideEditMode()
+                } else {
+                    it.close(updated)
+                }
+            }
         }
 
         override fun onTimeClicked(time: String) {
@@ -148,7 +163,7 @@ interface ExpenseContract {
         }
 
         override fun onEditBtnClicked() {
-            getView()?.showEditMode()
+            getView()?.showEditMode(curTransaction)
         }
 
         override fun onEditSaveClicked(date: String,
@@ -234,6 +249,7 @@ interface ExpenseContract {
                                 updated = true
                                 getView()?.run {
                                     close(updated)
+                                    getAppBus().onTransactionAdded.onNext(Any())
                                     hideLoading()
                                 }
                             },

@@ -16,6 +16,8 @@ class AppBus {
     val onSignInSuccessful: PublishSubject<Any> = PublishSubject.create<Any>()
     val onTransactionAdded: PublishSubject<Any> = PublishSubject.create<Any>()
     val onSignOut: PublishSubject<Any> = PublishSubject.create()
+    val onAddExpenseInitFailed: PublishSubject<Any> = PublishSubject.create()
+    val onAddExpenseProcessCompleted: PublishSubject<Any> = PublishSubject.create()
 
 }
 

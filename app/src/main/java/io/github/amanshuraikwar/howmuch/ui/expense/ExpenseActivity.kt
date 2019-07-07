@@ -18,6 +18,7 @@ import io.github.amanshuraikwar.howmuch.base.di.ActivityContext
 import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.base.ui.base.BaseActivity
 import io.github.amanshuraikwar.howmuch.protocol.Category
+import io.github.amanshuraikwar.howmuch.ui.addexpense.AddExpenseFragment
 import kotlinx.android.synthetic.main.activity_expense.*
 
 class ExpenseActivity
@@ -27,6 +28,8 @@ class ExpenseActivity
         const val KEY_TRANSACTION = "transaction"
         const val KEY_CATEGORY = "category"
     }
+
+    private lateinit var curEditTransactionFragment: AddExpenseFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +48,7 @@ class ExpenseActivity
     private fun init() {
         toolbar.setNavigationIcon(R.drawable.round_close_24)
         toolbar.setNavigationOnClickListener {
-            this.finish()
+            onBackPressed()
         }
         deleteBtn.setOnClickListener {
             if (confirmTv.visibility == VISIBLE) {
@@ -58,6 +61,9 @@ class ExpenseActivity
         confirmTv.setOnClickListener {
             confirmTv.visibility = GONE
             editBtn.visibility = VISIBLE
+        }
+        editBtn.setOnClickListener {
+            presenter.onEditBtnClicked()
         }
     }
 
@@ -124,12 +130,35 @@ class ExpenseActivity
         }
     }
 
-    override fun showEditMode() {
+    override fun showEditMode(transaction: Transaction) {
 
+        curEditTransactionFragment = AddExpenseFragment()
+        val args = Bundle()
+
+        args.putParcelable(AddExpenseFragment.KEY_MODE, AddExpenseFragment.Mode.EDIT)
+        args.putParcelable(AddExpenseFragment.KEY_TRANSACTION, transaction)
+        curEditTransactionFragment.arguments = args
+
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.editTransactionFl, curEditTransactionFragment)
+                .commitAllowingStateLoss()
+
+        editTransactionFl.visibility = VISIBLE
+        transactionCl.visibility = GONE
+
+        toolbar.title = "Edit transaction"
     }
 
     override fun hideEditMode() {
 
+        supportFragmentManager
+                .beginTransaction()
+                .remove(curEditTransactionFragment)
+                .commitAllowingStateLoss()
+
+        editTransactionFl.visibility = GONE
+        transactionCl.visibility = VISIBLE
+        toolbar.title = "Transaction"
     }
 
     override fun close(success: Boolean) {
@@ -215,6 +244,10 @@ class ExpenseActivity
 
     override fun showCategories(categories: List<Category>) {
 
+    }
+
+    override fun isInEditMode(): Boolean {
+        return editTransactionFl.visibility == VISIBLE
     }
 
     @Module
