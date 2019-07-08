@@ -13,6 +13,7 @@ interface UserDataManager {
 
     fun getSignedInUser(): Observable<User>
 
+    @Deprecated("Use sum of all categories instead")
     fun getMonthlyExpenseLimit(): Observable<Double>
 
     fun setMonthlyExpenseLimit(limit: Double): Completable

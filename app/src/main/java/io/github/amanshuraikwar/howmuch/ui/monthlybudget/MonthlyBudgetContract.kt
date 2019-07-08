@@ -192,34 +192,20 @@ interface MonthlyBudgetContract {
                                 .flatMap {
                                     listItems ->
                                     getDataManager()
-                                            .getMonthlyExpenseLimit()
-                                            .map {
-                                                listItems.add(txnList.getMonthlyExpenseLimitItem(it))
-                                                listItems.add(Divider.Item())
-                                                listItems.add(txnList.getGraphItem(it))
-                                                listItems
-                                            }
-                                }
-                                .map {
-                                    it.add(Divider.Item())
-                                    it
-                                }
-                                .map {
-                                    it.add(
-                                            StatHeader.Item(
-                                                    StatHeader("Categories")
-                                            )
-                                    )
-                                    it
-                                }
-                                .flatMap {
-                                    listItems ->
-                                    getDataManager()
                                             .getAllCategories()
-                                            .map { it.toList() }
-                                            .map { txnList.getCategoryItems(it) }
+                                            .map { it.filter { it.type == TransactionType.DEBIT } }
                                             .map {
-                                                listItems.addAll(it)
+                                                val total = it.sumByDouble { it.monthlyLimit }
+                                                listItems.add(txnList.getMonthlyExpenseLimitItem(total))
+                                                listItems.add(Divider.Item())
+                                                listItems.add(txnList.getGraphItem(total))
+                                                listItems.add(Divider.Item())
+                                                listItems.add(
+                                                        StatHeader.Item(
+                                                                StatHeader("Categories")
+                                                        )
+                                                )
+                                                listItems.addAll(txnList.getCategoryItems(it))
                                                 listItems
                                             }
                                 }

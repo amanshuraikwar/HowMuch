@@ -1,5 +1,7 @@
 package io.github.amanshuraikwar.howmuch.ui.category
 
+import android.app.Activity
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
@@ -15,7 +17,10 @@ import dagger.Module
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.base.ui.base.BaseActivity
 import io.github.amanshuraikwar.howmuch.protocol.Category
+import io.github.amanshuraikwar.howmuch.protocol.Transaction
+import io.github.amanshuraikwar.howmuch.ui.expense.ExpenseActivity
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
+import io.github.amanshuraikwar.howmuch.ui.stats.StatsFragment
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
 import kotlinx.android.synthetic.main.activity_monthly_budget.curMonthTv
@@ -32,6 +37,10 @@ class CategoryActivity
 @Inject constructor() : BaseActivity<CategoryContract.View,
         CategoryContract.Presenter>(),
         CategoryContract.View {
+
+    companion object {
+        private const val REQ_CODE_TRANSACTION = 10069
+    }
 
     private var adapter: MultiItemListAdapter<*>? = null
 
@@ -170,6 +179,28 @@ class CategoryActivity
         editDialogView.monthlyLimitEt.isEnabled = true
         editDialogView.saveBtn.isEnabled = true
         editDialogView.saveBtn.text = "save"
+    }
+
+    override fun startTransactionActivity(transaction: Transaction,
+                                          category: Category) {
+        startActivityForResult(
+                {
+                    val intent = Intent(this, ExpenseActivity::class.java)
+                    intent.putExtra(ExpenseActivity.KEY_TRANSACTION, transaction)
+                    intent.putExtra(ExpenseActivity.KEY_CATEGORY, category)
+                    intent
+                }.invoke(),
+                REQ_CODE_TRANSACTION
+        )
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQ_CODE_TRANSACTION) {
+            if (resultCode == Activity.RESULT_OK) {
+                presenter.onTransactionEdited()
+            }
+        }
     }
 
     @Module

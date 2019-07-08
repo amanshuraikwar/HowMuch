@@ -12,6 +12,7 @@ import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.ui.list.date.DateHeaderListItem
 import io.github.amanshuraikwar.howmuch.ui.list.items.*
 import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionListItem
+import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionOnClickListener
 import io.github.amanshuraikwar.howmuch.ui.month.MonthPresenter
 import io.github.amanshuraikwar.howmuch.ui.month.MonthPresenterImpl
 import io.github.amanshuraikwar.howmuch.ui.month.MonthView
@@ -31,11 +32,13 @@ interface CategoryContract {
         fun showEditDialogError(msg: String)
         fun showEditDialogLoading(msg: String)
         fun hideEditDialogLoading()
+        fun startTransactionActivity(transaction: Transaction, category: Category)
     }
 
     interface Presenter : MonthPresenter<View> {
         fun onEditClicked()
         fun onEditSaveClicked(text: String)
+        fun onTransactionEdited()
     }
 
     class PresenterImpl @Inject constructor(appBus: AppBus,
@@ -179,6 +182,8 @@ interface CategoryContract {
                                 color1 = color1,
                                 color2 = color2,
                                 last = i == inputSorted.size - 1
+                        ).setOnClickListener(
+                                transactionOnClickListener
                         )
                 )
 
@@ -188,6 +193,15 @@ interface CategoryContract {
 
             return list
         }
+
+        private val transactionOnClickListener =
+                object : TransactionOnClickListener {
+                    override fun onClick(transaction: Transaction) {
+                        getView()?.startTransactionActivity(
+                                transaction, category
+                        )
+                    }
+                }
 
         override fun onEditClicked() {
             getView()?.showEditDialog(category)
@@ -230,6 +244,10 @@ interface CategoryContract {
                             }
                     )
                     .addToCleanup()
+        }
+
+        override fun onTransactionEdited() {
+            fetchItems()
         }
     }
 }

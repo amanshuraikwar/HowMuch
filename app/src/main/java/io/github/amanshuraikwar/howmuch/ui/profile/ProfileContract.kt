@@ -11,6 +11,8 @@ import io.github.amanshuraikwar.howmuch.ui.list.items.ProfileBtn
 import io.github.amanshuraikwar.howmuch.ui.list.items.UserInfo
 import io.github.amanshuraikwar.howmuch.base.util.Util;
 import io.github.amanshuraikwar.howmuch.ui.HowMuchBasePresenterImpl
+import io.github.amanshuraikwar.howmuch.ui.list.items.Divider
+import io.github.amanshuraikwar.howmuch.ui.list.items.DividerFrontPadded
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -96,66 +98,39 @@ interface ProfileContract {
                     )
             )
 
-            list.add(
-                    ProfileBtn.Item(
-                            ProfileBtn(
-                                    "Wallets",
-                                    R.drawable.ic_credit_card_white_24dp
-                            )
-                    ).setOnClickListener {
-                        getView()?.startWalletsActivity()
-                    }
-            )
-
-            list.add(
-                    ProfileBtn.Item(
-                            ProfileBtn(
-                                    "Categories",
-                                    R.drawable.ic_bubble_chart_white_24dp
-                            )
-                    ).setOnClickListener {
-                        getView()?.startCategoriesActivity()
-                    }
-            )
+            list.add(Divider.Item())
 
             list.add(
                     ProfileBtn.Item(
                             ProfileBtn(
                                     "History",
-                                    R.drawable.ic_history_white_24dp
+                                    R.drawable.round_history_24
                             )
                     ).setOnClickListener {
                         getView()?.startHistoryActivity()
                     }
             )
 
-            list.add(
-                    ProfileBtn.Item(
-                            ProfileBtn(
-                                    "Settings",
-                                    R.drawable.ic_settings_white_24dp
-                            )
-                    ).setOnClickListener {
-                        getView()?.startSettingsActivity()
-                    }
-            )
+            list.add(Divider.Item())
 
             list.add(
                     ProfileBtn.Item(
                             ProfileBtn(
                                     "About",
-                                    R.drawable.ic_new_releases_white_24dp
+                                    R.drawable.round_new_releases_24
                             )
                     ).setOnClickListener {
                         getView()?.startAboutActivity()
                     }
             )
 
+            list.add(Divider.Item())
+
             list.add(
                     ProfileBtn.Item(
                             ProfileBtn(
                                     "Sign Out",
-                                    R.drawable.ic_exit_to_app_white_24dp
+                                    R.drawable.round_exit_to_app_24
                             )
                     ).setOnClickListener {
                         getView()?.showSignOutAlertDialog()

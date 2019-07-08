@@ -93,19 +93,16 @@ interface StatsContract {
                     .flatMap {
                         prevList ->
                         getDataManager()
-                                .getMonthlyExpenseLimit()
-                                .map {
-                                    prevList.addAll(txnList.getThisMonthDayItems(it))
-                                    prevList
-                                }
-                    }
-                    .flatMap {
-                        prevList ->
-                        getDataManager()
                                 .getAllCategories()
-                                .map { it.groupBy { it.id }.mapValues { it.value[0] } }
+                                .map { it.filter { it.type == TransactionType.DEBIT } }
                                 .map {
-                                    prevList.addAll(txnList.getListItems(it))
+                                    val total = it.sumByDouble { it.monthlyLimit }
+                                    prevList.addAll(txnList.getThisMonthDayItems(total))
+                                    prevList.addAll(
+                                            txnList.getListItems(
+                                                    it.groupBy { it.id }.mapValues { it.value[0] }
+                                            )
+                                    )
                                     prevList
                                 }
                     }

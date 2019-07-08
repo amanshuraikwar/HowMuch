@@ -344,9 +344,10 @@
         name="TextAppearance.ProfileBtn"
         parent="@style/TextAppearance.Body1">
 
-        <item name="android:fontFamily">@font/rubik</item>
+        <item name="android:fontFamily">@font/cabin</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/primaryText</item>
+        <item name="android:letterSpacing">0.05</item>
     </style>
 
     <style
@@ -603,8 +604,9 @@
         parent="@style/TextAppearance.Subhead">
 
         <item name="android:textColor">@color/primaryText</item>
-        <item name="android:fontFamily">@font/rubik</item>
+        <item name="android:fontFamily">@font/cabin</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.05</item>
     </style>
 
     <style
@@ -612,7 +614,8 @@
         parent="@style/TextAppearance.Body1">
 
         <item name="android:textColor">@color/secondaryText</item>
-        <item name="android:fontFamily">@font/rubik</item>
+        <item name="android:fontFamily">@font/cabin</item>
+        <item name="android:letterSpacing">0.05</item>
     </style>
 
     <style
