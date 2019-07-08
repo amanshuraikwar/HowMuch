@@ -23,7 +23,7 @@
         android:paddingStart="32dp"
         android:paddingEnd="32dp"
         app:bv_lineWidth="8dp"
-        app:bv_lineBackground="#E8F5E9"
+        app:bv_lineBackground="@color/lightGreen"
         app:bv_lineColor="@color/green"
         app:bv_labelTextSize="12sp"
         app:bv_labelPadding="16dp"

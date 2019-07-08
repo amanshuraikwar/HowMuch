@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentActivity
 import io.github.amanshuraikwar.multiitemlistadapter.ViewHolder
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.base.util.Util;
-import kotlinx.android.synthetic.main.item_transaction.view.*
+import kotlinx.android.synthetic.main.item_category_transaction.view.*
 
 class TransactionViewHolder(itemView: View) : ViewHolder<TransactionListItem>(itemView) {
 
@@ -15,7 +15,7 @@ class TransactionViewHolder(itemView: View) : ViewHolder<TransactionListItem>(it
 
     companion object {
         @LayoutRes
-        val LAYOUT = R.layout.item_transaction
+        val LAYOUT = R.layout.item_category_transaction
     }
 
     override fun bind(listItem: TransactionListItem, host: FragmentActivity) {

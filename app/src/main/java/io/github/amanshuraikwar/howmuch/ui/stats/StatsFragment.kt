@@ -121,13 +121,7 @@ class StatsFragment
     }
 
     override fun startHistoryActivity(filter: String?) {
-        startActivity(
-                {
-                    val intent = Intent(activity, HistoryActivity::class.java)
-                    intent.putExtra(HistoryActivity.KEY_FILTERS, filter)
-                    intent
-                }.invoke()
-        )
+        startActivity(Intent(activity, HistoryActivity::class.java))
     }
 
     override fun startSettingsActivity() {

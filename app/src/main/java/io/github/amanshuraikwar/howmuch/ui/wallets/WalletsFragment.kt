@@ -90,14 +90,14 @@ class WalletsFragment
     }
 
     override fun startHistoryActivity(filter: String?) {
-        startActivity(
-                {
-                    val intent = Intent(activity, HistoryActivity::class.java)
-                    intent.putExtra(HistoryActivity.KEY_FILTERS, filter)
-                    intent
-                }.invoke()
-
-        )
+//        startActivity(
+//                {
+//                    val intent = Intent(activity, HistoryActivity::class.java)
+//                    intent.putExtra(HistoryActivity.KEY_FILTERS, filter)
+//                    intent
+//                }.invoke()
+//
+//        )
     }
 
     @Module

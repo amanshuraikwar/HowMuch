@@ -33,9 +33,9 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/amountCv"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="24dp"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_marginStart="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/titleTv"
         app:layout_constraintBottom_toBottomOf="@id/titleTv"
@@ -45,15 +45,6 @@
         app:cardCornerRadius="12dp"
         app:cardElevation="0dp"
         app:cardBackgroundColor="#555"/>
-
-    <ImageView
-        android:id="@+id/iconIv"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        app:layout_constraintStart_toStartOf="@id/amountCv"
-        app:layout_constraintEnd_toEndOf="@id/amountCv"
-        app:layout_constraintTop_toTopOf="@id/amountCv"
-        app:layout_constraintBottom_toBottomOf="@id/amountCv"/>
 
     <TextView
         android:id="@+id/titleTv"
