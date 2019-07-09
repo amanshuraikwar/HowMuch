@@ -226,7 +226,7 @@ interface StatsContract {
             return StatTotal.Item(
                             StatTotal(
                                     "Last 7 days",
-                                    thisMonthTotalMap[TransactionType.DEBIT] ?: 0.0,
+                                    thisMonthTotalMap[TransactionType.DEBIT]?.money() ?: 0.0,
                                     trend
                             )
                     )
@@ -320,8 +320,8 @@ interface StatsContract {
             list.add(
                     MonthlyExpenseLimit.Item(
                             MonthlyExpenseLimit(
-                                    debitAmount,
-                                    limit,
+                                    debitAmount.money(),
+                                    limit.money(),
                                     { getView()?.startMonthlyBudgetActivity() }
                             )
                     )

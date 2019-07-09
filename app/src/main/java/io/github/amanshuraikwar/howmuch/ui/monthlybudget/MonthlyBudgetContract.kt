@@ -75,8 +75,8 @@ interface MonthlyBudgetContract {
 
             return Limit.Item(
                     Limit(
-                            spentAmount,
-                            limit,
+                            spentAmount.money(),
+                            limit.money(),
                             R.color.monthlyBudgetLimitPrimary,
                             R.color.monthlyBudgetLimitSecondary
                     )

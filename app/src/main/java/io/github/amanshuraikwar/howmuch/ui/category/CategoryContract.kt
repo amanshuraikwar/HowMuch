@@ -9,6 +9,7 @@ import io.github.amanshuraikwar.howmuch.base.util.Util
 import io.github.amanshuraikwar.howmuch.graph.pie.BarView
 import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.protocol.Transaction
+import io.github.amanshuraikwar.howmuch.protocol.money
 import io.github.amanshuraikwar.howmuch.ui.list.date.DateHeaderListItem
 import io.github.amanshuraikwar.howmuch.ui.list.items.*
 import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionListItem
@@ -101,8 +102,8 @@ interface CategoryContract {
 
             return Limit.Item(
                     Limit(
-                            spentAmount,
-                            category.monthlyLimit,
+                            spentAmount.money(),
+                            category.monthlyLimit.money(),
                             ViewUtil.getCategoryColor(category.name),
                             ViewUtil.getCategoryColor2(category.name)
                     )
