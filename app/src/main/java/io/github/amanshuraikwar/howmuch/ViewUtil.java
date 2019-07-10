@@ -57,9 +57,4 @@ public class ViewUtil {
             default: return R.drawable.round_bubble_chart_24;
         }
     }
-
-    @NonNull
-    public static String getDefaultTransactionTitle(Category category) {
-        return category.getName();
-    }
 }

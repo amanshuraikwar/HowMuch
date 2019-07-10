@@ -44,6 +44,8 @@ class LimitLineView : View {
     var xRawCur: Float = 0f
     var yRawLimit: Float = 0f
 
+    private var labelMarkerPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+
     constructor(context: Context): super(context) {
         init(context, null, R.attr.LimitLineViewStyle, R.style.LimitLineView)
     }
@@ -135,7 +137,36 @@ class LimitLineView : View {
             lastDrawnY = sum
         }
 
+        // if last drawn X was not cur X
+        // then draw a straight line to cur X
+        if (lastDrawnX < xRawCur) {
+            linePath.lineTo(
+                    xRawCur.scaleX().canvasX(),
+                    sum.scaleY().canvasY()
+            )
+            lastDrawnX = xRawCur
+        }
+
         canvas.drawPath(linePath, linePaint)
+
+        // draw label marker
+
+        canvas.drawRoundRect(
+                xRawCur.scaleX().canvasX() - labelTextPaint.measureText("TODAY")/ 2 - 10,
+                contentRect.bottom - labelTextPaint.textSize - 10,
+                xRawCur.scaleX().canvasX() + labelTextPaint.measureText("TODAY") / 2 + 10,
+                contentRect.bottom + 16,
+                8f,
+                8f,
+                labelMarkerPaint
+        )
+
+        linePath.reset()
+        linePath.moveTo(xRawCur.scaleX().canvasX() - 8, contentRect.bottom - labelTextPaint.textSize - 8)
+        linePath.lineTo(xRawCur.scaleX().canvasX(), contentRect.bottom - labelTextPaint.textSize - 18)
+        linePath.lineTo(xRawCur.scaleX().canvasX() + 8, contentRect.bottom - labelTextPaint.textSize - 8)
+        linePath.close()
+        canvas.drawPath(linePath, labelMarkerPaint)
 
         // draw cur x text
 
@@ -389,11 +420,9 @@ class LimitLineView : View {
         baselinePaint.color = baselineColor
         baselinePaint.strokeWidth = baselineWidth
         baselinePaint.strokeCap = Paint.Cap.ROUND
-        baselinePaint.pathEffect =
-                DashPathEffect(floatArrayOf(lineDashGap, lineDashGap), 0f)
 
         yLimitLinePaint.style = Paint.Style.STROKE
-        yLimitLinePaint.color = baselineColor
+        yLimitLinePaint.color = lineColor
         yLimitLinePaint.strokeWidth = baselineWidth
         yLimitLinePaint.pathEffect =
                 DashPathEffect(floatArrayOf(lineDashGap, lineDashGap), 0f)
@@ -442,6 +471,9 @@ class LimitLineView : View {
 
         intersectionPointPaint.style = Paint.Style.FILL
         intersectionPointPaint.color = intersectionPointColor
+
+        labelMarkerPaint.style = Paint.Style.FILL
+        labelMarkerPaint.color = lineColor
     }
 
     /**

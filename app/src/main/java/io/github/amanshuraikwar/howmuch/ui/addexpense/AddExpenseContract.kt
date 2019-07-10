@@ -17,6 +17,8 @@ import io.github.amanshuraikwar.howmuch.ui.list.items.CategoryItem
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 interface AddExpenseContract {
@@ -154,6 +156,45 @@ interface AddExpenseContract {
             }
         }
 
+        private fun getSuggestedTransactionTitle(amount: String,
+                                                 time: String): String {
+
+            if (selectedCategory.name.toLowerCase() == "food") {
+
+                val hour = Util.unBeautifyTime(time).split(":")[0].toInt()
+
+                if (hour in 7..11) {
+                    return "Breakfast"
+                }
+
+                if (hour in 11..14) {
+                    return "Lunch"
+                }
+
+                if (hour in 16..18) {
+                    return "Snacks"
+                }
+
+                if (hour in 19..22) {
+                    return "Dinner"
+                }
+
+                if (hour in 22..24) {
+                    return "Groceries"
+                }
+            }
+
+            if (selectedCategory.name.toLowerCase() == "home") {
+
+                if (amount.toDouble() >= 10000) {
+                    return "Rent"
+                }
+            }
+
+            return selectedCategory.name
+
+        }
+
         override fun onSaveClicked(date: String,
                                    time: String,
                                    amount: String,
@@ -167,7 +208,7 @@ interface AddExpenseContract {
             // if title is empty, get default transaction title
             val titleToSave =
                     if (title.isEmpty()) {
-                        ViewUtil.getDefaultTransactionTitle(selectedCategory)
+                        getSuggestedTransactionTitle(amount, time)
                     } else {
                         title
                     }

@@ -71,8 +71,8 @@
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
             app:vpb_lineWidth="4dp"
-            app:vpb_lineBackground="#FFCC80"
-                app:vpb_lineColor="#FFA726"
+            app:vpb_lineBackground="@color/monthlyBudgetLimitSecondary"
+            app:vpb_lineColor="@color/monthlyBudgetLimitPrimary"
             app:vpb_orientation="horizontal" />
 
         <com.google.android.material.button.MaterialButton
