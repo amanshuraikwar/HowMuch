@@ -173,7 +173,7 @@ public class Util {
 
     public static String unBeautifyDate(String beautifulDate) throws ParseException {
 
-        if (beautifulDate.equals("Today")) {
+        if (beautifulDate.equalsIgnoreCase("Today")) {
             return getCurDate();
         }
 

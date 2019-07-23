@@ -81,13 +81,13 @@ interface StatsContract {
                     .map {
                         prevList ->
                         prevList.add(txnList.getPastSevenDayItem())
-                        prevList.add(Divider.Item())
+                        //prevList.add(Divider.Item())
                         prevList
                     }
                     .map {
                         prevList ->
                         prevList.add(txnList.getBarViewListItem())
-                        prevList.add(Divider.Item())
+                        //prevList.add(Divider.Item())
                         prevList
                     }
                     .flatMap {
@@ -296,13 +296,21 @@ interface StatsContract {
             return trend
         }
 
+        private fun List<Transaction>.filterByDate(month: Int,
+                                                   year: Int)
+                : List<Transaction> {
+            return this.filter {
+                val parts = it.date.split("-")
+                parts[1].toInt() == month && parts[2].toInt() == year
+            }
+        }
+
         private fun List<Transaction>.getThisMonthDayItems(limit: Double): List<ListItem<*, *>> {
 
-            val firstDayOfMonth = Util.getFirstDayOfMonth()
+            val curMonth = Util.getCurMonthNumber()
+            val curYear = Util.getCurYearNumber()
 
-            val filteredTransactions = this.filter {
-                Util.toTimeMillisec(it.date, it.time) >= firstDayOfMonth
-            }
+            val filteredTransactions = this.filterByDate(curMonth, curYear)
 
             val thisMonthTotalMap = filteredTransactions
                     .groupBy { it.type }
@@ -338,7 +346,7 @@ interface StatsContract {
             }
 
             val list = mutableListOf<ListItem<*, *>>(
-                    Divider.Item(),
+                    //Divider.Item(),
                     StatHeader.Item(StatHeader("Recent Transactions"))
             )
 

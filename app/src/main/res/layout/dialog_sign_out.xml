@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_normal"
+        android:paddingStart="@dimen/padding_normal"
+        android:paddingEnd="@dimen/padding_normal"
+        android:textAppearance="@style/TextAppearance.ToolbarTitle.SmallCaps"
+        android:text="@string/sign_out_message"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/actionBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_normal"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:textAppearance="@style/TextAppearance.Button"
+        android:text="@string/sign_out"/>
+</LinearLayout>

@@ -94,12 +94,16 @@ class LimitLineView : View {
         val xMax = graphRect.width()
         val yMax = graphRect.height()
 
-        // draw baseline
+        //region draw baseline
 
         linePath.reset()
         linePath.moveTo(0f.canvasX(), 0f.canvasY())
         linePath.lineTo(xMax.canvasX(), 0f.canvasY())
         canvas.drawPath(linePath, baselinePaint)
+
+        //endregion
+
+        //region y limit
 
         // draw y limit line
 
@@ -116,6 +120,8 @@ class LimitLineView : View {
                 (yRawLimit.scaleY() + valueTextPadding).canvasY(),
                 valueTextPaint
         )
+
+        //endregion
 
         // draw provided data
 
@@ -149,30 +155,101 @@ class LimitLineView : View {
 
         canvas.drawPath(linePath, linePaint)
 
-        // draw label marker
-
-        canvas.drawRoundRect(
-                xRawCur.scaleX().canvasX() - labelTextPaint.measureText("TODAY")/ 2 - 10,
-                contentRect.bottom - labelTextPaint.textSize - 10,
-                xRawCur.scaleX().canvasX() + labelTextPaint.measureText("TODAY") / 2 + 10,
-                contentRect.bottom + 16,
-                8f,
-                8f,
-                labelMarkerPaint
-        )
+        // draw cur x intersection point
 
         linePath.reset()
-        linePath.moveTo(xRawCur.scaleX().canvasX() - 8, contentRect.bottom - labelTextPaint.textSize - 8)
-        linePath.lineTo(xRawCur.scaleX().canvasX(), contentRect.bottom - labelTextPaint.textSize - 18)
-        linePath.lineTo(xRawCur.scaleX().canvasX() + 8, contentRect.bottom - labelTextPaint.textSize - 8)
-        linePath.close()
-        canvas.drawPath(linePath, labelMarkerPaint)
+        linePath.addCircle(
+                lastDrawnX.scaleX().canvasX(),
+                lastDrawnY.scaleY().canvasY(),
+                intersectionPointRadius,
+                Path.Direction.CW
+        )
+
+        canvas.drawPath(linePath, intersectionPointPaint)
+
+        // draw label marker
+
+        val labelWidth = labelTextPaint.measureText("TODAY")
+        val labelPaddingHorizontal = 10
+        val labelPaddingTop = 10
+        val labelPaddingBottom = 16
+        val labelBoxRadius = 8f
+
+        // if last data y has not crossed y limit
+        // draw label box to left
+        if (lastDrawnY < yRawLimit) {
+
+            val labelRect = RectF(
+                    xRawCur.scaleX().canvasX() - labelWidth - labelPaddingHorizontal*2,
+                    contentRect.bottom - labelTextPaint.textSize - labelPaddingTop,
+                    xRawCur.scaleX().canvasX(),
+                    contentRect.bottom + labelPaddingBottom
+            )
+
+            canvas.drawRoundRect(
+                    labelRect,
+                    labelBoxRadius,
+                    labelBoxRadius,
+                    labelMarkerPaint
+            )
+
+            linePath.reset()
+            linePath.moveTo(xRawCur.scaleX().canvasX() - labelBoxRadius*1.5f, labelRect.top)
+            linePath.lineTo(xRawCur.scaleX().canvasX(), graphRect.bottom + 4)
+            linePath.lineTo(xRawCur.scaleX().canvasX(), labelRect.top + labelBoxRadius*2)
+            linePath.close()
+            canvas.drawPath(linePath, labelMarkerPaint)
+
+        } else {
+
+            val labelRect = RectF(
+                    xRawCur.scaleX().canvasX() - labelWidth - labelPaddingHorizontal*2,
+                    contentRect.bottom - labelTextPaint.textSize - labelPaddingTop,
+                    xRawCur.scaleX().canvasX(),
+                    contentRect.bottom + labelPaddingBottom
+            )
+
+            canvas.drawRoundRect(
+                    labelRect,
+                    labelBoxRadius,
+                    labelBoxRadius,
+                    labelMarkerPaint
+            )
+
+            linePath.reset()
+            linePath.moveTo(xRawCur.scaleX().canvasX() - labelBoxRadius*1.5f, labelRect.top)
+            linePath.lineTo(xRawCur.scaleX().canvasX(), graphRect.bottom + 4)
+            linePath.lineTo(xRawCur.scaleX().canvasX(), labelRect.top + labelBoxRadius*2)
+            linePath.close()
+            canvas.drawPath(linePath, labelMarkerPaint)
+
+        }
+
+
+
+
+
+//        canvas.drawRoundRect(
+//                xRawCur.scaleX().canvasX() - labelTextPaint.measureText("TODAY")/ 2 - 10,
+//                contentRect.bottom - labelTextPaint.textSize - 10,
+//                xRawCur.scaleX().canvasX() + labelTextPaint.measureText("TODAY") / 2 + 10,
+//                contentRect.bottom + 16,
+//                8f,
+//                8f,
+//                labelMarkerPaint
+//        )
+
+
+
+
+
+
 
         // draw cur x text
 
         canvas.drawText(
                 "TODAY",
-                xRawCur.scaleX().canvasX(),
+                xRawCur.scaleX().canvasX() - labelWidth/2 - labelPaddingHorizontal,
                 (0f - labelTextPadding - labelTextSize).canvasY(),
                 labelTextPaint
         )
@@ -267,6 +344,19 @@ class LimitLineView : View {
 
                 canvas.drawPath(linePath, intersectionPointPaint)
 
+                // draw prediction projection to x axis
+                linePath.reset()
+                linePath.moveTo(
+                        projectedYLimitIntersectionX.canvasX(),
+                        yRawLimit.scaleY().canvasY()
+                )
+                linePath.lineTo(
+                        projectedYLimitIntersectionX.canvasX(),
+                        (0f.scaleY() + this.lineDashGap).canvasY()
+                )
+
+                canvas.drawPath(linePath, projectionLinePaint)
+
             }
 
         } else {
@@ -350,6 +440,18 @@ class LimitLineView : View {
 
                 canvas.drawPath(linePath, intersectionPointPaint)
 
+                // draw prediction projection to x axis
+                linePath.reset()
+                linePath.moveTo(
+                        projectedYLimitIntersectionX.canvasX(),
+                        yRawLimit.scaleY().canvasY()
+                )
+                linePath.lineTo(
+                        projectedYLimitIntersectionX.canvasX(),
+                        (0f.scaleY() + this.lineDashGap).canvasY()
+                )
+
+                canvas.drawPath(linePath, projectionLinePaint)
             }
         }
     }

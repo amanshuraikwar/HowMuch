@@ -15,7 +15,8 @@ import kotlinx.android.synthetic.main.item_bars.view.*
 
 class MonthBarGraph(val items: List<BarView.BarItem>,
                     val color1: Int,
-                    val color2: Int) {
+                    val color2: Int,
+                    val markerX: String = "TODAY") {
 
     class Item(val bars: MonthBarGraph)
         : ListItem<SimpleListItemOnClickListener, ListItemTypeFactory>() {
@@ -36,13 +37,14 @@ class MonthBarGraph(val items: List<BarView.BarItem>,
             val LAYOUT = R.layout.item_month_bar_graph
         }
 
-        override fun bind(listItem: Item, host: FragmentActivity) {
+        override fun bind(listItem: Item,
+                          host: FragmentActivity) {
             itemView.barView.data = listItem.bars.items
             itemView.barView.lineColor = ContextCompat.getColor(host, listItem.bars.color1)
             itemView.barView.lineBackgroundColor = ContextCompat.getColor(host, listItem.bars.color2)
             itemView.barView.labelTextColor = ContextCompat.getColor(host, R.color.white)
             itemView.barView.labelMarker = true
-            itemView.barView.markerX = "TODAY"
+            itemView.barView.markerX = listItem.bars.markerX
             itemView.barView.labelMarkerColor = ContextCompat.getColor(host, listItem.bars.color1)
             itemView.barView.invalidate()
         }

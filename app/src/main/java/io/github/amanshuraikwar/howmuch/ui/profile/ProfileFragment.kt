@@ -68,17 +68,19 @@ class ProfileFragment
     }
 
     override fun showSignOutAlertDialog() {
-        AlertDialog
-                .Builder(activity)
-                .setMessage(R.string.sign_out_message)
-                .setNegativeButton("Sign Out") {
-                    dialog, _ ->
-                    presenter.onSignOutClicked()
-                    dialog.dismiss()
-                }
-                .setPositiveButton("Cancel") { dialog, _ -> dialog.dismiss() }
-                .setCancelable(true)
-                .show()
+        SignOutDialogFragment {presenter.onSignOutClicked()}
+                .show(childFragmentManager, "sign-out-dialog")
+//        AlertDialog
+//                .Builder(activity)
+//                .setMessage(R.string.sign_out_message)
+//                .setNegativeButton("Sign Out") {
+//                    dialog, _ ->
+//                    presenter.onSignOutClicked()
+//                    dialog.dismiss()
+//                }
+//                .setPositiveButton("Cancel") { dialog, _ -> dialog.dismiss() }
+//                .setCancelable(true)
+//                .show()
     }
 
     override fun startHistoryActivity() {

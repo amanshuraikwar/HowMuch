@@ -122,7 +122,12 @@ interface CategoryContract {
                 barItems.add(
                         BarView.BarItem(
                                 if (i == curDay) {
-                                    "TODAY"
+                                    if (curMonth == displayedMonth
+                                        && curYear == displayedYear) {
+                                        "TODAY"
+                                    } else {
+                                        "THIS DAY"
+                                    }
                                 } else {
                                     ""
                                 },
@@ -135,7 +140,13 @@ interface CategoryContract {
                     MonthBarGraph(
                             barItems,
                             ViewUtil.getCategoryColor(category.name),
-                            ViewUtil.getCategoryColor2(category.name)
+                            ViewUtil.getCategoryColor2(category.name),
+                            if (curMonth == displayedMonth
+                                    && curYear == displayedYear) {
+                                "TODAY"
+                            } else {
+                                "THIS DAY"
+                            }
                     )
             )
         }

@@ -79,6 +79,6 @@
     <color name="utilities3">#C5CAE9</color>
     <color name="travel3">#B2DFDB</color>
 
-    <color name="monthlyBudgetLimitPrimary">#FFA726</color>
-    <color name="monthlyBudgetLimitSecondary">#FFF3E0</color>
+    <color name="monthlyBudgetLimitPrimary">#EF5350</color>
+    <color name="monthlyBudgetLimitSecondary">#FFEBEE</color>
 </resources>

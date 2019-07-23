@@ -147,9 +147,13 @@ class CategoryActivity
     }
 
     override fun initUi(title: String, color1: Int, color2: Int) {
+        val actColor1 = ContextCompat.getColor(this, color1)
         toolbar.title = title
-        pb.indeterminateTintList =
-                ColorStateList.valueOf(ContextCompat.getColor(this, color1))
+        pb.indeterminateTintList = ColorStateList.valueOf(actColor1)
+        editDialogView.monthlyLimitTil.boxStrokeColor = actColor1
+        editDialogView.monthlyLimitTil.hintTextColor = ColorStateList.valueOf(actColor1)
+        editDialogView.saveBtn.setBackgroundColor(actColor1)
+
     }
 
     override fun showEditDialog(category: Category) {
