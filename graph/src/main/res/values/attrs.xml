@@ -28,7 +28,7 @@
         <attr name="spark_animateChanges" format="boolean|reference" />
     </declare-styleable>
 
-    <attr name="spark_PieViewStyle" format="reference" />
+    <attr name="PieViewStyle" format="reference" />
 
     <declare-styleable name="PieView">
         <attr name="pie_lineWidth" format="dimension|reference" />
@@ -92,4 +92,58 @@
     </declare-styleable>
 
     <attr name="LimitLineViewStyle" format="reference" />
+
+    <attr name="BudgetLineViewStyle" format="reference" />
+
+    <declare-styleable name="BudgetLineView">
+
+        <attr name="blv_spentLineWidth" format="dimension|reference" />
+        <attr name="blv_spentLineColor" format="color|reference" />
+
+        <attr name="blv_baselineWidth" format="dimension|reference" />
+        <attr name="blv_baselineColor" format="color|reference" />
+
+        <attr name="blv_budgetLimitLineWidth" format="dimension|reference" />
+        <attr name="blv_budgetLimitLineColor" format="color|reference" />
+
+        <attr name="blv_budgetLimitShiftColor" format="color|reference" />
+
+        <attr name="blv_budgetLimitTextSize" format="dimension|reference" />
+        <attr name="blv_budgetLimitTextColor" format="color|reference" />
+        <attr name="blv_budgetLimitTextFontFamily" format="reference" />
+        <attr name="blv_budgetLimitTextStyle" format="enum">
+            <enum name="BOLD" value="0"/>
+        </attr>
+        <attr name="blv_budgetLimitTextPadding" format="dimension|reference" />
+
+        <attr name="blv_budgetProjectionLineWidth" format="dimension|reference" />
+        <attr name="blv_budgetProjectionLineColor" format="color|reference" />
+
+        <attr name="blv_dateProjectionLineWidth" format="dimension|reference" />
+        <attr name="blv_dateProjectionLineColor" format="color|reference" />
+
+        <attr name="blv_zeroOffset" format="dimension|reference" />
+
+        <attr name="blv_intersectionPointRadius" format="dimension|reference" />
+        <attr name="blv_intersectionPointColor" format="color|reference" />
+
+        <attr name="blv_intersectionPointBorderWidth" format="dimension|reference" />
+        <attr name="blv_intersectionPointBorderColor" format="color|reference" />
+
+        <attr name="blv_dateTextSize" format="dimension|reference" />
+        <attr name="blv_dateTextColor" format="color|reference" />
+        <attr name="blv_dateTextFontFamily" format="reference" />
+        <attr name="blv_dateTextStyle" format="enum">
+            <enum name="BOLD" value="0"/>
+        </attr>
+
+        <attr name="blv_dateRectPadding" format="dimension|reference" />
+        <attr name="blv_dateRectColor" format="color|reference" />
+        <attr name="blv_dateRectRadius" format="dimension|reference" />
+
+        <attr name="blv_puckSize" format="dimension|reference" />
+        <attr name="blv_puckGap" format="dimension|reference" />
+
+    </declare-styleable>
+
 </resources>

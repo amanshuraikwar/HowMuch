@@ -54,4 +54,51 @@
         <item name="llv_labelTextColor">#000</item>
     </style>
 
+    <style name="BudgetLineView">
+
+        <item name="blv_spentLineWidth">3dp</item>
+        <item name="blv_spentLineColor">#1eb980</item>
+
+        <item name="blv_baselineWidth">2dp</item>
+        <item name="blv_baselineColor">#eee</item>
+
+        <item name="blv_budgetLimitLineWidth">1dp</item>
+        <item name="blv_budgetLimitLineColor">#EF5350</item>
+
+        <item name="blv_budgetLimitShiftColor">#11EF5350</item>
+
+        <item name="blv_budgetLimitTextSize">14sp</item>
+        <item name="blv_budgetLimitTextColor">#EF5350</item>
+        <item name="blv_budgetLimitTextPadding">8dp</item>
+        <!--<item name="blv_budgetLimitTextFontFamily"></item>-->
+        <item name="blv_budgetLimitTextStyle">BOLD</item>
+
+        <item name="blv_budgetProjectionLineWidth">3dp</item>
+        <item name="blv_budgetProjectionLineColor">#551eb980</item>
+
+        <item name="blv_dateProjectionLineWidth">1dp</item>
+        <item name="blv_dateProjectionLineColor">#eee</item>
+
+        <item name="blv_zeroOffset">8dp</item>
+
+        <item name="blv_intersectionPointRadius">4dp</item>
+        <item name="blv_intersectionPointColor">#fff</item>
+
+        <item name="blv_intersectionPointBorderWidth">3dp</item>
+        <item name="blv_intersectionPointBorderColor">#1eb980</item>
+
+        <item name="blv_dateTextSize">12sp</item>
+        <item name="blv_dateTextColor">#fff</item>
+        <!--<item name="blv_dateTextFontFamily"></item>-->
+        <item name="blv_dateTextStyle">BOLD</item>
+
+        <item name="blv_dateRectPadding">4dp</item>
+        <item name="blv_dateRectColor">#1eb980</item>
+        <item name="blv_dateRectRadius">4dp</item>
+
+        <item name="blv_puckSize">4dp</item>
+        <item name="blv_puckGap">2dp</item>
+
+    </style>
+
 </resources>

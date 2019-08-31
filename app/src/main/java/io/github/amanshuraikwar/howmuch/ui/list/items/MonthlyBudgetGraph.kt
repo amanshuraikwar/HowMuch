@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.ViewUtil
+import io.github.amanshuraikwar.howmuch.graph.budget.BudgetLineView
 import io.github.amanshuraikwar.howmuch.graph.pie.LimitLineView
 import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
@@ -41,11 +42,19 @@ class MonthlyBudgetGraph(val data: List<LimitLineView.Item>,
         }
 
         override fun bind(listItem: Item, host: FragmentActivity) {
-            itemView.graph.data = listItem.obj.data
-            itemView.graph.yRawLimit = listItem.obj.bugdetLimit
-            itemView.graph.xRawCur = listItem.obj.today
-            itemView.graph.xRawMax = 31f
-            itemView.graph.invalidate()
+
+            itemView.budgetLineView.data =
+                    listItem.obj.data.map { BudgetLineView.Item(it.x.toInt(), it.y) }
+
+            itemView.budgetLineView.budgetLimit = listItem.obj.bugdetLimit
+            itemView.budgetLineView.today = listItem.obj.today.toInt()
+            itemView.budgetLineView.maxDate = 31
+            itemView.budgetLineView.invalidate()
+
+            //itemView.graph.data = listItem.obj.data
+            //itemView.graph.yRawLimit = listItem.obj.bugdetLimit
+            //itemView.graph.xRawCur = listItem.obj.today
+            //itemView.graph.xRawMax = 31f
         }
     }
 }

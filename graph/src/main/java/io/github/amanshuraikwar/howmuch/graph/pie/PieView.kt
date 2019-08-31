@@ -2,13 +2,10 @@ package io.github.amanshuraikwar.howmuch.graph.pie
 
 import android.content.Context
 import android.graphics.*
-import android.os.Build
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import androidx.annotation.ColorInt
 import io.github.amanshuraikwar.howmuch.graph.R
-import io.github.amanshuraikwar.howmuch.graph.SparkAdapter
 
 class PieView : View {
 
@@ -30,12 +27,12 @@ class PieView : View {
     var data: List<PieItem>? = null
 
     constructor(context: Context): super(context) {
-        init(context, null, R.attr.spark_PieViewStyle, R.style.spark_PieView)
+        init(context, null, R.attr.PieViewStyle, R.style.spark_PieView)
     }
 
     constructor(context: Context, attrs: AttributeSet?)
             : super(context, attrs) {
-        init(context, attrs, R.attr.spark_PieViewStyle, R.style.spark_PieView)
+        init(context, attrs, R.attr.PieViewStyle, R.style.spark_PieView)
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
