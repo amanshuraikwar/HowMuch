@@ -12,7 +12,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('/Volumes/USER/personal/HowMuch/howmuchreleasekeystore')
+            storeFile file('/Users/amanshuraikwar/projects/howmuch/howmuchreleasekeystore')
             storePassword 'lk4r0yke'
             keyAlias = 'arhmks1'
             keyPassword 'lk4r0yke'

@@ -37,13 +37,7 @@
             android:name=".ui.addexpense.AddExpenseActivity"
             android:configChanges="orientation|screenSize|screenLayout"/>
         <activity
-            android:name=".ui.history.activity.HistoryActivity"
-            android:configChanges="orientation|screenSize|screenLayout"/>
-        <activity
-            android:name=".ui.editcategories.EditCategoriesActivity"
-            android:configChanges="orientation|screenSize|screenLayout"/>
-        <activity
-            android:name=".ui.editwallets.EditWalletsActivity"
+            android:name=".ui.history.HistoryActivity"
             android:configChanges="orientation|screenSize|screenLayout"/>
         <activity
             android:name=".ui.settings.activity.SettingsActivity"

@@ -26,9 +26,6 @@ interface ProfileContract {
         fun initiateSignOut()
         fun showSignOutAlertDialog()
         fun startHistoryActivity()
-        fun startWalletsActivity()
-        fun startCategoriesActivity()
-        fun startSettingsActivity()
         fun startAboutActivity()
     }
 

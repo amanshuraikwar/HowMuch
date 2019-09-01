@@ -24,7 +24,6 @@ interface StatsContract {
         fun submitList(list: List<ListItem<*, *>>)
         fun startTransactionActivity(transaction: Transaction, category: Category)
         fun startHistoryActivity(filter: String? = null)
-        fun startSettingsActivity()
         fun startMonthlyBudgetActivity()
     }
 

@@ -662,7 +662,7 @@
         name="TextAppearance.CurrencySmall"
         parent="@style/TextAppearance.Title">
 
-        <item name="android:fontFamily">@font/eczar</item>
+        <item name="android:fontFamily">@font/cabin</item>
     </style>
 
     <style

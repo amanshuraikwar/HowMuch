@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -18,11 +17,8 @@ import io.github.amanshuraikwar.howmuch.R
 import io.github.amanshuraikwar.howmuch.base.di.ActivityContext
 import io.github.amanshuraikwar.howmuch.base.ui.base.BaseFragment
 import io.github.amanshuraikwar.howmuch.ui.about.AboutActivity
-import io.github.amanshuraikwar.howmuch.ui.editcategories.EditCategoriesActivity
-import io.github.amanshuraikwar.howmuch.ui.editwallets.EditWalletsActivity
-import io.github.amanshuraikwar.howmuch.ui.history.activity.HistoryActivity
+import io.github.amanshuraikwar.howmuch.ui.history.HistoryActivity
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
-import io.github.amanshuraikwar.howmuch.ui.settings.activity.SettingsActivity
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.MultiItemListAdapter
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -85,18 +81,6 @@ class ProfileFragment
 
     override fun startHistoryActivity() {
         startActivity(Intent(activity, HistoryActivity::class.java))
-    }
-
-    override fun startWalletsActivity() {
-        startActivity(Intent(activity, EditWalletsActivity::class.java))
-    }
-
-    override fun startCategoriesActivity() {
-        startActivity(Intent(activity, EditCategoriesActivity::class.java))
-    }
-
-    override fun startSettingsActivity() {
-        startActivity(Intent(activity, SettingsActivity::class.java))
     }
 
     override fun startAboutActivity() {

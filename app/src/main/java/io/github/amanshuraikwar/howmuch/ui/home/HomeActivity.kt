@@ -20,7 +20,6 @@ import io.github.amanshuraikwar.howmuch.ui.categories.CategoriesFragment
 import io.github.amanshuraikwar.howmuch.ui.profile.ProfileFragment
 import io.github.amanshuraikwar.howmuch.ui.signin.SignInFragment
 import io.github.amanshuraikwar.howmuch.ui.stats.StatsFragment
-import io.github.amanshuraikwar.howmuch.ui.wallets.WalletsFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : BaseActivity<HomeContract.View, HomeContract.Presenter>(), HomeContract.View {

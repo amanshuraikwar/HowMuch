@@ -1,7 +1,6 @@
-package io.github.amanshuraikwar.howmuch.ui.history.activity
+package io.github.amanshuraikwar.howmuch.ui.history
 
 import io.github.amanshuraikwar.howmuch.R
-import io.github.amanshuraikwar.howmuch.ViewUtil
 import io.github.amanshuraikwar.howmuch.base.bus.AppBus
 import io.github.amanshuraikwar.howmuch.base.data.DataManager
 import io.github.amanshuraikwar.howmuch.base.util.Util
@@ -11,7 +10,6 @@ import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.protocol.TransactionType
 import io.github.amanshuraikwar.howmuch.ui.list.date.DateHeaderListItem
 import io.github.amanshuraikwar.howmuch.ui.list.items.*
-import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionListItem
 import io.github.amanshuraikwar.howmuch.ui.list.transaction.TransactionOnClickListener
 import io.github.amanshuraikwar.howmuch.ui.month.MonthPresenter
 import io.github.amanshuraikwar.howmuch.ui.month.MonthPresenterImpl

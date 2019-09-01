@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="preloaded_fonts" translatable="false">
-        <item>@font/bitter</item>
         <item>@font/cabin</item>
-        <item>@font/eczar</item>
         <item>@font/raleway_medium</item>
         <item>@font/roboto_mono</item>
         <item>@font/roboto_mono_bold</item>
         <item>@font/rubik</item>
-        <item>@font/rubik_black</item>
     </array>
 </resources>
