@@ -79,6 +79,7 @@ class BudgetLineView : View {
     }
     set(value) {
         field = value
+        populatePath()
         //invalidate()
     }
 
@@ -133,6 +134,8 @@ class BudgetLineView : View {
 
     private var todayRect = RectF()
     private var budgetLimitReachDateRect = RectF()
+
+    var isCurMonth = true
 
     constructor(context: Context): super(context) {
         init(context, null, R.attr.BudgetLineViewStyle, R.style.BudgetLineView)
@@ -497,6 +500,14 @@ class BudgetLineView : View {
     }
 
     private fun populatePath() {
+
+        if (isCurMonth) {
+            todayLabel = "TODAY"
+        } else {
+            todayLabel = maxDate.toString()
+            today = maxDate
+        }
+
         updateGraphRect()
         populateBaseline()
         calculateYScaleFactor()
@@ -760,6 +771,9 @@ class BudgetLineView : View {
                 lastDrawnX = budgetLimitReachDate.getGraphX()
                 lastDrawnY = budgetLimitShifted.getGraphY()
             }
+        } else {
+            lastDrawnX = today.getGraphX()
+            lastDrawnY = curSum.getGraphY()
         }
     }
 
@@ -941,6 +955,8 @@ class BudgetLineView : View {
             // in case budgetLimitReachDate != floor(budgetLimitReachDateAct)
             // [2]
             budgetLimitShifted = curSum
+        } else {
+            budgetLimitShifted = budgetLimit
         }
 
     }

@@ -1,26 +1,21 @@
 package io.github.amanshuraikwar.howmuch.ui.list.items
 
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import androidx.annotation.LayoutRes
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import io.github.amanshuraikwar.howmuch.R
-import io.github.amanshuraikwar.howmuch.ViewUtil
 import io.github.amanshuraikwar.howmuch.graph.budget.BudgetLineView
 import io.github.amanshuraikwar.howmuch.graph.pie.LimitLineView
-import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.SimpleListItemOnClickListener
 import io.github.amanshuraikwar.multiitemlistadapter.ViewHolder
 import kotlinx.android.synthetic.main.item_monthly_budget_graph.view.*
-import kotlinx.android.synthetic.main.item_stat_category.view.*
 
 class MonthlyBudgetGraph(val data: List<LimitLineView.Item>,
-                         val bugdetLimit: Float,
-                         val today: Float) {
+                         val budgetLimit: Float,
+                         val today: Float,
+                         val isCurMonth: Boolean = true) {
 
     class Item(val obj: MonthlyBudgetGraph)
         : ListItem<SimpleListItemOnClickListener, ListItemTypeFactory>() {
@@ -43,16 +38,16 @@ class MonthlyBudgetGraph(val data: List<LimitLineView.Item>,
 
         override fun bind(listItem: Item, host: FragmentActivity) {
 
-            itemView.budgetLineView.data =
-                    listItem.obj.data.map { BudgetLineView.Item(it.x.toInt(), it.y) }
-
-            itemView.budgetLineView.budgetLimit = listItem.obj.bugdetLimit
+            itemView.budgetLineView.budgetLimit = listItem.obj.budgetLimit
             itemView.budgetLineView.today = listItem.obj.today.toInt()
             itemView.budgetLineView.maxDate = 31
+            itemView.budgetLineView.isCurMonth = listItem.obj.isCurMonth
+            itemView.budgetLineView.data =
+                    listItem.obj.data.map { BudgetLineView.Item(it.x.toInt(), it.y) }
             itemView.budgetLineView.invalidate()
 
             //itemView.graph.data = listItem.obj.data
-            //itemView.graph.yRawLimit = listItem.obj.bugdetLimit
+            //itemView.graph.yRawLimit = listItem.obj.budgetLimit
             //itemView.graph.xRawCur = listItem.obj.today
             //itemView.graph.xRawMax = 31f
         }

@@ -88,7 +88,7 @@
             android:layout_marginBottom="@dimen/margin_very_small"
             app:iconTint="@color/activeIcon"
             android:textColor="@color/primaryText"
-            app:rippleColor="#FFA726"
+            app:rippleColor="@color/monthlyBudgetLimitPrimary"
             android:text="see more"
             app:iconGravity="end"
             app:icon="@drawable/round_chevron_right_24" />

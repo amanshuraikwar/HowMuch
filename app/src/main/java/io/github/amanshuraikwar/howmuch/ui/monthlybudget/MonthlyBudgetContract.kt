@@ -104,7 +104,8 @@ interface MonthlyBudgetContract {
                     MonthlyBudgetGraph(
                             data,
                             limit.toFloat(),
-                            curDayOfMonth.toFloat()
+                            curDayOfMonth.toFloat(),
+                            displayedMonth == curMonth
                     )
             )
         }
