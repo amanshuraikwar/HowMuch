@@ -71,3 +71,4 @@ keystores
 
 # ds store
 .DS_STORE
+app/beta/
