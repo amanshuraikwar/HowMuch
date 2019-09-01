@@ -99,6 +99,15 @@
         <item name="blv_puckSize">4dp</item>
         <item name="blv_puckGap">2dp</item>
 
+        <item name="blv_intersectionPointTextBgColor">#E6EBB5B5</item>
+
+        <item name="blv_touchedPointAmountTextColor">#EF5350</item>
+        <item name="blv_touchedPointAmountTextSize">24sp</item>
+<!--        <item name="blv_touchedPointAmountTextFontFamily"></item>-->
+        <item name="blv_touchedPointAmountTextStyle">BOLD</item>
+
+        <item name="blv_touchedPointAmountTextPadding">16dp</item>
+
     </style>
 
 </resources>

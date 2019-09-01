@@ -7,11 +7,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     style="@style/Widget.MaterialComponents.CardView"
-    android:layout_marginTop="@dimen/margin_small"
-    android:layout_marginBottom="@dimen/margin_small"
     app:cardBackgroundColor="@color/white"
     app:cardElevation="0dp"
-    app:cardCornerRadius="8dp">
+    app:cardCornerRadius="0dp">
 
     <io.github.amanshuraikwar.howmuch.graph.budget.BudgetLineView
         android:id="@+id/budgetLineView"
@@ -19,44 +17,23 @@
         android:layout_height="248dp"
         android:paddingStart="72dp"
         android:paddingEnd="@dimen/padding_normal"
-        android:paddingTop="@dimen/padding_normal"
-        android:paddingBottom="@dimen/padding_normal"
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp"
         android:background="@color/white"
         app:blv_spentLineColor="@color/monthlyBudgetLimitPrimary"
-        app:blv_budgetLimitLineColor="@color/monthlyBudgetLimitPrimary"
-        app:blv_budgetLimitShiftColor="@color/monthlyBudgetLimitSecondary"
-        app:blv_budgetLimitTextColor="@color/monthlyBudgetLimitPrimary"
+
+        app:blv_budgetLimitLineColor="@color/secondaryText"
+        app:blv_budgetLimitShiftColor="@color/gray3"
+        app:blv_budgetLimitTextColor="@color/secondaryText"
         app:blv_budgetLimitTextFontFamily="@font/rubik"
+
         app:blv_budgetProjectionLineColor="@color/monthlyBudgetLimitSecondary"
-        app:blv_intersectionPointColor="@color/monthlyBudgetLimitSecondary"
+        app:blv_intersectionPointColor="@color/white"
         app:blv_intersectionPointBorderColor="@color/monthlyBudgetLimitPrimary"
         app:blv_dateTextFontFamily="@font/cabin"
-        app:blv_dateRectColor="@color/monthlyBudgetLimitPrimary"/>
-
-    <io.github.amanshuraikwar.howmuch.graph.pie.LimitLineView
-        android:id="@+id/graph"
-        android:layout_width="match_parent"
-        android:layout_height="248dp"
-        android:paddingStart="72dp"
-        android:paddingEnd="24dp"
-        android:paddingTop="@dimen/padding_normal"
-        android:paddingBottom="@dimen/padding_normal"
-        app:llv_lineWidth="3dp"
-        app:llv_lineColor="@color/monthlyBudgetLimitPrimary"
-        app:llv_baselineWidth="1dp"
-        app:llv_baselineColor="@color/gray3"
-        app:llv_lineDashGap="4dp"
-        app:llv_intersectionPointRadius="4dp"
-        app:llv_intersectionPointColor="@color/monthlyBudgetLimitPrimary"
-        app:llv_valueTextSize="16sp"
-        app:llv_valuePadding="8dp"
-        app:llv_valueTextColor="@color/monthlyBudgetLimitPrimary"
-        app:llv_valueFontFamily="@font/rubik"
-        app:llv_valueTextStyle="BOLD"
-        app:bv_labelTextSize="12sp"
-        app:bv_labelPadding="12dp"
-        app:llv_labelTextColor="@color/white"
-        app:llv_labelFontFamily="@font/cabin"
-        app:llv_labelTextStyle="BOLD"
-        android:visibility="gone" />
+        app:blv_dateRectColor="@color/monthlyBudgetLimitPrimary"
+        app:blv_intersectionPointTextBgColor="#eeFFEBEE"
+        app:blv_touchedPointAmountTextColor="@color/monthlyBudgetLimitPrimary"
+        app:blv_touchedPointAmountTextSize="34sp"
+        app:blv_touchedPointAmountTextFontFamily="@font/rubik" />
 </com.google.android.material.card.MaterialCardView>

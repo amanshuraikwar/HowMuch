@@ -144,6 +144,17 @@
         <attr name="blv_puckSize" format="dimension|reference" />
         <attr name="blv_puckGap" format="dimension|reference" />
 
+        <attr name="blv_intersectionPointTextBgColor" format="color|reference" />
+
+        <attr name="blv_touchedPointAmountTextSize" format="dimension|reference" />
+        <attr name="blv_touchedPointAmountTextColor" format="color|reference" />
+        <attr name="blv_touchedPointAmountTextFontFamily" format="reference" />
+        <attr name="blv_touchedPointAmountTextStyle" format="enum">
+            <enum name="BOLD" value="0"/>
+        </attr>
+
+        <attr name="blv_touchedPointAmountTextPadding" format="dimension|reference" />
+
     </declare-styleable>
 
 </resources>

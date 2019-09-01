@@ -44,12 +44,8 @@ class MonthlyBudgetGraph(val data: List<LimitLineView.Item>,
             itemView.budgetLineView.isCurMonth = listItem.obj.isCurMonth
             itemView.budgetLineView.data =
                     listItem.obj.data.map { BudgetLineView.Item(it.x.toInt(), it.y) }
+            itemView.budgetLineView.isChecked = false
             itemView.budgetLineView.invalidate()
-
-            //itemView.graph.data = listItem.obj.data
-            //itemView.graph.yRawLimit = listItem.obj.budgetLimit
-            //itemView.graph.xRawCur = listItem.obj.today
-            //itemView.graph.xRawMax = 31f
         }
     }
 }

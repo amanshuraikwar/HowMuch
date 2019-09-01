@@ -1,13 +1,18 @@
 package io.github.amanshuraikwar.howmuch.graph.budget
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import android.view.animation.AnimationUtils
+import android.widget.Checkable
 import androidx.core.content.res.ResourcesCompat
 import io.github.amanshuraikwar.howmuch.graph.R
+import kotlin.math.max
+import kotlin.math.sqrt
 
-class BudgetLineView : View {
+class BudgetLineView : View, Checkable {
 
     /**
      * The rect where the actual stuff is drawn.
@@ -74,6 +79,15 @@ class BudgetLineView : View {
     private var intersectionPointBorderColor = Color.BLACK
     private val intersectionPointBorderPaint = Paint(Paint.ANTI_ALIAS_FLAG)
 
+    private var intersectionPointTextBgColor = Color.parseColor("#eeFFEBEE")
+    private val intersectionPointTextBgPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+    private var touchedPointAmountTextSize = 120f
+    private var touchedPointAmountTextColor = Color.RED
+    private val touchedPointAmountTextPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+    private var touchedPointAmountTextPadding = 20f
+
     var data: List<Item> = mutableListOf<Item>().apply {
         for (i in 1..31) this.add(Item(i, i*10f))
     }
@@ -132,10 +146,33 @@ class BudgetLineView : View {
     var lastDrawnX = 0f
     var lastDrawnY = 0f
 
+    var isCurMonth = true
+
     private var todayRect = RectF()
     private var budgetLimitReachDateRect = RectF()
 
-    var isCurMonth = true
+    private var touchedX = 0f
+    private var touchedY = 0f
+
+    private var checkedX = false
+    private var progressAnimator: ValueAnimator? = null
+    private var progress = 0f
+        set(value) {
+            field = value
+            postInvalidateOnAnimation()
+        }
+
+    private var intersectionPoints = mutableListOf<PointF>()
+
+    /**
+     * Diagonal length of the view.
+     */
+    private var diagonal = 0
+
+    /**
+     * Used generically for calculating text bounds
+     */
+    private val textBounds = Rect()
 
     constructor(context: Context): super(context) {
         init(context, null, R.attr.BudgetLineViewStyle, R.style.BudgetLineView)
@@ -158,6 +195,7 @@ class BudgetLineView : View {
 
     override fun onSizeChanged(w: Int, h: Int, oldW: Int, oldH: Int) {
         super.onSizeChanged(w, h, oldW, oldH)
+        diagonal = sqrt((w*w + h*h).toDouble()).toInt()
         updateContentRect()
         populatePath()
     }
@@ -178,18 +216,89 @@ class BudgetLineView : View {
                 budgetLimitShifted.getGraphY() - budgetLimitTextPadding,
                 budgetLimitTextPaint)
 
-        canvas.drawPath(spentLinePath, spentLinePaint)
-        canvas.drawPath(budgetProjectionLinePath, budgetProjectionLinePaint)
-        canvas.drawPath(intersectionPointPath, intersectionPointPaint)
-        canvas.drawPath(intersectionPointPath, intersectionPointBorderPaint)
         canvas.drawPath(dateRectPath, dateRectPaint)
         drawDates(canvas)
 
+        canvas.drawPath(spentLinePath, spentLinePaint)
+        canvas.drawPath(budgetProjectionLinePath, budgetProjectionLinePaint)
+
+        canvas.drawPath(intersectionPointPath, intersectionPointPaint)
+        canvas.drawPath(intersectionPointPath, intersectionPointBorderPaint)
+
+        if (progress != 0f) {
+
+            canvas.drawCircle(
+                    touchedX,
+                    touchedY,
+                    progress * diagonal,
+                    intersectionPointTextBgPaint
+            )
+
+            canvas.drawCircle(
+                    touchedX,
+                    touchedY,
+                    max(
+                            intersectionPointRadius.toDouble(),
+                            (progress + 0.5) * intersectionPointRadius
+                    ).toFloat(),
+                    intersectionPointPaint
+            )
+
+            canvas.drawCircle(
+                    touchedX,
+                    touchedY,
+                    max(
+                            intersectionPointRadius.toDouble(),
+                            (progress + 0.5) * intersectionPointRadius
+                    ).toFloat(),
+                    intersectionPointBorderPaint
+            )
+        }
+
+        if (progress > 0.5f) {
+            drawTouchedPointAmountText(canvas)
+        }
+    }
+
+    private fun drawTouchedPointAmountText(canvas: Canvas) {
+
+        touchedPointAmountTextPaint.textAlign =
+                if (touchedX >= contentRect.centerX()) {
+                    Paint.Align.RIGHT
+                } else {
+                    Paint.Align.LEFT
+                }
+
+        val amount = touchedY.getAmount().toInt()
+
+        val x = touchedX
+        val y =
+                if (touchedY >= contentRect.centerY()) {
+                    touchedY - (progress + 0.5f) * intersectionPointRadius - touchedPointAmountTextPadding - touchedPointAmountTextPaint.textSize/2
+                } else {
+                    touchedY + (progress + 0.5f) * intersectionPointRadius + touchedPointAmountTextPadding + touchedPointAmountTextPaint.textSize/2
+                }
+
+        touchedPointAmountTextPaint.getTextBounds(
+                amount.toString(), 0, amount.toString().length, textBounds)
+
+        touchedPointAmountTextPaint.color =
+                Color.argb(
+                        (255*progress).toInt(),
+                        Color.red(touchedPointAmountTextColor),
+                        Color.green(touchedPointAmountTextColor),
+                        Color.blue(touchedPointAmountTextColor)
+                )
+
+        canvas.drawText(
+                amount.toString(),
+                x,
+                y - (textBounds.bottom + textBounds.top) / 2.0f,
+                touchedPointAmountTextPaint
+        )
     }
 
     private fun drawDates(canvas: Canvas) {
-
-        val textBounds = Rect()
 
         if (today < budgetLimitReachDate) {
 
@@ -248,7 +357,8 @@ class BudgetLineView : View {
             canvas.drawText(
                     budgetLimitReachDate.toString(),
                     budgetLimitReachDateRect.right - dateRectPadding,
-                    budgetLimitReachDateRect.centerY() - (textBounds.bottom + textBounds.top) / 2.0f,
+                    budgetLimitReachDateRect.centerY()
+                            - (textBounds.bottom + textBounds.top) / 2.0f,
                     dateTextPaint
             )
 
@@ -342,7 +452,8 @@ class BudgetLineView : View {
                 a.getColor(
                         R.styleable.BudgetLineView_blv_budgetLimitTextColor, budgetLimitTextColor)
 
-        val budgetLimitTextStyle = a.getInt(R.styleable.BudgetLineView_blv_budgetLimitTextStyle, -1)
+        val budgetLimitTextStyle =
+                a.getInt(R.styleable.BudgetLineView_blv_budgetLimitTextStyle, -1)
 
         val budgetLimitTextFontFamilyResId =
                 a.getResourceId(R.styleable.BudgetLineView_blv_budgetLimitTextFontFamily, 0)
@@ -369,7 +480,8 @@ class BudgetLineView : View {
 
         budgetLimitTextPadding =
                 a.getDimension(
-                        R.styleable.BudgetLineView_blv_budgetLimitTextPadding, budgetLimitTextPadding)
+                        R.styleable.BudgetLineView_blv_budgetLimitTextPadding,
+                        budgetLimitTextPadding)
 
         budgetProjectionLineWidth =
         a.getDimension(
@@ -489,8 +601,86 @@ class BudgetLineView : View {
 
         zeroOffset = a.getDimension(R.styleable.BudgetLineView_blv_zeroOffset, zeroOffset)
 
+        intersectionPointTextBgColor =
+                a.getColor(
+                        R.styleable.BudgetLineView_blv_intersectionPointTextBgColor,
+                        intersectionPointTextBgColor)
+
+        intersectionPointTextBgPaint.run {
+            style = Paint.Style.FILL
+            color = intersectionPointTextBgColor
+        }
+
+        touchedPointAmountTextSize =
+                a.getDimension(
+                        R.styleable.BudgetLineView_blv_touchedPointAmountTextSize,
+                        touchedPointAmountTextSize)
+
+        touchedPointAmountTextColor =
+                a.getColor(
+                        R.styleable.BudgetLineView_blv_touchedPointAmountTextColor,
+                        touchedPointAmountTextColor)
+
+        val touchedPointAmountTextStyle =
+                a.getInt(R.styleable.BudgetLineView_blv_touchedPointAmountTextStyle, -1)
+
+        val touchedPointAmountTextFontFamilyResId =
+                a.getResourceId(
+                        R.styleable.BudgetLineView_blv_touchedPointAmountTextFontFamily, 0)
+
+        var touchedPointAmountTextTypeface =
+                if (touchedPointAmountTextFontFamilyResId != 0) {
+                    ResourcesCompat.getFont(context, touchedPointAmountTextFontFamilyResId)
+                } else {
+                    Typeface.DEFAULT
+                }
+
+        if (touchedPointAmountTextStyle == 0) {
+            touchedPointAmountTextTypeface =
+                    Typeface.create(touchedPointAmountTextTypeface, Typeface.BOLD)
+        }
+
+        touchedPointAmountTextPaint.run {
+            style = Paint.Style.FILL
+            textSize = touchedPointAmountTextSize
+            color = touchedPointAmountTextColor
+            typeface = touchedPointAmountTextTypeface
+        }
+
+        touchedPointAmountTextPadding =
+                a.getDimension(
+                        R.styleable.BudgetLineView_blv_touchedPointAmountTextPadding,
+                        touchedPointAmountTextPadding)
+
         a.recycle()
 
+        setOnTouchListener { v, event ->
+            if (progress == 0f) {
+                touchedX = event.x
+                touchedY = event.y
+            }
+            false
+        }
+
+        setOnClickListener {
+            if (progress == 0f) {
+                correctTouchedCoordinates()
+            }
+            toggle()
+        }
+
+    }
+
+    private fun correctTouchedCoordinates() {
+        intersectionPoints
+                .minBy {
+                    sqrt(((touchedX - it.x)*(touchedX - it.x)
+                                    + (touchedY - it.y)*(touchedY - it.y)).toDouble())
+                }
+                ?.let {
+                    touchedX = it.x
+                    touchedY = it.y
+                }
     }
 
     override fun setPadding(left: Int, top: Int, right: Int, bottom: Int) {
@@ -683,6 +873,7 @@ class BudgetLineView : View {
 
         dateProjectionLinePath.reset()
         intersectionPointPath.reset()
+        intersectionPoints =  mutableListOf()
 
         val dataMap = data.groupBy { it.x }.mapValues { it.value.sumByFloat { item -> item.y } }
         var curSum = 0f
@@ -696,6 +887,8 @@ class BudgetLineView : View {
         intersectionPointPath.addCircle(
                 today.getGraphX(), curSum.getGraphY(), intersectionPointRadius, Path.Direction.CW)
 
+        intersectionPoints.add(PointF(today.getGraphX(), curSum.getGraphY()))
+
         if (today != budgetLimitReachDate) {
             dateProjectionLinePath.moveTo(budgetLimitReachDate.getGraphX(), budgetLimitShifted.getGraphY())
             dateProjectionLinePath.lineTo(budgetLimitReachDate.getGraphX(), graphRect.bottom)
@@ -705,6 +898,8 @@ class BudgetLineView : View {
                     intersectionPointRadius,
                     Path.Direction.CW
             )
+            intersectionPoints.add(
+                    PointF(budgetLimitReachDate.getGraphX(), budgetLimitShifted.getGraphY()))
         }
 
         // draw point for the first date
@@ -716,12 +911,16 @@ class BudgetLineView : View {
                 Path.Direction.CW
         )
 
+        intersectionPoints.add(PointF(1.getGraphX(), (dataMap[1] ?: 0f).getGraphY()))
+
         intersectionPointPath.addCircle(
                 lastDrawnX,
                 lastDrawnY,
                 intersectionPointRadius,
                 Path.Direction.CW
         )
+
+        intersectionPoints.add(PointF(lastDrawnX, lastDrawnY))
 
     }
 
@@ -974,6 +1173,42 @@ class BudgetLineView : View {
         )
     }
 
+    override fun isChecked(): Boolean {
+        return false
+    }
+
+    override fun toggle() {
+
+        val newProgress = if (checkedX) 0f else 1f
+
+        checkedX = !checkedX
+
+        if (newProgress != progress) {
+            progressAnimator?.cancel()
+            val interpolator =
+                    AnimationUtils
+                            .loadInterpolator(context, android.R.interpolator.fast_out_slow_in)
+            progressAnimator =
+                    ValueAnimator.ofFloat(progress, newProgress).apply {
+                        addUpdateListener {
+                            progress = it.animatedValue as Float
+                        }
+                        this.interpolator = interpolator
+                        duration = if (checkedX) 350L else 200L
+                        start()
+                    }
+        }
+    }
+
+    override fun setChecked(checked: Boolean) {
+        checkedX = checked
+        progress = if (checkedX) {
+            1f
+        } else {
+            0f
+        }
+    }
+
     private fun <T> Iterable<T>.sumByFloat(selector: (T) -> Float): Float {
         var sum = 0f
         for (element in this) {
@@ -994,6 +1229,14 @@ class BudgetLineView : View {
      */
     private fun Float.getGraphY():Float {
         return graphRect.top + (graphRect.height() - (this * yScaleFactor + zeroOffset))
+    }
+
+    /**
+     * Converts amount back from the y coordinate (according to euclid coordinate system)
+     * on the graphRect
+     */
+    private fun Float.getAmount():Float {
+        return (-(this - graphRect.top - graphRect.height()) - zeroOffset) / yScaleFactor
     }
 
     data class Item(val x: Int,

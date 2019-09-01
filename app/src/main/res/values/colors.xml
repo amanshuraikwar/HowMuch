@@ -27,8 +27,8 @@
 
     <!-- text colors-->
     <color name="primaryText">#424242</color>
-    <color name="secondaryText">#8A000000</color>
-    <color name="disableHintText">#61000000</color>
+    <color name="secondaryText">#8A424242</color>
+    <color name="disableHintText">#61424242</color>
 
     <color name="primaryTextLight">#ffffffff</color>
     <color name="secondaryTextLight">#B3ffffff</color>
