@@ -25,6 +25,8 @@ android {
         applicationId "io.github.amanshuraikwar.howmuch"
         minSdkVersion minVersion
         targetSdkVersion targetVersion
+        versionCode gitVersionCode
+        versionName gitVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         signingConfig signingConfigs.release
@@ -33,13 +35,13 @@ android {
     ext {
         APP_NAME_DEV = "@string/app_name_dev"
         APP_NAME_PROD = "@string/app_name_prod"
-        APP_NAME_BETA = "@string/app_name_beta"
     }
 
     buildTypes {
 
         debug {
             applicationIdSuffix ".debug"
+            manifestPlaceholders = [ applicationLabel : APP_NAME_DEV]
         }
 
         release {
@@ -47,30 +49,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             debuggable false
+            manifestPlaceholders = [ applicationLabel : APP_NAME_PROD]
         }
 
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
-        }
-    }
-
-    // automatic version code and version name from git tag
-    flavorDimensions "version"
-
-    productFlavors {
-
-        dev {
-            applicationIdSuffix ".dev"
-            versionCode gitVersionCodeTime
-            versionName gitVersionName + "-DEV"
-            manifestPlaceholders = [ applicationLabel : APP_NAME_DEV]
-        }
-
-        prod {
-            versionCode gitVersionCode
-            versionName gitVersionName
-            manifestPlaceholders = [ applicationLabel : APP_NAME_PROD]
         }
     }
 

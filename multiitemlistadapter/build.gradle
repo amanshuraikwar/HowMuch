@@ -11,6 +11,8 @@ android {
     defaultConfig {
         minSdkVersion minVersion
         targetSdkVersion targetVersion
+        versionCode gitVersionCode
+        versionName gitVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -24,27 +26,6 @@ android {
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
-        }
-    }
-
-    // automatic version code and version name from git tag
-    flavorDimensions "version"
-
-    productFlavors {
-
-        dev {
-            versionCode gitVersionCodeTime
-            versionName gitVersionName + "-DEV"
-        }
-
-        beta {
-            versionCode gitVersionCodeTime
-            versionName gitVersionName + "-BETA"
-        }
-
-        prod {
-            versionCode gitVersionCode
-            versionName gitVersionName
         }
     }
 }
