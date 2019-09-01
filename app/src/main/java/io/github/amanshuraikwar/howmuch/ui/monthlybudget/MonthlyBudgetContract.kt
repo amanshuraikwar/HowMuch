@@ -25,7 +25,11 @@ interface MonthlyBudgetContract {
 
     interface View : BaseView, UiMessageView, LoadingView {
         fun submitList(list: List<ListItem<*, *>>)
-        fun startHistoryActivity(category: Category)
+        fun startHistoryActivity(
+                category: Category,
+                month: Int,
+                year: Int
+        )
         fun updateMonth(previousMonth: Boolean, monthName: String, nextMonth: Boolean)
     }
 
@@ -139,7 +143,11 @@ interface MonthlyBudgetContract {
                                         entry.key,
                                         entry.value,
                                         {
-                                            getView()?.startHistoryActivity(it)
+                                            getView()?.startHistoryActivity(
+                                                    it,
+                                                    displayedMonth,
+                                                    displayedYear
+                                            )
                                         }
                                 )
                         )

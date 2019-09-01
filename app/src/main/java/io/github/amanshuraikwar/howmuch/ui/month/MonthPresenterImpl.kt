@@ -32,6 +32,12 @@ abstract class MonthPresenterImpl<V : MonthView> constructor(appBus: AppBus,
             curYear = Util.getCurYearNumber()
             displayedMonth = curMonth
             displayedYear = curYear
+            getView()?.getInitDisplayedMonth()?.let {
+                displayedMonth = it
+            }
+            getView()?.getInitDisplayedYear()?.let {
+                displayedYear = it
+            }
             fetchItems()
         }
     }

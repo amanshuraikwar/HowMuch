@@ -8,4 +8,6 @@ import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 interface MonthView : BaseView, UiMessageView, LoadingView {
     fun updateMonth(previousMonth: Boolean, monthName: String, nextMonth: Boolean)
     fun submitList(list: List<ListItem<*, *>>)
+    fun getInitDisplayedMonth(): Int?
+    fun getInitDisplayedYear(): Int?
 }

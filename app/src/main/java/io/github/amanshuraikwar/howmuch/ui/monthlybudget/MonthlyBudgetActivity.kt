@@ -103,11 +103,15 @@ class MonthlyBudgetActivity
         showToast(message)
     }
 
-    override fun startHistoryActivity(category: Category) {
+    override fun startHistoryActivity(category: Category,
+                                      month: Int,
+                                      year: Int) {
         startActivity(
                 {
                     val intent = Intent(this, CategoryActivity::class.java)
                     intent.putExtra("category", category)
+                    intent.putExtra("init_month", month)
+                    intent.putExtra("init_year", year)
                     intent
                 }.invoke()
 

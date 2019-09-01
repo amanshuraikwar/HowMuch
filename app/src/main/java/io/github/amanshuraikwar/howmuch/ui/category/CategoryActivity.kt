@@ -207,6 +207,14 @@ class CategoryActivity
         }
     }
 
+    override fun getInitDisplayedMonth(): Int? {
+        return intent?.extras?.getInt("init_month")
+    }
+
+    override fun getInitDisplayedYear(): Int? {
+        return intent?.extras?.getInt("init_year")
+    }
+
     @Module
     abstract class DiModule {
 

@@ -41,6 +41,7 @@ interface ExpenseContract {
         fun switchToDebit()
         fun showCategories(categories: List<Category>)
         fun isInEditMode(): Boolean
+        fun startHistoryActivity(category: Category)
     }
 
     interface Presenter : BasePresenter<View> {
@@ -62,6 +63,7 @@ interface ExpenseContract {
         fun onDeleteBtnClicked()
         fun onDeleteConfirmedClicked()
         fun onTransactionTypeBtnClicked()
+        fun onCategoryClicked()
     }
 
     class TransactionNotFoundException(msg: String) : Exception(msg)
@@ -280,6 +282,10 @@ interface ExpenseContract {
                     getView()?.showCategories(categories.filter { it.type == TransactionType.DEBIT })
                 }
             }
+        }
+
+        override fun onCategoryClicked() {
+            getView()?.startHistoryActivity(curCategory)
         }
     }
 }

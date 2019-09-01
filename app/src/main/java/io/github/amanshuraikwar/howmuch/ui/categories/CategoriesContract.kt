@@ -23,7 +23,11 @@ interface CategoriesContract {
 
     interface View : BaseView, UiMessageView, LoadingView {
         fun submitList(list: List<ListItem<*, *>>)
-        fun startHistoryActivity(category: Category)
+        fun startHistoryActivity(
+                category: Category,
+                month: Int,
+                year: Int
+        )
         fun updateMonth(previousMonth: Boolean, monthName: String, nextMonth: Boolean)
         @ColorInt fun getCategoryColor(category: String): Int
     }
@@ -187,7 +191,11 @@ interface CategoriesContract {
                                         category,
                                         categoryAmountMap[category] ?: 0.0,
                                         {
-                                            getView()?.startHistoryActivity(it)
+                                            getView()?.startHistoryActivity(
+                                                    it,
+                                                    displayedMonth,
+                                                    displayedYear
+                                            )
                                         }
                                 )
                         )

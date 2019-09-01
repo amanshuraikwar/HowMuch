@@ -143,6 +143,14 @@ class HistoryActivity : BaseActivity<HistoryActivityContract.View,
         }
     }
 
+    override fun getInitDisplayedMonth(): Int? {
+        return null
+    }
+
+    override fun getInitDisplayedYear(): Int? {
+        return null
+    }
+
     @Module
     abstract class DiModule {
 

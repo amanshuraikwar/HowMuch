@@ -3,6 +3,7 @@ package io.github.amanshuraikwar.howmuch.ui.expense
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View.*
@@ -19,6 +20,7 @@ import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.base.ui.base.BaseActivity
 import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.ui.addexpense.AddExpenseFragment
+import io.github.amanshuraikwar.howmuch.ui.category.CategoryActivity
 import kotlinx.android.synthetic.main.activity_expense.*
 
 class ExpenseActivity
@@ -64,6 +66,12 @@ class ExpenseActivity
         }
         editBtn.setOnClickListener {
             presenter.onEditBtnClicked()
+        }
+        categoryCv.setOnClickListener {
+            presenter.onCategoryClicked()
+        }
+        categoryTv.setOnClickListener {
+            presenter.onCategoryClicked()
         }
     }
 
@@ -248,6 +256,17 @@ class ExpenseActivity
 
     override fun isInEditMode(): Boolean {
         return editTransactionFl.visibility == VISIBLE
+    }
+
+    override fun startHistoryActivity(category: Category) {
+        startActivity(
+                {
+                    val intent = Intent(this, CategoryActivity::class.java)
+                    intent.putExtra("category", category)
+                    intent
+                }.invoke()
+
+        )
     }
 
     @Module
