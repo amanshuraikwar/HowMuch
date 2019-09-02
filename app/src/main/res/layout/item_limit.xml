@@ -36,7 +36,7 @@
         android:textColor="@color/secondaryText"
         tools:text=" / 25546.00" />
 
-    <io.github.amanshuraikwar.howmuch.graph.pie.VerticalProgressBar
+    <io.github.amanshuraikwar.howmuch.graph.VerticalProgressBar
         android:id="@+id/pb"
         android:layout_width="match_parent"
         android:layout_height="8dp"

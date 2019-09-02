@@ -1,10 +1,10 @@
-package io.github.amanshuraikwar.howmuch.graph.animation;
+package io.github.amanshuraikwar.howmuch.graph.spark.animation;
 
 import android.animation.Animator;
 
 import androidx.annotation.Nullable;
 
-import io.github.amanshuraikwar.howmuch.graph.SparkView;
+import io.github.amanshuraikwar.howmuch.graph.spark.SparkView;
 
 
 /**

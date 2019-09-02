@@ -6,7 +6,7 @@ import io.github.amanshuraikwar.howmuch.base.data.DataManager
 import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.base.ui.base.*
 import io.github.amanshuraikwar.howmuch.base.util.Util
-import io.github.amanshuraikwar.howmuch.graph.pie.BarView
+import io.github.amanshuraikwar.howmuch.graph.BarView2
 import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.protocol.TransactionType
 import io.github.amanshuraikwar.howmuch.ui.HowMuchBasePresenterImpl
@@ -190,7 +190,7 @@ interface StatsContract {
                     Bars(
                           debitDayAmountMap.map {
                               entry ->
-                              BarView.BarItem(
+                              BarView2.BarItem(
                                       Util.getWeekDay(entry.key).toUpperCase(),
                                       entry.value.toFloat()
                               )

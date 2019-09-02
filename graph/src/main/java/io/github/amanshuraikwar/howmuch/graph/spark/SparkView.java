@@ -1,4 +1,4 @@
-package io.github.amanshuraikwar.howmuch.graph;
+package io.github.amanshuraikwar.howmuch.graph.spark;
 
 import android.animation.Animator;
 import android.annotation.TargetApi;
@@ -30,8 +30,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import io.github.amanshuraikwar.howmuch.graph.animation.LineSparkAnimator;
-import io.github.amanshuraikwar.howmuch.graph.animation.SparkAnimator;
+import io.github.amanshuraikwar.howmuch.graph.R;
+import io.github.amanshuraikwar.howmuch.graph.spark.animation.LineSparkAnimator;
+import io.github.amanshuraikwar.howmuch.graph.spark.animation.SparkAnimator;
 
 /**
  * A {@link SparkView} is a simplified line chart with no axes.

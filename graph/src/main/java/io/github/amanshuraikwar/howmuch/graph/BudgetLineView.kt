@@ -1,4 +1,4 @@
-package io.github.amanshuraikwar.howmuch.graph.budget
+package io.github.amanshuraikwar.howmuch.graph
 
 import android.animation.ValueAnimator
 import android.content.Context
@@ -8,7 +8,6 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Checkable
 import androidx.core.content.res.ResourcesCompat
-import io.github.amanshuraikwar.howmuch.graph.R
 import kotlin.math.max
 import kotlin.math.sqrt
 
@@ -89,7 +88,7 @@ class BudgetLineView : View, Checkable {
     private var touchedPointAmountTextPadding = 20f
 
     var data: List<Item> = mutableListOf<Item>().apply {
-        for (i in 1..31) this.add(Item(i, i*10f))
+        for (i in 1..31) this.add(Item(i, i * 10f))
     }
     set(value) {
         field = value
@@ -668,7 +667,6 @@ class BudgetLineView : View, Checkable {
             }
             toggle()
         }
-
     }
 
     private fun correctTouchedCoordinates() {

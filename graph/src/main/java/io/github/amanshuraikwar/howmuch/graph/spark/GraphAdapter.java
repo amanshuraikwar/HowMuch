@@ -1,4 +1,4 @@
-package io.github.amanshuraikwar.howmuch.graph;
+package io.github.amanshuraikwar.howmuch.graph.spark;
 
 import androidx.annotation.NonNull;
 

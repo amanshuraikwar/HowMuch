@@ -12,7 +12,7 @@ import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.SimpleListItemOnClickListener
 import io.github.amanshuraikwar.multiitemlistadapter.ViewHolder
-import kotlinx.android.synthetic.main.item_stat_total.view.*
+import kotlinx.android.synthetic.main.item_stat_last_7_days.view.*
 
 class StatTotal(val title: String,
                 val amount: Double,
@@ -34,7 +34,7 @@ class StatTotal(val title: String,
 
         companion object {
             @LayoutRes
-            val LAYOUT = R.layout.item_stat_total
+            val LAYOUT = R.layout.item_stat_last_7_days
         }
 
         override fun bind(listItem: Item, host: FragmentActivity) {

@@ -1,4 +1,4 @@
-package io.github.amanshuraikwar.howmuch.graph.animation;
+package io.github.amanshuraikwar.howmuch.graph.spark.animation;
 
 import android.animation.Animator;
 import android.animation.TimeInterpolator;
@@ -9,7 +9,7 @@ import android.graphics.PathMeasure;
 import androidx.annotation.IntRange;
 import androidx.annotation.Nullable;
 
-import io.github.amanshuraikwar.howmuch.graph.SparkView;
+import io.github.amanshuraikwar.howmuch.graph.spark.SparkView;
 
 /**
  * Animates the sparkline by path-tracing from the first point to the last.

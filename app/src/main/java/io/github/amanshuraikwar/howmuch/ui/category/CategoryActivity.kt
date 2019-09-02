@@ -208,11 +208,15 @@ class CategoryActivity
     }
 
     override fun getInitDisplayedMonth(): Int? {
-        return intent?.extras?.getInt("init_month")
+        return intent?.extras?.getInt("init_month")?.let {
+            return if (it > 0) it else null
+        }
     }
 
     override fun getInitDisplayedYear(): Int? {
-        return intent?.extras?.getInt("init_year")
+        return intent?.extras?.getInt("init_year")?.let {
+            return if (it > 0) it else null
+        }
     }
 
     @Module

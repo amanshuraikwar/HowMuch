@@ -1,14 +1,10 @@
-package io.github.amanshuraikwar.howmuch.graph.pie
+package io.github.amanshuraikwar.howmuch.graph
 
 import android.content.Context
 import android.graphics.*
-import android.os.Build
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
-import androidx.annotation.ColorInt
 import io.github.amanshuraikwar.howmuch.graph.R
-import io.github.amanshuraikwar.howmuch.graph.SparkAdapter
 import kotlin.math.min
 
 class VerticalProgressBar : View {

@@ -35,23 +35,12 @@
         <item name="bv_labelPadding">8dp</item>
     </style>
 
-    <style name="LimitLineView">
-
-        <item name="llv_lineWidth">2dp</item>
-        <item name="llv_lineColor">#000</item>
-        <item name="llv_baselineWidth">1dp</item>
-        <item name="llv_baselineColor">#eee</item>
-        <item name="llv_lineDashGap">4dp</item>
-        <item name="llv_intersectionPointRadius">4dp</item>
-        <item name="llv_intersectionPointColor">#ff0000</item>
-
-        <item name="llv_valueTextSize">14dp</item>
-        <item name="llv_valuePadding">8dp</item>
-        <item name="llv_valueTextColor">#000</item>
-
-        <item name="llv_labelTextSize">14dp</item>
-        <item name="llv_labelPadding">8dp</item>
-        <item name="llv_labelTextColor">#000</item>
+    <style name="BarView2">
+        <item name="bv_lineWidth">4dp</item>
+        <item name="bv_lineBackground">#e0e0e0</item>
+        <item name="bv_lineColor">#abcdef</item>
+        <item name="bv_labelTextSize">14sp</item>
+        <item name="bv_labelPadding">8dp</item>
     </style>
 
     <style name="BudgetLineView">

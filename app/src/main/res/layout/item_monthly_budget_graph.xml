@@ -11,7 +11,7 @@
     app:cardElevation="0dp"
     app:cardCornerRadius="0dp">
 
-    <io.github.amanshuraikwar.howmuch.graph.budget.BudgetLineView
+    <io.github.amanshuraikwar.howmuch.graph.BudgetLineView
         android:id="@+id/budgetLineView"
         android:layout_width="match_parent"
         android:layout_height="248dp"

@@ -63,35 +63,27 @@
         </attr>
     </declare-styleable>
 
-    <declare-styleable name="LimitLineView">
+    <attr name="BarView2Style" format="reference" />
 
-        <attr name="llv_lineWidth" format="dimension|reference" />
-        <attr name="llv_lineColor" format="color|reference" />
-        <attr name="llv_baselineWidth" format="dimension|reference" />
-        <attr name="llv_baselineColor" format="color|reference" />
-        <attr name="llv_lineDashGap" format="dimension|reference" />
-        <attr name="llv_intersectionPointRadius" format="dimension|reference" />
-        <attr name="llv_intersectionPointColor" format="color|reference" />
-
-        <attr name="llv_valueTextSize" format="dimension|reference" />
-        <attr name="llv_valuePadding" format="dimension|reference" />
-        <attr name="llv_valueTextColor" format="color|reference" />
-        <attr name="llv_valueFontFamily" format="reference" />
-        <attr name="llv_valueTextStyle" format="enum">
+    <declare-styleable name="BarView2">
+        <attr name="bv2_lineWidth" format="dimension|reference" />
+        <attr name="bv2_lineColor" format="color|reference" />
+        <attr name="bv2_lineBackground" format="color|reference" />
+        <attr name="bv2_labelTextSize" format="dimension|reference" />
+        <attr name="bv2_labelPadding" format="dimension|reference" />
+        <attr name="bv2_labelTextColor" format="color|reference" />
+        <attr name="bv2_labelFontFamily" format="reference" />
+        <attr name="bv2_labelTextStyle" format="enum">
             <enum name="BOLD" value="0"/>
         </attr>
-
-        <attr name="llv_labelTextSize" format="dimension|reference" />
-        <attr name="llv_labelPadding" format="dimension|reference" />
-        <attr name="llv_labelTextColor" format="color|reference" />
-        <attr name="llv_labelFontFamily" format="reference" />
-        <attr name="llv_labelTextStyle" format="enum">
+        <attr name="bv2_clickedBgColor" format="color|reference" />
+        <attr name="bv2_clickedBarValueTextColor" format="color|reference" />
+        <attr name="bv2_clickedBarValueTextSize" format="dimension|reference" />
+        <attr name="bv2_clickedBarValueTextFontFamily" format="reference" />
+        <attr name="bv2_clickedBarValueTextStyle" format="enum">
             <enum name="BOLD" value="0"/>
         </attr>
-
     </declare-styleable>
-
-    <attr name="LimitLineViewStyle" format="reference" />
 
     <attr name="BudgetLineViewStyle" format="reference" />
 

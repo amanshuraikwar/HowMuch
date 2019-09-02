@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.amanshuraikwar.howmuch.graph;
+package io.github.amanshuraikwar.howmuch.graph.spark;
 
 import android.os.Handler;
 import android.view.MotionEvent;

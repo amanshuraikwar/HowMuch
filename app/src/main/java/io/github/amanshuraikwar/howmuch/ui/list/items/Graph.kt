@@ -4,8 +4,7 @@ import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.FragmentActivity
 import io.github.amanshuraikwar.howmuch.R
-import io.github.amanshuraikwar.howmuch.graph.GraphAdapter
-import io.github.amanshuraikwar.howmuch.graph.SparkAdapter
+import io.github.amanshuraikwar.howmuch.graph.spark.GraphAdapter
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.SimpleListItemOnClickListener

@@ -1,4 +1,4 @@
-package io.github.amanshuraikwar.howmuch.graph.pie
+package io.github.amanshuraikwar.howmuch.graph
 
 import android.content.Context
 import android.graphics.*
@@ -6,7 +6,6 @@ import android.graphics.Typeface.BOLD
 import android.graphics.Typeface.create
 import android.util.AttributeSet
 import android.view.View
-import io.github.amanshuraikwar.howmuch.graph.R
 
 import androidx.core.content.res.ResourcesCompat
 

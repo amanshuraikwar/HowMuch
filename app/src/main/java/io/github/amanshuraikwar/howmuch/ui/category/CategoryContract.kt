@@ -6,7 +6,8 @@ import io.github.amanshuraikwar.howmuch.ViewUtil
 import io.github.amanshuraikwar.howmuch.base.bus.AppBus
 import io.github.amanshuraikwar.howmuch.base.data.DataManager
 import io.github.amanshuraikwar.howmuch.base.util.Util
-import io.github.amanshuraikwar.howmuch.graph.pie.BarView
+import io.github.amanshuraikwar.howmuch.graph.BarView
+import io.github.amanshuraikwar.howmuch.graph.BarView2
 import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.protocol.money

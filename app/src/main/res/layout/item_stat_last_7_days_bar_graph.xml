@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/Widget.MaterialComponents.CardView"
+    android:layout_marginTop="@dimen/margin_small"
+    android:layout_marginBottom="@dimen/margin_small"
+    android:layout_marginStart="@dimen/margin_small"
+    android:layout_marginEnd="@dimen/margin_small"
+    app:cardElevation="0dp"
+    app:cardCornerRadius="8dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="@color/gray3"
+    app:cardBackgroundColor="@color/white">
+
+    <io.github.amanshuraikwar.howmuch.graph.BarView2
+        android:id="@+id/barView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:paddingTop="@dimen/padding_small"
+        android:paddingBottom="@dimen/padding_normal"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        app:bv2_lineWidth="8dp"
+        app:bv2_lineBackground="@color/lightGreen"
+        app:bv2_lineColor="@color/green"
+        app:bv2_labelTextSize="12sp"
+        app:bv2_labelPadding="16dp"
+        app:bv2_labelFontFamily="@font/cabin"
+        app:bv2_labelTextColor="@color/secondaryText"
+        app:bv2_labelTextStyle="BOLD"
+        app:bv2_clickedBgColor="#eeE8F5E9"
+        app:bv2_clickedBarValueTextColor="@color/green"
+        app:bv2_clickedBarValueTextSize="34sp"
+        app:bv2_clickedBarValueTextFontFamily="@font/rubik"
+        app:bv2_clickedBarValueTextStyle="BOLD" />
+</com.google.android.material.card.MaterialCardView>

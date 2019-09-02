@@ -61,7 +61,7 @@
         android:textAppearance="@style/TextAppearance.Percentage"
         tools:text="50%" />
 
-    <io.github.amanshuraikwar.howmuch.graph.pie.VerticalProgressBar
+    <io.github.amanshuraikwar.howmuch.graph.VerticalProgressBar
         android:id="@+id/pb"
         android:layout_width="0dp"
         android:layout_height="4dp"

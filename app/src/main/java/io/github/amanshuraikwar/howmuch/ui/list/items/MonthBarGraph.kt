@@ -5,13 +5,13 @@ import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import io.github.amanshuraikwar.howmuch.R
-import io.github.amanshuraikwar.howmuch.base.util.Util
-import io.github.amanshuraikwar.howmuch.graph.pie.BarView
+import io.github.amanshuraikwar.howmuch.graph.BarView
+import io.github.amanshuraikwar.howmuch.graph.BarView2
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.SimpleListItemOnClickListener
 import io.github.amanshuraikwar.multiitemlistadapter.ViewHolder
-import kotlinx.android.synthetic.main.item_bars.view.*
+import kotlinx.android.synthetic.main.item_month_bar_graph.view.*
 
 class MonthBarGraph(val items: List<BarView.BarItem>,
                     val color1: Int,

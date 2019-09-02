@@ -58,7 +58,7 @@
         app:labelVisibilityMode="unlabeled"
         android:visibility="gone"/>
 
-    <io.github.amanshuraikwar.howmuch.graph.budget.BudgetLineView
+    <io.github.amanshuraikwar.howmuch.graph.BudgetLineView
         android:layout_width="match_parent"
         android:layout_height="300dp"
         app:layout_constraintTop_toTopOf="parent"

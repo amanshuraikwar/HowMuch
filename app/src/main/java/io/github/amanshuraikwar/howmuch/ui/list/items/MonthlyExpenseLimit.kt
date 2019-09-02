@@ -8,7 +8,7 @@ import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.SimpleListItemOnClickListener
 import io.github.amanshuraikwar.multiitemlistadapter.ViewHolder
-import kotlinx.android.synthetic.main.item_monthly_expense_limit.view.*
+import kotlinx.android.synthetic.main.item_monthly_budget.view.*
 import kotlin.math.min
 
 class MonthlyExpenseLimit(val actual: Double,
@@ -31,7 +31,7 @@ class MonthlyExpenseLimit(val actual: Double,
 
         companion object {
             @LayoutRes
-            val LAYOUT = R.layout.item_monthly_expense_limit
+            val LAYOUT = R.layout.item_monthly_budget
         }
 
         override fun bind(listItem: Item, host: FragmentActivity) {

@@ -1,4 +1,4 @@
-package io.github.amanshuraikwar.howmuch.graph.animation;
+package io.github.amanshuraikwar.howmuch.graph.spark.animation;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 
 import java.util.List;
 
-import io.github.amanshuraikwar.howmuch.graph.SparkView;
+import io.github.amanshuraikwar.howmuch.graph.spark.SparkView;
 
 /**
  * Animates each point vertically from the previous position to the current position.

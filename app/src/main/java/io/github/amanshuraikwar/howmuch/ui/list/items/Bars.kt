@@ -4,14 +4,14 @@ import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.FragmentActivity
 import io.github.amanshuraikwar.howmuch.R
-import io.github.amanshuraikwar.howmuch.graph.pie.BarView
+import io.github.amanshuraikwar.howmuch.graph.BarView2
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.SimpleListItemOnClickListener
 import io.github.amanshuraikwar.multiitemlistadapter.ViewHolder
-import kotlinx.android.synthetic.main.item_bars.view.*
+import kotlinx.android.synthetic.main.item_stat_last_7_days_bar_graph.view.*
 
-class Bars(val items: List<BarView.BarItem>) {
+class Bars(val items: List<BarView2.BarItem>) {
 
     class Item(val bars: Bars)
         : ListItem<SimpleListItemOnClickListener, ListItemTypeFactory>() {
@@ -29,11 +29,12 @@ class Bars(val items: List<BarView.BarItem>) {
 
         companion object {
             @LayoutRes
-            val LAYOUT = R.layout.item_bars
+            val LAYOUT = R.layout.item_stat_last_7_days_bar_graph
         }
 
         override fun bind(listItem: Item, host: FragmentActivity) {
             itemView.barView.data = listItem.bars.items
+            itemView.barView.setChecked(false)
             itemView.barView.invalidate()
         }
     }

@@ -4,15 +4,14 @@ import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.FragmentActivity
 import io.github.amanshuraikwar.howmuch.R
-import io.github.amanshuraikwar.howmuch.graph.budget.BudgetLineView
-import io.github.amanshuraikwar.howmuch.graph.pie.LimitLineView
+import io.github.amanshuraikwar.howmuch.graph.BudgetLineView
 import io.github.amanshuraikwar.howmuch.ui.list.ListItemTypeFactory
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
 import io.github.amanshuraikwar.multiitemlistadapter.SimpleListItemOnClickListener
 import io.github.amanshuraikwar.multiitemlistadapter.ViewHolder
 import kotlinx.android.synthetic.main.item_monthly_budget_graph.view.*
 
-class MonthlyBudgetGraph(val data: List<LimitLineView.Item>,
+class MonthlyBudgetGraph(val data: List<BudgetLineView.Item>,
                          val budgetLimit: Float,
                          val today: Float,
                          val isCurMonth: Boolean = true) {
@@ -42,8 +41,7 @@ class MonthlyBudgetGraph(val data: List<LimitLineView.Item>,
             itemView.budgetLineView.today = listItem.obj.today.toInt()
             itemView.budgetLineView.maxDate = 31
             itemView.budgetLineView.isCurMonth = listItem.obj.isCurMonth
-            itemView.budgetLineView.data =
-                    listItem.obj.data.map { BudgetLineView.Item(it.x.toInt(), it.y) }
+            itemView.budgetLineView.data = listItem.obj.data
             itemView.budgetLineView.isChecked = false
             itemView.budgetLineView.invalidate()
         }

@@ -33,7 +33,6 @@ import io.github.amanshuraikwar.howmuch.ui.list.items.StatCategoryPadded;
 import io.github.amanshuraikwar.howmuch.ui.list.items.StatHeader;
 import io.github.amanshuraikwar.howmuch.ui.list.items.StatTotal;
 import io.github.amanshuraikwar.howmuch.ui.list.items.StatTransaction;
-import io.github.amanshuraikwar.howmuch.ui.list.items.StatWallet;
 import io.github.amanshuraikwar.howmuch.ui.list.items.Total;
 import io.github.amanshuraikwar.howmuch.ui.list.items.TransactionItem;
 import io.github.amanshuraikwar.howmuch.ui.list.items.UserInfo;
@@ -95,10 +94,6 @@ public class ListItemTypeFactory extends BaseTypeFactory {
 
     public int type(Button.Item item) {
         return 10;
-    }
-
-    public int type(StatWallet.Item item) {
-        return 11;
     }
 
     public int type(EditCategory.Item item) {
@@ -221,8 +216,6 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 return StatTotal.Holder.Companion.getLAYOUT();
             case 10:
                 return Button.Holder.Companion.getLAYOUT();
-            case 11:
-                return StatWallet.Holder.Companion.getLAYOUT();
             case 12:
                 return EditCategory.Holder.Companion.getLAYOUT();
             case 13:
@@ -315,9 +308,6 @@ public class ListItemTypeFactory extends BaseTypeFactory {
                 break;
             case 10:
                 viewHolder = new Button.Holder(parent);
-                break;
-            case 11:
-                viewHolder = new StatWallet.Holder(parent);
                 break;
             case 12:
                 viewHolder = new EditCategory.Holder(parent);

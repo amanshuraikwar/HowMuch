@@ -9,7 +9,7 @@ import io.github.amanshuraikwar.howmuch.base.ui.base.BaseView
 import io.github.amanshuraikwar.howmuch.base.ui.base.LoadingView
 import io.github.amanshuraikwar.howmuch.base.ui.base.UiMessageView
 import io.github.amanshuraikwar.howmuch.base.util.Util
-import io.github.amanshuraikwar.howmuch.graph.pie.LimitLineView
+import io.github.amanshuraikwar.howmuch.graph.BudgetLineView
 import io.github.amanshuraikwar.howmuch.protocol.Category
 import io.github.amanshuraikwar.howmuch.protocol.Transaction
 import io.github.amanshuraikwar.howmuch.protocol.TransactionType
@@ -95,8 +95,8 @@ interface MonthlyBudgetContract {
                             .groupBy { it.date }
                             .mapValues { it.value.sumByDouble { it.amount } }
                             .map {
-                                LimitLineView.Item(
-                                        it.key.split("-")[0].toFloat(),
+                                BudgetLineView.Item(
+                                        it.key.split("-")[0].toInt(),
                                         it.value.toFloat()
                                 )
                             }
