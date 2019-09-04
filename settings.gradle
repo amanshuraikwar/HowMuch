@@ -1,1 +1,1 @@
-include ':app', ':protocol', ':googlesheetsprotocol', ':base', ':multiitemlistadapter', ':graph', ':googlesheetsapi'
+include ':app', ':protocol', ':googlesheetsprotocol', ':base', ':multiitemlistadapter', ':graph', ':googlesheetsapi', ':notificationlistener'
