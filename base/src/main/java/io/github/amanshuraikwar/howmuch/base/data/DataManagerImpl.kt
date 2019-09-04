@@ -1,6 +1,7 @@
 package io.github.amanshuraikwar.howmuch.base.data
 
 import io.github.amanshuraikwar.howmuch.protocol.*
+import io.reactivex.Observable
 import javax.inject.Inject
 
 /**
@@ -77,4 +78,7 @@ class DataManagerImpl
 
     override fun deleteWallet(wallet: Wallet)
             = walletDataManager.deleteWallet(wallet)
+
+    override fun getSpreadSheetId()
+            = userDataManager.getSpreadSheetId()
 }

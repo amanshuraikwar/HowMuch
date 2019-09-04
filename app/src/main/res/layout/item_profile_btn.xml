@@ -24,6 +24,8 @@
         android:layout_gravity="center_vertical"
         android:paddingStart="72dp"
         android:paddingEnd="@dimen/padding_normal"
+        android:lines="1"
+        android:ellipsize="end"
         android:textAppearance="@style/TextAppearance.ProfileBtn"
         tools:text="Sign Out" />
 </FrameLayout>

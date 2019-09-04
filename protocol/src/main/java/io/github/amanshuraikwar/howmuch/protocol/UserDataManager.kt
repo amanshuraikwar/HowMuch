@@ -17,4 +17,6 @@ interface UserDataManager {
     fun getMonthlyExpenseLimit(): Observable<Double>
 
     fun setMonthlyExpenseLimit(limit: Double): Completable
+
+    fun getSpreadSheetId(): Observable<String>
 }

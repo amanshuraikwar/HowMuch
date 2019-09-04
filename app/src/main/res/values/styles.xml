@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- activities and app -->
     <style name="HowMuch" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="android:statusBarColor">@color/white</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
 
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:windowSharedElementsUseOverlay">true</item>
@@ -683,4 +683,5 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
     </style>
+
 </resources>

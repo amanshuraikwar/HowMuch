@@ -14,6 +14,7 @@ import io.github.amanshuraikwar.howmuch.ui.HowMuchBasePresenterImpl
 import io.github.amanshuraikwar.howmuch.ui.list.items.Divider
 import io.github.amanshuraikwar.howmuch.ui.list.items.DividerFrontPadded
 import io.github.amanshuraikwar.multiitemlistadapter.ListItem
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
@@ -27,6 +28,7 @@ interface ProfileContract {
         fun showSignOutAlertDialog()
         fun startHistoryActivity()
         fun startAboutActivity()
+        fun openGoogleSpreadSheet(spreadsheetId: String)
     }
 
     interface Presenter : BasePresenter<View> {
@@ -48,10 +50,34 @@ interface ProfileContract {
 
         private fun refreshUserInfo() {
 
-            getDataManager()
-                    .getSignedInUser()
-                    .delay(1000, TimeUnit.MILLISECONDS)
-                    .map { toInitList(it) }
+            Observable
+                    .fromCallable {
+                        mutableListOf<ListItem<*,*>>()
+                    }
+                    .flatMap {
+                        list ->
+                        getDataManager()
+                                .getSignedInUser()
+                                .delay(1000, TimeUnit.MILLISECONDS)
+                                .map {
+                                    list.add(getUserItem(it))
+                                    list.add(Divider.Item())
+                                    list
+                                }
+                                .flatMap {
+                                    getDataManager()
+                                            .getSpreadSheetId()
+                                            .map {
+                                                list.add(getSpreadSheetItem(it))
+                                                list.add(Divider.Item())
+                                                list
+                                            }
+                                }
+                                .map {
+                                    list.addAll(getItems())
+                                    list
+                                }
+                    }
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe {
@@ -81,21 +107,31 @@ interface ProfileContract {
                     .addToCleanup()
         }
 
-        private fun toInitList(user: User): List<ListItem<*, *>> {
+        private fun getSpreadSheetItem(it: String): ListItem<*, *> {
+            return ProfileBtn.Item(
+                    ProfileBtn(
+                            "Google Spreadsheet",
+                            R.drawable.round_table_chart_24
+                    )
+            ).setOnClickListener {
+                getView()?.openGoogleSpreadSheet(it)
+            }
+        }
 
-            val list = mutableListOf<ListItem<*, *>>()
+        private fun getUserItem(user: User): ListItem<*, *> {
 
-            list.add(
-                    UserInfo.Item(
-                            UserInfo(
-                                    user.name,
-                                    user.email,
-                                    user.userPicUrl ?: ""
-                            )
+            return UserInfo.Item(
+                    UserInfo(
+                            user.name,
+                            user.email,
+                            user.userPicUrl ?: ""
                     )
             )
+        }
 
-            list.add(Divider.Item())
+        private fun getItems(): List<ListItem<*, *>> {
+
+            val list = mutableListOf<ListItem<*, *>>()
 
             list.add(
                     ProfileBtn.Item(

@@ -132,4 +132,11 @@ class  GoogleSheetsUserDataManager
     override fun setMonthlyExpenseLimit(limit: Double): Completable {
         return localDataManager.setMonthlyExpenseLimit(limit)
     }
+
+    override fun getSpreadSheetId(): Observable<String> {
+        return getSignedInUser()
+                .flatMap {
+                    localDataManager.getSpreadsheetIdForEmail(it.email)
+                }
+    }
 }

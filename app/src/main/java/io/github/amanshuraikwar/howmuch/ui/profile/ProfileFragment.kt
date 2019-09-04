@@ -1,7 +1,9 @@
 package io.github.amanshuraikwar.howmuch.ui.profile
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -105,6 +108,30 @@ class ProfileFragment
 
     override fun showError(message: String) {
         showToast(message)
+    }
+
+    @Suppress("MoveLambdaOutsideParentheses")
+    override fun openGoogleSpreadSheet(spreadsheetId: String) {
+        MaterialAlertDialogBuilder(activity)
+                .setTitle("Open Google Spreadsheet")
+                .setMessage(
+                        "Open the google spreadsheet where your data resides. " +
+                                "It is not recommended to tamper with the said spreadsheet."
+                )
+                .setPositiveButton(
+                        "OPEN",
+                        {
+                            dialog, _ ->
+                            startActivity(
+                                    Intent(
+                                            Intent.ACTION_VIEW,
+                                            Uri.parse("https://docs.google.com/spreadsheets/d/$spreadsheetId")
+                                    )
+                            )
+                            dialog.dismiss()
+                        }
+                )
+                .show()
     }
 
     @Module
