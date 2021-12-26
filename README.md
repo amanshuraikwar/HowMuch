@@ -32,8 +32,5 @@ The codebase of <b>HowMuch</b> is mostly written in kotlin and some parts are st
 <img width="240" src="https://amanshuraikwar.github.io/assets/howmuch/4.jpg">
 </div>
 
-## Get it on Google Play
-[<img height="100" src="https://amanshuraikwar.github.io/assets/splash/en_badge_web_generic.png">](https://play.google.com/store/apps/details?id=io.github.amanshuraikwar.howmuch.beta.release)
-
 ### APK
 For the latest APK file, check out releases.
