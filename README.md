@@ -1,4 +1,4 @@
-# HowMuch
+# HowMuch (No Longer Maintained)
 
 Easy to use lite expense tracker using google sheets.
 
